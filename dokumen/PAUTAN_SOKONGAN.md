@@ -36,14 +36,14 @@
 
 ## Templat Respons (untuk salin)
 
-> **Subjek:** [Pustaka Hadis] Sokongan - <topik>
+> **Subjek:** [PustakaHadith] Sokongan - <topik>
 >
 > Terima kasih menghubungi kami. Kami akan balas dalam 1-2 hari bekerja.
 >
 > ---
 > **Maklumat berguna (sila sertakan):**
 > - Versi Windows (Win+R → winver)
-> - Versi Pustaka Hadis (Tetapan → Tentang)
+> - Versi PustakaHadith (Tetapan → Tentang)
 > - Langkah untuk ulang masalah
 > - Ralat (jika ada) — salin teks / tangkap skrin
 >
