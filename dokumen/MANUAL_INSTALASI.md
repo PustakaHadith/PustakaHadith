@@ -90,10 +90,10 @@ masih disimpan di folder data Windows anda (lihat di bawah).
 Semua data anda disimpan di satu tempat:
 
 ```
-%LOCALAPPDATA%\PustakaHadis
+%LOCALAPPDATA%\PustakaHadith
 ```
 
-Cara lihat: tekan `Win + R`, taip `%LOCALAPPDATA%\PustakaHadis`, Enter.
+Cara lihat: tekan `Win + R`, taip `%LOCALAPPDATA%\PustakaHadith`, Enter.
 
 Isi penting:
 
@@ -118,7 +118,7 @@ Isi penting:
 | **Carian kata kunci tiada hasil** | Cuba perkataan lain, atau gunakan soalan penuh untuk carian makna (AI). |
 | **Tab English kelabu / tidak tersedia** | Reka bentuk semasa: terjemahan Inggeris tidak disertakan dalam binaan edaran buat masa ini (menunggu kebenaran lesen). |
 | **Sambungan gagal / tiada internet** | Semak sambungan; hadis yang sudah dimuat turun masih boleh dicari (mod luar talian). |
-| **Data hilang selepas nyahpasang** | Nyahpasang tidak memadam data pengguna (`%LOCALAPPDATA%\PustakaHadis`). Padam folder itu secara manual jika mahu data dibuang sepenuhnya. |
+| **Data hilang selepas nyahpasang** | Nyahpasang tidak memadam data pengguna (`%LOCALAPPDATA%\PustakaHadith`). Padam folder itu secara manual jika mahu data dibuang sepenuhnya. |
 
 ---
 

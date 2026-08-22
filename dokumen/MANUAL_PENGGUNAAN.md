@@ -170,7 +170,7 @@ setempat kerana model sudah dimuat semasa pemasangan.
 - Untuk hasil carian terbaik, taip soalan penuh, bukan satu perkataan.
 - Simpan hadis yang kerap dirujuk ke penanda halaman.
 - Data anda selamat — nyahpasang tidak memadam folder data
-  (`%LOCALAPPDATA%\PustakaHadis`).
+  (`%LOCALAPPDATA%\PustakaHadith`).
 
 ---
 

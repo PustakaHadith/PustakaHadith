@@ -29,7 +29,7 @@ PustakaHadith adalah aplikasi pangkalan data hadis luar talian. Aplikasi ini **t
 Semua data disimpan **hanya dalam folder data aplikasi anda**:
 
 ```
-%LOCALAPPDATA%\PustakaHadis\
+%LOCALAPPDATA%\PustakaHadith\
 ├── hadis.db              # Pangkalan data hadis (62,169 rekod) — hanya baca
 ├── user_settings.json    # Tetapan anda (tema, saiz fon, kunci API tertopeng)
 ├── bookmarks.json        # Penanda halaman anda
@@ -74,7 +74,7 @@ Tiada sambungan lain (tiada pemeriksaan kemas kini automatik, tiada telemetri).
 ## Hak Anda
 
 - **Akses**: Semua data anda dalam peranti anda.
-- **Padam**: Padam folder `%LOCALAPPDATA%\PustakaHadis` bila-bila masa.
+- **Padam**: Padam folder `%LOCALAPPDATA%\PustakaHadith` bila-bila masa.
 - **Portabiliti**: Salin folder data ke peranti lain.
 - **Tidak perlu** menghubungi kami untuk memadam data — data dalam milik anda.
 

@@ -43,7 +43,7 @@ Saya menulis untuk **mengesahkan dan memohon kebenaran rasmi** penggunaan **API 
 | **Kaedah akses** | Pengguna daftar akaun di `developer.hadis.my` → dapatkan kunci API → masukkan ke aplikasi → klik "Sync" |
 | **Kekerapan** | **Sekali sahaja** (sync awal) atau bila pengguna pilih "Sync Semula" — **bukan automatik/berterusan** |
 | **Kuota dihormati** | 200 permintaan/hari (Basic) / 1,000 (Personal) / 10,000 (Developer) — aplikasi **tidak melebihi** had ini |
-| **Penyimpanan** | Data disimpan **hanya di peranti pengguna** (`%LOCALAPPDATA%\PustakaHadis\hadis.db`) — **tidak dikongsi/dikumpul ke server kami** |
+| **Penyimpanan** | Data disimpan **hanya di peranti pengguna** (`%LOCALAPPDATA%\PustakaHadith\hadis.db`) — **tidak dikongsi/dikumpul ke server kami** |
 
 ### Aliran Kerja (User Flow) Semasa
 
