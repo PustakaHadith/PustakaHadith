@@ -73,7 +73,7 @@ Selepas pemasangan alatan + payload + aset disalin:
 1. Hyper-V Manager → VM → **Checkpoint** → nama: `Pre-MSIX-Capture`
 2. Atau PowerShell:
 ```powershell
-Checkpoint-VM -Name "PustakaHadis-VM" -SnapshotName "Pre-MSIX-Capture"
+Checkpoint-VM -Name "PustakaHadith-VM" -SnapshotName "Pre-MSIX-Capture"
 ```
 
 ---
@@ -162,7 +162,7 @@ Get-AppxPackage -Name "PustakaHadis" | Remove-AppxPackage
 
 ```powershell
 # Kembalikan VM ke snapshot bersih
-Restore-VMSnapshot -VMName "PustakaHadis-VM" -Name "Pre-MSIX-Capture"
+Restore-VMSnapshot -VMName "PustakaHadith-VM" -Name "Pre-MSIX-Capture"
 ```
 
 ---

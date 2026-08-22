@@ -92,7 +92,7 @@ SignTool sign /fd SHA256 /f "C:\Certs\TestCert.pfx" /p "test123" "C:\Output\Pust
 
 ```powershell
 # Kembalikan VM ke snapshot bersih
-Restore-VMSnapshot -VMName "PustakaHadis-VM" -Name "Pre-MSIX-Capture"
+Restore-VMSnapshot -VMName "PustakaHadith-VM" -Name "Pre-MSIX-Capture"
 # Ulangi dari Fasa 2
 ```
 
