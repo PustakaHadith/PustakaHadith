@@ -38,7 +38,7 @@ from ui.widgets import (                                              # noqa: E4
     GearButton, Toast, divider,
 )
 from ui.settings_panel import Overlay, SettingsPanel                  # noqa: E402
-from ui.deklarasi import DEKLARASI_FLAG, DeklarasiDialog              # noqa: E402
+
 from utils.bahasa import simbol_boleh_dipapar                        # noqa: E402
 from ui.workers import (                                              # noqa: E402
     CollectionsWorker, PreloadWorker,
@@ -466,21 +466,6 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
             self._shown_once = True
             QTimer.singleShot(0, self._force_relayout)
             QTimer.singleShot(150, self._force_relayout)
-            QTimer.singleShot(300, self._tunjuk_deklarasi_pertama)
-
-    def _tunjuk_deklarasi_pertama(self):
-        """Papar deklarasi SEKALI pada larian pertama (flag dalam tetapan).
-
-        Modal -- pengguna perlu tekan "Faham" sebelum guna aplikasi.
-        Bendera disimpan dalam user_settings.json supaya tidak muncul
-        lagi pada larian seterusnya; boleh dibuka semula dari panel
-        Tetapan -> Tentang.
-        """
-        if self.settings.get(DEKLARASI_FLAG):
-            return
-        DeklarasiDialog(penuh=False, parent=self).exec_()
-        self.settings[DEKLARASI_FLAG] = True
-        _write_json(SETTINGS, self.settings)
 
     def _set_nav(self, key):
         for k, b in self.nav.items():
