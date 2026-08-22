@@ -260,7 +260,7 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
 
         logo = QLabel(
             f'<span style="font-size:21px;font-weight:800;color:{TEAL};">Pustaka</span>'
-            f'<span style="font-size:21px;font-weight:300;color:{TEAL_LIGHT};">Hadis</span>'
+            f'<span style="font-size:21px;font-weight:300;color:{TEAL_LIGHT};">Hadith</span>'
             f'<span style="font-size:12px;font-weight:400;color:{TEXT_MUTED};"> v{VERSI}</span>')
         logo.setTextFormat(Qt.RichText)
         logo.setCursor(Qt.PointingHandCursor)

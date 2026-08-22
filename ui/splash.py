@@ -123,7 +123,7 @@ class SplashPermula(QWidget):
         v.setContentsMargins(28, 26, 28, 22)
         v.setSpacing(10)
 
-        # Tajuk — gaya sama header apl: "Pustaka" bold + "Hadis" light + v1.0
+        # Tajuk — gaya sama header apl: "Pustaka" bold + "Hadith" light + v1.0
         pal = self._pal
         teal = pal.get("TEAL", "#5CBF85")
         teal_l = pal.get("TEAL_LIGHT", "#7FD39A")
