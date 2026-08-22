@@ -1,4 +1,4 @@
-# Pautan Sokongan — Pustaka Hadis
+# Pautan Sokongan — PustakaHadith
 
 **Untuk Microsoft Store (Gate 6)**
 
