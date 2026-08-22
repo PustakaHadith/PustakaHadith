@@ -1,4 +1,4 @@
-# Checklist Pemantauan — Pustaka Hadis v1.0 Installer
+# Checklist Pemantauan — PustakaHadith v1.0 Installer
 
 > Dokumen INDUK untuk memantau dan semak imbang kerja installer.
 > Kemas kini setiap kali kerja selesai. Setiap fasa ada GATE — fasa
@@ -26,7 +26,7 @@
 
 **Tugas pengguna (Fasa 0, masih terbuka):** ⏳
 - ☐ Daftar akaun Microsoft Store: https://storedeveloper.microsoft.com/
-- ☐ Tempah nama "Pustaka Hadis" (segera — nama boleh diambil orang lain)
+- ☐ Tempah nama "PustakaHadith" (segera — nama boleh diambil orang lain)
 - ☐ Pilih nama Publisher (akan direkod sebagai identiti MSIX)
 
 ---

@@ -1,6 +1,6 @@
-# Manual Pemasangan — Pustaka Hadis v1.0
+# Manual Pemasangan — PustakaHadith v1.0
 
-> Panduan memasang Pustaka Hadis pada Windows (64-bit).
+> Panduan memasang PustakaHadith pada Windows (64-bit).
 > Untuk pengguna aplikasi. Bahasa: Melayu.
 
 ---
@@ -26,16 +26,16 @@ Status: **sedang disediakan** — akan tersedia selepas pendaftaran
 Microsoft Store selesai.
 
 1. Buka aplikasi **Microsoft Store** pada Windows.
-2. Cari **Pustaka Hadis**.
+2. Cari **PustakaHadith**.
 3. Klik **Dapatkan / Install**.
-4. Selepas siap, klik **Buka** — atau cari **Pustaka Hadis** di menu
+4. Selepas siap, klik **Buka** — atau cari **PustakaHadith** di menu
    Mula.
 
 Kemas kini dikendalikan automatik oleh Store.
 
 ### Cara 2 — Pemasang EXE (pakej sekunder)
 
-Fail: `PustakaHadis-Setup-1.0.0-x64.exe`
+Fail: `PustakaHadith-Setup-1.0.0-x64.exe`
 
 1. Klik dua kali fail pemasang.
 2. Ikut arahan wizard (bahasa Melayu). Pilihan:
@@ -47,18 +47,18 @@ Fail: `PustakaHadis-Setup-1.0.0-x64.exe`
 Mengemas kini: jalankan pemasang versi baharu atas versi lama — data
 anda (tetapan, penanda buku, data hadis) **tidak dipadam**.
 
-Membuang: **Tetapan → Apl → Apl dipasang → Pustaka Hadis → Nyahpasang**
+Membuang: **Tetapan → Apl → Apl dipasang → PustakaHadith → Nyahpasang**
 (atau jalankan pemasang dan pilih buang). Data pengguna kekal di
 folder data anda.
 
 ### Cara 3 — Zip mudah alih (untuk penguji dalaman)
 
-Fail: `PustakaHadis-portable-1.0.0-x64.zip`
+Fail: `PustakaHadith-portable-1.0.0-x64.zip`
 
 1. Buka zip dan **ekstrak penuh** ke satu folder (contoh:
-   `D:\PustakaHadis`). Jangan jalankan terus dari dalam zip.
-2. Buka folder itu dan klik dua kali **`PustakaHadis.exe`**.
-3. Untuk mudah, klik kanan `PustakaHadis.exe` → **Tunjuk lagi pilihan →
+   `D:\PustakaHadith`). Jangan jalankan terus dari dalam zip.
+2. Buka folder itu dan klik dua kali **`PustakaHadith.exe`**.
+3. Untuk mudah, klik kanan `PustakaHadith.exe` → **Tunjuk lagi pilihan →
    Hantar ke → Desktop (cipta pintasan)**.
 
 Tiada proses pemasangan; buang = padam folder sahaja. Data pengguna
@@ -131,7 +131,7 @@ Isi penting:
 - **Huraian ringkas:** SemakHadis.com — atribusi dipaparkan pada setiap
   huraian
 - **Carian makna (AI):** model `intfloat/multilingual-e5-small`
-- **Sumber kod:** https://github.com/anomalyco/opencode
+- **Sumber kod:** https://github.com/opencodemk/PustakaHadith
 
 Notis: teks hadis adalah terjemahan yang mungkin tidak menyeluruh dalam
 sumber asal. Semak dengan sumber rujukan utama untuk kegunaan rasmi.

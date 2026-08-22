@@ -138,7 +138,7 @@ nasai      : 468
 | **Format edaran** | MSIX (Microsoft Store), EXE (Inno Setup per-user), ZIP portable |
 | **Pangkalan data** | SQLite (`hadis.db`) — 62,169 rekod, FTS5 + indeks vektor FAISS (62,169 vektor, dimensi 384) |
 | **Model AI** | `intfloat/multilingual-e5-small` (bundled, on-device inference, ~460 MB) |
-| **Repositori** | https://github.com/anomalyco/opencode |
+| **Repositori** | https://github.com/opencodemk/PustakaHadith |
 | **Lesen kod** | MIT License |
 
 ---
@@ -161,7 +161,7 @@ nasai      : 468
 | **E-mel rasmi (MSIX/Store)** | [pustaka.hadith@outlook.com] |
 | **E-mel (Umum)** | [pustakahadith@gmail.com] |
 | **E-mel (Backup)** | [pustaka.hadith@proton.me] |
-| **GitHub Issues** | https://github.com/anomalyco/opencode/issues |
+| **GitHub Issues** | https://github.com/opencodemk/PustakaHadith/issues |
 | **Pembangun utama** | [Nama Pembangun] |
 | **Kontak hadis.my** | hadisapi@gmail.com (kuota/kelulusan), khai@webmaster.my (cc), WhatsApp +60 19-209 2006 |
 
@@ -190,7 +190,7 @@ Pembangun Utama, Pustaka Hadis
 E-mel (MSIX/Store): [pustaka.hadith@outlook.com]  
 E-mel (Umum): [pustakahadith@gmail.com]  
 E-mel (Backup): [pustaka.hadith@proton.me]  
-GitHub: https://github.com/anomalyco/opencode
+GitHub: https://github.com/opencodemk/PustakaHadith
 
 ---
 

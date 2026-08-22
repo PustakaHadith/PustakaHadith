@@ -1,14 +1,14 @@
-# Dasar Privasi — Pustaka Hadis
+# Dasar Privasi — PustakaHadith
 
 **Tarikh berkuat kuasa:** 20 Ogos 2026  
 **Versi:** 1.0  
-**Pemilik:** Pustaka Hadis
+**Pemilik:** PustakaHadith
 
 ---
 
 ## Ringkasan
 
-Pustaka Hadis adalah aplikasi pangkalan data hadis luar talian. Aplikasi ini **tidak mengumpul, menyimpan, atau mengongsikan** sebarang data peribadi anda kepada pihak ketiga.
+PustakaHadith adalah aplikasi pangkalan data hadis luar talian. Aplikasi ini **tidak mengumpul, menyimpan, atau mengongsikan** sebarang data peribadi anda kepada pihak ketiga.
 
 ---
 
@@ -88,7 +88,15 @@ Sebarang perubahan akan dikemaskini di halaman ini dengan tarikh baharu. Semak s
 
 ## Hubungi Kami
 
-Soalan mengenai privasi: **[pautan sokongan / e-mel akan ditambah]**
+Soalan mengenai privasi:
+
+| Jenis | E-mel |
+|---|---|
+| **Umum / Surat menyurat** | `pustakahadith@gmail.com` |
+| **Microsoft Store / MSIX** | `pustaka.hadith@outlook.com` |
+| **Backup / Selamat** | `pustaka.hadith@proton.me` |
+
+GitHub Issues: https://github.com/opencodemk/PustakaHadith/issues
 
 ---
 

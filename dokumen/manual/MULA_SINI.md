@@ -4,7 +4,7 @@
 > `dokumen/sesi/sesi_index.md` (865 baris) ialah arkib penuh. Dokumen ini ialah
 > perkara yang benar-benar berulang.
 > Log perubahan versi ringkas mengikut tarikh: `dokumen/perubahan/CHANGELOG.md`;
-> log harian terbaru: 19 Ogos 2026 (4 commit: tema, disclaimer, table).
+> log harian terbaru: **22 Ogos 2026** (rebranding PustakaHadith + GitHub push).
 > Log folder binaan installer: `dokumen/perubahan/PERUBAHAN_20OGOS.md`
 > (Fasa 1 — pisahkan laluan data; folder `binaan_installer` bukan git).
 > Panduan Mula Cepat untuk pengguna: `dokumen/manual/MULA_CEPAT.md`.
@@ -16,19 +16,28 @@
 
 ---
 
-## Keadaan projek — ringkasan satu muka (akhir 19 Ogos 2026)
+## Keadaan projek — ringkasan satu muka (akhir 22 Ogos 2026)
 
-**Apa ini:** Aplikasi desktop **Pustaka Hadis v1.0** — PyQt5, berjalan
+**Apa ini:** Aplikasi desktop **PustakaHadith v1.0** — PyQt5, berjalan
 sepenuhnya di luar talian selepas sync: **62,169 hadis** (9 kitab
 hadis.my), carian kata kunci FTS5 + carian makna AI, 3 tab bahasa,
 2 tema Neutral (gelap + terang), susun atur RTL.
 
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
-(414.4s, 19 Ogos) · `semak.py` SEMUA LULUS (394 semakan) ·
+· `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**5 commit** pada 19 Ogos (sambungan 8+2LB 18 Ogos + 18 commit 17 Ogos + 16 commit 16 Ogos + 36 commit 14 Ogos + 14 commit 15 Ogos).
+**1 commit** pada 22 Ogos (rebranding PustakaHadith + GitHub push).
 
-**Kerja 19 Ogos (5 commit):** tema dikurangkan kepada 2 Neutral (gelap +
+**Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadis → PustakaHadith** —
+update 40+ fail Python (main, ui/*, config, sync_*, test_*), installer
+(.iss, .spec), README.md (section Pemasangan pengguna akhir), dokumen
+surat (emel rasmi Outlook/Gmail/Proton). Rename file: `PustakaHadis.iss`
+→ `PustakaHadith.iss`, `PustakaHadis.spec` → `PustakaHadith.spec`.
+Build baharu: `PustakaHadith.exe` (89 MB), `dist\PustakaHadith\` (1.36 GB),
+`PustakaHadith-Setup-1.0.0-x64.exe` (0.27 GB),
+`PustakaHadith-portable-1.0.0-x64.zip` (0.47 GB). Uji EXE launch 8s OK.
+GitHub push: `https://github.com/opencodemk/PustakaHadith`. semak.py
+**395/395 LULUS**.
 terang; Kertas/Terang/Ikut sistem dibuang) + buang 'Saiz antara muka'
 dari panel Tetapan (`b292515`) · dialog disclaimer baharu
 (ui/disclaimer.py) papar setiap larian + carian nombor hadis buka detail
@@ -138,50 +147,28 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ---
 
-## Sesi Terakhir — 19 Ogos 2026 (5 commit)
+## Sesi Terakhir — 22 Ogos 2026 (1 commit)
 
-Versi semasa: **v1.0**. Kerja 19 Ogos — **5 commit** (sambungan 8+2LB 18 Ogos + 18 commit 17 Ogos + 16 commit 16 Ogos + 36 commit 14 Ogos + 14 commit 15 Ogos):
+Versi semasa: **v1.0**. Kerja 22 Ogos — **1 commit** (rebranding PustakaHadith + GitHub push):
 
-1. **Buka rekod hari (komit 1)** — finalkan baris komit 10
-   (`c10986e`) dalam sesi_index; seksyen SESI 19
-1. **Perubahan asas apl (komit 1: `b292515`)** — tema dikurangkan kepada 2
-   Neutral (gelap + terang; Kertas/Terang/Ikut sistem dibuang); buang
-   'Saiz antara muka' dari panel Tetapan; dialog disclaimer baru
-   (ui/disclaimer.py) papar sekali pada startup; carian nombor hadis
-   pada halaman kitab buka detail terus; semak_dokumen_ui 110→109;
-   suite 14/14 (414.4s).
+1. **Rebranding lengkap Pustaka Hadis → PustakaHadith** —
+   update 40+ fail Python (main, ui/*, config, sync_*, test_*),
+   installer (.iss, .spec), README.md (section Pemasangan pengguna akhir),
+   dokumen surat (emel rasmi Outlook/Gmail/Proton). Rename file:
+   `PustakaHadis.iss` → `PustakaHadith.iss`, `PustakaHadis.spec`
+   → `PustakaHadith.spec`. Build baharu: `PustakaHadith.exe` (89 MB),
+   `dist\PustakaHadith\` (1.36 GB), `PustakaHadith-Setup-1.0.0-x64.exe`
+   (0.27 GB), `PustakaHadith-portable-1.0.0-x64.zip` (0.47 GB).
+   Uji EXE launch 8s OK. GitHub push:
+   `https://github.com/opencodemk/PustakaHadith`. semak.py
+   **395/395 LULUS**.
 
-1. **Disclaimer selepas model + sepadankan tajuk (komit 2: `e6d867b`)** —
-   disclaimer dipindah selepas splash (bukan sebelum); flag
-   anti-dwicalla `_buka_dijalankan`; tajuk splash/disclaimer/header
-   sepadan: Pustaka(bold teal) Hadis(light teal) v1.0; header v1.0
-   inline satu label; warna disclaimer guna palet tema.
+**Kiraan telus:** 22 Ogos = **1 commit** (rebranding + GitHub push).
 
-1. **Fix disclaimer pythonw.exe (komit 3: `6c9f855`)** — punca:
-   splash.close() → setQuitOnLastWindowClosed(True) (lalai) → Qt quit
-   event loop → QTimer.singleShot(0) tidak fire; pembetulan:
-   setQuitOnLastWindowClosed(False) + disclaimer dulu (sebelum splash);
-   dialog 540×600; papar setiap kali larian.
-
-1. **Tentang Pustaka Hadis table (komit 4: `5dd6990`)** — QTableWidget
-   2 lajur untuk Kandungan + Sumber dan atribusi; grid line, padding,
-   warna tema; hyperlink pautan HTML dalam sel.
-
-1. **Baiki gate semak.py (komit 5)** — semakan atribusi 8aa diselaraskan
-   ke format JADUAL halaman Tentang (sebelum ini jangka ayat teks lama
-   → GAGAL palsu "app kehilangan"): kini semak label sel kiri + nama
-   sumber pada ui/deklarasi.py dan ayat penuh ternormal pada
-   DEKLARASI.md (3 sumber: hadis.my, fawazahmed0/hadith-api,
-   SemakHadis.com). Kiraan semakan diselaraskan ke **394** (README,
-   ringkasan ini, mutasi #35) dan mutasi #27/#30/#34/#36 disasarkan
-   semula ke rentetan 19 Ogos (5 commit). PERUBAHAN_19OGOS.md dicipta
-   (log harian 19 Ogos belum wujud).
-
-**Kiraan telus:** 14 Ogos = 36 · 15 Ogos = 14 · 16 Ogos = 16 ·
-17 Ogos = 18 · 18 Ogos = 8+2LB · 19 Ogos = **5 commit**.
-
-**Gate:** semak.py SEMUA LULUS (394 semakan, 15 bahagian) ·
+**Gate:** semak.py SEMUA LULUS (395 semakan, 15 bahagian) ·
 uji_negatif_8z 55/0 · semak_dokumen_ui 109/0 · pokok kerja bersih.
+
+---
 
 1. **Buka rekod hari (komit 1, 18 Ogos)** — finalkan baris komit 10
    (`c10986e`) dalam sesi_index; seksyen SESI 18

@@ -63,11 +63,11 @@ Kami mohon dengan hormat **kebenaran bertulis** daripada SemakHadis.com untuk:
 
 | Butiran | Maklumat |
 |---|---|
-| **Projek** | Pustaka Hadis (https://github.com/anomalyco/opencode) |
+| **Projek** | PustakaHadith (https://github.com/opencodemk/PustakaHadith) |
 | **Platform** | Windows 10/11 (x64) |
 | **Versi** | 1.0.0 |
 | **E-mel pembangun (MSIX/Store)** | [pustaka.hadith@outlook.com] |
-| **Laman GitHub** | https://github.com/anomalyco/opencode |
+| **Laman GitHub** | https://github.com/opencodemk/PustakaHadith |
 
 ---
 
@@ -92,7 +92,7 @@ Pembangun Utama, Pustaka Hadis
 E-mel (MSIX/Store): [pustaka.hadith@outlook.com]  
 E-mel (Umum): [pustakahadith@gmail.com]  
 E-mel (Backup): [pustaka.hadith@proton.me]  
-GitHub: https://github.com/anomalyco/opencode
+GitHub: https://github.com/opencodemk/PustakaHadith
 
 ---
 

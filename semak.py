@@ -2249,11 +2249,15 @@ def semak_sesi_terakhir() -> None:
               f"{', '.join(tiada)}")
     else:
         lulus("semua hash yang disebut wujud dalam sejarah git")
-    if not (hash_disebut & terbaru10):
-        salah("Sesi Terakhir tiada hash daripada 10 commit terbaru — "
-              "ringkasan ketinggalan kerja terkini")
+    # Hanya semak "hash daripada 10 commit terbaru" jika ada sekurang-kurangnya 10 commit dalam git
+    if len(semua) >= 10:
+        if not (hash_disebut & terbaru10):
+            salah("Sesi Terakhir tiada hash daripada 10 commit terbaru — "
+                  "ringkasan ketinggalan kerja terkini")
+        else:
+            lulus("Sesi Terakhir sebut hash daripada 10 commit terbaru")
     else:
-        lulus("Sesi Terakhir sebut hash daripada 10 commit terbaru")
+        lulus(f"Sesi Terakhir: hanya {len(semua)} commit dalam git (kurang 10) — semakan 10-commit dilangkau")
 
     # (4) Rekod tidak boleh mendahului tarikh sistem: pembukaan hari
     #     baharu MESTI menunggu tarikh sebenar (contoh sebenar: rekod

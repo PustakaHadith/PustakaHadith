@@ -25,12 +25,12 @@
 
 | Item | Contoh |
 |---|---|
-| URL sokongan | `https://github.com/<pengguna>/<repo>/issues` |
+| URL sokongan | `https://github.com/opencodemk/PustakaHadith/issues` |
 | E-mel sokongan (Umum) | `pustakahadith@gmail.com` |
 | E-mel sokongan (MSIX/Store) | `pustaka.hadith@outlook.com` |
 | E-mel backup | `pustaka.hadith@proton.me` |
-| Laman web projek | `https://github.com/<pengguna>/<repo>` |
-| Dasar privasi | `https://github.com/<pengguna>/<repo>#privasi` (atau URL raw) |
+| Laman web projek | `https://github.com/opencodemk/PustakaHadith` |
+| Dasar privasi | `https://github.com/opencodemk/PustakaHadith#privasi` (atau URL raw) |
 
 ---
 

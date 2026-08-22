@@ -1,13 +1,13 @@
-# Manual Penggunaan — Pustaka Hadis v1.0
+# Manual Penggunaan — PustakaHadith v1.0
 
-> Panduan menggunakan aplikasi Pustaka Hadis.
+> Panduan menggunakan aplikasi PustakaHadith.
 > Bahasa: Melayu · Untuk pengguna aplikasi.
 
 ---
 
-## Mengenai Pustaka Hadis
+## Mengenai PustakaHadith
 
-Pustaka Hadis ialah aplikasi membaca dan mencari hadis daripada
+PustakaHadith ialah aplikasi membaca dan mencari hadis daripada
 **9 kitab utama** (kutub al-tis'ah) — **62,169 hadis** dengan teks Arab
 berbaris penuh, terjemahan Melayu & Indonesia, transliterasi, darjat
 ulama, huraian ringkas, dan carian makna (AI).
