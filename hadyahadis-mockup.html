@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<title>PustakaHadith — Splash Screen (Exact App Colors)</title>
+<style>
+/* ===== EXACT COLORS FROM ui/theme.py ===== */
+
+/* NEUTRAL (Dark) - DEFAULT */
+[data-theme="neutral"] {
+  --page-bg: #1F1F1F;
+  --surface: #1F1F1F;
+  --card-bg: #252526;
+  --card-hover: #2D2D2D;
+  --header-bg: #232324;
+  --teal: #5CBF85;
+  --teal-light: #7FD39A;
+  --teal-pale: #2A3B2F;
+  --teal-dark: #0F2417;
+  --teal-glow: #3A6B4A;
+  --text-primary: #FFFFFF;
+  --text-secondary: #C6C6C6;
+  --text-muted: #9C9C9C;
+  --text-faint: #8E8E8E;
+  --border: #3B3B3B;
+  --border-light: #4A4A4A;
+  --shadow: rgba(0,0,0,0.4);
+}
+
+/* LIGHT (Warm Paper Light) */
+[data-theme="light"] {
+  --page-bg: #F4F1EA;
+  --surface: #F4F1EA;
+  --card-bg: #FFFFFF;
+  --card-hover: #FAF8F2;
+  --header-bg: #FDFCF8;
+  --teal: #1A6B3C;
+  --teal-light: #2D7A4A;
+  --teal-pale: #E9F2EA;
+  --teal-dark: #123F24;
+  --teal-glow: #7FBC92;
+  --text-primary: #2B2B2B;
+  --text-secondary: #5F594D;
+  --text-muted: #6E685A;
+  --text-faint: #9A937F;
+  --border: #E5E0D5;
+  --border-light: #D9D2C4;
+  --shadow: rgba(0,0,0,0.08);
+}
+
+/* NEUTRAL LIGHT (Light Neutral) */
+[data-theme="lightneutral"] {
+  --page-bg: #F4F4F4;
+  --surface: #F4F4F4;
+  --card-bg: #FFFFFF;
+  --card-hover: #F6F6F6;
+  --header-bg: #ECECEC;
+  --teal: #1A6B3C;
+  --teal-light: #2D7A4A;
+  --teal-pale: #E9F2EA;
+  --teal-dark: #123F24;
+  --teal-glow: #7FBC92;
+  --text-primary: #1A1A1A;
+  --text-secondary: #444444;
+  --text-muted: #595959;
+  --text-faint: #6B6B6B;
+  --border: #D9D9D9;
+  --border-light: #C4C4C4;
+  --shadow: rgba(0,0,0,0.08);
+}
+
+/* DARK (Warm Paper Dark) */
+[data-theme="dark"] {
+  --page-bg: #1E1D1A;
+  --surface: #1E1D1A;
+  --card-bg: #282721;
+  --card-hover: #2F2E28;
+  --header-bg: #23221D;
+  --teal: #5CBF85;
+  --teal-light: #7FD39A;
+  --teal-pale: #2A3B2F;
+  --teal-dark: #0F2417;
+  --teal-glow: #3A6B4A;
+  --text-primary: #E8E4DA;
+  --text-secondary: #A39C8C;
+  --text-muted: #9C9589;
+  --text-faint: #928D80;
+  --border: #3B3932;
+  --border-light: #4A473E;
+  --shadow: rgba(0,0,0,0.4);
+}
+
+/* Base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { transition: background-color 0.3s, color 0.3s; }
+body { 
+  font-family: 'Segoe UI', system-ui, sans-serif; 
+  background: var(--page-bg); 
+  color: var(--text-primary); 
+  min-height: 100vh; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 20px;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Splash Card - EXACT from splash.py */
+.splash-card {
+  width: 480px;
+  max-width: 100%;
+  background: var(--card-bg, #252526);
+  border: 1px solid var(--border, #3B3B3B);
+  border-radius: 18px;
+  padding: 28px 26px 22px;
+  box-shadow: 0 4px 24px var(--shadow, rgba(0,0,0,0.4));
+}
+
+/* Title - EXACT from splash.py line 131-134 (concat tanpa space) */
+.splash-title {
+  text-align: center;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+/* Subtitle - EXACT from splash.py line 139 */
+.splash-sub {
+  text-align: center;
+  color: var(--text-muted, #9C9C9C);
+  font-size: 12px;
+  margin-bottom: 24px;
+}
+
+/* Phase text - EXACT from splash.py */
+.splash-phase {
+  text-align: center;
+  color: var(--teal-light, #7FD39A);
+  font-size: 13px;
+  margin-bottom: 16px;
+  min-height: 18px;
+}
+
+/* Progress bar - EXACT from splash.py (indeterminate) */
+.splash-bar {
+  width: 100%;
+  height: 14px;
+  background: var(--page-bg, #1F1F1F);
+  border: 1px solid var(--border, #3B3B3B);
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.splash-bar-chunk {
+  height: 100%;
+  width: 100%;
+  background: var(--teal, #5CBF85);
+  border-radius: 6px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Hint - EXACT from splash.py line 159 */
+.splash-hint {
+  text-align: center;
+  color: var(--text-faint, #8E8E8E);
+  font-size: 11px;
+  margin-top: 20px;
+}
+
+/* Theme Selector */
+.theme-selector {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.theme-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 2px solid var(--border, #3B3B3B);
+  background: transparent;
+  color: var(--text-primary, #FFFFFF);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.theme-btn:hover { border-color: var(--teal, #5CBF85); }
+.theme-btn.active {
+  border-color: var(--teal, #5CBF85);
+  background: var(--teal-pale, #2A3B2F);
+}
+
+/* Exact title from splash.py line 131-134 */
+.splash-title-exact {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  line-height: 1.3;
+}
+
+/* Version badge */
+.version-badge {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted, #9C9C9C);
+  margin-left: 4px;
+}
+</style>
+</head>
+<body data-theme="neutral">
+<!-- Theme Selector -->
+<div style="display:flex; justify-content:center; gap:8px; margin-bottom:24px; flex-wrap:wrap;">
+  <button class="theme-btn active" data-theme="neutral" onclick="setTheme('neutral')">NEUTRAL (Default)</button>
+  <button class="theme-btn" data-theme="light" onclick="setTheme('light')">LIGHT (Warm)</button>
+  <button class="theme-btn" data-theme="lightneutral" onclick="setTheme('lightneutral')">LIGHT NEUTRAL</button>
+  <button class="theme-btn" data-theme="dark" onclick="setTheme('dark')">DARK (Warm)</button>
+</div>
+
+<!-- Splash Card - EXACT from splash.py -->
+<div class="splash-card" style="width:480px; max-width:100%; padding:28px 26px 22px;">
+  <!-- Tajuk — EXACT dari splash.py line 131-134 (concat tanpa space) -->
+  <div style="text-align:center; line-height:1.3; margin-bottom:8px;">
+    <span style="font-size:21px;font-weight:800;color:var(--teal,#5CBF85);">Pustaka</span><span style="font-size:21px;font-weight:300;color:var(--teal-light,#7FD39A);">Hadith</span><span style="font-size:12px;font-weight:400;color:var(--text-muted,#9C9C9C);"> v1.0</span>
+  </div>
+
+  <!-- Sub — EXACT dari splash.py line 139 -->
+  <div style="text-align:center; color:var(--text-muted,#9C9C9C); font-size:12px; margin-bottom:24px;">
+    Versi 1.0 — carian kata kunci + makna (AI)
+  </div>
+
+  <!-- Fasa — EXACT dari splash.py -->
+  <div style="text-align:center; color:var(--teal-light,#7FD39A); font-size:13px; margin-bottom:16px; min-height:18px;" id="phaseText">
+    Menyediakan…
+  </div>
+
+  <!-- Progress Bar — EXACT dari splash.py (indeterminate 0..0) -->
+  <div style="width:100%; height:14px; background:var(--page-bg,#1F1F1F); border:1px solid var(--border,#3B3B3B); border-radius:7px; overflow:hidden;">
+    <div style="height:100%; width:100%; background:var(--teal,#5CBF85); border-radius:6px; animation:pulse 1.5s ease-in-out infinite;"></div>
+  </div>
+
+  <!-- Hint — EXACT dari splash.py line 159 -->
+  <div style="text-align:center; color:var(--text-faint,#8E8E8E); font-size:11px; margin-top:20px;">
+    Menyediakan model carian makna… klik untuk teruskan
+  </div>
+
+  <!-- Simulate phases -->
+  <script>
+    const phases = [
+      "Memeriksa indeks carian makna…",
+      "Memuatkan model carian makna…",
+      "Memuatkan indeks carian…",
+      "Menetapkan pemetaan hadis…",
+      "Sedia! ✔"
+    ];
+    let i = 0;
+    const phaseEl = document.getElementById('phaseText') || document.querySelector('div[style*="min-height:18px"]');
+    setInterval(() => {
+      if (i < phases.length) {
+        phaseEl.textContent = phases[i];
+        i++;
+      }
+    }, 2000);
+  </script>
+</div>
+
+<style>
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+</style>
+
+<script>
+function setTheme(theme) {
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  // Update active button
+  document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelector(`[data-theme="${theme}"]`)?.classList.add('active');
+}
+
+// Load saved theme
+const saved = localStorage.getItem('theme') || 'neutral';
+document.body.setAttribute('data-theme', saved);
+document.querySelector(`[data-theme="${saved}"]`)?.classList.add('active');
+</script>
+</body>
+</html>

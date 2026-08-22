@@ -1,0 +1,61 @@
+# ---------- Kunci & tetapan pengguna (SENSITIF — jangan commit) ----------
+user_settings.json
+bookmarks.json
+profil_model.json
+.env
+.env.local
+*.key
+kunci_terdedah.txt
+
+# ---------- Data besar (dibina semula oleh skrip sync) ----------
+hadis.db
+hadis.db-wal
+hadis.db-shm
+hadis_faiss.index
+hadis_id_map.pkl
+sunnah_map/
+
+# ---------- Model & cache yang dimuat turun ----------
+.cache_models/
+.cache_eng/
+.cache_he/
+.cache_syarah/
+.cache_sema/
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+.venv*/
+venv/
+build/
+dist/
+
+# ---------- Mesin / bukti dijana ----------
+.freebuff/
+bukti_visual/
+
+# ---------- Bahan luaran (ZIP pembetulan dari Drive, bukan kod projek) ----------
+# PustakaHadith_Pembetulan_Lengkap/ = arkib 13-15 Ogos (kod pendua + OCR cache).
+# Gabung ⑤⑥ selesai 15 Ogos 2026 -- isi disalin ke lokasi sebenar (db.py skema 8,
+# uji_carian_arab.py, dokumen/audit/*). Folder ini sendiri bukan kod projek.
+PustakaHadith_Pembetulan_Lengkap/
+# Backup DB sebelum migrasi skema 8 (fail sandaran besar, bukan untuk commit)
+hadis.db.sebelum_carian_arab.bak
+scripts/logo_mockup/
+*.log
+.DS_Store
+Thumbs.db
+# Fail sementara Terabox (penyegerak awan) -- jangan tanda sebagai untracked
+*.terabox.uploading.cfg
+user_settings.json.tmp
+
+# ---------- Build outputs PustakaHadith (baru) ----------
+dist/PustakaHadith/
+dist/PustakaHadith-*
+installer/output/PustakaHadith-Setup-*.exe
+installer/output/PustakaHadith-portable-*.zip
+installer/PustakaHadith.iss
+PustakaHadith.spec

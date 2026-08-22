@@ -1,0 +1,92 @@
+╔══════════════════════════════════════════════════════════╗
+║   PUSTAKA HADIS                                          ║
+║   Koleksi 9 kitab hadis — 62,169 hadis                   ║
+╚══════════════════════════════════════════════════════════╝
+
+
+  DUA LANGKAH SAHAJA
+  ══════════════════
+
+    1.  Klik dua kali        PASANG.bat
+        Tunggu sampai keluar "SIAP", tekan sebarang kekunci.
+        (kali pertama ambil 1-3 minit)
+
+    2.  Klik dua kali ikon   Hadis   di Desktop
+
+
+  Itu sahaja. Langkah 1 dibuat SEKALI seumur hidup.
+
+
+  ──────────────────────────────────────────────────────────
+  KALAU IKON "Hadis" TAK JALAN
+  ──────────────────────────────────────────────────────────
+
+    Klik dua kali   BUAT_PINTASAN.bat
+    Ia cuba cipta semula ikon dan beritahu sebab jika gagal.
+
+    Nak buka apl terus tanpa ikon?
+    Klik dua kali   JALANKAN.bat
+
+    Masih tak jalan?
+    Klik dua kali   NYAHPEPIJAT.bat
+    Tetingkap akan kekal terbuka dan tunjukkan sebabnya.
+    Salin teks itu dan hantar kepada saya.
+
+
+  ──────────────────────────────────────────────────────────
+  KUNCI API
+  ──────────────────────────────────────────────────────────
+
+    Kali pertama buka apl:
+      klik ikon gear (atas kanan) → Tetapan API → masukkan kunci
+
+    Dapatkan kunci percuma di  https://hadis.my
+    Kuota: 200 permintaan sehari, reset 12 malam.
+
+
+  ──────────────────────────────────────────────────────────
+  FAIL DALAM FOLDER INI
+  ──────────────────────────────────────────────────────────
+
+    PASANG.bat        pasang keperluan + cipta pintasan  ← MULA SINI
+    BUAT_PINTASAN.bat cipta semula ikon sahaja
+    JALANKAN.bat      buka apl tanpa ikon
+    NYAHPEPIJAT.bat   tunjuk sebab kalau ada masalah
+    BUANG.bat         buang apl dari komputer
+    BACA_SAYA.txt     fail ini
+    pintasan.ps1      dipanggil oleh PASANG.bat - jangan sentuh
+
+    main.py           kod utama
+    api/ core/ ui/ utils/     kod aplikasi
+    requirements.txt  senarai keperluan Python
+
+    Fail hadis.db dan user_settings.json akan muncul
+    sendiri selepas apl dijalankan kali pertama.
+    Itu normal — jangan padam.
+
+
+  ──────────────────────────────────────────────────────────
+  KEPERLUAN
+  ──────────────────────────────────────────────────────────
+
+    Windows + Python 3.10 atau lebih baharu
+    Muat turun: https://python.org/downloads
+
+    PENTING semasa pasang Python:
+    tandakan kotak  [v] Add python.exe to PATH
+
+
+  ──────────────────────────────────────────────────────────
+  NAK BUANG APL INI?
+  ──────────────────────────────────────────────────────────
+
+    Klik dua kali   BUANG.bat
+
+    Ia tanya 2 soalan (ENTER = pilihan selamat):
+      1. Buang data anda?      hadis.db, tetapan, tanda buku
+      2. Tanggal PyQt5?        hanya jika tiada program lain guna
+
+    Kemudian taip  BUANG  untuk sahkan.
+
+    Selepas itu, padam sendiri folder ini.
+    Skrip tidak boleh padam folder yang sedang dijalankannya.

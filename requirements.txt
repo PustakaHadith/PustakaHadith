@@ -1,0 +1,13 @@
+# Kebergantungan Pustaka Hadis — versi disahkan berfungsi dengan Python 3.14
+# (Sesi 19 & 20: versi ini diuji, ada wheel Python 3.14)
+
+# UI
+PyQt5>=5.15.11
+requests>=2.28.0
+pyperclip>=1.8.0
+tqdm>=4.65.0
+
+# Carian Makna (AI)
+torch>=2.6
+sentence-transformers>=5.0
+faiss-cpu>=1.9

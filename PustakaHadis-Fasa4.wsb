@@ -1,0 +1,12 @@
+<Configuration>
+  <MappedFolders>
+    <MappedFolder>
+      <HostFolder>D:\Pustaka Quran Hadis\binaan_installer\dist\PustakaHadis-Debug</HostFolder>
+      <SandboxFolder>C:\Users\WDAGUtilityAccount\Desktop\PustakaHadis-Debug</SandboxFolder>
+      <ReadOnly>true</ReadOnly>
+    </MappedFolder>
+  </MappedFolders>
+  <LogonCommand>
+    <Command>cmd /c start "" "C:\Users\WDAGUtilityAccount\Desktop\PustakaHadis-Debug\PustakaHadis-Debug.exe"</Command>
+  </LogonCommand>
+</Configuration>

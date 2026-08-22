@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Mockup — Ibn Majah No. 2094: ARAB · Terjemahan + Huraian + Darjat</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f4f1ea;
+       color: #2b2b2b; margin: 0; padding: 24px 16px; }
+.kepala { max-width: 1120px; margin: 0 auto 16px; }
+h1 { font-size: 20px; margin: 0 0 4px; }
+.sub { color: #7a7468; font-size: 13px; margin: 0 0 14px; }
+button { padding: 8px 14px; border: 1px solid #cfc8b8; border-radius: 8px;
+         background: #fff; cursor: pointer; font-size: 13px; color: #2b2b2b; }
+.mod { max-width: 1120px; margin: 0 auto; }
+.kad { background: #fff; border: 1px solid #e4dfd3; border-radius: 10px;
+       padding: 14px 16px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+.nota { max-width: 1120px; margin: 0 auto 10px; font-size: 12px; color: #8a8578; }
+.breadcrumb { font-size: 12px; color: #1a6b3c; margin: 0 0 8px; }
+.tajuk-bar { display: flex; justify-content: space-between; align-items: center;
+             gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.tajuk-teks { font-size: 15px; font-weight: 600; }
+.tindakan { display: flex; gap: 6px; flex-wrap: wrap; }
+button.mini { padding: 3px 10px; font-size: 11px; border: 1px solid #d8d2c2;
+              border-radius: 6px; background: #faf8f2; cursor: pointer; color: #2b2b2b; }
+.bab { font-size: 12px; color: #7a7468; margin: 0 0 10px; }
+.panel-sisi { display: flex; gap: 14px; align-items: flex-start; flex-wrap: nowrap;
+              overflow-x: auto; padding: 16px 18px; border: 1px solid #e4dfd3;
+              border-radius: 10px; background: #fdfcf8; margin-bottom: 14px; }
+.teks { font-size: 15px; line-height: 1.85; overflow-wrap: break-word; }
+.teks.arab { direction: rtl; text-align: right;
+             font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', serif;
+             font-size: 17px; line-height: 2; }
+.teks.transliterasi { direction: ltr; text-align: left; font-style: italic; color: #444; }
+.lajur { flex: 1 0 240px; min-width: 240px; }
+.lajur h4 { font-size: 11px; letter-spacing: .1em; color: #9a937f; margin: 0 0 6px; }
+.tab-bahasa { display: flex; gap: 24px; margin-bottom: 6px; padding-left: 2px; }
+.tab-bahasa button { border: none; background: none; cursor: pointer;
+                     font-size: 13px; letter-spacing: .08em; padding: 4px 0;
+                     color: #9a937f; font-weight: 400; }
+.tab-bahasa button.aktif { color: #2b2b2b; font-weight: 700; }
+.lajur .tab-bahasa { gap: 12px; padding-left: 0; margin-bottom: 6px; }
+.lajur .tab-bahasa button { font-size: 12px; letter-spacing: .04em; }
+.trans-blok { margin-bottom: 14px; }
+.trans-blok:last-child { margin-bottom: 0; }
+.kap-bahasa { font-size: 11px; letter-spacing: .1em; color: #9a937f;
+              margin: 0 0 6px; }
+/* ── Seksyen di bawah ── */
+.seksyen { margin-top: 16px; }
+.seksyen-tajuk { font-size: 13px; font-weight: 600; margin: 0 0 8px;
+                 display: flex; align-items: center; gap: 8px; }
+.chip { font-size: 11px; padding: 2px 10px; border-radius: 10px;
+        background: #fdf3e0; color: #9a6a00; font-weight: 400; }
+.panel-huraian { border: 1px solid #e4dfd3; border-radius: 10px; padding: 14px 18px;
+                 background: #fff; }
+.panel-huraian h3 { font-size: 15px; margin: 0 0 8px; }
+.darjat-bar { font-size: 13px; color: #444; padding: 4px 0; }
+.nota-dalam { font-size: 12px; color: #8a8578; margin-top: 10px;
+              border-top: 1px dashed #e4dfd3; padding-top: 8px; }
+.quote { font-size: 13px; color: #555; font-style: italic; margin-top: 10px;
+         border-left: 3px solid #d8d2c2; padding-left: 10px; }
+.bar-bawah { display: flex; justify-content: space-between; gap: 10px;
+             margin-top: 14px; padding: 10px 4px; border-top: 1px solid #e4dfd3;
+             font-size: 13px; color: #1a6b3c; }
+/* ── Mod gelap ── */
+body.gelap { background: #1e1d1a; color: #e8e4da; }
+body.gelap .sub { color: #a39c8c; }
+body.gelap button { border-color: #4a473e; background: #2f2e28; color: #e8e4da; }
+body.gelap .kad { background: #282721; border-color: #3b3932; box-shadow: none; }
+body.gelap .nota { color: #8f8878; }
+body.gelap .breadcrumb,
+body.gelap .bar-bawah { color: #5cbf85; }
+body.gelap button.mini { border-color: #4a473e; background: #33322c; color: #e8e4da; }
+body.gelap .bab { color: #a39c8c; }
+body.gelap .panel-sisi { border-color: #3b3932; background: #23221d; }
+body.gelap .lajur h4,
+body.gelap .kap-bahasa { color: #8f8878; }
+body.gelap .tab-bahasa button { color: #8f8878; }
+body.gelap .tab-bahasa button.aktif { color: #e8e4da; }
+body.gelap .teks.transliterasi { color: #c9c4b8; }
+body.gelap .panel-huraian { border-color: #3b3932; background: #282721; }
+body.gelap .chip { background: #3a3120; color: #e0b35c; }
+body.gelap .darjat-bar { color: #c9c4b8; }
+body.gelap .nota-dalam { color: #8f8878; border-top-color: #3b3932; }
+body.gelap .quote { color: #b5aea0; border-left-color: #4a473e; }
+body.gelap .bar-bawah { border-top-color: #3b3932; }
+</style>
+</head>
+<body>
+  <div class="kepala">
+    <h1>Mockup — Halaman Detail Sunan Ibn Majah No. 2094</h1>
+    <p class="sub">Data sebenar dari hadis.db · Bab: The Chapters on Expiation · Hadis LEMAH (chip AMBER).
+      Palet chip: <b style="color:#1a6b3c">hijau</b>=Sahih · <b style="color:#9a6a00">amber</b>=Lemah (ini) ·
+      <b style="color:#b3261e">merah</b>=Palsu. SemakHadis Lemah = darjat CDN Daif (konsisten).</p>
+    <button id="b-gelap" class="mini" onclick="tukar_gelap()">🌙 Mod gelap</button>
+  </div>
+
+  <div class="mod">
+    <div class="kad" id="kad-2094">
+      <div class="breadcrumb">Utama › Sunan Ibn Majah › No. 2094</div>
+      <div class="tajuk-bar">
+        <div class="tajuk-teks"><b>Sunan Ibn Majah — Hadis No. 2094</b></div>
+        <div class="tindakan">
+          <button class="mini">💬 WhatsApp</button>
+          <button class="mini">📋 Salin</button>
+          <button class="mini">🔊 Dengar</button>
+          <button class="mini">☆ Simpan</button>
+        </div>
+      </div>
+      <div class="bab">Bab: The Chapters on Expiation</div>
+
+      <div class="panel-sisi">
+        <div class="lajur">
+          <div class="tab-bahasa"><button class="aktif" data-arab="arab" onclick="pilih_arab('arab')">ARAB</button><button data-arab="transliterasi" onclick="pilih_arab('transliterasi')">TRANSLITERASI</button></div>
+          <div class="teks arab" id="teks-arab">حَدَّثَنَا عَلِيُّ بْنُ مُحَمَّدٍ حَدَّثَنَا أَبُو مُعَاوِيَةَ عَنْ بَشَّارِ بْنِ كِدَامٍ عَنْ مُحَمَّدِ بْنِ زَيْدٍ عَنْ ابْنِ عُمَرَ قَالَ قَالَ رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ إِنَّمَا الْحَلِفُ حِنْثٌ أَوْ نَدَمٌ</div>
+        </div>
+        <div class="lajur">
+          <div class="tab-bahasa"><button class="aktif" data-lang="melayu" onclick="pilih_bahasa('melayu')">MELAYU</button><button data-lang="indonesia" onclick="pilih_bahasa('indonesia')">INDONESIA</button><button data-lang="english" onclick="pilih_bahasa('english')">ENGLISH</button></div>
+          <div class="teks" id="teks-terjemah">Telah menceritakan kepada kami Ali bin Muhammad, katanya: telah menceritakan kepada kami Abu Mu'awiyah daripada Basshar bin Kidam daripada Muhammad bin Zaid daripada Ibnu Umar رضي الله عنهما, katanya: Rasulullah صلى الله عليه وسلم bersabda: "Sesungguhnya sumpah itu hanyalah (membawa kepada) dosa atau penyesalan."</div>
+        </div>
+      </div>
+
+      
+      <div class="seksyen">
+        <div class="seksyen-tajuk">Huraian (SemakHadis · Lemah)</div>
+        <div class="panel-huraian">
+          <h3>Bersumpah itu sama ada kekecewaan atau penyesalan</h3>
+          <div class="chip">Lemah</div>
+          <div class="kap-bahasa" style="margin-top:10px">TERJEMAHAN</div>
+          <div class="teks">Bersumpah itu sama ada kekecewaan (melanggar sumpah) atau penyesalan.</div>
+          <div class="kap-bahasa" style="margin-top:10px">TAKHIJ</div>
+          <div class="teks">Hadis ini disebut oleh Syeikh Mashhūr bin Ḥasan Āl Salmān حفظه الله dalam kitab himpunan hadis-hadis daif dan palsu beliau berjudul Silsilah al-Aḥādīth al-Ḍa‘īfah wal-Mawḍū‘ah Mujarradah ‘An al-Takhrīj, di halaman 790, hadis no. 4062. Kitab ini adalah ringkasan kepada kitab Silsilah al-Aḥādīth al-Ḍa‘īfah wal-Mawḍū‘ah karya Syeikh Muḥammad Nāṣir al-Dīn al-Albānī (m. 1420H) رحمه الله . Berikut adalah maklumat tentang hadis ini, seperti yang terdapat dalam kitab ini:</div>
+          <div class="kap-bahasa" style="margin-top:10px">KOMENTAR</div>
+          <div class="teks">(Lemah)
+Daripada Ibn 'Umar RA secara marfu’ (disandarkan kepada Nabi SAW): Bersumpah itu sama ada kekecewaan (melanggar sumpah) atau penyesalan.
+[Riwayat al-Hakim dalam al-Mustadrak. Lihat Silsilah al-Da'ifah, no. 3758]</div>
+          <div class="nota-dalam">Sumber: SemakHadis.com</div>
+        </div>
+      </div>
+
+      
+      <div class="seksyen">
+        <div class="seksyen-tajuk">Penilaian ulama (darjat)</div>
+        <div class="panel-huraian">
+          <div class="darjat-bar">Al-Albani — Daif</div><div class="darjat-bar">Muhammad Fouad Abd al-Baqi — Daif</div><div class="darjat-bar">Zubair Ali Zai — Daif</div>
+          <div class="quote">Penilaian ini daripada ulama hadis moden. Ulama boleh
+            berbeza pendapat. Rujuk ahli ilmu untuk kepastian.</div>
+          <div class="nota-dalam">Sumber: fawazahmed0/hadith-api (Unlicense)</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bar-bawah">
+      <span>‹ Kembali</span>
+      <span>‹ No. 2093 · No. 2095 ›</span>
+    </div>
+  </div>
+
+  <div id="teks-simpan-indonesia" hidden>Telah menceritakan kepada kami Ali bin Muhammad berkata, telah menceritakan kepada kami Abu Mu'awiyah dari Basysyar bin Kidam dari Muhammad bin Zaid dari Ibnu Umar ia berkata, "Rasulullah shallallahu 'alaihi wasallam bersabda: "Hanyasanaya sumpah itu adalah dosa atau penyesalan."</div>
+  <div id="teks-simpan-english" hidden>It was narrated from Ibn 'Umar that :the Messenger of Allah (ﷺ) said: "An oath (leads to) either sin or regret</div>
+  <div id="teks-simpan-gaya-melayu" hidden>haddathana 'aliyyu bnu muhammadin haddathana abu mu'awiyaha 'an basysyari bni kidamin 'an muhammadi bni zaydin 'an abni 'umara qala qala rasulu Allahi salla Allahu 'alayhi wa-sallama innama al-halifu hinthun aw nadamun</div>
+  <div id="teks-simpan-akademik" hidden>ḥaddathanā ʿaliyyu bnu muḥammadin ḥaddathanā ʾabū muʿāwiyaha ʿan bashshāri bni kidāmin ʿan muḥammadi bni zaydin ʿan abni ʿumara qāla qāla rasūlu Allāhi ṣallā Allāhu ʿalayhi wasallama ʾinnamā al-ḥalifu ḥinthun ʾaw nadamun</div>
+
+<script>
+function pilih_bahasa(lang) {
+  document.getElementById('teks-terjemah').textContent =
+    document.getElementById('teks-simpan-' + lang).textContent;
+  document.querySelectorAll('.tab-bahasa button[data-lang]').forEach(b => {
+    b.classList.toggle('aktif', b.getAttribute('data-lang') === lang);
+  });
+}
+var arabAsal = document.getElementById('teks-arab').textContent;
+function pilih_arab(mode) {
+  var tb = document.getElementById('teks-arab');
+  if (mode === 'arab') {
+    tb.textContent = arabAsal;
+    tb.className = 'teks arab';
+  } else {
+    var my = document.getElementById('teks-simpan-gaya-melayu').textContent;
+    var ak = document.getElementById('teks-simpan-akademik').textContent;
+    tb.innerHTML = '<div class="trans-blok"><div class="kap-bahasa">GAYA MELAYU</div>'
+      + '<div class="teks transliterasi">' + my + '</div></div>'
+      + '<div class="trans-blok"><div class="kap-bahasa">AKADEMIK</div>'
+      + '<div class="teks transliterasi">' + ak + '</div></div>';
+    tb.className = 'teks';
+  }
+  document.querySelectorAll('.tab-bahasa button[data-arab]').forEach(b => {
+    b.classList.toggle('aktif', b.getAttribute('data-arab') === mode);
+  });
+}
+function tukar_gelap() {
+  var g = document.body.classList.toggle('gelap');
+  try { localStorage.setItem('mockup_gelap', g ? '1' : '0'); } catch (e) {}
+  document.getElementById('b-gelap').textContent = g ? '☀️ Mod terang' : '🌙 Mod gelap';
+}
+try {
+  if (localStorage.getItem('mockup_gelap') === '1') {
+    document.body.classList.add('gelap');
+    document.getElementById('b-gelap').textContent = '☀️ Mod terang';
+  }
+} catch (e) {}
+</script>
+</body>
+</html>
