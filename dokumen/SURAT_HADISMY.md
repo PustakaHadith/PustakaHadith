@@ -162,7 +162,7 @@ nasai      : 468
 | **E-mel (Umum)** | [pustakahadith@gmail.com] |
 | **E-mel (Backup)** | [pustaka.hadith@proton.me] |
 | **GitHub Issues** | https://github.com/opencodemk/PustakaHadith/issues |
-| **Pembangun utama** | [Nama Pembangun] |
+| **Pembangun utama** | **opencodemk** |
 | **Kontak hadis.my** | hadisapi@gmail.com (kuota/kelulusan), khai@webmaster.my (cc), WhatsApp +60 19-209 2006 |
 
 ---
@@ -185,8 +185,8 @@ Sekian, terima kasih.
 
 **Yang benar,**
 
-**[Nama Pembangun / Penanggungjawab]**  
-Pembangun Utama, Pustaka Hadis  
+**opencodemk**  
+Pembangun Utama, PustakaHadith  
 E-mel (MSIX/Store): [pustaka.hadith@outlook.com]  
 E-mel (Umum): [pustakahadith@gmail.com]  
 E-mel (Backup): [pustaka.hadith@proton.me]  

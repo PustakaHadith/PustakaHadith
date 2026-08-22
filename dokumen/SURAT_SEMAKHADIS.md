@@ -87,8 +87,8 @@ Sekian, terima kasih.
 
 **Yang benar,**
 
-**[Nama Pembangun / Penanggungjawab]**  
-Pembangun Utama, Pustaka Hadis  
+**opencodemk**  
+Pembangun Utama, PustakaHadith  
 E-mel (MSIX/Store): [pustaka.hadith@outlook.com]  
 E-mel (Umum): [pustakahadith@gmail.com]  
 E-mel (Backup): [pustaka.hadith@proton.me]  
