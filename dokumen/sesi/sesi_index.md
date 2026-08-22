@@ -8253,3 +8253,36 @@ semak_dokumen_ui 110/0 · pokok kerja bersih · tema pengguna "sistem".
 
 ---
 
+## SESI 22 OGOS 2026
+
+**Ringkasan:** folder `binaan_installer` → `PustakaHadith` (rebrand selesai), PyInstaller windowed build, Inno Setup + ZIP portable, buang dialog deklarasi berganda, header PustakaHadis → PustakaHadith, push ke GitHub (`opencodemk/PustakaHadith`).
+
+| # | Kerja | Komit |
+|---|-------|-------|
+| 1 | **Rebrand folder** — rename `binaan_installer` → `PustakaHadith`, .venv-build baharu, copy fail data | — |
+| 2 | **Recreate .iss** — `installer/PustakaHadith.iss` hilang semasa rename, dibina semula (Inno Setup) | — |
+| 3 | **PyInstaller windowed** — `console=True` → `console=False`, rebuild dengan `runw.exe` | — |
+| 4 | **Inno Setup** — `PustakaHadith-Setup-1.0.0-x64.exe` (294.9 MB) | — |
+| 5 | **ZIP portable** — `PustakaHadith-portable-1.0.0-x64.zip` (201.5 MB) | — |
+| 6 | **semak.py 399/399 LULUS** | — |
+| 7 | **Git push ke GitHub** — `opencodemk/PustakaHadith` | — |
+| 8 | **Git filter-branch** — `→` → `->` dalam semua commit | — |
+| 9 | **Git filter-branch #2** — buang "Rebrand: Pustaka Hadis -> " dari commit pertama | — |
+| 10 | **Buang dialog deklarasi berganda** — buang `_tunjuk_deklarasi_pertama` dari `showEvent` | `65543f8` |
+| 11 | **Header PustakaHadith** — tukar "Hadis" → "Hadith" dalam header + splash, kekal font/warna | `59dd9a0` |
+| 12 | **Rebuild EXE** — build windowed baru, EXE berfungsi | — |
+
+**Kiraan telus:** 22 Ogos = **2 commit** (65543f8, 59dd9a0) + filter-branch rewrite.
+
+**Build outputs:**
+- `dist/PustakaHadith/PustakaHadith.exe` — 74.2 MB (windowed)
+- `Output/PustakaHadith-Setup-1.0.0-x64.exe` — 294.9 MB
+- `Output/PustakaHadith-portable-1.0.0-x64.zip` — 201.5 MB
+
+**Baki tertangguh (§8):** tidak berubah — #7 kunci API hadis.my kekal
+AKTIF sengaja; jurang Tafsir 843 dipantau; installer Fasa 0 TERTUNDA.
+
+---
+
+*sesi_index.md — dikemas kini 22 Ogos 2026*
+
