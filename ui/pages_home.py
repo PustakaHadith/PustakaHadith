@@ -165,7 +165,7 @@ class PagesHome:
         ql.setContentsMargins(0, 0, 0, 0)
         ql.setSpacing(10)
         ql.addWidget(self._kad_pantas(
-            "Jelajah 9 Kitab", "Buka rak digital", self.go, "kitab"), 1)
+            "Jelajah 9 Kitab", "Buka rak digital", self.go, "rak"), 1)
         ql.addWidget(self._kad_pantas(
             "Carian Makna", "Temui hadis berkaitan",
             self._pergi_carian), 1)
@@ -344,7 +344,7 @@ class PagesHome:
             baharu = self._kad_sisi(
                 "📖", "Mula baca",
                 "Belum ada sejarah — jelajah 9 kitab untuk mula",
-                self.go, "kitab")
+                self.go, "rak")
         # Ganti widget pada kedudukan kad lama dalam layout induk.
         induk = kad.parentWidget()
         if induk is None:
@@ -391,7 +391,7 @@ class PagesHome:
             self._buka_hadis_terus(e["slug"], int(e.get("n", 1)),
                                    dari="home")
         else:
-            self.go("kitab")
+            self.go("rak")
 
     # ── Pilihan Hari Ini (hadis harian, deterministik ikut tarikh) ──
     def _fetch_pilihan_hari(self):

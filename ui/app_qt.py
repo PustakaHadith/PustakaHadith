@@ -22,6 +22,7 @@ from ui.helpers import (                                             # noqa: E40
     _parse_lompat, _read_json, _slug_dari_awalan, _write_json,
 )
 from ui.pages_kitab import PagesKitab                                    # noqa: E402
+from ui.pages_rak import PagesRak                                        # noqa: E402
 from ui.pages_carian import PagesCarian                                  # noqa: E402
 from ui.pages_detail import PagesDetail                                  # noqa: E402
 from ui.pages_tersimpan import PagesTersimpan                            # noqa: E402
@@ -53,7 +54,7 @@ from ui.workers import (                                              # noqa: E4
 LABEL_RAWAK = "⚄  Rawak"
 
 
-class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
+class PustakaApp(PagesKitab, PagesRak, PagesCarian, PagesDetail,
                  PagesTersimpan, PagesTetapan, PagesHome, QMainWindow):
     # Lazy Loading: model AI dimuat pada carian makna pertama.
     # Isyarat pramuat model lama (kemajuan_pramuat, siap_pramuat) DITANGGAL.
@@ -249,8 +250,14 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
         # dibuang. `PAGES["settings"]` (ui/helpers.py) selamat kekal --
         # ia index 5 (terakhir), buang dari sini tidak mengubah index
         # halaman lain (home=0, kitab=1, detail=2, search=3, saved=4).
+        # 25 Ogos: halaman RAK DIGITAL ditambah di HUJUNG (index 5)
+        # supaya indeks halaman lama (home=0, kitab=1, detail=2,
+        # search=3, saved=4) KEKAL TIDAK BERUBAH -- PAGES (ui/helpers)
+        # dan semua rujukan indeks kekal sah. "settings" (6) tiada
+        # halaman dibina (panel gelongsor menggantikannya); go("settings")
+        # menjadi no-op selamat.
         for fn in (self._page_home, self._page_kitab, self._page_detail,
-                   self._page_search, self._page_saved):
+                   self._page_search, self._page_saved, self._page_rak):
             fn()
 
         # QStackedWidget mengira saiz halaman semasa ia belum kelihatan.
@@ -278,9 +285,10 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
 
         self.nav = {}
         # Nav baharu (25 Ogos, mockup Split Command Center): "Jelajah
-        # Kitab" ditambah; "Rawak" dipindah ke panel kanan halaman utama.
+        # Kitab" → halaman RAK DIGITAL (bukan senarai terus); "Rawak"
+        # dipindah ke panel kanan halaman utama.
         for label, key in [("Utama", "home"), ("Pencarian", "search"),
-                           ("Jelajah Kitab", "kitab"), ("Tersimpan", "saved")]:
+                           ("Jelajah Kitab", "rak"), ("Tersimpan", "saved")]:
             b = QPushButton(label)
             b.setObjectName("nav")
             b.setCursor(Qt.PointingHandCursor)
@@ -522,6 +530,9 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
         # koleksi sampai; kaedah wujud hanya pada halaman utama baharu.
         if hasattr(self, "_fetch_pilihan_hari"):
             self._fetch_pilihan_hari()
+        # Kiraan pada jilid Rak Digital 9 Kitab (25 Ogos).
+        if hasattr(self, "_rak_update_kiraan"):
+            self._rak_update_kiraan()
 
     def _total_of(self, slug):
         for c in self.collections:

@@ -988,7 +988,7 @@ def _sumber_ui() -> str:
     kali fungsi dialih.
     """
     teks = _baca_cek(os.path.join(BASE, "ui", "app_qt.py"))
-    for p in ("ui/pages_kitab.py", "ui/pages_carian.py",
+    for p in ("ui/pages_kitab.py", "ui/pages_rak.py", "ui/pages_carian.py",
               "ui/pages_detail.py", "ui/pages_tersimpan.py",
               "ui/pages_tetapan.py", "ui/pages_home.py",
               "ui/helpers.py"):
@@ -1005,7 +1005,7 @@ def _cari_fungsi(nama: str):
     app_qt.py; semakan AST perlu parse fail yang benar-benar
     mengandunginya.
     """
-    for p in ("ui/pages_detail.py", "ui/pages_kitab.py",
+    for p in ("ui/pages_detail.py", "ui/pages_kitab.py", "ui/pages_rak.py",
               "ui/pages_carian.py", "ui/pages_tersimpan.py",
               "ui/pages_tetapan.py", "ui/pages_home.py",
               "ui/app_qt.py"):

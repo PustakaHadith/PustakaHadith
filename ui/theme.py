@@ -206,7 +206,7 @@ _THEMED_MODULES = ("ui.theme", "ui.widgets", "ui.pages",
                    "ui.pages_kitab", "ui.pages_carian",
                    "ui.pages_detail", "ui.pages_tersimpan",
                    "ui.pages_tetapan", "ui.pages_home",
-                   "ui.deklarasi")
+                   "ui.pages_rak", "ui.deklarasi")
 
 
 def apply_theme(name: str = "dark") -> dict:
@@ -626,6 +626,9 @@ QLabel#panelTitle {{
 QLabel#panelSection {{
     font-size: {s(11)}; font-weight: 700; color: {TEAL};
     letter-spacing: 1px;
+}}
+QLabel#rakNombor {{
+    font-size: {s(42)}; font-weight: 800; color: {TEAL};
 }}
 
 /* Chip topik (Niat, Solat, …) — kotak sama saiz, sudut sederhana */

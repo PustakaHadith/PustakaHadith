@@ -28,8 +28,11 @@ from ui.theme import COLLECTION_META  # metadata kitab -- BUKAN warna
 SETTINGS = SETTINGS_PATH
 BOOKMARKS = BOOKMARKS_PATH
 
+# 25 Ogos: "rak" = index 5 (halaman Rak Digital, dibina di hujung
+# stack). "settings" dialih ke 6 — halaman itu TIDAK lagi dibina
+# (digantikan panel gelongsor); setCurrentIndex(6) = no-op selamat.
 PAGES = {"home": 0, "kitab": 1, "detail": 2, "search": 3,
-         "saved": 4, "settings": 5}
+         "saved": 4, "rak": 5, "settings": 6}
 
 # lang= API: 'ms' arab+melayu, 'id' arab+indonesia, None semua
 LANG_PARAM = {"bm_only": "ms", "ind_only": "id", "both": None}
