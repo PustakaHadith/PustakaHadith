@@ -135,6 +135,14 @@ class JilidRak(QFrame):
         # dan melebar apabila jilid makin tinggi (kesan "dicabut").
         naik = 10.0 * a
 
+        # Geometri spina: RUANG KEPALA 12px di atas — batang jilid
+        # bergerak dalam 12-naik .. h-4 dan TIDAK PERNAH terpotong
+        # pada batas widget walaupun terangkat penuh (pembetulan:
+        # dahulu top margin 6px < angkat 10px -> hujung atas terpotong).
+        atas_spina = 12.0 - naik
+        tinggi_spina = h - 16.0
+        bawah = atas_spina + tinggi_spina
+
         asas = QColor(self._meta.get("warna", "#2E7D6B"))
         if self._dipilih:
             fill = QColor(asas)
@@ -149,26 +157,29 @@ class JilidRak(QFrame):
             border = QColor(asas.darker(130))
             lebar_border = 1
 
-        # Bayang lembut di pangkal — hanya apabila terangkat.
+        # Bayang lembut di pangkal — hanya apabila terangkat; sentiasa
+        # di BAWAH tapak jilid supaya tidak dilindungi jilid sendiri.
         if a > 0.01:
             p.setPen(Qt.NoPen)
             bayang = QColor(0, 0, 0, int(70 * a))
             p.setBrush(bayang)
             lebar_bayang = (w - 10) + 8 * a
             p.drawRoundedRect(
-                QRectF((w - lebar_bayang) / 2, h - 10 + 4 * a,
+                QRectF((w - lebar_bayang) / 2, bawah - 2 + 4 * a,
                        lebar_bayang, 5),
                 3, 3)
 
         # Batang jilid — naik mengikut `a`.
         p.setPen(Qt.NoPen)
         p.setBrush(fill)
-        p.drawRoundedRect(QRectF(2, 6 - naik, w - 4, h - 12), 8, 8)
+        p.drawRoundedRect(QRectF(2, atas_spina, w - 4, tinggi_spina), 8, 8)
 
         # Gurusan buku: garis menegak halus dekat tepi kiri/kanan.
         p.setPen(QColor(255, 255, 255, 40))
-        p.drawLine(int(w * 0.18), 12 - int(naik), int(w * 0.18), h - 18 - int(naik))
-        p.drawLine(int(w * 0.82), 12 - int(naik), int(w * 0.82), h - 18 - int(naik))
+        p.drawLine(int(w * 0.18), int(atas_spina) + 8,
+                   int(w * 0.18), int(bawah) - 8)
+        p.drawLine(int(w * 0.82), int(atas_spina) + 8,
+                   int(w * 0.82), int(bawah) - 8)
 
         # Singkatan di atas (mendatar).
         p.setPen(QColor(255, 255, 255, 230 if self._dipilih else 200))
@@ -176,7 +187,8 @@ class JilidRak(QFrame):
         f.setPointSize(11)
         f.setBold(True)
         p.setFont(f)
-        p.drawText(QRectF(0, 12 - naik, w, 22), Qt.AlignCenter, self._singkatan)
+        p.drawText(QRectF(0, atas_spina + 6, w, 22),
+                   Qt.AlignCenter, self._singkatan)
 
         # Nama kitab MENEGAK (baca dari bawah ke atas) di tengah.
         f2 = QFont(self.font())
@@ -184,7 +196,7 @@ class JilidRak(QFrame):
         f2.setBold(self._dipilih)
         p.setFont(f2)
         p.save()
-        p.translate(w / 2, h / 2 - naik)
+        p.translate(w / 2, atas_spina + tinggi_spina / 2)
         p.rotate(-90)
         teks = self._meta.get("short", self._slug)
         p.setPen(QColor(255, 255, 255, 235 if self._dipilih else 205))
@@ -198,7 +210,7 @@ class JilidRak(QFrame):
             f3.setPointSize(8)
             p.setFont(f3)
             p.setPen(QColor(255, 255, 255, 190))
-            p.drawText(QRectF(0, h - 30 - naik, w, 18),
+            p.drawText(QRectF(0, bawah - 24, w, 18),
                        Qt.AlignCenter, self._kiraan)
 
         # Border — dipilih/hover lebih jelas.
@@ -207,7 +219,7 @@ class JilidRak(QFrame):
         pen = p.pen()
         pen.setWidth(lebar_border)
         p.setPen(pen)
-        p.drawRoundedRect(QRectF(2, 6 - naik, w - 4, h - 12), 8, 8)
+        p.drawRoundedRect(QRectF(2, atas_spina, w - 4, tinggi_spina), 8, 8)
 
 
 class PagesRak:
