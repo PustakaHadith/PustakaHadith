@@ -95,15 +95,16 @@ class DisclaimerDialog(QDialog):
             self.move(x, y)
 
     def _bina(self):
-        # Latar glob (25 Ogos, permintaan pengguna): kandungan dialog
-        # duduk atas BackgroundCanvas — glob + scrim pada tema AQUA,
-        # warna pepejal pada tema lain. TekstEdit/butang sudah telus.
+        # Latar (25 Ogos, permintaan pengguna): kandungan dialog duduk
+        # atas BackgroundCanvas — peta dunia rangkaian pada tema AQUA
+        # (imej berbeza daripada Utama/rak, 26 Ogos), warna pepejal pada
+        # tema lain. TekstEdit/butang sudah telus.
         p = apply_theme(_tema_tersimpan())
         BG = p.get("CARD_BG", "#1E1D1A")
         FG = p.get("TEXT_PRIMARY", "#E8E4DA")
         self.setStyleSheet(f"QDialog {{ background-color: {BG}; color: {FG}; }}")
 
-        kanvas = BackgroundCanvas(self)
+        kanvas = BackgroundCanvas(self, dunia=True)
         lo = QVBoxLayout(kanvas)
         lo.setContentsMargins(28, 24, 28, 20)
         lo.setSpacing(12)

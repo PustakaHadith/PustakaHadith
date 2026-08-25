@@ -107,8 +107,10 @@ class SettingsPanel(QFrame):
         w, h = max(1, self.width()), max(1, self.height())
         c = self._cache_latar
         if c is None or c[0] != w or c[1] != h:
-            from ui.widgets import lukis_latar
-            c = (w, h, lukis_latar(w, h))
+            # Peta dunia rangkaian — 26 Ogos, permintaan pengguna:
+            # imej ini untuk Tetapan (dan Makluman) SAHAJA.
+            from ui.widgets import lukis_latar_dunia
+            c = (w, h, lukis_latar_dunia(w, h))
             self._cache_latar = c
         p = QPainter(self)
         p.drawPixmap(0, 0, c[2])

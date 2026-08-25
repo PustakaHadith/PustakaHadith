@@ -18,27 +18,36 @@ from .theme import (
     TEXT_MUTED, TEXT_PRIMARY, TEXT_SECONDARY, ada_latar_imej,
 )
 
-# Latar glob (tema AQUA sahaja) — aset baca sahaja di ASSET_DIR. Jika
+# Latar imej (tema AQUA sahaja) — aset baca sahaja di ASSET_DIR. Jika
 # fail hilang, BackgroundCanvas fallback kepada warna PAGE_BG pepejal
 # (apl tetap berfungsi; tiada ranap).
+# _LATAR_GLOB  : halaman Utama + rak (glob + manuskrip + garis masa)
+# _LATAR_DUNIA : Makluman (deklarasi) + panel Tetapan SAHAJA — peta
+#                dunia rangkaian (26 Ogos, permintaan pengguna)
 _LATAR_GLOB = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     "latar_globe_timeline.png",
 )
+_LATAR_DUNIA = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "latar_globe_dunia.png",
+)
 
 
-def lukis_latar(w: int, h: int) -> QPixmap:
-    """Lukis latar penuh (glob + scrim) ke pixmap — kongsi semua permukaan.
+def lukis_latar(w: int, h: int, laluan: str | None = None) -> QPixmap:
+    """Lukis latar penuh (imej + scrim) ke pixmap — kongsi semua permukaan.
 
     Dipakai oleh BackgroundCanvas (halaman Utama/rak) DAN SettingsPanel
     (paintEvent) supaya kedua-duanya sentiasa serupa. Tema bukan-AQUA:
     warna PAGE_BG sahaja (pemanggil boleh langkau panggilan ini).
+
+    laluan: laluan imej alternatif (None = glob lalai Utama/rak).
     """
     pm = QPixmap(w, h)
     pm.fill(QColor(PAGE_BG))
     p = QPainter(pm)
     p.setRenderHint(QPainter.SmoothPixmapTransform)
-    imej = _imej_glob()
+    imej = _imej_glob(laluan or _LATAR_GLOB)
     if imej is not None and not imej.isNull():
         # Skala "cover": isi penuh, kekal nisbah, potong lebihan.
         iw, ih = imej.width(), imej.height()
@@ -62,17 +71,23 @@ def lukis_latar(w: int, h: int) -> QPixmap:
     return pm
 
 
-def _imej_glob() -> QPixmap | None:
-    """Muat pixmap glob sekali (cache per modul)."""
-    global _GLOB_CACHE
-    if _GLOB_CACHE is None:
-        if os.path.exists(_LATAR_GLOB):
-            _GLOB_CACHE = QPixmap(_LATAR_GLOB)
+def _imej_glob(laluan: str) -> QPixmap | None:
+    """Muat pixmap latar sekali (cache per laluan)."""
+    pm = _GLOB_CACHE.get(laluan)
+    if pm is None:
+        if os.path.exists(laluan):
+            pm = QPixmap(laluan)
         else:
-            _GLOB_CACHE = QPixmap()
-    return _GLOB_CACHE or None
+            pm = QPixmap()
+        _GLOB_CACHE[laluan] = pm
+    return pm or None
 
-_GLOB_CACHE: QPixmap | None = None
+_GLOB_CACHE: dict[str, QPixmap] = {}
+
+
+def lukis_latar_dunia(w: int, h: int) -> QPixmap:
+    """Latar peta dunia rangkaian — Makluman + panel Tetapan SAHAJA."""
+    return lukis_latar(w, h, _LATAR_DUNIA)
 
 
 class BackgroundCanvas(QWidget):
@@ -88,10 +103,14 @@ class BackgroundCanvas(QWidget):
     dilukis di sini — paintEvent di bawah mengawal sepenuhnya. Cache
     QPixmap ikut (lebar, tinggi): skala semula HANYA pada resize, bukan
     setiap paint (elak kedip & CPU).
+
+    dunia=True: guna latar peta dunia rangkaian (Makluman + Tetapan
+    sahaja, 26 Ogos permintaan pengguna) — bukan glob Utama/rak.
     """
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, dunia: bool = False):
         super().__init__(parent)
+        self._dunia = dunia
         self._cache: tuple[int, int, QPixmap] | None = None
 
     def paintEvent(self, e):
@@ -104,7 +123,10 @@ class BackgroundCanvas(QWidget):
             return
         c = self._cache
         if c is None or c[0] != w or c[1] != h:
-            c = (w, h, lukis_latar(w, h))
+            if self._dunia:
+                c = (w, h, lukis_latar_dunia(w, h))
+            else:
+                c = (w, h, lukis_latar(w, h))
             self._cache = c
         p = QPainter(self)
         p.drawPixmap(0, 0, c[2])
