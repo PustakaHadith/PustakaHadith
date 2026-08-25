@@ -147,26 +147,33 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ---
 
-## Sesi Terakhir — 22 Ogos 2026 (1 commit)
+## Sesi Terakhir - 25 Ogos 2026 (2 commit)
 
-Versi semasa: **v1.0**. Kerja 22 Ogos — **1 commit** (rebranding PustakaHadith + GitHub push):
+Versi semasa: **v1.0**. Kerja 25 Ogos — **2 commit** (redesign UI/UX fasa 1: halaman utama + rak kitab):
 
-1. **Rebranding lengkap Pustaka Hadis → PustakaHadith** —
-   update 40+ fail Python (main, ui/*, config, sync_*, test_*),
-   installer (.iss, .spec), README.md (section Pemasangan pengguna akhir),
-   dokumen surat (emel rasmi Outlook/Gmail/Proton). Rename file:
-   `PustakaHadis.iss` → `PustakaHadith.iss`, `PustakaHadis.spec`
-   → `PustakaHadith.spec`. Build baharu: `PustakaHadith.exe` (89 MB),
-   `dist\PustakaHadith\` (1.36 GB), `PustakaHadith-Setup-1.0.0-x64.exe`
-   (0.27 GB), `PustakaHadith-portable-1.0.0-x64.zip` (0.47 GB).
-   Uji EXE launch 8s OK. GitHub push:
-   `https://github.com/opencodemk/PustakaHadith`. semak.py
-   **395/395 LULUS**.
+1. **Halaman utama baharu: Split Command Center + tema AQUA** (`ae3e418`) —
+   palet AQUA tema ke-5 (lalai pengguna baharu; 4 tema lama kekal),
+   `BackgroundCanvas` latar glob + scrim kontras AA, panel kaca alpha
+   20/255 tanpa blur, header baharu (nav + Jelajah Kitab; Rawak pindah
+   ke panel kanan), sejarah bacaan `reading_history.json` + hook
+   automatik pada render butiran, Pilihan Hari Ini (worker DB),
+   panel Tetapan 3 butang tema. Reka bentuk:
+   `UIUX_PustakaHadith/SELECTED_UIUX.md` + spesifikasi
+   `docs/superpowers/specs/2026-08-25-halaman-utama-aqua-design.md`.
 
-**Kiraan telus:** 22 Ogos = **1 commit** (rebranding + GitHub push).
+2. **Rak Digital 9 Kitab** (`6b62d3b`) — halaman `rak` baharu
+   (index 5; indeks halaman lama kekal), 9 jilid dilukis custom
+   `paintEvent` (teks menegak, warna kitab, kiraan hadis), pilihan
+   klik + papan kekunci ←→/Enter, panel pratonton kitab (nombor,
+   pengarang, terakhir dibaca), carian dalam banner. Nav "Jelajah
+   Kitab" kini menuju rak; senarai hadis dibuka melalui "Buka kitab".
 
-**Gate:** semak.py SEMUA LULUS (395 semakan, 15 bahagian) ·
-uji_negatif_8z 55/0 · semak_dokumen_ui 109/0 · pokok kerja bersih.
+**Kiraan telus:** 25 Ogos = **2 commit** (halaman utama + rak).
+
+**Gate:** semak.py SEMUA semakan kod LULUS (kontras 90 pasangan/5 tema,
+6 tema melancar, 8d muat 730px) · ujian fungsional halaman 7/7 +
+rak 4/4 · ujian berdata (uji_tukar_tema/uji_pra_hantar) menunggu
+hadis.db penuh di persekitaran ini.
 
 ---
 
