@@ -147,7 +147,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ---
 
-## Sesi Terakhir - 25 Ogos 2026 (2 commit)
+## Sesi Terakhir — 25 Ogos 2026 (2 commit)
 
 Versi semasa: **v1.0**. Kerja 25 Ogos — **2 commit** (redesign UI/UX fasa 1: halaman utama + rak kitab):
 
