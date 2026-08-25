@@ -19,7 +19,9 @@ dalam `_THEMED_MODULES` untuk konsisten.
 
 from __future__ import annotations
 
-from PyQt5.QtCore import QRectF, Qt, pyqtSignal
+from PyQt5.QtCore import (
+    QEasingCurve, QRectF, Qt, QPropertyAnimation, pyqtProperty, pyqtSignal,
+)
 from PyQt5.QtGui import QColor, QFont, QPainter
 from PyQt5.QtWidgets import (
     QFrame, QHBoxLayout, QLabel, QLineEdit, QPushButton, QVBoxLayout,
@@ -43,6 +45,14 @@ class JilidRak(QFrame):
     siap dalam Qt. paintEvent melukis: rounded rect warna kitab,
     singkatan di atas, nama menegak di tengah, kiraan hadis di pangkal.
     Dipilih = border terang + opasiti penuh; tidak = 60% + pudar.
+
+    ANIMASI TIMBUL (26 Ogos, permintaan pengguna): hover mengangkat
+    jilid ~10px dengan bayang lembut di bawah — jilid "dicabut sedikit"
+    dari rak. Dilaksanakan sebagai QPropertyAnimation pada sifat custom
+    `angkat` (0.0–1.0) yang dicairkan dalam paintEvent. SENGAJA tidak
+    guna QGraphicsDropShadowEffect: efek grafik aktif semasa navigasi
+    halaman pernah mencetuskan ranap native (access violation, diukur
+    16 Ogos — lihat ui/pages_home.py sejarah BungkusTimbul).
     """
 
     clicked = pyqtSignal(str)
@@ -54,14 +64,35 @@ class JilidRak(QFrame):
         self._dipilih = False
         self._hover = False
         self._kiraan = ""
+        self._angkat_v = 0.0          # 0 = di rak; 1 = terangkat penuh
         self.setFixedSize(_LEBAR_JILID, _TINGGI_JILID)
         self.setCursor(Qt.PointingHandCursor)
+        self._anim = QPropertyAnimation(self, b"angkat", self)
+        self._anim.setDuration(150)
+        self._anim.setEasingCurve(QEasingCurve.OutCubic)
         singkatan = {
             "bukhari": "BU", "muslim": "MU", "abu-daud": "AD",
             "tirmidzi": "TI", "nasai": "AN", "ibnu-majah": "IM",
             "malik": "MW", "ahmad": "AH", "darimi": "DA",
         }
         self._singkatan = singkatan.get(slug, slug[:2].upper())
+
+    # Sifat animasi — QPropertyAnimation menulis melalui setter ini;
+    # setter mencetuskan repaint setiap frame.
+    @pyqtProperty(float)
+    def angkat(self) -> float:
+        return self._angkat_v
+
+    @angkat.setter
+    def angkat(self, v: float):
+        self._angkat_v = max(0.0, min(1.0, float(v)))
+        self.update()
+
+    def _terbangkan(self, sasaran: float):
+        self._anim.stop()
+        self._anim.setStartValue(self._angkat_v)
+        self._anim.setEndValue(sasaran)
+        self._anim.start()
 
     def set_dipilih(self, ya: bool):
         if self._dipilih != ya:
@@ -74,12 +105,12 @@ class JilidRak(QFrame):
 
     def enterEvent(self, e):
         self._hover = True
-        self.update()
+        self._terbangkan(1.0)
         super().enterEvent(e)
 
     def leaveEvent(self, e):
         self._hover = False
-        self.update()
+        self._terbangkan(0.0)
         super().leaveEvent(e)
 
     def mouseReleaseEvent(self, e):
@@ -98,13 +129,18 @@ class JilidRak(QFrame):
         p = QPainter(self)
         p.setRenderHint(QPainter.Antialiasing)
         w, h = self.width(), self.height()
+        a = self._angkat_v
+
+        # Jilid terangkat sehingga ~10px; bayang di bawah menggelap
+        # dan melebar apabila jilid makin tinggi (kesan "dicabut").
+        naik = 10.0 * a
 
         asas = QColor(self._meta.get("warna", "#2E7D6B"))
         if self._dipilih:
             fill = QColor(asas)
             border = QColor("#EAF6F6")
             lebar_border = 2
-        elif self._hover:
+        elif self._hover or a > 0.01:
             fill = QColor(asas).lighter(115)
             border = QColor(asas).lighter(150)
             lebar_border = 2
@@ -113,14 +149,26 @@ class JilidRak(QFrame):
             border = QColor(asas.darker(130))
             lebar_border = 1
 
+        # Bayang lembut di pangkal — hanya apabila terangkat.
+        if a > 0.01:
+            p.setPen(Qt.NoPen)
+            bayang = QColor(0, 0, 0, int(70 * a))
+            p.setBrush(bayang)
+            lebar_bayang = (w - 10) + 8 * a
+            p.drawRoundedRect(
+                QRectF((w - lebar_bayang) / 2, h - 10 + 4 * a,
+                       lebar_bayang, 5),
+                3, 3)
+
+        # Batang jilid — naik mengikut `a`.
         p.setPen(Qt.NoPen)
         p.setBrush(fill)
-        p.drawRoundedRect(QRectF(2, 6, w - 4, h - 12), 8, 8)
+        p.drawRoundedRect(QRectF(2, 6 - naik, w - 4, h - 12), 8, 8)
 
         # Gurusan buku: garis menegak halus dekat tepi kiri/kanan.
         p.setPen(QColor(255, 255, 255, 40))
-        p.drawLine(int(w * 0.18), 12, int(w * 0.18), h - 18)
-        p.drawLine(int(w * 0.82), 12, int(w * 0.82), h - 18)
+        p.drawLine(int(w * 0.18), 12 - int(naik), int(w * 0.18), h - 18 - int(naik))
+        p.drawLine(int(w * 0.82), 12 - int(naik), int(w * 0.82), h - 18 - int(naik))
 
         # Singkatan di atas (mendatar).
         p.setPen(QColor(255, 255, 255, 230 if self._dipilih else 200))
@@ -128,7 +176,7 @@ class JilidRak(QFrame):
         f.setPointSize(11)
         f.setBold(True)
         p.setFont(f)
-        p.drawText(QRectF(0, 12, w, 22), Qt.AlignCenter, self._singkatan)
+        p.drawText(QRectF(0, 12 - naik, w, 22), Qt.AlignCenter, self._singkatan)
 
         # Nama kitab MENEGAK (baca dari bawah ke atas) di tengah.
         f2 = QFont(self.font())
@@ -136,7 +184,7 @@ class JilidRak(QFrame):
         f2.setBold(self._dipilih)
         p.setFont(f2)
         p.save()
-        p.translate(w / 2, h / 2)
+        p.translate(w / 2, h / 2 - naik)
         p.rotate(-90)
         teks = self._meta.get("short", self._slug)
         p.setPen(QColor(255, 255, 255, 235 if self._dipilih else 205))
@@ -150,7 +198,7 @@ class JilidRak(QFrame):
             f3.setPointSize(8)
             p.setFont(f3)
             p.setPen(QColor(255, 255, 255, 190))
-            p.drawText(QRectF(0, h - 30, w, 18),
+            p.drawText(QRectF(0, h - 30 - naik, w, 18),
                        Qt.AlignCenter, self._kiraan)
 
         # Border — dipilih/hover lebih jelas.
@@ -159,7 +207,7 @@ class JilidRak(QFrame):
         pen = p.pen()
         pen.setWidth(lebar_border)
         p.setPen(pen)
-        p.drawRoundedRect(QRectF(2, 6, w - 4, h - 12), 8, 8)
+        p.drawRoundedRect(QRectF(2, 6 - naik, w - 4, h - 12), 8, 8)
 
 
 class PagesRak:
