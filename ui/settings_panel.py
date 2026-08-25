@@ -13,7 +13,7 @@ from __future__ import annotations
 from PyQt5.QtCore import (
     QEasingCurve, QEvent, QPropertyAnimation, QRect, Qt, QTimer, pyqtSignal,
 )
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QPainter, QPixmap
 from PyQt5.QtWidgets import (
     QComboBox, QDialog, QFrame, QGraphicsDropShadowEffect, QGridLayout,
     QHBoxLayout, QLabel, QLineEdit, QMessageBox, QPushButton, QScrollArea,
@@ -77,6 +77,8 @@ class SettingsPanel(QFrame):
             }}
         """)
         self.setFixedWidth(PANEL_W)
+        # Cache latar glob (25 Ogos) — lukis semula HANYA pada resize.
+        self._cache_latar: tuple[int, int, QPixmap] | None = None
 
         sh = QGraphicsDropShadowEffect(self)
         sh.setBlurRadius(28)
@@ -87,6 +89,34 @@ class SettingsPanel(QFrame):
 
         self._build()
         self.hide()
+
+    def paintEvent(self, e):
+        """Latar glob (25 Ogos, permintaan pengguna) — sama dengan
+        halaman Utama/rak: glob + scrim pada tema AQUA; tema lain kekal
+        permukaan HEADER_BG biasa (super() melukis QSS dahulu, imej
+        dilukis ATASNYA; anak-anak panel sentiasa dilukis selepas ini).
+
+        QFrame#settingsPanel QSS border-left kekal dilukis oleh super()
+        tetapi ditutup imej — jadi border dilukis semula di hujung kanan
+        di sini supaya pemisah panel/utama kekal kelihatan.
+        """
+        super().paintEvent(e)
+        import ui.theme as _t
+        if not _t.ada_latar_imej():
+            return
+        w, h = max(1, self.width()), max(1, self.height())
+        c = self._cache_latar
+        if c is None or c[0] != w or c[1] != h:
+            from ui.widgets import lukis_latar
+            c = (w, h, lukis_latar(w, h))
+            self._cache_latar = c
+        p = QPainter(self)
+        p.drawPixmap(0, 0, c[2])
+        # Border kiri panel — imej menutup QSS border, lukis semula
+        # garis kiri sahaja (bukan bingkai penuh).
+        p.setPen(QColor(_t.BORDER))
+        p.drawLine(0, 0, 0, h - 1)
+        p.end()
 
     # ── susun atur ────────────────────────────────────────────────────
     def _build(self):

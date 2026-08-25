@@ -27,6 +27,52 @@ _LATAR_GLOB = os.path.join(
 )
 
 
+def lukis_latar(w: int, h: int) -> QPixmap:
+    """Lukis latar penuh (glob + scrim) ke pixmap — kongsi semua permukaan.
+
+    Dipakai oleh BackgroundCanvas (halaman Utama/rak) DAN SettingsPanel
+    (paintEvent) supaya kedua-duanya sentiasa serupa. Tema bukan-AQUA:
+    warna PAGE_BG sahaja (pemanggil boleh langkau panggilan ini).
+    """
+    pm = QPixmap(w, h)
+    pm.fill(QColor(PAGE_BG))
+    p = QPainter(pm)
+    p.setRenderHint(QPainter.SmoothPixmapTransform)
+    imej = _imej_glob()
+    if imej is not None and not imej.isNull():
+        # Skala "cover": isi penuh, kekal nisbah, potong lebihan.
+        iw, ih = imej.width(), imej.height()
+        skala = max(w / iw, h / ih)
+        tw, th = int(iw * skala), int(ih * skala)
+        diskala = imej.scaled(tw, th, Qt.KeepAspectRatio,
+                              Qt.SmoothTransformation)
+        p.drawPixmap((w - tw) // 2, (h - th) // 2, diskala)
+        # Scrim gelap: asas alpha 150 + lebih gelap di kiri (panel
+        # teks utama) — glob kekal kelihatan di kanan tetapi teks
+        # sentiasa atas permukaan gelap (kontras AA dijamin).
+        p.fillRect(0, 0, w, h, QColor(6, 14, 22, 150))
+        g = QLinearGradient(0, 0, w * 0.85, 0)
+        g.setColorAt(0.0, QColor(6, 14, 22, 200))
+        g.setColorAt(0.55, QColor(6, 14, 22, 120))
+        g.setColorAt(1.0, QColor(6, 14, 22, 30))
+        p.fillRect(0, 0, w, h, g)
+    p.end()
+    return pm
+
+
+def _imej_glob() -> QPixmap | None:
+    """Muat pixmap glob sekali (cache per modul)."""
+    global _GLOB_CACHE
+    if _GLOB_CACHE is None:
+        if os.path.exists(_LATAR_GLOB):
+            _GLOB_CACHE = QPixmap(_LATAR_GLOB)
+        else:
+            _GLOB_CACHE = QPixmap()
+    return _GLOB_CACHE or None
+
+_GLOB_CACHE: QPixmap | None = None
+
+
 class BackgroundCanvas(QWidget):
     """Widget akar yang melukis latar imej glob untuk tema AQUA.
 
@@ -45,47 +91,18 @@ class BackgroundCanvas(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self._cache: tuple[int, int, QPixmap] | None = None
-        self._imej: QPixmap | None = None
-        if os.path.exists(_LATAR_GLOB):
-            self._imej = QPixmap(_LATAR_GLOB)
-
-    def _piksel(self, w: int, h: int) -> QPixmap:
-        """Lukis latar penuh (glob + scrim) ke pixmap cache."""
-        pm = QPixmap(w, h)
-        pm.fill(QColor(PAGE_BG))
-        p = QPainter(pm)
-        p.setRenderHint(QPainter.SmoothPixmapTransform)
-        if self._imej is not None and not self._imej.isNull():
-            # Skala "cover": isi penuh, kekal nisbah, potong lebihan.
-            iw, ih = self._imej.width(), self._imej.height()
-            skala = max(w / iw, h / ih)
-            tw, th = int(iw * skala), int(ih * skala)
-            imej = self._imej.scaled(tw, th, Qt.KeepAspectRatio,
-                                     Qt.SmoothTransformation)
-            p.drawPixmap((w - tw) // 2, (h - th) // 2, imej)
-            # Scrim gelap: asas alpha 150 + lebih gelap di kiri (panel
-            # teks utama) dan di bawah — glob kekal kelihatan di kanan
-            # atas tetapi teks sentiasa atas permukaan gelap.
-            p.fillRect(0, 0, w, h, QColor(6, 14, 22, 150))
-            g = QLinearGradient(0, 0, w * 0.85, 0)
-            g.setColorAt(0.0, QColor(6, 14, 22, 200))
-            g.setColorAt(0.55, QColor(6, 14, 22, 120))
-            g.setColorAt(1.0, QColor(6, 14, 22, 30))
-            p.fillRect(0, 0, w, h, g)
-        p.end()
-        return pm
 
     def paintEvent(self, e):
         w, h = max(1, self.width()), max(1, self.height())
+        if not ada_latar_imej():
+            # Tema lain: warna pepejal — tiada perlu cache pixmap.
+            p = QPainter(self)
+            p.fillRect(self.rect(), QColor(PAGE_BG))
+            p.end()
+            return
         c = self._cache
         if c is None or c[0] != w or c[1] != h:
-            if not ada_latar_imej():
-                # Tema lain: warna pepejal — tiada perlu cache pixmap.
-                p = QPainter(self)
-                p.fillRect(self.rect(), QColor(PAGE_BG))
-                p.end()
-                return
-            c = (w, h, self._piksel(w, h))
+            c = (w, h, lukis_latar(w, h))
             self._cache = c
         p = QPainter(self)
         p.drawPixmap(0, 0, c[2])

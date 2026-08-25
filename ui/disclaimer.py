@@ -16,6 +16,7 @@ from PyQt5.QtWidgets import (
 
 from ui.theme import apply_theme
 from ui.splash import _tema_tersimpan
+from ui.widgets import BackgroundCanvas
 from VERSI import VERSI
 from config import SETTINGS_PATH  # laluan pusat (INSTALLER.md §3)
 
@@ -94,14 +95,21 @@ class DisclaimerDialog(QDialog):
             self.move(x, y)
 
     def _bina(self):
-        lo = QVBoxLayout(self)
-        lo.setContentsMargins(28, 24, 28, 20)
-        lo.setSpacing(12)
-
+        # Latar glob (25 Ogos, permintaan pengguna): kandungan dialog
+        # duduk atas BackgroundCanvas — glob + scrim pada tema AQUA,
+        # warna pepejal pada tema lain. TekstEdit/butang sudah telus.
         p = apply_theme(_tema_tersimpan())
         BG = p.get("CARD_BG", "#1E1D1A")
         FG = p.get("TEXT_PRIMARY", "#E8E4DA")
         self.setStyleSheet(f"QDialog {{ background-color: {BG}; color: {FG}; }}")
+
+        kanvas = BackgroundCanvas(self)
+        lo = QVBoxLayout(kanvas)
+        lo.setContentsMargins(28, 24, 28, 20)
+        lo.setSpacing(12)
+        luar = QVBoxLayout(self)
+        luar.setContentsMargins(0, 0, 0, 0)
+        luar.addWidget(kanvas)
 
         teal = p.get("TEAL", "#5CBF85")
         teal_l = p.get("TEAL_LIGHT", "#7FD39A")
