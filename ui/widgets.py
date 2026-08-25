@@ -47,14 +47,16 @@ def lukis_latar(w: int, h: int) -> QPixmap:
         diskala = imej.scaled(tw, th, Qt.KeepAspectRatio,
                               Qt.SmoothTransformation)
         p.drawPixmap((w - tw) // 2, (h - th) // 2, diskala)
-        # Scrim gelap: asas alpha 150 + lebih gelap di kiri (panel
-        # teks utama) — glob kekal kelihatan di kanan tetapi teks
-        # sentiasa atas permukaan gelap (kontras AA dijamin).
-        p.fillRect(0, 0, w, h, QColor(6, 14, 22, 150))
+        # Scrim RENDAH (26 Ogos, permintaan pengguna: "glassy") —
+        # diredupkan daripada alpha 150/200 supaya glob lebih jelas
+        # menembusi permukaan seperti kaca. Cukup gelap untuk teks:
+        # imej glob asasnya navy gelap (#0d1b2a); zon paling terang
+        # hanyalah nod/garis rangkaian kecil.
+        p.fillRect(0, 0, w, h, QColor(6, 14, 22, 85))
         g = QLinearGradient(0, 0, w * 0.85, 0)
-        g.setColorAt(0.0, QColor(6, 14, 22, 200))
-        g.setColorAt(0.55, QColor(6, 14, 22, 120))
-        g.setColorAt(1.0, QColor(6, 14, 22, 30))
+        g.setColorAt(0.0, QColor(6, 14, 22, 120))
+        g.setColorAt(0.55, QColor(6, 14, 22, 60))
+        g.setColorAt(1.0, QColor(6, 14, 22, 10))
         p.fillRect(0, 0, w, h, g)
     p.end()
     return pm
