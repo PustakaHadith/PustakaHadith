@@ -40,7 +40,7 @@ from PyQt5.QtWidgets import (
 from ui.helpers import (
     BOOKMARKS, _ATRIBUSI_HE, _ATRIBUSI_INGGERIS,
     _ATRIBUSI_SEMA, _HAD_PETIK_RINGKAS, _HAD_WA, _clear, _write_json,
-    click_sound, sunnah_url,
+    click_sound, record_reading, sunnah_url,
 )
 from ui.pages import LangTabs, breadcrumb
 from ui.theme import (
@@ -50,7 +50,7 @@ from ui.theme import (
 )
 from ui.widgets import (
     BAB_TAFSIR, Collapsible, _ialah_bab_tafsir, arabic_browser,
-    attach_copy_menu, centered_column, make_scroll, text_browser,
+    attach_copy_menu, centered_column, elide, make_scroll, text_browser,
 )
 from ui.workers import HadithWorker, RandomWorker
 from utils.bahasa import betulkan_melayu, guna_simbol_selawat
@@ -316,6 +316,16 @@ class PagesDetail:
         slug = h.get("collection", "")
         meta = COLLECTION_META.get(slug, {})
         hid = h.get("id")
+        # Sejarah bacaan (panel "Sambung perjalanan ilmu", 25 Ogos):
+        # rekod automatik pada SETIAP render butiran — titik hook tunggal
+        # (open_detail, _on_detail_full, pemulihan tema semua lalu di sini).
+        # Label = nama bab jika ada, else potongan terjemahan. Gagal senyap.
+        try:
+            _label = ((h.get("nama_bab") or "").strip()
+                      or elide((h.get("melayu") or "").strip(), 48))
+            record_reading(slug, hid, _label)
+        except Exception:
+            pass
 
         col, cl = centered_column()
         cl.setContentsMargins(0, 18, 0, 0)

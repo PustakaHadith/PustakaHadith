@@ -45,12 +45,25 @@ if os.path.exists("user_settings.json"):
 def _pulihkan_settings():
     """Pulihkan user_settings.json ke keadaan asal (atau buang jika
     asalnya tiada) — supaya ujian app selepas semak.py tidak terjerat
-    dialog deklarasi modal yang menyekat dalam mod offscreen."""
-    if _ASAL_SETTINGS is not None:
-        with open("user_settings.json", "w", encoding="utf-8") as _fh:
-            _fh.write(_ASAL_SETTINGS)
-    elif os.path.exists("user_settings.json"):
-        os.remove("user_settings.json")
+    dialog deklarasi modal yang menyekat dalam mod offscreen.
+
+    25 Ogos: cuba semula sehingga 5x pada PermissionError — Windows
+    (antivirus/pemeriksa fail) kadang memegang kunci sekejap selepas
+    subproses app selesai; tanpa cuba semula, larian semak gagal palsu.
+    """
+    import time as _time
+    for _cuba in range(5):
+        try:
+            if _ASAL_SETTINGS is not None:
+                with open("user_settings.json", "w", encoding="utf-8") as _fh:
+                    _fh.write(_ASAL_SETTINGS)
+            elif os.path.exists("user_settings.json"):
+                os.remove("user_settings.json")
+            return
+        except PermissionError:
+            if _cuba == 4:
+                raise
+            _time.sleep(0.3)
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE)
@@ -235,12 +248,19 @@ def semak_import() -> None:
 
 # ---------------------------------------------------------------- 6
 def semak_apl() -> None:
-    """Apl mesti melancar tanpa ralat, dalam 5 mod tema (termasuk sistem)."""
-    tajuk("6. Apl melancar (5 mod tema, termasuk 'sistem')")
+    """Apl mesti melancar tanpa ralat, dalam 6 mod tema (termasuk sistem)."""
+    tajuk("6. Apl melancar (6 mod tema, termasuk 'sistem')")
     skrip = (
-        "import sys,json; sys.path.insert(0,'.')\n"
-        "json.dump({'theme':TEMA,'api_key':'','api_url':'x'},"
-        "open('user_settings.json','w'))\n"
+        "import sys,json,time; sys.path.insert(0,'.')\n"
+        # 25 Ogos: cuba semula pada PermissionError — antivirus Windows
+        # kadang memegang kunci fail sekejap selepas ia ditulis berulang.
+        "for _ in range(10):\n"
+        "    try:\n"
+        "        _f=open('user_settings.json','w')\n"
+        "        json.dump({'theme':TEMA,'api_key':'','api_url':'x'},_f)\n"
+        "        _f.close(); break\n"
+        "    except PermissionError:\n"
+        "        time.sleep(0.3)\n"
         "from PyQt5.QtWidgets import QApplication\n"
         "from PyQt5.QtCore import QTimer\n"
         "a=QApplication([])\n"
@@ -253,7 +273,9 @@ def semak_apl() -> None:
     # MENCIPTA hadis.db kosong. Di folder bersih itu menandai semak_bersih
     # kotor; rekod keadaan asal supaya artifak sendiri boleh dibuang.
     db_asal = os.path.exists("hadis.db")
-    for tema in ("neutral", "dark", "lightneutral", "light", "sistem"):
+    # 25 Ogos: "aqua" ditambah (tema ke-5, lalai baharu).
+    for tema in ("aqua", "neutral", "dark", "lightneutral", "light",
+                 "sistem"):
         try:
             r = subprocess.run(
                 [sys.executable, "-c", skrip.replace("TEMA", repr(tema))],
@@ -1922,19 +1944,28 @@ def semak_susunatur() -> None:
             salah(f"{fn.name}: {akar} tiada addStretch(1)")
 
     # Halaman utama mesti muat tanpa skrol pada laptop 768px.
-    # Pengguna mahu SEMUA 9 kad kelihatan sebaik apl dibuka.
+    # Pengguna mahu kandungan utama kelihatan sebaik apl dibuka.
+    # 25 Ogos: stack.widget(0) kini BackgroundCanvas (halaman utama
+    # Split Command Center) — QScrollArea dijumpai melalui findChild.
     import subprocess as _sp
     uji = (
-        "import sys,json; sys.path.insert(0,'.')\n"
-        "json.dump({'theme':'dark','api_key':'','api_url':'x'},"
-        "open('user_settings.json','w'))\n"
-        "from PyQt5.QtWidgets import QApplication\n"
+        "import sys,json,time; sys.path.insert(0,'.')\n"
+        "for _ in range(10):\n"
+        "    try:\n"
+        "        _f=open('user_settings.json','w')\n"
+        "        json.dump({'theme':'dark','api_key':'','api_url':'x'},_f)\n"
+        "        _f.close(); break\n"
+        "    except PermissionError:\n"
+        "        time.sleep(0.3)\n"
+        "from PyQt5.QtWidgets import QApplication, QScrollArea\n"
         "from PyQt5.QtCore import QTimer\n"
         "a=QApplication([])\n"
         "from ui.app_qt import PustakaApp\n"
         "w=PustakaApp(); w.resize(1240,730); w.show()\n"
         "def c():\n"
-        "    sa=w.stack.widget(0)\n"
+        "    sa=w.stack.widget(0).findChild(QScrollArea)\n"
+        "    if sa is None:\n"
+        "        print('TIADA SKROL'); return\n"
         "    print('LEBIHAN', sa.widget().height()-sa.viewport().height())\n"
         "    a.quit()\n"
         "QTimer.singleShot(700,c); a.exec_()\n"
@@ -2286,8 +2317,8 @@ def semak_kontras_tema() -> None:
     """
     tajuk("13. Kontras WCAG AA semua tema (≥ 4.5:1)")
 
-    # 4 tema: neutral lalai, kertas hangat, neutral terang, kertas terang
-
+    # 5 tema: aqua (lalai baharu 25 Ogos), neutral, kertas hangat,
+    # neutral terang, kertas terang
     import ui.theme as _t
 
     def _lum(hexa: str) -> float:
@@ -2306,7 +2337,7 @@ def semak_kontras_tema() -> None:
 
     mula = len(gagal)
     total = 0
-    for nama in ("neutral", "dark", "lightneutral", "light"):
+    for nama in ("aqua", "neutral", "dark", "lightneutral", "light"):
         p = _t.THEMES[nama]
         for perm in ("PAGE_BG", "CARD_BG", "HEADER_BG"):
             for tier in ("TEXT_PRIMARY", "TEXT_SECONDARY",
@@ -2329,7 +2360,7 @@ def semak_kontras_tema() -> None:
             if n < 4.5:
                 salah(f"{nama}: TEAL pada {perm} = {n:.2f}:1 — bawah AA")
     if len(gagal) == mula:
-        lulus(f"{total} pasangan warna ≥ 4.5:1 (4 tema)")
+        lulus(f"{total} pasangan warna ≥ 4.5:1 (5 tema)")
 
 
 def _senarai_untracked_git() -> list[str]:
@@ -2840,16 +2871,20 @@ def semak_pemalar_render() -> None:
         else:
             salah("_toggle_save TIADA guna _label_simpan -- literal?")
 
-    # --- LABEL_RAWAK: bukan kosong + butang guna pemalar ---
+    # --- LABEL_RAWAK: bukan kosong + kad Rawak pada halaman utama ---
     if LABEL_RAWAK and LABEL_RAWAK.strip():
         lulus(f"LABEL_RAWAK = {LABEL_RAWAK!r} (bukan kosong)")
     else:
         salah("LABEL_RAWAK kosong")
-    src_app = open("ui/app_qt.py", encoding="utf-8").read()
-    if "QPushButton(LABEL_RAWAK)" in src_app:
-        lulus("butang Rawak guna LABEL_RAWAK")
+    # 25 Ogos: butang Rawak DIPINDAHKAN dari header ke panel kanan
+    # halaman utama (Split Command Center). Semakan diubah: kad Rawak
+    # wujud pada ui/pages_home.py dan disambungkan ke `_random`.
+    src_home = open("ui/pages_home.py", encoding="utf-8").read()
+    if "Rawak" in src_home and "self._random" in src_home:
+        lulus("kad Rawak (panel kanan halaman utama) sambung _random")
     else:
-        salah("butang Rawak TIADA guna LABEL_RAWAK")
+        salah("kad Rawak TIADA pada halaman utama")
+    src_app = open("ui/app_qt.py", encoding="utf-8").read()
     # Literal label hanya dalam definisi pemalar (satu sahaja dalam fail)
     if src_app.count('"⚄  Rawak"') <= 1:
         lulus("tiada literal '⚄  Rawak' duplikat di luar pemalar")
@@ -3575,12 +3610,16 @@ def semak_deklarasi() -> None:
     else:
         lulus("atribusi 3 sumber sepadan (jadual Tentang == DEKLARASI.md)")
 
-    src = open("ui/app_qt.py", encoding="utf-8").read()
-    if "_tunjuk_deklarasi_pertama" in src \
-            and 'DEKLARASI_FLAG' in src and "DeklarasiDialog" in src:
-        lulus("app_qt.py: dialog deklarasi pada larian pertama")
+    # 25 Ogos: dialog deklarasi larian pertama kini di ui/disclaimer.py
+    # (papar_disclaimer dipanggil dari main.py) — bukan lagi app_qt.py
+    # (cantuman lama dibuang pada komit 65543f8, "dialog berganda").
+    src_main = open("main.py", encoding="utf-8").read()
+    src_dis = open("ui/disclaimer.py", encoding="utf-8").read()
+    if "papar_disclaimer" in src_main and "DisclaimerDialog" in src_dis \
+            and "_sudah_baca" in src_dis:
+        lulus("deklarasi larian pertama: main.py + ui/disclaimer.py")
     else:
-        salah("app_qt.py TIADA cantuman deklarasi pertama")
+        salah("TIADA cantuman deklarasi pertama (main.py/disclaimer.py)")
 
     sp = open("ui/settings_panel.py", encoding="utf-8").read()
     if "_sec_tentang" in sp and "DeklarasiDialog" in sp \

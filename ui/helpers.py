@@ -18,7 +18,9 @@ import json
 import os
 import re
 
-from config import BOOKMARKS_PATH, SETTINGS_PATH, SUNNAH_MAP  # noqa: E402
+from config import (                                       # noqa: E402
+    BOOKMARKS_PATH, READING_HISTORY_PATH, SETTINGS_PATH, SUNNAH_MAP,
+)
 from ui.theme import COLLECTION_META  # metadata kitab -- BUKAN warna
 
 # Laluan pusat daripada config.py (INSTALLER.md §3): data pengguna di
@@ -226,6 +228,31 @@ def _write_json(path, data):
         os.replace(tmp, path)
     except Exception:
         pass
+
+
+# ── Sejarah bacaan (25 Ogos 2026 — panel "Sambung perjalanan ilmu") ──
+# Data pengguna ringan di DATA_DIR (pola sama bookmarks.json): senarai
+# hadis yang dibuka, terbaharu di depan, nyah-duplikasi ikut (slug,n).
+# Cap 50 entri — cukup untuk "terakhir dibaca" tanpa membesar tanpa had.
+# Tulis atomik melalui _write_json. Gagal senyap: sejarah ialah keselesaan,
+# bukan fungsi kritikal — jangan sesekali ganggu aliran bacaan.
+
+READING_HISTORY = READING_HISTORY_PATH
+_HAD_SEJARAH = 50
+
+
+def read_history() -> list:
+    return _read_json(READING_HISTORY, [])
+
+
+def record_reading(slug: str, n: int, label: str = "") -> None:
+    """Rekod hadis dibuka — dipanggil automatik dari render detail."""
+    if not slug or not isinstance(n, int):
+        return
+    senarai = [e for e in read_history()
+               if not (e.get("slug") == slug and e.get("n") == n)]
+    senarai.insert(0, {"slug": slug, "n": n, "label": label or ""})
+    _write_json(READING_HISTORY, senarai[:_HAD_SEJARAH])
 
 
 def _clear(layout):

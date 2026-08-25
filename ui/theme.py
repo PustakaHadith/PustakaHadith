@@ -38,6 +38,9 @@ DARK = {
     "RED_BG": "#3B2523", "RED_BORDER": "#5C3A42", "RED_TEXT": "#E08A80",
     "GREEN_BG": "#2A3B2F", "GREEN_BORDER": "#3D5540", "GREEN_TEXT": "#7FD39A",
     "WA_GREEN": "#25D366", "WA_GREEN_DARK": "#1DA851",
+    # Kunci panel kaca (Split Command Center, 25 Ogos): tema bukan-AQUA
+    # tiada latar imej, jadi panel = permukaan pepejal biasa.
+    "PANEL_BG": "#282721", "BORDER_GLASS": "#3B3932",
 }
 
 # Palet NEUTRAL (lalai, malam 14 Ogos 2026) — gelap neutral gaya
@@ -62,6 +65,7 @@ NEUTRAL = {
     "RED_BG": "#3B2523", "RED_BORDER": "#5C3A42", "RED_TEXT": "#E08A80",
     "GREEN_BG": "#2A3B2F", "GREEN_BORDER": "#3D5540", "GREEN_TEXT": "#7FD39A",
     "WA_GREEN": "#25D366", "WA_GREEN_DARK": "#1DA851",
+    "PANEL_BG": "#252526", "BORDER_GLASS": "#3B3B3B",
 }
 
 # Palet NEUTRAL TERANG (malam 14 Ogos 2026) — pasangan terang kepada
@@ -86,6 +90,7 @@ LIGHT_NEUTRAL = {
     "RED_BG": "#FDEAEA", "RED_BORDER": "#EAB4AE", "RED_TEXT": "#B3261E",
     "GREEN_BG": "#E9F2EA", "GREEN_BORDER": "#B7D4BD", "GREEN_TEXT": "#1A6B3C",
     "WA_GREEN": "#25D366", "WA_GREEN_DARK": "#1DA851",
+    "PANEL_BG": "#FFFFFF", "BORDER_GLASS": "#D9D9D9",
 }
 
 # Tema terang — palet kertas hangat mockup. Teks utama mockup #2B2B2B
@@ -111,11 +116,49 @@ LIGHT = {
     "RED_BG": "#FDEAEA", "RED_BORDER": "#EAB4AE", "RED_TEXT": "#B3261E",
     "GREEN_BG": "#E9F2EA", "GREEN_BORDER": "#B7D4BD", "GREEN_TEXT": "#1A6B3C",
     "WA_GREEN": "#25D366", "WA_GREEN_DARK": "#1DA851",
+    "PANEL_BG": "#FFFFFF", "BORDER_GLASS": "#E4DFD3",
+}
+
+# Palet AQUA (25 Ogos 2026, keputusan UI/UX PustakaHadith) — tema ke-5,
+# identiti baharu yang BEBAS daripada gaya hadis.my. Latar globe/jaringan
+# dilukis oleh ui.widgets.BackgroundCanvas HANYA bila tema ini aktif;
+# panel kaca (QFrame#glassPanel) menggunakan alpha sebenar 20/255 tanpa
+# blur (SELECTED_UIUX.md). Semua tier teks >= 4.5:1 (dikira WCAG):
+# TEXT_PRIMARY #EAF6F6 / PAGE_BG #0A1520 = 15.9:1; TEXT_SECONDARY 9.5:1;
+# TEXT_MUTED 6.8:1; TEXT_FAINT 5.6:1. Atas CARD_BG #10222F (panel/kad):
+# PRIMARY 14.7:1; MUTED 6.0:1; FAINT 4.9:1; TEAL 7.9:1 — semua lulus AA.
+AQUA = {
+    "PAGE_BG": "#0A1520", "SURFACE": "#0A1520",
+    "CARD_BG": "#10222F", "CARD_BG_HOVER": "#16303F",
+    "HEADER_BG": "#0C1A26",
+
+    "TEAL": "#3EC9B0", "TEAL_LIGHT": "#6FDCC8", "TEAL_PALE": "#123A38",
+    "TEAL_DARK": "#06251F", "TEAL_GLOW": "#1F6B5C",
+
+    "TEXT_PRIMARY": "#EAF6F6", "TEXT_SECONDARY": "#9FBFCB",
+    "TEXT_MUTED": "#7FA3B0", "TEXT_FAINT": "#6E93A1",
+
+    "BORDER": "#1D3A4A", "BORDER_LIGHT": "#274B5E",
+
+    # Panel kaca — alpha sebenar 20/255 (8%), tanpa blur. Border kaca
+    # teal halus alpha 60/255.
+    "PANEL_BG": "rgba(13, 42, 60, 20)", "BORDER_GLASS": "rgba(62, 201, 176, 60)",
+
+    "AMBER_BG": "#3A3120", "AMBER_BORDER": "#5C5030", "AMBER_TEXT": "#E0B35C",
+    "RED_BG": "#3B2523", "RED_BORDER": "#5C3A42", "RED_TEXT": "#E08A80",
+    "GREEN_BG": "#123A38", "GREEN_BORDER": "#1F6B5C", "GREEN_TEXT": "#3EC9B0",
+    "WA_GREEN": "#25D366", "WA_GREEN_DARK": "#1DA851",
 }
 
 THEMES = {"light": LIGHT, "dark": DARK, "neutral": NEUTRAL,
-          "lightneutral": LIGHT_NEUTRAL}
+          "lightneutral": LIGHT_NEUTRAL, "aqua": AQUA}
 CURRENT_THEME = "dark"
+
+# Tema lalai pengguna BAHARU (25 Ogos): AQUA — identiti baharu. Dipakai
+# oleh app_qt (PustakaApp) dan settings_panel (pemilih tema). Pengguna
+# sedia ada yang telah memilih tema kekal tema mereka (kunci "theme"
+# tersimpan dalam user_settings.json).
+DEFAULT_TEMA = "aqua"
 
 # Kunci "sistem" — bukan palet, tetapi mod yang mengikuti mod gelap
 # Windows. Bukan dalam THEMES supaya ia tidak dilayan sebagai palet;
@@ -189,7 +232,16 @@ def apply_theme(name: str = "dark") -> dict:
 
 
 def is_dark() -> bool:
-    return CURRENT_THEME in ("dark", "neutral")
+    return CURRENT_THEME in ("dark", "neutral", "aqua")
+
+
+def ada_latar_imej() -> bool:
+    """True jika tema aktif melukis latar imej (glob) pada BackgroundCanvas.
+
+    Dipanggil oleh ui.widgets.BackgroundCanvas dan halaman utama (untuk
+    memutuskan ketelusan viewport). Tema lain = permukaan pepejal QSS.
+    """
+    return CURRENT_THEME == "aqua"
 
 
 # ── Palet (kertas hangat mockup) ─────────────────────────────────────
@@ -547,4 +599,69 @@ QPushButton#backTop:hover   {{ background-color: {CARD_BG_HOVER}; border-color: 
 QPushButton#backTop:pressed {{ background-color: {TEAL_DARK}; }}
 
 QFrame#divider {{ background-color: {BORDER}; border: none; max-height: 2px; }}
+
+/* ── Halaman Utama Split Command Center (25 Ogos 2026) ─────────────
+   PANEL_BG/BORDER_GLASS: AQUA = rgba kaca alpha 20/255 (kelihatan
+   latar glob di belakang); tema lain = permukaan pepejal biasa.
+   Halaman utama (scroll + viewport + body) TELUS supaya latar
+   BackgroundCanvas kelihatan — hanya pada halaman ini. */
+QFrame#glassPanel {{
+    background-color: {PANEL_BG};
+    border: 1px solid {BORDER_GLASS};
+    border-radius: {s(14)};
+}}
+QScrollArea#homeScroll, QWidget#homeBody {{ background: transparent; }}
+QScrollArea#homeScroll > QWidget > QWidget {{ background: transparent; }}
+
+QLabel#eyebrow {{
+    font-size: {s(11)}; font-weight: 700; color: {TEAL};
+    letter-spacing: 2px;
+}}
+QLabel#homeH1 {{
+    font-size: {s(34)}; font-weight: 800; color: {TEXT_PRIMARY};
+}}
+QLabel#panelTitle {{
+    font-size: {s(19)}; font-weight: 700; color: {TEXT_PRIMARY};
+}}
+QLabel#panelSection {{
+    font-size: {s(11)}; font-weight: 700; color: {TEAL};
+    letter-spacing: 1px;
+}}
+
+/* Chip topik (Niat, Solat, …) — kotak sama saiz, sudut sederhana */
+QPushButton#chipTopik {{
+    background-color: {CARD_BG}; color: {TEXT_SECONDARY};
+    border: 1px solid {BORDER}; border-radius: {s(8)};
+    padding: {s(8)} {s(18)}; font-size: {s(12)}; font-weight: 600;
+}}
+QPushButton#chipTopik:hover {{
+    border-color: {TEAL}; color: {TEAL}; background-color: {CARD_BG_HOVER};
+}}
+
+/* Kad jalan pantas & kad panel kanan */
+QFrame#quickCard {{
+    background-color: {CARD_BG};
+    border: 1px solid {BORDER};
+    border-left: 3px solid {TEAL};
+    border-radius: {s(8)};
+}}
+QFrame#quickCard:hover {{
+    background-color: {CARD_BG_HOVER}; border-color: {TEAL};
+}}
+QFrame#sideCard {{
+    background-color: {CARD_BG};
+    border: 1px solid {BORDER};
+    border-radius: {s(10)};
+}}
+QFrame#sideCard:hover {{
+    background-color: {CARD_BG_HOVER}; border-color: {TEAL_GLOW};
+}}
+QLabel#badgeNumb {{
+    background-color: {TEAL_PALE}; color: {TEAL};
+    font-size: {s(16)}; font-weight: 800;
+    border-radius: {s(8)};
+}}
+QLabel#petikanText {{
+    font-size: {s(14)}; font-weight: 600; color: {TEXT_PRIMARY};
+}}
 """

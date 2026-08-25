@@ -60,6 +60,7 @@ RATE_LIMIT_PER_DAY = 200     # disahkan 2026-07-28
 DB_PATH = str(DATA_DIR / "hadis.db")
 SETTINGS_PATH = str(DATA_DIR / "user_settings.json")
 BOOKMARKS_PATH = str(DATA_DIR / "bookmarks.json")
+READING_HISTORY_PATH = str(DATA_DIR / "reading_history.json")
 ENV_PATH = str(DATA_DIR / ".env")
 CACHE_SEMA = str(DATA_DIR / ".cache_sema")
 CACHE_HE = str(DATA_DIR / ".cache_he")

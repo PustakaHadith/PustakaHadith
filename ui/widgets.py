@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import os
+
 from PyQt5.QtCore import QEvent, QObject, QSize, Qt, QTimer, pyqtSignal
-from PyQt5.QtGui import QColor, QFont, QIcon, QPixmap, QTextOption
+from PyQt5.QtGui import (QColor, QFont, QIcon, QLinearGradient, QPainter,
+                         QPixmap, QTextOption)
 from PyQt5.QtWidgets import (
     QApplication, QFrame, QHBoxLayout, QLabel, QLineEdit, QMenu,
     QPushButton, QScrollArea, QSizePolicy, QTextBrowser, QVBoxLayout,
@@ -11,9 +14,82 @@ from PyQt5.QtWidgets import (
 )
 
 from .theme import (
-    ARABIC_FONTS, CARD_BG, CONTENT_MAX_W, GUTTER, TEAL, TEXT_MUTED,
-    TEXT_PRIMARY, TEXT_SECONDARY,
+    ARABIC_FONTS, CARD_BG, CONTENT_MAX_W, GUTTER, PAGE_BG, TEAL,
+    TEXT_MUTED, TEXT_PRIMARY, TEXT_SECONDARY, ada_latar_imej,
 )
+
+# Latar glob (tema AQUA sahaja) — aset baca sahaja di ASSET_DIR. Jika
+# fail hilang, BackgroundCanvas fallback kepada warna PAGE_BG pepejal
+# (apl tetap berfungsi; tiada ranap).
+_LATAR_GLOB = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "latar_globe_timeline.png",
+)
+
+
+class BackgroundCanvas(QWidget):
+    """Widget akar yang melukis latar imej glob untuk tema AQUA.
+
+    TEMA BUKAN-AQUA: isi PAGE_BG sahaja (sifar kosong, penampilan lama
+    dikekalkan). TEMA AQUA: glob diskala "cover" + scrim gelap supaya
+    SEMUA teks kekal >= 4.5:1 walaupun di zon glob paling terang —
+    panel kaca alpha 20/255 sahaja TIDAK cukup menjamin kontras.
+
+    PENTING QSS: widget ini SENGAJA tidak set WA_StyledBackground, jadi
+    peraturan QSS `QWidget#page {{ background-color: ... }}` TIDAK
+    dilukis di sini — paintEvent di bawah mengawal sepenuhnya. Cache
+    QPixmap ikut (lebar, tinggi): skala semula HANYA pada resize, bukan
+    setiap paint (elak kedip & CPU).
+    """
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._cache: tuple[int, int, QPixmap] | None = None
+        self._imej: QPixmap | None = None
+        if os.path.exists(_LATAR_GLOB):
+            self._imej = QPixmap(_LATAR_GLOB)
+
+    def _piksel(self, w: int, h: int) -> QPixmap:
+        """Lukis latar penuh (glob + scrim) ke pixmap cache."""
+        pm = QPixmap(w, h)
+        pm.fill(QColor(PAGE_BG))
+        p = QPainter(pm)
+        p.setRenderHint(QPainter.SmoothPixmapTransform)
+        if self._imej is not None and not self._imej.isNull():
+            # Skala "cover": isi penuh, kekal nisbah, potong lebihan.
+            iw, ih = self._imej.width(), self._imej.height()
+            skala = max(w / iw, h / ih)
+            tw, th = int(iw * skala), int(ih * skala)
+            imej = self._imej.scaled(tw, th, Qt.KeepAspectRatio,
+                                     Qt.SmoothTransformation)
+            p.drawPixmap((w - tw) // 2, (h - th) // 2, imej)
+            # Scrim gelap: asas alpha 150 + lebih gelap di kiri (panel
+            # teks utama) dan di bawah — glob kekal kelihatan di kanan
+            # atas tetapi teks sentiasa atas permukaan gelap.
+            p.fillRect(0, 0, w, h, QColor(6, 14, 22, 150))
+            g = QLinearGradient(0, 0, w * 0.85, 0)
+            g.setColorAt(0.0, QColor(6, 14, 22, 200))
+            g.setColorAt(0.55, QColor(6, 14, 22, 120))
+            g.setColorAt(1.0, QColor(6, 14, 22, 30))
+            p.fillRect(0, 0, w, h, g)
+        p.end()
+        return pm
+
+    def paintEvent(self, e):
+        w, h = max(1, self.width()), max(1, self.height())
+        c = self._cache
+        if c is None or c[0] != w or c[1] != h:
+            if not ada_latar_imej():
+                # Tema lain: warna pepejal — tiada perlu cache pixmap.
+                p = QPainter(self)
+                p.fillRect(self.rect(), QColor(PAGE_BG))
+                p.end()
+                return
+            c = (w, h, self._piksel(w, h))
+            self._cache = c
+        p = QPainter(self)
+        p.drawPixmap(0, 0, c[2])
+        p.end()
 
 
 def elide(text: str, n: int) -> str:

@@ -30,12 +30,12 @@ from ui.pages_home import PagesHome                                      # noqa:
 from VERSI import VERSI                                              # noqa: E402
 from api.hadis_api import HadisAPI                                    # noqa: E402
 from ui.theme import (                                                # noqa: E402
-    available_arabic_fonts, default_arabic_font, FONT_SCALES, HEADER_BG,
-    HEADER_HEIGHT, TEAL, TEAL_LIGHT, TEXT_MUTED, apply_theme, build_qss,
-    is_dark, tema_efektif,
+    DEFAULT_TEMA, available_arabic_fonts, default_arabic_font,
+    FONT_SCALES, HEADER_BG, HEADER_HEIGHT, TEAL, TEAL_LIGHT, TEXT_MUTED,
+    apply_theme, build_qss, is_dark, tema_efektif,
 )
 from ui.widgets import (                                              # noqa: E402
-    GearButton, Toast, divider,
+    BackgroundCanvas, GearButton, Toast, divider,
 )
 from ui.settings_panel import Overlay, SettingsPanel                  # noqa: E402
 
@@ -47,6 +47,9 @@ from ui.workers import (                                              # noqa: E4
 # Label butang "Rawak" pada bar navigasi atas. Pemalar (bukan literal
 # dibenamkan) supaya label diuji unit (semak.py 8r) dan tidak berubah
 # tanpa disedari.
+# 25 Ogos 2026: butang Rawak DIPINDAHKAN dari header ke panel kanan
+# halaman utama (mockup Split Command Center). Pemalar dikekalkan —
+# kad Rawak panel kanan memaparnya dan ujian semak.py 8r kekal sah.
 LABEL_RAWAK = "⚄  Rawak"
 
 
@@ -96,7 +99,7 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
         self._ada_glif_selawat = simbol_boleh_dipapar(
             self.settings.get("arabic_font", ""))
 
-        apply_theme(self.settings.get("theme", "neutral"))
+        apply_theme(self.settings.get("theme", DEFAULT_TEMA))
         self.setStyleSheet(build_qss(FONT_SCALES[self.ui_idx]))
         self._build()
         # 'Ikut sistem' — pantau mod gelap Windows (registry) tiap 2 s;
@@ -202,6 +205,12 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
 
     # ── susun atur ───────────────────────────────────────────────────
     def _build(self):
+        # Root kekal QWidget#page biasa (25 Ogos): latar glob AQUA
+        # dilukis oleh BackgroundCanvas DALAM halaman utama sahaja —
+        # viewport QScrollArea halaman lain ternyata telus (nampak
+        # glob "bocor" pada halaman kitab bila root melukis imej).
+        # Root QSS PAGE_BG menjamin halaman bukan-Utama kekal opaque
+        # seperti sebelum ini.
         root = QWidget()
         root.setObjectName("page")
         self.setCentralWidget(root)
@@ -268,8 +277,10 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
         lo.addSpacing(24)
 
         self.nav = {}
+        # Nav baharu (25 Ogos, mockup Split Command Center): "Jelajah
+        # Kitab" ditambah; "Rawak" dipindah ke panel kanan halaman utama.
         for label, key in [("Utama", "home"), ("Pencarian", "search"),
-                           ("Tersimpan", "saved")]:
+                           ("Jelajah Kitab", "kitab"), ("Tersimpan", "saved")]:
             b = QPushButton(label)
             b.setObjectName("nav")
             b.setCursor(Qt.PointingHandCursor)
@@ -277,12 +288,6 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
             lo.addWidget(b)
             self.nav[key] = b
         lo.addStretch()
-
-        rb = QPushButton(LABEL_RAWAK)
-        rb.setObjectName("nav")
-        rb.setCursor(Qt.PointingHandCursor)
-        rb.clicked.connect(self._random)
-        lo.addWidget(rb)
 
         sb = GearButton(size=22)
         sb.setObjectName("nav")
@@ -301,9 +306,9 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
         kunci tidak berubah tetapi palet efektif mungkin bertukar bila
         Windows bertukar gelap/terang.
         """
-        if not paksa and name == self.settings.get("theme", "neutral"):
+        if not paksa and name == self.settings.get("theme", DEFAULT_TEMA):
             return
-        if name != self.settings.get("theme", "neutral"):
+        if name != self.settings.get("theme", DEFAULT_TEMA):
             self.settings["theme"] = name
             _write_json(SETTINGS, self.settings)
 
@@ -361,7 +366,7 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
         tidak memilih 'sistem'.
         """
         import ui.theme as _t
-        if self.settings.get("theme", "neutral") != "sistem":
+        if self.settings.get("theme", DEFAULT_TEMA) != "sistem":
             return
         if _t.tema_efektif("sistem") == _t.CURRENT_THEME:
             return
@@ -488,6 +493,9 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
             self._render_saved()
         elif key == "settings":
             self._sync_settings()
+        elif key == "home" and hasattr(self, "_render_sejarah"):
+            # Kad "Terakhir dibaca" sentiasa segar bila kembali ke Utama.
+            self._render_sejarah()
 
     # ── data ─────────────────────────────────────────────────────────
     def _fetch_collections(self):
@@ -509,6 +517,11 @@ class PustakaApp(PagesKitab, PagesCarian, PagesDetail,
         if total and hasattr(self, "_home_count"):
             self._home_count.setText(
                 f"{total:,} hadis daripada {len(self.collections)} kitab")
+        # Pilihan Hari Ini (panel kanan, 25 Ogos): perlukan jumlah hadis
+        # Bukhari sebagai modul indeks harian. Dipanggil sekali selepas
+        # koleksi sampai; kaedah wujud hanya pada halaman utama baharu.
+        if hasattr(self, "_fetch_pilihan_hari"):
+            self._fetch_pilihan_hari()
 
     def _total_of(self, slug):
         for c in self.collections:

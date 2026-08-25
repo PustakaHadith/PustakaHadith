@@ -24,9 +24,9 @@ from ui.widgets import attach_copy_menu
 from ui.deklarasi import DeklarasiDialog
 from ui.theme import (
     AMBER_BG, AMBER_BORDER, AMBER_TEXT, BORDER, CARD_BG, CARD_BG_HOVER,
-    FONT_SCALE_LABELS, GREEN_TEXT, HEADER_BG, PAGE_BG, RADIUS_SM, RED_TEXT,
-    TEAL, TEAL_LIGHT, TEAL_PALE, TEXT_FAINT, TEXT_MUTED, TEXT_PRIMARY,
-    TEXT_SECONDARY,
+    DEFAULT_TEMA, FONT_SCALE_LABELS, GREEN_TEXT, HEADER_BG, PAGE_BG,
+    RADIUS_SM, RED_TEXT, TEAL, TEAL_LIGHT, TEAL_PALE, TEXT_FAINT,
+    TEXT_MUTED, TEXT_PRIMARY, TEXT_SECONDARY,
 )
 
 PANEL_W = 380
@@ -302,17 +302,21 @@ class SettingsPanel(QFrame):
         gl.setContentsMargins(0, 0, 0, 0)
         gl.setSpacing(8)
 
-        cur = self.app.settings.get("theme", "neutral")
+        cur = self.app.settings.get("theme", DEFAULT_TEMA)
         self._theme_btns = {}
 
-        # 2 tema sahaja: Neutral gelap + Neutral terang
-        for key, label, pos, span in (("neutral", "🌙  Neutral", (0, 0), 1),
-                                      ("lightneutral", "☀  Neutral terang", (0, 1), 1)):
+        # 3 tema (25 Ogos): AQUA (lalai baharu) + Neutral gelap/terang.
+        # Tema dark/light (kertas hangat) kekal boleh dipilih melalui
+        # 'Ikut sistem'/fail tetapan — panel memaparkan yang kerap diguna.
+        for key, label, pos in (("aqua", "◈  Aqua", (0, 0)),
+                                ("neutral", "🌙  Neutral", (0, 1)),
+                                ("lightneutral", "☀  Neutral terang",
+                                 (0, 2))):
             b = QPushButton(label)
             b.setCursor(Qt.PointingHandCursor)
             b.setFixedHeight(36)
             b.clicked.connect(lambda _, k=key: self._pick_theme(k))
-            gl.addWidget(b, pos[0], pos[1], 1, span)
+            gl.addWidget(b, pos[0], pos[1], 1, 1)
             self._theme_btns[key] = b
 
         self._paint_theme_btns(cur)
@@ -336,7 +340,7 @@ class SettingsPanel(QFrame):
             """)
 
     def _pick_theme(self, name: str):
-        if name == self.app.settings.get("theme", "neutral"):
+        if name == self.app.settings.get("theme", DEFAULT_TEMA):
             return
         self._paint_theme_btns(name)
         # Panel dibina semula oleh set_theme; tangguh supaya klik selesai

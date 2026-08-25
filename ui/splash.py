@@ -30,22 +30,22 @@ from PyQt5.QtWidgets import (
 
 from VERSI import VERSI                                    # noqa: E402
 from config import SETTINGS_PATH                          # noqa: E402
-from ui.theme import apply_theme                           # noqa: E402
+from ui.theme import DEFAULT_TEMA, apply_theme               # noqa: E402
 
 
 def _tema_tersimpan() -> str:
-    """Baca tema pengguna (neutral/dark/light/lightneutral/sistem).
+    """Baca tema pengguna (aqua/neutral/dark/light/lightneutral/sistem).
 
-    Lalai 'neutral' (14 Ogos 2026) — pengguna awam biasa dengan mod
-    gelap neutral Windows/telefon; kertas hangat menjadi pilihan.
+    Lalai 'aqua' (25 Ogos 2026) — identiti baharu PustakaHadith.
     'sistem' (Ikut sistem) diselesaikan oleh apply_theme() mengikut
     mod gelap Windows semasa.
     """
     try:
         with open(SETTINGS_PATH, encoding="utf-8") as f:
-            return (json.load(f) or {}).get("theme", "neutral") or "neutral"
+            return (json.load(f) or {}).get("theme", DEFAULT_TEMA) \
+                or DEFAULT_TEMA
     except Exception:
-        return "neutral"
+        return DEFAULT_TEMA
 
 
 class SplashPermula(QWidget):
