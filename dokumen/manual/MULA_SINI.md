@@ -16,17 +16,25 @@
 
 ---
 
-## Keadaan projek — ringkasan satu muka (akhir 22 Ogos 2026)
+## Keadaan projek — ringkasan satu muka (akhir 25 Ogos 2026)
 
 **Apa ini:** Aplikasi desktop **PustakaHadith v1.0** — PyQt5, berjalan
 sepenuhnya di luar talian selepas sync: **62,169 hadis** (9 kitab
 hadis.my), carian kata kunci FTS5 + carian makna AI, 3 tab bahasa,
-2 tema Neutral (gelap + terang), susun atur RTL.
+5 tema (Aqua lalai + Neutral gelap/terang + Kertas gelap/terang),
+susun atur RTL.
 
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**1 commit** pada 22 Ogos (rebranding PustakaHadith + GitHub push).
+**2 commit** pada 25 Ogos (halaman utama AQUA + rak kitab).
+
+**Kerja 25 Ogos (2 commit):** redesign UI/UX fasa 1 mengikut
+`UIUX_PustakaHadith/SELECTED_UIUX.md` — halaman utama Split Command
+Center + tema AQUA (tema ke-5, lalai baharu) + latar glob + sejarah
+bacaan (`ae3e418`); Rak Digital 9 Kitab — halaman `rak` baharu, 9 jilid
+pada satu rak, nav "Jelajah Kitab" menuju rak (`6b62d3b`). Tetapan
+KEKAL tanpa perubahan (keputusan pengguna).
 
 **Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadis → PustakaHadith** —
 update 40+ fail Python (main, ui/*, config, sync_*, test_*), installer
