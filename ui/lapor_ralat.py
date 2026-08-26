@@ -43,12 +43,19 @@ class LaporRalatDialog(QDialog):
         nota.setWordWrap(True)
         v.addWidget(nota)
 
+        # Medan input: latar putih + teks HITAM (dialog mewarisi tema
+        # gelap apl, jadi teks hitam mesti ditegakkan supaya kelihatan).
+        in_ss = (f"background-color: #ffffff; color: #000000; "
+                 f"border: 1px solid {BORDER}; border-radius: 6px; "
+                 f"padding: 6px;")
+
         # Daripada (e-mel pengguna)
         frm = QHBoxLayout()
         fl = QLabel("Daripada (e-mel)")
         fl.setFixedWidth(120)
         self._email = QLineEdit()
         self._email.setPlaceholderText("anda@email.com")
+        self._email.setStyleSheet(in_ss)
         frm.addWidget(fl)
         frm.addWidget(self._email, 1)
         v.addLayout(frm)
@@ -58,6 +65,7 @@ class LaporRalatDialog(QDialog):
         sl = QLabel("Tajuk")
         sl.setFixedWidth(120)
         self._subjek = QLineEdit(SUBJEK_LALAI)
+        self._subjek.setStyleSheet(in_ss)
         sj.addWidget(sl)
         sj.addWidget(self._subjek, 1)
         v.addLayout(sj)
@@ -65,6 +73,7 @@ class LaporRalatDialog(QDialog):
         # Mesej
         self._mesej = QPlainTextEdit()
         self._mesej.setPlaceholderText("Laporkan ralat anda di sini.")
+        self._mesej.setStyleSheet(in_ss)
         self._mesej.setMinimumHeight(150)
         v.addWidget(self._mesej, 1)
 
