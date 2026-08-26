@@ -588,7 +588,10 @@ class PagesCarian:
         # Kemudian kad keyword yang tidak bertindih dengan semantik
         for h in kw:
             slug = h.get("collection", "")
-            hid = h.get("hadis_id")
+            # search_hadis pulang `id` (bukan `hadis_id`) — guna mana-mana
+            # yang ada supaya penapis dedupe tidak melanggar hasil sekitar
+            # satu koleksi (bug: hadis_id sentiasa None -> 1 kad/koleksi).
+            hid = h.get("hadis_id") or h.get("id")
             key = (slug, hid)
             if key in seen:
                 continue
