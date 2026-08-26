@@ -395,14 +395,19 @@ Hadis):
     Center). `uji_visual_kiraan.py` kekal langkah manual (perlu skrin
     fizikal + DB penuh). **Ujian pasang (sandbox):** pasang senyap ke
     folder sementara + lancar (`PustakaHadith - Makluman`, CPU aktif)
-    berjaya; uninstall bersih.     **Bangun semula (dist dikemas 26/8, SAH):** `ISCC` jalanan terus
-    (`Start-Process -Wait` beri EXIT=1 awal kerana argumen berganda);
-    binaan **disahkan BERJAYA (EXIT=0, 1937s)** →
-    `Output/PustakaHadith-Setup-1.0.0-x64.exe` 722.5 MB (19:53); saiz
-    sama dengan binaan awal (kandungan dist setara). Ujian pasang
-    sandbox sebelum ini LULUS (pasang 1876 MB + lancar).
+    berjaya; uninstall bersih. **Bangun semula (dist dikemas 26/8, SAH
+    + AQUA):** binaan onedir awal (15:31) RUPANYA LAPUK — tiada kod/tema
+    AQUA (cache `build/` lama + aset glob `latar_globe_*.png` TIDAK
+    dibundel → `BackgroundCanvas` guna fallback warna pepejal).
+    **Pembetulan:** tambah `latar_globe_dunia.png` +
+    `latar_globe_timeline.png` ke `datas` spec; padam `build/` +
+    `dist/PustakaHadith`; binaan PyInstaller **BERJAYA (EXIT=0,
+    21:09)**; ISCC **BERJAYA (EXIT=0, 1955s)** →
+    `Output/PustakaHadith-Setup-1.0.0-x64.exe` **725.8 MB (21:43)**
+    (saiz naik kerana aset AQUA disertakan). Apl dibuka dari
+    `dist/.../PustakaHadith.exe` (PID 6852) — tema AQUA kelihatan.
 
-**Kiraan telus:** 26 Ogos = **52 commit**.
+**Kiraan telus:** 26 Ogos = **53 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
