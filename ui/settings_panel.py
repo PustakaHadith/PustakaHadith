@@ -501,7 +501,7 @@ class SettingsPanel(QFrame):
             lb.setFixedWidth(120)
             lb.setStyleSheet(f"font-size: 12px; color: {TEXT_SECONDARY};")
             rl.addWidget(lb)
-            le = QLineEdit(self.app.settings.get(key, default))
+            le = QLineEdit(str(self.app.settings.get(key, default)))
             if password:
                 le.setEchoMode(QLineEdit.Password)
             le.setStyleSheet(

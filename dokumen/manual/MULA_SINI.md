@@ -375,8 +375,10 @@ Hadis):
      **menghantar terus** via SMTP jika pelayan dikonfigurasi di
      **Tetapan → Pelayan E-mel (Lapor Ralat)** (host/port/e-mel pengirim/
      kata laluan apl; disimpan ke user_settings.json yang di-gitignore).
-     Jika tiada SMTP dikonfigurasi, jatuh balik ke `mailto:` (buka klien
-     e-mel). Modul `ui/smtp_mail.py` (`hantar_emel_smtp`) guna STARTTLS;
+     Jika tiada SMTP dikonfigurasi/gagal, jatuh balik ke **buka Gmail
+     compose dalam browser** (`https://mail.google.com/mail/?view=cm&to=…`)
+     — tiada klien e-mel diperlukan; pengguna klik Hantar sekali dalam
+     browser. Modul `ui/smtp_mail.py` (`hantar_emel_smtp`) guna STARTTLS;
      'From' dikuatkuasakan akaun SMTP, jadi e-mel pelapor disertakan dalam
      badan ("Daripada: <email>"). "Batal" tutup dialog. (Asalnya dicadang
      di Tetapan, dipindah ke butiran hadis seperti permintaan.) Disahkan

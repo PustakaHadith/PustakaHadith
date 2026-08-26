@@ -119,12 +119,15 @@ class LaporRalatDialog(QDialog):
                 self._maklum("Laporan dihantar. Terima kasih.")
                 self.accept()
                 return
-            except Exception as e:  # gagal SMTP -> jatuh balik ke mailto
-                self._maklum(f"Gagal hantar ({e}). Membuka klien e-mel…")
-        # Fallback: buka klien e-mel lalai
-        url = (f"mailto:{DEV_EMAIL}?subject={quote(subjek)}"
-               f"&body={quote(body)}")
-        webbrowser.open(url)
+            except Exception as e:  # gagal SMTP -> jatuh balik ke Gmail
+                self._maklum(f"Gagal hantar ({e}). Membuka Gmail…")
+        # Fallback: buka Gmail compose dalam browser (tiada klien e-mel
+        # diperlukan). Pengguna klik Hantar sekali dalam browser.
+        self._maklum("Membuka Gmail (pra-isi)…")
+        gurl = (f"https://mail.google.com/mail/?view=cm&fs=1"
+                f"&to={quote(DEV_EMAIL)}&su={quote(subjek)}"
+                f"&body={quote(body)}")
+        webbrowser.open(gurl)
         self.accept()
 
     def _smtp_cfg(self):
