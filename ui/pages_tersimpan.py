@@ -37,6 +37,7 @@ class PagesTersimpan:
         self.stack.addWidget(kanvas)
         sa = make_scroll(kanvas)
         sa.setObjectName("savedScroll")
+        sa.setStyleSheet("background: transparent;")
         self._tersimpan_sa = sa
 
         # Butang terapung "↑ ke atas" (Sesi 34) — corak sama halaman
