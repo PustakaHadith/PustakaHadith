@@ -56,6 +56,7 @@ from ui.widgets import (
     text_browser,
 )
 from ui.workers import HadithWorker, RandomWorker
+from ui.lapor_ralat import LaporRalatDialog
 from utils.bahasa import betulkan_melayu, guna_simbol_selawat
 
 # Destinasi butang Kembali mengikut halaman asal (_detail_from).
@@ -1240,19 +1241,13 @@ class PagesDetail:
         self.toast.show_msg("Disalin ke papan klip")
 
     def _lapor_ralat(self):
-        """Buka halaman sunnah.com hadis ini untuk lapor ralat.
+        """Buka dialog 'Lapor Ralat' untuk e-mel laporan ke pembangun.
 
-        App tiada sistem laporan sendiri, jadi pautan dibuka ke halaman
-        sunnah.com hadis tersebut (jika padanan wujud) supaya pengguna
-        boleh lapor di sumber.
+        Pautan 'Lapor ralat' pada bar tindakan bawah terjemahan
+        (sebaris 'Kongsi | Salin') membuka dialog e-mel, bukan sunnah.com.
         """
-        h = self._detail_h or {}
-        url = sunnah_url(h.get("collection", ""), h.get("id"))
-        if not url:
-            self.toast.show_msg("Tiada padanan sunnah.com untuk hadis ini")
-            return
-        webbrowser.open(url)
-        self.toast.show_msg("Dibuka: sunnah.com (lapor ralat)")
+        dlg = LaporRalatDialog(parent=self)
+        dlg.exec_()
 
     def _menu_salin(self):
         """Menu popup 'Salin' (pautan teks) bawah terjemahan.

@@ -365,16 +365,20 @@ Hadis):
      No." sidebar. Disahkan offscreen: "433"→indeks kekal kitab (bukan
      search 3); "riba"→Pencarian (3).
 
-21. **Dialog 'Lapor Ralat'** (`134a5fc`) — butang "🐞 Lapor Ralat" di
-     bahagian **Tetapan → Tentang** membuka `LaporRalatDialog` (QDialog,
-     tajuk "Lapor Ralat"). Kandungan: nota "Laporkan ralat anda di sini."
-     (juga placeholder kotak mesej), medan "Daripada (e-mel)" (USER EMAIL),
-     medan "Tajuk" terisi "LAPOR RALAT", dan kotak mesej. "Hantar"
-     menyusun `mailto:pustakahadis@gmail.com?subject=...&body=...` lalu
-     buka klien e-mel lalai (tiada SMTP). E-mel pengguna disertakan dalam
-     badan ("Daripada: <email>") supaya pembangun boleh balas. "Batal"
-     tutup dialog. Disahkan offscreen: butang wujud; URL mailto ke
-     pustakahadis@gmail.com, subjek "LAPOR RALAT", From + mesej dalam badan.
+21. **Dialog 'Lapor Ralat'** (`134a5fc`, dipindah `f31ead1`) — pautan
+     teks **"Lapor ralat"** pada bar tindakan bawah terjemahan di
+     **halaman butiran hadis** (sebaris **"Kongsi | Salin"**) membuka
+     `LaporRalatDialog` (QDialog, tajuk "Lapor Ralat"). Kandungan: nota
+     "Laporkan ralat anda di sini." (juga placeholder kotak mesej), medan
+     "Daripada (e-mel)" (USER EMAIL), medan "Tajuk" terisi "LAPOR RALAT",
+     dan kotak mesej. "Hantar" menyusun
+     `mailto:pustakahadis@gmail.com?subject=...&body=...` lalu buka klien
+     e-mel lalai (tiada SMTP). E-mel pengguna disertakan dalam badan
+     ("Daripada: <email>"). "Batal" tutup dialog. (Asalnya dicadang di
+     Tetapan, dipindah ke butiran hadis seperti permintaan.) Disahkan
+     offscreen: tiada butang di Tetapan; pautan butiran buka dialog; URL
+     mailto ke pustakahadis@gmail.com, subjek "LAPOR RALAT", From + mesej
+     dalam badan.
 
 **Kiraan telus:** 26 Ogos = **21 commit**.
 
