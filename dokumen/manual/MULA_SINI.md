@@ -181,9 +181,9 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ---
 
-## Sesi Terakhir — 26 Ogos 2026 (21 commit)
+## Sesi Terakhir — 26 Ogos 2026 (47 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **21 commit** (glassy scrim +
+Versi semasa: **v1.0**. Kerja 26 Ogos — **47 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
 Hadis):
 
@@ -365,7 +365,7 @@ Hadis):
      No." sidebar. Disahkan offscreen: "433"→indeks kekal kitab (bukan
      search 3); "riba"→Pencarian (3).
 
-21. **Dialog 'Lapor Ralat'** (`134a5fc`, dipindah `f31ead1`) — pautan
+21. **Dialog 'Lapor Ralat'** (`80537f3`, dipindah `f31ead1`) — pautan
      teks **"Lapor ralat"** pada bar tindakan bawah terjemahan di
      **halaman butiran hadis** (sebaris **"Kongsi | Salin"**) membuka
      `LaporRalatDialog` (QDialog, tajuk "Lapor Ralat"). Kandungan: nota
@@ -382,7 +382,7 @@ Hadis):
      SMTP → buka URL Gmail compose ke pustakahadith@gmail.com, subjek
      "LAPOR RALAT", badan ada "Daripada".
 
-**Kiraan telus:** 26 Ogos = **21 commit**.
+**Kiraan telus:** 26 Ogos = **47 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)

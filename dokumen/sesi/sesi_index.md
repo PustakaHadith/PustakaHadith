@@ -8284,5 +8284,24 @@ AKTIF sengaja; jurang Tafsir 843 dipantau; installer Fasa 0 TERTUNDA.
 
 ---
 
-*sesi_index.md — dikemas kini 22 Ogos 2026*
+---
+
+## Sesi 56 - 26 Ogos 2026 (47 commit)
+
+**Tema: Aqua Glass (sambungan) + ciri 'Lapor Ralat'**
+
+- **Scrim latar dikurangkan (glassy)** + **latar peta dunia hanya Makluman/Tetapan** (imej bg_03/bg_04 dipisah, `_GLOB_CACHE` ikut laluan).
+- **Spesifikasi + redesign Halaman Senarai Hadis** (Split Command Center: banner kaca + sidebar PILIH BAB + panel dwibahasa terjemahan kiri | Arab kanan, di atas `BackgroundCanvas` AQUA; `hadith_card_dwibahasa`; chips Semua/Tersimpan/Belum dibaca; Lompat No. di sidebar; `ListWorker` sokong param).
+- **Redesign Halaman Pencarian** (Aqua Glass: hero telus + kad dwibahasa + togol 3-mod Kata/Makna/Kedua-dua; draf AI kekal sebelum hasil; spesifikasi di `docs/superpowers/specs`).
+- **Ciri 'Lapor Ralat'** (evolusi panjang): dialog `LaporRalatDialog` (`ui/lapor_ralat.py`) dengan medan Daripada(e-mel)/Tajuk(LAPOR RALAT)/mesej; pautan "Lapor ralat" pada bar tindakan butiran hadis sebaris "Kongsi | Salin". Cuba hantar terus via SMTP (Tetapan -> Pelayan E-mel, Outlook `pustaka.hadith@outlook.com`) **dibuang** kerana susah difail (app password/2FA); kekal buka **Gmail compose pra-isi** (`https://mail.google.com/mail/?view=cm&to=pustakahadith@gmail.com`) -> pengguna klik Hantar sekali dalam browser. Modul `ui/smtp_mail.py` dihapus, seksyen Tetapan dibuang. Ruangan teks dialog bertukar **hitam atas putih**.
+- **Bug fix:** `QLineEdit(int)` bila baca setting `smtp_port` (elak crash restart); nombor carian kitab buka terus butiran (bukan Pencarian); kembali dari Utama ke halaman asal; kiraan Tersimpan Utama selari; maklum balas Rawak.
+- **Destinasi laporan:** `pustakahadith@gmail.com` (tanpa 's').
+
+**Status:** Lapor Ralat berfungsi (Gmail compose). Gate #12 MULA_SINI diselesaikan (`80537f3`).
+
+**Baki/tertangguh:** installer Fasa 0 (PLAN_BINA_EDARAN.md) TERTUNDA; jurang Tafsir 843 (#7) kekal; `semak.py` standing failure (untracked Output/*.exe, Screenshot/*, mockup/selected_*) tangguh ke edaran.
+
+---
+
+*sesi_index.md — dikemas kini 26 Ogos 2026*
 
