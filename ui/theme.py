@@ -490,8 +490,8 @@ QPushButton#filterChip {{
 }}
 QPushButton#filterChip:hover {{ border-color: {TEAL_GLOW}; color: {TEXT_PRIMARY}; }}
 QPushButton#filterChip_active {{
-    background-color: {TEAL}; color: {PAGE_BG};
-    border: 1px solid {TEAL}; border-radius: {s(4)};
+    background-color: {TEAL}; color: #ffffff;
+    border: 1px solid {TEAL_GLOW}; border-radius: {s(4)};
     padding: {s(6)} {s(12)}; font-size: {s(12)}; font-weight: 700;
 }}
 
