@@ -221,6 +221,14 @@ class PagesKitab:
         q = self._kitab_carian.text().strip()
         if not q:
             return
+        # Nombor sahaja -> buka TERUS butiran hadis (bukan ke Pencarian),
+        # sama seperti kotak "Pergi ke No." di sidebar. Sebarang teks lain
+        # dianggap carian dalam kitab ini dan dihalakan ke halaman Pencarian.
+        if q.replace(" ", "").isdigit():
+            self._kitab_carian.clear()
+            self._buka_hadis_terus(
+                self._kitab_slug, int(q), dari="kitab")
+            return
         # Kunci skop kitab pada halaman Pencarian (chip aktif).
         if getattr(self, "search_bar", None) is not None \
                 and self.search_bar.chips is not None:
