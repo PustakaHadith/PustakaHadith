@@ -1325,7 +1325,6 @@ class PagesDetail:
         if self._is_saved(slug, hid):
             self.bookmarks = [b for b in self.bookmarks
                               if not (b.get("slug") == slug and b.get("id") == hid)]
-            self._save_btn.setText(_label_simpan(False))
             self.toast.show_msg("Dibuang dari tersimpan")
         else:
             self.bookmarks.append({
@@ -1334,9 +1333,13 @@ class PagesDetail:
                 "indonesia": h.get("indonesia", ""),
                 "book": h.get("book"), "nama_bab": h.get("nama_bab", ""),
                 "kitab_name": COLLECTION_META.get(slug, {}).get("name", slug)})
-            self._save_btn.setText(_label_simpan(True))
             self.toast.show_msg("Disimpan")
         _write_json(BOOKMARKS, self.bookmarks)
+        # _save_btn hanya wujud di halaman detail; abaikan di halaman
+        # lain (cth. Tersimpan) yang memanggil _toggle_save.
+        btn = getattr(self, "_save_btn", None)
+        if btn is not None:
+            btn.setText(_label_simpan(self._is_saved(slug, hid)))
 
     def _kemas_butang_atas_detail(self):
         """Tunjuk/sembunyi butang ↑ mengikut kedudukan skrol (Sesi 34).

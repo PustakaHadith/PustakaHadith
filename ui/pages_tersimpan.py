@@ -17,17 +17,25 @@ konsisten dengan modul UI yang lain.
 from __future__ import annotations
 
 from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import (
+    QHBoxLayout, QLabel, QPushButton, QSizePolicy, QVBoxLayout, QWidget,
+)
 
 from ui.helpers import _clear
 from ui.pages import Hero, empty_state
-from ui.widgets import centered_column, hadith_card, make_scroll
+from ui.theme import ada_latar_imej
+from ui.widgets import BackgroundCanvas, hadith_card_dwibahasa, make_scroll
 
 
 class PagesTersimpan:
     def _page_saved(self):
-        sa = make_scroll()
-        self.stack.addWidget(sa)
+        # Latar: BackgroundCanvas (glob garisan masa AQUA / warna pepejal
+        # tema lain) — pola sama Utama/Carian/Senarai. Skrol telus di
+        # dalam supaya glob kekal TETAP semasa skrol.
+        kanvas = BackgroundCanvas()
+        self.stack.addWidget(kanvas)
+        sa = make_scroll(kanvas)
+        sa.setObjectName("savedScroll")
         self._tersimpan_sa = sa
 
         # Butang terapung "↑ ke atas" (Sesi 34) — corak sama halaman
@@ -56,44 +64,80 @@ class PagesTersimpan:
         sa.resizeEvent = _on_resize
 
         body = QWidget()
-        body.setObjectName("page")
+        body.setObjectName("homeBody")
         sa.setWidget(body)
-        self._saved_root = QVBoxLayout(body)
-        self._saved_root.setContentsMargins(0, 0, 0, 16)
-        self._saved_root.setSpacing(0)
+        bl = QVBoxLayout(body)
+        bl.setContentsMargins(0, 0, 0, 16)
+        bl.setSpacing(0)
+
+        hero = Hero("Hadis Tersimpan", compact=True)
+        # Aqua Glass: hero telus supaya glob tembus (hanya teks atas glob).
+        if ada_latar_imej():
+            hero.setStyleSheet(
+                "QFrame#hero { background: transparent; border: none; }")
+        self._saved_sub = QLabel("")
+        self._saved_sub.setObjectName("muted")
+        self._saved_sub.setAlignment(Qt.AlignCenter)
+        hero.body.addWidget(self._saved_sub)
+        bl.addWidget(hero)
+
+        # Lajur kandungan berpusat (TELUS — biar glob AQUA kelihatan).
+        col = QWidget()
+        col.setObjectName("homeBody")
+        col.setMaximumWidth(960)
+        col.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
+        cl = QVBoxLayout(col)
+        cl.setContentsMargins(0, 18, 0, 0)
+        cl.setSpacing(0)
+        self._saved_col = cl
+        wrap = QWidget()
+        wl = QHBoxLayout(wrap)
+        wl.setContentsMargins(0, 0, 0, 0)
+        wl.addStretch(1)
+        wl.addWidget(col, 0, Qt.AlignTop)
+        wl.addStretch(1)
+        bl.addWidget(wrap)
+
+        vl = QVBoxLayout(kanvas)
+        vl.setContentsMargins(0, 0, 0, 0)
+        vl.addWidget(sa)
 
     def _render_saved(self):
-        _clear(self._saved_root)
-        self._saved_root.addWidget(Hero(
-            "Hadis Tersimpan",
-            subtitle=f"{len(self.bookmarks)} hadis disimpan", compact=True))
+        _clear(self._saved_col)
+        n = len(self.bookmarks)
+        self._saved_sub.setText(
+            f"{n} hadis disimpan" if n else "Tiada hadis disimpan")
 
-        col, cl = centered_column()
-        cl.setContentsMargins(0, 18, 0, 0)
         if not self.bookmarks:
             # stretch=1 supaya empty_state mengisi & berpusat menegak
-            cl.addWidget(empty_state(
+            self._saved_col.addWidget(empty_state(
                 "⭐", "Belum ada hadis tersimpan",
                 "Buka mana-mana hadis dan tekan Simpan."), 1)
-        else:
-            for b in reversed(self.bookmarks):
-                h = {"id": b.get("id"), "collection": b.get("slug"),
-                     "arab": b.get("arab", ""), "melayu": b.get("melayu", ""),
-                     "indonesia": b.get("indonesia", ""),
-                     "book": b.get("book"), "nama_bab": b.get("nama_bab", "")}
-                c = hadith_card(h, b.get("kitab_name", ""), self.ar_scale,
-                                show_chip=True, arabic_font=self.ar_font,
-                                papar_melayu=self._papar_melayu)
-                c.clicked.connect(
-                    lambda s=b.get("slug"), i=b.get("id"): self.open_by_ref(s, i))
-                cl.addWidget(c)
-        # Bila kosong, kolum mesti MENGEMBANG supaya empty_state
-        # berpusat; bila ada tanda buku, stretch biasa di hujung.
-        if not self.bookmarks:
-            self._saved_root.addWidget(col, 1)
-        else:
-            self._saved_root.addWidget(col)
-            self._saved_root.addStretch(1)
+            return
+
+        for b in reversed(self.bookmarks):
+            slug = b.get("slug")
+            hid = b.get("id")
+            h = {"collection": slug, "id": hid,
+                  "arab": b.get("arab", ""), "melayu": b.get("melayu", ""),
+                  "indonesia": b.get("indonesia", ""),
+                  "book": b.get("book"), "nama_bab": b.get("nama_bab", "")}
+            c = hadith_card_dwibahasa(
+                h, b.get("kitab_name", ""), self.ar_scale,
+                arabic_font=self.ar_font, tersimpan=True,
+                papar_melayu=self._papar_melayu)
+            c._hid = hid
+            c.clicked.connect(
+                lambda s=slug, i=hid: self.open_by_ref(s, i))
+            c.simpan_clicked.connect(
+                lambda _, s=slug, i=hid: self._bookmark_toggle(s, i))
+            self._saved_col.addWidget(c)
+        self._saved_col.addStretch(1)
+
+    def _bookmark_toggle(self, slug, hid):
+        """Buang/masuk semula tanda buku terus dari halaman Tersimpan."""
+        self._toggle_save({"collection": slug, "id": hid})
+        self._render_saved()
 
     def _kemas_butang_atas_tersimpan(self):
         """Tunjuk/sembunyi butang ↑ mengikut kedudukan skrol (Sesi 34).
