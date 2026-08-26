@@ -19,10 +19,11 @@ from __future__ import annotations
 
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import (
-    QHBoxLayout, QLabel, QPushButton, QSizePolicy, QVBoxLayout, QWidget,
+    QCheckBox, QHBoxLayout, QLabel, QPushButton, QSizePolicy, QVBoxLayout,
+    QWidget,
 )
 
-from ui.helpers import _clear, read_history
+from ui.helpers import _clear, read_history, remove_reading
 from ui.pages import Hero, empty_state
 from ui.theme import ada_latar_imej, COLLECTION_META
 from ui.widgets import BackgroundCanvas, hadith_card_dwibahasa, make_scroll
@@ -192,6 +193,25 @@ class PagesTersimpan:
         n = len(hist)
         self._saved_sub.setText(
             f"{n} hadis dibaca" if n else "Tiada sejarah bacaan")
+        # Bar kawalan: pilih semua + buang pukal (Sesi 26 Ogos).
+        self._sejarah_checks = []
+        bar = QWidget()
+        bl = QHBoxLayout(bar)
+        bl.setContentsMargins(0, 0, 0, 0)
+        bl.setSpacing(10)
+        self._sejarah_all_chk = QCheckBox("Pilih semua")
+        self._sejarah_all_chk.setCursor(Qt.PointingHandCursor)
+        self._sejarah_all_chk.stateChanged.connect(self._sejarah_pilih_semua)
+        bl.addWidget(self._sejarah_all_chk)
+        bl.addStretch(1)
+        self._sejarah_buang_btn = QPushButton("🗑  Buang dipilih (0)")
+        self._sejarah_buang_btn.setObjectName("ghost")
+        self._sejarah_buang_btn.setCursor(Qt.PointingHandCursor)
+        self._sejarah_buang_btn.setEnabled(False)
+        self._sejarah_buang_btn.clicked.connect(self._sejarah_buang_pilih)
+        bl.addWidget(self._sejarah_buang_btn)
+        self._saved_col.addWidget(bar)
+
         if not hist:
             self._saved_col.addWidget(empty_state(
                 "📖", "Belum ada sejarah bacaan",
@@ -216,8 +236,43 @@ class PagesTersimpan:
                 lambda s=slug, i=nid: self.open_by_ref(s, i, "saved"))
             c.simpan_clicked.connect(
                 lambda _, s=slug, i=nid, hh=h: self._bookmark_toggle(s, i, hh))
-            self._saved_col.addWidget(c)
+            chk = QCheckBox()
+            chk.setCursor(Qt.PointingHandCursor)
+            chk.stateChanged.connect(self._sejarah_kemas_buang)
+            self._sejarah_checks.append((chk, slug, nid))
+            row = QWidget()
+            rl = QHBoxLayout(row)
+            rl.setContentsMargins(0, 0, 0, 0)
+            rl.setSpacing(10)
+            rl.addWidget(chk, 0, Qt.AlignTop)
+            rl.addWidget(c, 1)
+            self._saved_col.addWidget(row)
         self._saved_col.addStretch(1)
+        self._sejarah_kemas_buang()
+
+    def _sejarah_pilih_semua(self, state):
+        for chk, _, _ in getattr(self, "_sejarah_checks", []):
+            chk.setChecked(state == Qt.Checked)
+        self._sejarah_kemas_buang()
+
+    def _sejarah_kemas_buang(self):
+        btn = getattr(self, "_sejarah_buang_btn", None)
+        if btn is None:
+            return
+        checks = getattr(self, "_sejarah_checks", [])
+        k = sum(1 for chk, _, _ in checks if chk.isChecked())
+        btn.setText(f"🗑  Buang dipilih ({k})")
+        btn.setEnabled(k > 0)
+        all_chk = getattr(self, "_sejarah_all_chk", None)
+        if all_chk is not None:
+            total = len(checks)
+            all_chk.setChecked(k == total and total > 0)
+
+    def _sejarah_buang_pilih(self):
+        for chk, slug, nid in list(getattr(self, "_sejarah_checks", [])):
+            if chk.isChecked():
+                remove_reading(slug, nid)
+        self._render_saved()
 
     def _bookmark_toggle(self, slug, hid, h=None):
         """Buang/masuk semula tanda buku terus dari halaman Tersimpan."""

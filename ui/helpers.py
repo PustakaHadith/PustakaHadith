@@ -282,6 +282,15 @@ def record_reading(slug: str, n: int, label: str = "") -> None:
     _write_json(READING_HISTORY, senarai[:_HAD_SEJARAH])
 
 
+def remove_reading(slug: str, n: int) -> None:
+    """Buang satu entri sejarah bacaan ikut pasangan (slug, n)."""
+    if not slug:
+        return
+    senarai = [e for e in read_history()
+               if not (e.get("slug") == slug and e.get("n") == n)]
+    _write_json(READING_HISTORY, senarai)
+
+
 def _clear(layout):
     while layout.count():
         it = layout.takeAt(0)
