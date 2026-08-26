@@ -395,9 +395,14 @@ Hadis):
     Center). `uji_visual_kiraan.py` kekal langkah manual (perlu skrin
     fizikal + DB penuh). **Ujian pasang (sandbox):** pasang senyap ke
     folder sementara + lancar (`PustakaHadith - Makluman`, CPU aktif)
-    berjaya; uninstall bersih.
+    berjaya; uninstall bersih.     **Bangun semula (dist dikemas 26/8, SAH):** `ISCC` jalanan terus
+    (`Start-Process -Wait` beri EXIT=1 awal kerana argumen berganda);
+    binaan **disahkan BERJAYA (EXIT=0, 1937s)** →
+    `Output/PustakaHadith-Setup-1.0.0-x64.exe` 722.5 MB (19:53); saiz
+    sama dengan binaan awal (kandungan dist setara). Ujian pasang
+    sandbox sebelum ini LULUS (pasang 1876 MB + lancar).
 
-**Kiraan telus:** 26 Ogos = **49 commit**.
+**Kiraan telus:** 26 Ogos = **52 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
