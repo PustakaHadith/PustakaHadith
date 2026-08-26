@@ -387,11 +387,13 @@ Hadis):
     (menyelesaikan kegagalan berdiri semak.py #9 untracked). Binaan
     PyInstaller **onedir BERJAYA** (`pyinstaller PustakaHadith.spec`):
     `dist/PustakaHadith/` ~1.8 GB, 7036 fail, `PustakaHadith.exe` ada
-    (teras Fasa 3 selesai; Fasa 0–2 sudah lulus 20 Ogos). **Baki
-    installer:** EXE Setup (Inno Setup `iscc` BELUM dipasang) + sijil
-    penandatanganan + MSIX/Store (akaun Partner Center). Skrip Inno
-    sudah wujud (`installer/PustakaHadith.iss`). `uji_visual_kiraan.py`
-    kekal langkah manual (perlu skrin fizikal + DB penuh).
+    (teras Fasa 3 selesai; Fasa 0–2 sudah lulus 20 Ogos). **EXE Setup
+    Inno Setup BERJAYA** (`iscc installer/PustakaHadith.iss`):
+    `Output/PustakaHadith-Setup-1.0.0-x64.exe` ~722 MB (BELUM
+    ditandatangani — SmartScreen mungkin beri amaran). **Baki
+    installer:** sijil penandatanganan kod + MSIX/Store (akaun Partner
+    Center). `uji_visual_kiraan.py` kekal langkah manual (perlu skrin
+    fizikal + DB penuh).
 
 **Kiraan telus:** 26 Ogos = **49 commit**.
 
