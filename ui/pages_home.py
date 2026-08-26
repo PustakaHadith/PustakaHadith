@@ -247,11 +247,14 @@ class PagesHome:
         self._kad_terakhir = QFrame()
         v.addWidget(self._kad_terakhir)
 
-        n_simpan = len(self.bookmarks) if getattr(self, "bookmarks", None) \
-            else 0
-        v.addWidget(self._kad_sisi(
-            str(n_simpan), "Tersimpan", "Rujukan pilihan anda",
-            self.go, "saved"))
+        self._kad_tersimpan = self._kad_sisi(
+            str(len(self.bookmarks) if getattr(self, "bookmarks", None)
+                else 0),
+            "Tersimpan", "Rujukan pilihan anda",
+            self.go, "saved")
+        self._kad_tersimpan_badge = self._kad_tersimpan.findChild(
+            QLabel, "badgeNumb")
+        v.addWidget(self._kad_tersimpan)
         v.addWidget(self._kad_sisi(
             "⚄", "Rawak", "Terokai hadis rawak", self._random))
 
@@ -327,6 +330,7 @@ class PagesHome:
         ajakan "Mula baca" menuju Jelajah Kitab. Kedua-dua keadaan guna
         kad sisi yang sama — hanya badge/tajuk/sub/tindakan berbeza.
         """
+        self._kemas_kiraan_home()
         kad = getattr(self, "_kad_terakhir", None)
         if kad is None:
             return
@@ -355,6 +359,15 @@ class PagesHome:
         kad.setParent(None)
         kad.deleteLater()
         self._kad_terakhir = baharu
+
+    def _kemas_kiraan_home(self):
+        """Segarkan badge 'Tersimpan' di halaman Utama supaya selari dengan
+        halaman Simpan & Sejarah (failsync bila simpan/buang dari tempat
+        lain). Dipanggil setiap kali kembali ke Utama."""
+        badge = getattr(self, "_kad_tersimpan_badge", None)
+        if badge is not None:
+            n = len(self.bookmarks) if getattr(self, "bookmarks", None) else 0
+            badge.setText(str(n))
 
     # ── tindakan ─────────────────────────────────────────────────────
     def _from_home_search(self):
