@@ -20,7 +20,7 @@ from PyQt5.QtWidgets import (
     QSizePolicy, QVBoxLayout, QWidget,
 )
 
-from ui.widgets import attach_copy_menu
+from ui.widgets import attach_copy_menu, BackgroundCanvas
 from ui.deklarasi import DeklarasiDialog
 from ui.theme import (
     AMBER_BG, AMBER_BORDER, AMBER_TEXT, BORDER, CARD_BG, CARD_BG_HOVER,
@@ -693,14 +693,15 @@ class ApiDialog(QDialog):
         self.setModal(True)
         self.setFixedWidth(440)
         self.setStyleSheet(f"""
-            QDialog {{ background-color: {HEADER_BG}; }}
+            QDialog {{ background-color: {PAGE_BG}; }}
             QLabel  {{ color: {TEXT_SECONDARY}; font-size: 11px; }}
         """)
         self._build()
 
     # ── susun atur ────────────────────────────────────────────────────
     def _build(self):
-        lo = QVBoxLayout(self)
+        kanvas = BackgroundCanvas(self, dunia=True)
+        lo = QVBoxLayout(kanvas)
         lo.setContentsMargins(22, 20, 22, 18)
         lo.setSpacing(14)
 
@@ -822,6 +823,10 @@ class ApiDialog(QDialog):
         lo.addWidget(brow)
 
         self._refresh_status()
+
+        luar = QVBoxLayout(self)
+        luar.setContentsMargins(0, 0, 0, 0)
+        luar.addWidget(kanvas)
 
     # ── pembantu ──────────────────────────────────────────────────────
     def _lbl(self, t):

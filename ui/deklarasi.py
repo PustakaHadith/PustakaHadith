@@ -24,6 +24,7 @@ from ui.theme import (
     AMBER_TEXT, BORDER, CARD_BG, HEADER_BG, PAGE_BG, TEAL, TEAL_LIGHT,
     TEXT_FAINT, TEXT_MUTED, TEXT_PRIMARY,
 )
+from ui.widgets import BackgroundCanvas
 
 DEKLARASI_FLAG = "deklarasi_dibaca"
 SEMAKHADIS_URL = "https://semakhadis.com"
@@ -93,7 +94,8 @@ class DeklarasiDialog(QDialog):
         self.setMaximumWidth(640)
         self.setStyleSheet(f"QDialog {{ background: {PAGE_BG}; }}")
 
-        akar = QVBoxLayout(self)
+        kanvas = BackgroundCanvas(self, dunia=True)
+        akar = QVBoxLayout(kanvas)
         akar.setContentsMargins(0, 0, 0, 0)
         akar.setSpacing(0)
 
@@ -135,6 +137,10 @@ class DeklarasiDialog(QDialog):
         btn.clicked.connect(self.accept)
         bl.addWidget(btn)
         akar.addWidget(bar)
+
+        luar = QVBoxLayout(self)
+        luar.setContentsMargins(0, 0, 0, 0)
+        luar.addWidget(kanvas)
 
     # ── teks pendek — skrin permulaan ───────────────────────────────
     def _bina_pendek(self, v: QVBoxLayout):

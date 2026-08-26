@@ -49,8 +49,9 @@ from ui.theme import (
     GUTTER, RED_BG, RED_BORDER, RED_TEXT, TEAL, TEXT_SECONDARY,
 )
 from ui.widgets import (
-    BAB_TAFSIR, Collapsible, _ialah_bab_tafsir, arabic_browser,
-    attach_copy_menu, centered_column, elide, make_scroll, text_browser,
+    BAB_TAFSIR, BackgroundCanvas, Collapsible, _ialah_bab_tafsir,
+    arabic_browser, attach_copy_menu, centered_column, elide, make_scroll,
+    text_browser,
 )
 from ui.workers import HadithWorker, RandomWorker
 from utils.bahasa import betulkan_melayu, guna_simbol_selawat
@@ -172,14 +173,16 @@ class PagesDetail:
         # dalam viewport 669px -- 188px ruang kosong terapung di bawah
         # butang. Melekatkan bar menghilangkan ruang itu sepenuhnya dan
         # butang sentiasa di tempat yang sama.
-        luar = QWidget()
-        luar.setObjectName("page")
+        luar = BackgroundCanvas(dunia=True)
+        luar.setObjectName("detailPage")
         self.stack.addWidget(luar)
         ll = QVBoxLayout(luar)
         ll.setContentsMargins(0, 0, 0, 0)
         ll.setSpacing(0)
 
-        sa = make_scroll()
+        sa = make_scroll(luar)
+        sa.setObjectName("detailScroll")
+        sa.setStyleSheet("background: transparent;")
         ll.addWidget(sa, 1)
         self._detail_sa = sa
 
@@ -214,7 +217,8 @@ class PagesDetail:
         sa.resizeEvent = _on_resize
 
         body = QWidget()
-        body.setObjectName("page")
+        body.setObjectName("detailBody")
+        body.setStyleSheet("background: transparent;")
         sa.setWidget(body)
         self._detail_root = QVBoxLayout(body)
         self._detail_root.setContentsMargins(0, 0, 0, 12)
