@@ -27,13 +27,13 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**12 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**13 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
 fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail
 + halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis + tab Simpan
-& Sejarah + tarikh simpan & navigasi Kembali).
+& Sejarah + tarikh simpan & navigasi Kembali + isi semula tarikh lama).
 
-**Kerja 26 Ogos (12 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (13 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
@@ -180,7 +180,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ## Sesi Terakhir — 26 Ogos 2026 (9 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **12 commit** (glassy scrim +
+Versi semasa: **v1.0**. Kerja 26 Ogos — **13 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
 Hadis):
 
@@ -286,9 +286,17 @@ Hadis):
     simpan dari tab **Telah dibaca** kini bawa data hadis penuh supaya kad
     tersimpan ada teks. Disahkan offscreen: meta kad = "Sunan Abu Daud 2906
     · … · disimpan 26 Ogos 2026"; `_detail_from` = "saved" (Kembali →
-    halaman simpan), kekal bila buka hadis seterusnya.
+     halaman simpan), kekal bila buka hadis seterusnya.
 
-**Kiraan telus:** 26 Ogos = **12 commit**.
+13. **Isi semula tarikh simpan lama** (`234b2ef`) — penanda buku disimpan
+     SEBELUM ciri `saved_at` wujud tiada rujukan masa. `backfill_saved_at`
+     (helpers.py) dijalankan sekali pada permulaan (`app_qt.py`): isi
+     `saved_at` yang hilang dengan *mtime* fail `bookmarks.json` sebagai
+     anggaran; tulis semula bila berubah. Hadis simpan BAHARU kekal guna
+     `datetime.now()`. Idempoten. Disahkan: lama dapat mtime, baru kekal,
+     backfill kedua tiada ubah; boot app semua penanda ada `saved_at`.
+
+**Kiraan telus:** 26 Ogos = **13 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
