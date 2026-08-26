@@ -559,13 +559,31 @@ class PagesKitab:
         bar.rangeChanged.connect(_bila_range)
 
     def _kitab_toggle_simpan(self, h: dict):
-        """Butang 🔖 pada kad — toggle tanda buku, muat semula halaman.
+        """Butang 🔖 pada kad — toggle tanda buku, KEMAS SATU kad sahaja.
 
-        Muat semula (bukan kemas widget tunggal) supaya chip "Tersimpan"
-        dan keadaan 🔖 semua kad sentiasa konsisten dengan bookmarks.
+        Tidak muat semula seluruh halaman (`_load_kitab_page`) kerana ia
+        mengosongkan senarai lalu memutar ListWorker semula — menyebabkan
+        kelipan ~1 saat (glob kelihatan berkedip). Sebaliknya kemas butang
+        🔖 kad yang diklik di tempatnya; jika penapis aktif ialah
+        "tersimpan", buang kad itu dari senarai (sudah tidak layak).
         """
         self._toggle_save(h)
-        self._load_kitab_page(self._kitab_page)
+        slug = h.get("collection") or self._kitab_slug
+        hid = h.get("id")
+        saved = self._is_saved(slug, hid)
+        for i in range(self._kitab_list.count()):
+            it = self._kitab_list.itemAt(i)
+            c = it.widget() if it else None
+            if c is not None and getattr(c, "_hid", None) == hid:
+                if self._kitab_tapis == "tersimpan" and not saved:
+                    self._kitab_list.removeWidget(c)
+                    c.deleteLater()
+                else:
+                    c.simpan_btn.setObjectName(
+                        "simpanChip_aktif" if saved else "simpanChip")
+                    c.simpan_btn.style().unpolish(c.simpan_btn)
+                    c.simpan_btn.style().polish(c.simpan_btn)
+                break
 
     def _skrol_ke_kad(self, sasaran: int):
         """Skrol senarai kitab supaya kad sasaran kelihatan ~1/3 dari atas.
