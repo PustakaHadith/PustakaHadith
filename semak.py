@@ -3640,6 +3640,37 @@ def semak_deklarasi() -> None:
     else:
         salah("halaman Carian TIADA pautan SemakHadis")
 
+    # Halaman Carian gaya Aqua Glass (26 Ogos 2026): latar glob + kad
+    # dwibahasa + togol kaedah carian (Kata kunci / Makna / Kedua-dua).
+    if "BackgroundCanvas()" in pc and "vl.addWidget(sa)" in pc:
+        lulus("halaman Carian: BackgroundCanvas (glob AQUA)")
+    else:
+        salah("halaman Carian TIADA BackgroundCanvas")
+
+    if "hadith_card_dwibahasa(" in pc and "_tambah_kad_carian" in pc:
+        lulus("halaman Carian: kad hasil dwibahasa")
+    else:
+        salah("halaman Carian TIADA kad dwibahasa")
+
+    if "_bina_togol_kaedah" in pc and "_set_mod_carian" in pc \
+            and '"carian_mod"' in pc:
+        lulus("halaman Carian: togol kaedah carian (carian_mod)")
+    else:
+        salah("halaman Carian TIADA togol kaedah carian")
+
+    if 'self.settings.get("carian_mod", "kedua")' in pc:
+        lulus("halaman Carian: lalai carian_mod = kedua")
+    else:
+        salah("halaman Carian TIADA lalai carian_mod = kedua")
+
+    # Mod 'kata' melangkau semantic, 'makna' melangkau keyword
+    # (enjin dilangkau ditetapkan senarai kosong serta-merta).
+    if 'mod in ("kata", "kedua")' in pc and 'mod in ("makna", "kedua")' in pc \
+            and "self._sem_res = []" in pc and "self._kw_res = []" in pc:
+        lulus("halaman Carian: mod kata/makna langkau enjin")
+    else:
+        salah("halaman Carian TIADA pengasingan enjin ikut mod")
+
 
 def semak_peraturan_sisa() -> None:
     """Ujian peraturan fail sisa: suntik fail, sahkan dikesan, buang.

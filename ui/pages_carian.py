@@ -32,9 +32,11 @@ from ui.pages import Hero, Pager, SearchBar, empty_state
 from ui.deklarasi import SEMAKHADIS_URL
 from ui.theme import (
     AMBER_BG, AMBER_BORDER, AMBER_TEXT, COLLECTION_META, TEXT_MUTED,
+    ada_latar_imej,
 )
 from ui.widgets import (
-    attach_copy_menu, centered_column, hadith_card, make_scroll, text_browser,
+    BackgroundCanvas, attach_copy_menu, hadith_card_dwibahasa, make_scroll,
+    text_browser,
 )
 from ui.workers import SearchWorker, SemanticWorker
 
@@ -42,8 +44,13 @@ from ui.workers import SearchWorker, SemanticWorker
 class PagesCarian:
     # ── HALAMAN: Carian ──────────────────────────────────────────────
     def _page_search(self):
-        sa = make_scroll()
-        self.stack.addWidget(sa)
+        # Latar: BackgroundCanvas (glob AQUA / warna pepejal tema lain) —
+        # pola sama Utama/rak/kitab. Skrol berlaku pada QScrollArea TELUS
+        # di dalamnya supaya glob kekal TETAP (parallax) semasa skrol.
+        kanvas = BackgroundCanvas()
+        self.stack.addWidget(kanvas)
+        sa = make_scroll(kanvas)
+        sa.setObjectName("homeScroll")
         self._search_sa = sa
 
         # Butang terapung "↑ ke atas" (Sesi 34) — sama seperti halaman
@@ -72,13 +79,17 @@ class PagesCarian:
         sa.resizeEvent = _on_resize
 
         body = QWidget()
-        body.setObjectName("page")
+        body.setObjectName("homeBody")
         sa.setWidget(body)
         bl = QVBoxLayout(body)
         bl.setContentsMargins(0, 0, 0, 16)
         bl.setSpacing(0)
 
         hero = Hero("Pencarian Hadis", compact=True)
+        # Aqua Glass: hero telus supaya glob tembus (hanya teks atas glob).
+        if ada_latar_imej():
+            hero.setStyleSheet(
+                "QFrame#hero { background: transparent; border: none; }")
         self.search_bar = SearchBar("Cari hadis… (cth. bukhari 433, B433)")
         self.search_bar.setMaximumWidth(900)
         w = QWidget()
@@ -97,8 +108,18 @@ class PagesCarian:
             self.search_bar.chips.changed.connect(
                 lambda _: self._do_search(1) if self._search_q else None)
 
-        col, cl = centered_column()
+        # Lajur kandungan berpusat (TELUS — biar glob AQUA kelihatan di
+        # belakang). Tidak guna centered_column() kerana widgetnya
+        # ber-objectName "page" (PAGE_BG pepejal) yang menutup glob.
+        col = QWidget()
+        col.setObjectName("homeBody")
+        col.setMaximumWidth(960)
+        col.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
+        cl = QVBoxLayout(col)
         cl.setContentsMargins(0, 18, 0, 0)
+        cl.setSpacing(0)
+        # Baris togol kaedah carian (Kata kunci / Makna / Kedua-dua).
+        cl.addWidget(self._bina_togol_kaedah())
         # Baris status: teks hasil + indikator jam berputar 🕐→🕛 semasa
         # carian berjalan. Emoji (berwarna sendiri) -- tiada import warna,
         # jadi tiada keperluan pendaftaran _THEMED_MODULES.
@@ -142,11 +163,102 @@ class PagesCarian:
         # (centered_column) sudah Maximum menegak -- ia mengisi viewport
         # bila kandungan pendek, dan stretch hanya mencipta kawasan skrol
         # kosong di bawah hasil carian yang panjang.
-        bl.addWidget(col)
+        # Pusat menegak lajur kandungan; glob kekal kelihatan di sisi.
+        wrap = QWidget()
+        wl2 = QHBoxLayout(wrap)
+        wl2.setContentsMargins(0, 0, 0, 0)
+        wl2.addStretch(1)
+        wl2.addWidget(col, 0, Qt.AlignTop)
+        wl2.addStretch(1)
+        bl.addWidget(wrap)
+
+        # Kanvas perlu mengisi ruang: letakkan scroll-area telus di dalamnya.
+        vl = QVBoxLayout(kanvas)
+        vl.setContentsMargins(0, 0, 0, 0)
+        vl.addWidget(sa)
 
         self._search_list.addWidget(
             empty_state("🔍", "Cari hadis",
                         "Masukkan kata kunci untuk mencari dalam 62,169 hadis."), 1)
+
+    def _bina_togol_kaedah(self) -> QWidget:
+        """Baris togol kaedah carian: Kata kunci / Makna / Kedua-dua.
+
+        Pilihan disimpan ke `carian_mod` (user_settings.json) dan dibaca
+        semula bila halaman dibina semula (tukar tema). Lalai "kedua".
+        """
+        row = QWidget()
+        rl = QHBoxLayout(row)
+        rl.setContentsMargins(0, 0, 0, 0)
+        rl.setSpacing(8)
+        label = QLabel("Kaedah carian")
+        label.setObjectName("muted")
+        rl.addWidget(label)
+        self._mod_chips = {}
+        for val, txt in (("kata", "Kata kunci"), ("makna", "Makna"),
+                         ("kedua", "Kedua-dua")):
+            b = QPushButton(txt)
+            b.setObjectName("filterChip")
+            b.setCursor(Qt.PointingHandCursor)
+            b.clicked.connect(lambda _, v=val: self._set_mod_carian(v))
+            self._mod_chips[val] = b
+            rl.addWidget(b)
+        rl.addStretch(1)
+        self._kemas_mod_carian()
+        return row
+
+    def _kemas_mod_carian(self):
+        """Tanda butang aktif ikut `carian_mod` (unpolish/polish = segar)."""
+        aktif = self.settings.get("carian_mod", "kedua")
+        for v, b in self._mod_chips.items():
+            b.setObjectName("filterChip_active" if v == aktif else "filterChip")
+            b.style().unpolish(b)
+            b.style().polish(b)
+
+    def _set_mod_carian(self, v: str):
+        """Tukar kaedah carian + kekalkan pilihan dalam tetapan."""
+        if self.settings.get("carian_mod", "kedua") == v:
+            return
+        self.settings["carian_mod"] = v
+        try:
+            from ui.pages_tetapan import SETTINGS, _write_json
+            _write_json(SETTINGS, self.settings)
+        except Exception:
+            pass
+        self._kemas_mod_carian()
+        # Cari semula dengan mod baharu bila ada query aktif.
+        if getattr(self, "_search_q", ""):
+            self._do_search(1)
+
+    def _tambah_kad_carian(self, h, slug, hid, lay):
+        """Tambah satu kad dwibahasa ke layout hasil carian.
+
+        `h` dinormalisasi (salinan) supaya `id`/`collection` wujud untuk
+        kad, simpan (🔖) dan buka butiran. Kitab ditunjukkan dalam meta kad.
+        """
+        h = dict(h)
+        h.setdefault("collection", slug)
+        h.setdefault("id", hid)
+        name = COLLECTION_META.get(slug, {}).get("name", slug)
+        c = hadith_card_dwibahasa(
+            h, name, self.ar_scale, arabic_font=self.ar_font,
+            tersimpan=self._is_saved(slug, hid),
+            papar_melayu=self._papar_melayu)
+        c._hid = hid
+        c.clicked.connect(lambda _, hh=h: self.open_detail(hh, "search"))
+        c.simpan_clicked.connect(
+            lambda _, hh=h, cc=c, s=slug, i=hid:
+            self._carian_toggle_simpan(hh, cc, s, i))
+        lay.addWidget(c)
+
+    def _carian_toggle_simpan(self, h, card, slug, hid):
+        """Butang 🔖 pada kad carian — toggle tanda buku, segar butang."""
+        self._toggle_save(h)
+        simpan = card.simpan_btn
+        simpan.setObjectName(
+            "simpanChip_aktif" if self._is_saved(slug, hid) else "simpanChip")
+        simpan.style().unpolish(simpan)
+        simpan.style().polish(simpan)
 
     def _hantar_carian(self):
         """Hantar carian dari bar carian (butang/Enter).
@@ -201,28 +313,43 @@ class PagesCarian:
         self._tok += 1
         tok = self._tok
 
-        # Gabungan: kedua-dua enjin (keyword + semantik) berjalan selari.
-        # Paparan hanya dibuat apabila KEDUA-DUANYA selesai -- supaya
-        # pengguna dapat draf AI + kad keyword dalam satu senarai.
+        mod = self.settings.get("carian_mod", "kedua")
         self._sem_res = None
         self._kw_res = None
         self._kw_meta = {}
+        self._sem_gagal = None
         _clear(self._search_list)
         self.search_info.setText(f"Mencari '{q}'…")
         self._carian_sibuk.show()
         self._carian_timer.start()
-        kw_worker = self._run(
-            SearchWorker(self.api, q, self._search_slug, page,
-                         self.per_page(), self.lang_param, tok),
-            self._on_search,
-            # SearchWorker.failed = pyqtSignal(str) -- satu argumen,
-            # jadi tok ditangkap dalam lambda (bukan disambung terus).
-            on_fail=lambda m: self._on_search_failed(m, tok))
-        # Tampal paparan hanya selepas worker benar-benar tamat (finished),
-        # BUKAN dari callback done -- mengelak akses serentak ke model torch
-        # (0xC0000409) semasa QThread masih menamatkan run().
-        kw_worker.finished.connect(lambda: self._tampal_gabungan(tok))
-        self._run_semantic_search(q, tok)
+
+        # Kaedah carian (togol 3-mod):
+        #   kata  -> hanya SearchWorker (FTS5), tiada draf AI
+        #   makna -> hanya SemanticWorker (draf + hasil makna)
+        #   kedua -> kedua-dua serentak (gelagat asal)
+        # Enjin yang dilangkau ditetapkan senarai kosong serta-merta supaya
+        # _tampal_gabungan tetap tamat (menunggu KEDUA-dua hasil).
+        if mod in ("kata", "kedua"):
+            kw_worker = self._run(
+                SearchWorker(self.api, q, self._search_slug, page,
+                             self.per_page(), self.lang_param, tok),
+                self._on_search,
+                # SearchWorker.failed = pyqtSignal(str) -- satu argumen,
+                # jadi tok ditangkap dalam lambda (bukan disambung terus).
+                on_fail=lambda m: self._on_search_failed(m, tok))
+            # Tampal paparan hanya selepas worker benar-benar tamat
+            # (finished), BUKAN dari callback done -- mengelak akses
+            # serentak ke model torch (0xC0000409) semasa QThread masih
+            # menamatkan run().
+            kw_worker.finished.connect(lambda: self._tampal_gabungan(tok))
+        else:
+            self._kw_res = []
+            self._kw_meta = {}
+
+        if mod in ("makna", "kedua"):
+            self._run_semantic_search(q, tok)
+        else:
+            self._sem_res = []
 
     def _run_semantic_search(self, query: str, tok: int):
         """Jalankan carian semantik di background thread (Lazy Loading).
@@ -362,6 +489,7 @@ class PagesCarian:
         self._carian_sibuk.hide()
         self._carian_timer.stop()
 
+        mod = self.settings.get("carian_mod", "kedua")
         sem = self._sem_res
         kw = self._kw_res
         meta = self._kw_meta
@@ -372,7 +500,8 @@ class PagesCarian:
         if self._search_slug:
             scope = f" dalam {COLLECTION_META[self._search_slug]['name']}"
 
-        # Draf jawapan AI di atas (jika ada hasil semantik)
+        # Draf jawapan AI di atas (jika ada hasil semantik). Mod "kata"
+        # melangkau enjin semantik -- tiada draf dipapar.
         if sem:
             from core.draft_answer import compose_draft_answer
             draft = compose_draft_answer(self._search_q, self.api,
@@ -397,8 +526,9 @@ class PagesCarian:
             # Kes "hukum riba": carian keyword (FTS5 AND semua perkataan)
             # pulang 0 hasil walaupun setiap perkataan wujud secara
             # berasingan. Beritahu pengguna mengapa kad keyword kosong dan
-            # bawa perhatian ke hasil AI yang ada di bawah.
-            if not kw and not meta.get("total"):
+            # bawa perhatian ke hasil AI yang ada di bawah. Hanya relevan
+            # bila enjin keyword turut dijalankan (mod kata/kerja).
+            if mod in ("kata", "kedua") and not kw and not meta.get("total"):
                 nota = QLabel(
                     "ℹ️ Tiada padanan kata kunci yang mengandungi SEMUA "
                     f"perkataan '{self._search_q}'. Padanan makna (AI) di "
@@ -426,8 +556,9 @@ class PagesCarian:
         # Fallback OR (v1.2): FTS5 AND pulang 0 hasil untuk kes "hukum riba"
         # walaupun setiap perkataan wujud berasingan. Bila fallback aktif,
         # hasil kata di bawah mengandungi MANA-MANA satu perkataan, bukan
-        # SEMUA — beritahu pengguna supaya mereka tidak keliru.
-        if meta.get("fallback") and kw:
+        # SEMUA — beritahu pengguna supaya mereka tidak keliru. Hanya
+        # untuk mod yang menjalankan enjin keyword (kata/kerja).
+        if mod in ("kata", "kedua") and meta.get("fallback") and kw:
             nota = QLabel(
                 "ℹ️ Carian kata kunci longgar: tiada hadis mengandungi SEMUA "
                 f"perkataan '{self._search_q}'. Hasil kata kunci di bawah "
@@ -440,33 +571,29 @@ class PagesCarian:
                 f"padding: 10px; font-size: 12px;")
             self._search_list.addWidget(nota)
 
-        # Kad hadis: semantik dahulu (paling relevan ikut makna), dedupe
+        # Kad hasis dwibahasa (terjemahan kiri, Arab kanan): semantik
+        # dahulu (paling relevan ikut makna), dedupe, kemudian keyword
+        # yang tidak bertindih.
         seen = set()
         for r in sem:
-            key = (r.get("collection"), r.get("hadis_id"))
-            seen.add(key)
-            h = self.api.get_hadis_by_id(r["collection"], r["hadis_id"])
-            if h:
-                name = COLLECTION_META.get(r["collection"], {}).get("name", r["collection"])
-                c = hadith_card(h, name, self.ar_scale, show_chip=True,
-                                arabic_font=self.ar_font,
-                                papar_melayu=self._papar_melayu)
-                c.clicked.connect(lambda hh=h: self.open_detail(hh, "search"))
-                self._search_list.addWidget(c)
-
-        # Kemudian kad keyword yang tidak bertindih dengan semantik
-        for h in kw:
-            key = (h.get("collection"), h.get("hadis_id"))
+            slug, hid = r["collection"], r["hadis_id"]
+            key = (slug, hid)
             if key in seen:
                 continue
             seen.add(key)
-            name = COLLECTION_META.get(h.get("collection", ""), {}).get(
-                "name", h.get("collection", ""))
-            c = hadith_card(h, name, self.ar_scale, show_chip=True,
-                            arabic_font=self.ar_font,
-                            papar_melayu=self._papar_melayu)
-            c.clicked.connect(lambda hh=h: self.open_detail(hh, "search"))
-            self._search_list.addWidget(c)
+            h = self.api.get_hadis_by_id(slug, hid)
+            if h:
+                self._tambah_kad_carian(h, slug, hid, self._search_list)
+
+        # Kemudian kad keyword yang tidak bertindih dengan semantik
+        for h in kw:
+            slug = h.get("collection", "")
+            hid = h.get("hadis_id")
+            key = (slug, hid)
+            if key in seen:
+                continue
+            seen.add(key)
+            self._tambah_kad_carian(h, slug, hid, self._search_list)
 
         if not seen:
             self._search_list.addWidget(
