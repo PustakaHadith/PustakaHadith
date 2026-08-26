@@ -192,6 +192,7 @@ class SettingsPanel(QFrame):
         self._sec_paparan()
         self._sec_bacaan()
         self._sec_api()
+        self._sec_lapor()
         self._sec_tentang()
         self.body.addStretch(1)
 
@@ -475,6 +476,78 @@ class SettingsPanel(QFrame):
         g.addWidget(self.info)        # label ini dirujuk oleh _save_api tetapi hidup dalam dialog
         self.api_status = QLabel("")
         self.api_status.hide()
+
+    def _sec_lapor(self):
+        """Tetapan pelayan SMTP — supaya 'Lapor Ralat' hantar terus tanpa
+        membuka klien e-mel. Diisi sekali oleh pembangun; disimpan ke
+        user_settings.json (gitignore)."""
+        g = self._group("Pelayan E-mel (Lapor Ralat)")
+
+        note = QLabel(
+            "Isi sekali supaya pengguna boleh hantar laporan terus "
+            "(tanpa membuka klien e-mel). Guna <b>kata laluan apl</b> "
+            "Gmail, bukan kata laluan login biasa.")
+        note.setObjectName("muted")
+        note.setWordWrap(True)
+        g.addWidget(note)
+
+        def _baris(label, key, default="", password=False):
+            row = QWidget()
+            row.setStyleSheet("background: transparent;")
+            rl = QHBoxLayout(row)
+            rl.setContentsMargins(0, 0, 0, 0)
+            rl.setSpacing(8)
+            lb = QLabel(label)
+            lb.setFixedWidth(120)
+            lb.setStyleSheet(f"font-size: 12px; color: {TEXT_SECONDARY};")
+            rl.addWidget(lb)
+            le = QLineEdit(self.app.settings.get(key, default))
+            if password:
+                le.setEchoMode(QLineEdit.Password)
+            le.setStyleSheet(
+                f"QLineEdit {{ background-color: {CARD_BG}; "
+                f"color: {TEXT_PRIMARY}; border: 1px solid {BORDER}; "
+                f"border-radius: 6px; padding: 6px; }}")
+            rl.addWidget(le, 1)
+            g.addWidget(row)
+            return le
+
+        self._lapor_host = _baris("Pelayan (host)", "smtp_host",
+                                  "smtp.gmail.com")
+        self._lapor_port = _baris("Port", "smtp_port", "587")
+        self._lapor_user = _baris("E-mel pengirim", "smtp_user", "")
+        self._lapor_pw = _baris("Kata laluan apl", "smtp_pass",
+                                password=True)
+
+        save = QPushButton("Simpan")
+        save.setCursor(Qt.PointingHandCursor)
+        save.setFixedSize(96, 32)
+        save.setStyleSheet(
+            f"QPushButton {{ background-color: {TEAL}; color: {PAGE_BG}; "
+            f"border: none; border-radius: 8px; font-size: 13px; "
+            f"font-weight: 700; }} "
+            f"QPushButton:hover {{ background-color: {TEAL_LIGHT}; }}")
+        save.clicked.connect(self._simpan_lapor)
+        bb = QHBoxLayout()
+        bb.addStretch()
+        bb.addWidget(save)
+        g.addLayout(bb)
+
+    def _simpan_lapor(self):
+        a = self.app
+        try:
+            port = int(self._lapor_port.text().strip() or 587)
+        except ValueError:
+            port = 587
+        a.settings["smtp_host"] = self._lapor_host.text().strip()
+        a.settings["smtp_port"] = port
+        a.settings["smtp_user"] = self._lapor_user.text().strip()
+        a.settings["smtp_pass"] = self._lapor_pw.text()
+        a.settings["smtp_from"] = self._lapor_user.text().strip()
+        from ui.app_qt import _write_json, SETTINGS
+        _write_json(SETTINGS, a.settings)
+        if hasattr(a, "toast"):
+            a.toast.show_msg("Tetapan pelayan e-mel disimpan")
 
     def _sec_tentang(self):
         """Butang 'Tentang' -- buka deklarasi penuh (tujuan, sumber,

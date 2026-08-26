@@ -371,15 +371,18 @@ Hadis):
      `LaporRalatDialog` (QDialog, tajuk "Lapor Ralat"). Kandungan: nota
      "Laporkan ralat anda di sini." (juga placeholder kotak mesej), medan
      "Daripada (e-mel)" (USER EMAIL), medan "Tajuk" terisi "LAPOR RALAT",
-     dan kotak mesej. "Hantar" menyusun
-     `mailto:pustakahadis@gmail.com?subject=...&body=...` lalu buka klien
-     e-mel lalai (tiada SMTP). E-mel pengguna disertakan dalam badan
-     ("Daripada: <email>"). "Batal" tutup dialog. (Asalnya dicadang di
-     Tetapan, dipindah ke butiran hadis seperti permintaan.) Disahkan
-     offscreen: tiada butang di Tetapan; pautan butiran buka dialog; URL
-     mailto ke pustakahadis@gmail.com, subjek "LAPOR RALAT", From + mesej
-     dalam badan. Medan input berlatar putih + teks hitam (bukan warna
-     tema gelap) supaya laporan kelihatan.
+     dan kotak mesej berlatar putih + teks hitam. "Hantar"
+     **menghantar terus** via SMTP jika pelayan dikonfigurasi di
+     **Tetapan → Pelayan E-mel (Lapor Ralat)** (host/port/e-mel pengirim/
+     kata laluan apl; disimpan ke user_settings.json yang di-gitignore).
+     Jika tiada SMTP dikonfigurasi, jatuh balik ke `mailto:` (buka klien
+     e-mel). Modul `ui/smtp_mail.py` (`hantar_emel_smtp`) guna STARTTLS;
+     'From' dikuatkuasakan akaun SMTP, jadi e-mel pelapor disertakan dalam
+     badan ("Daripada: <email>"). "Batal" tutup dialog. (Asalnya dicadang
+     di Tetapan, dipindah ke butiran hadis seperti permintaan.) Disahkan
+     offscreen: seksyen SMTP wujud; tanpa SMTP → mailto; dengan SMTP →
+     hantar_emel_smtp ke pustakahadis@gmail.com + toast "Laporan dihantar",
+     mailto TIDAK dipanggil.
 
 **Kiraan telus:** 26 Ogos = **21 commit**.
 

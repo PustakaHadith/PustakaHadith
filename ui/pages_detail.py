@@ -1246,7 +1246,7 @@ class PagesDetail:
         Pautan 'Lapor ralat' pada bar tindakan bawah terjemahan
         (sebaris 'Kongsi | Salin') membuka dialog e-mel, bukan sunnah.com.
         """
-        dlg = LaporRalatDialog(parent=self)
+        dlg = LaporRalatDialog(app=self, parent=self)
         dlg.exec_()
 
     def _menu_salin(self):
