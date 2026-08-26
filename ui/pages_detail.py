@@ -28,6 +28,7 @@ tidak mengimport semula (tiada pemanggil luar untuk nama-nama itu).
 
 from __future__ import annotations
 
+import time
 import webbrowser
 from datetime import datetime
 
@@ -1315,8 +1316,22 @@ class PagesDetail:
             self.toast.show_msg("TTS tidak tersedia pada sistem ini", 2500)
 
     def _random(self):
-        self._run(RandomWorker(self.api),
-                  lambda h: self.open_detail(h, "home") if h else None)
+        self._random_toast_t0 = time.monotonic()
+        self.toast.show_msg("\U0001F3B2  Membuka hadis rawak…", 0)
+        self._run(RandomWorker(self.api), self._on_random)
+
+    def _on_random(self, h):
+        if not h:
+            self.toast.show_msg("Tiada hadis rawak dijumpai", 2500)
+            return
+        self.open_detail(h, "home")
+        # Sembunyi toast "Membuka…" selepas detail mula dipapar; jamin
+        # paparan minimum supaya pengguna sempat baca maklum balas.
+        baki = 1200 - int((time.monotonic() - self._random_toast_t0) * 1000)
+        if baki > 0:
+            QTimer.singleShot(baki, self.toast.hide)
+        else:
+            self.toast.hide()
 
     # ── Tersimpan ────────────────────────────────────────────────────
     def _is_saved(self, slug, hid):
