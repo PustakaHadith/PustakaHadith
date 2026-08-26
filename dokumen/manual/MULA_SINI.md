@@ -27,11 +27,11 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**7 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**8 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
-fiks dedupe carian + fiks klik kad).
+fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail).
 
-**Kerja 26 Ogos (7 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (8 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
@@ -39,7 +39,9 @@ Halaman Pencarian diubah suai — BackgroundCanvas glob + kad dwibahasa +
 togol kaedah carian Kata kunci/Makna/Kedua-dua (`4f1de4d`); fiks dedupe
 carian keyword `hadis_id`→`id` supaya SEMUA hasil dipapar (`319787f`);
 fiks klik kad carian/kitab — lambda sepadan isyarat `ClickCard.clicked`
-(0 arg) (`d157235`).
+(0 arg) (`d157235`); latar glob **dunia** (`BackgroundCanvas(dunia=True)`,
+sama seperti Tetapan) untuk dialog Tetapan API, dialog Tentang, dan
+halaman Detail (`360c74b`).
 Kerja 25 Ogos kekal (halaman utama AQUA + rak kitab).
 
 **Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadis → PustakaHadith** —
@@ -161,7 +163,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ---
 
-## Sesi Terakhir — 26 Ogos 2026 (7 commit)
+## Sesi Terakhir — 26 Ogos 2026 (8 commit)
 
 Versi semasa: **v1.0**. Kerja 26 Ogos — **4 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
@@ -215,7 +217,17 @@ Hadis):
    pecah (CRASH LIST: NONE, `_detail_from='search'`). Senarai Hadis
    (`lambda hh=h:`, baris 516) sudah betul sejak mula.
 
-**Kiraan telus:** 26 Ogos = **7 commit**.
+8. **Latar glob seragam** (`360c74b`) — dialog **Tetapan API**
+   (`ApiDialog`), dialog **Tentang** (`DeklarasiDialog`), dan **halaman
+   Detail** (`PagesDetail._page_detail`) dibalut `BackgroundCanvas(
+   dunia=True)` supaya latar sama dengan panel Tetapan (peta dunia AQUA;
+   pepejal pada tema lain). Sebelum ini ketiga-tiganya guna latar
+   pepejal (`HEADER_BG`/`PAGE_BG`). Scroll & body detail dibuat telus
+   (`detailScroll`/`detailBody`) supaya glob kelihatan. Disahkan offscreen:
+   ketiga-tiga mengandungi `BackgroundCanvas`, detail render dengan data
+   sebenar tanpa ralat.
+
+**Kiraan telus:** 26 Ogos = **8 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
