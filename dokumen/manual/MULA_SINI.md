@@ -27,15 +27,16 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**18 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**19 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
 fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail
 + halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis + tab Simpan
 & Sejarah + tarikh simpan & navigasi Kembali + isi semula tarikh lama +
 kotak semak buang pukal sejarah + kilat chip aktif + tarikh dibaca sejarah
-+ fiks kembali dari Utama + kiraan Tersimpan Utama selari).
++ fiks kembali dari Utama + kiraan Tersimpan Utama selari + maklum balas
+Rawak).
 
-**Kerja 26 Ogos (18 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (19 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
@@ -182,7 +183,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ## Sesi Terakhir — 26 Ogos 2026 (9 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **18 commit** (glassy scrim +
+Versi semasa: **v1.0**. Kerja 26 Ogos — **19 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
 Hadis):
 
@@ -345,7 +346,17 @@ Hadis):
      yang dipanggil setiap `_render_sejarah` (go("home")). Disahkan
      offscreen: 3→4→2 sepadan `len(self.bookmarks)`.
 
-**Kiraan telus:** 26 Ogos = **18 commit**.
+19. **Maklum balas Rawak** (`4cdf6c4`) — butang **Rawak** (kad sisi Utama)
+     berfungsi tetapi tiada maklum balas semasa `RandomWorker` memuat,
+     jadi nampak "tak fungsi". `_random` kini papar toast "🎲 Membuka hadis
+     rawak…" (kekal) lalu `RandomWorker`→`_on_random`: buka detail (`from
+     ="home"`, jadi Kembali → Utama) dan sembunyi toast selepas jaminan
+     paparan minimum 1200ms; kegagalan papar "Tiada hadis rawak dijumpai".
+     `import time` ditambah di peringkat modul (sebelum ini hanya import
+     setempat dalam `open_by_ref`). Disahkan offscreen: toast kelihatan →
+     detail (indeks 2) → toast disembunyi; tiada hadis → toast ralat.
+
+**Kiraan telus:** 26 Ogos = **19 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
