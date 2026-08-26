@@ -27,12 +27,13 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**10 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**11 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
 fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail
-+ halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis).
++ halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis + tab Simpan
+& Sejarah).
 
-**Kerja 26 Ogos (10 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (11 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
@@ -47,7 +48,10 @@ halaman Detail (`360c74b`); halaman **Tersimpan (bookmark)** diubah suai
 togol 🔖 buang terus dari halaman (`6ab1f5a`); fiks kelipan Senarai
 Hadis — butang 🔖 pada kad tidak lagi muat semula seluruh halaman
 (`_load_kitab_page`) yang mengosongkan senarai + putar ListWorker semula
-(~1 saat kelipan glob), sebaliknya kemas SATU kad di tempatnya (`52e83b2`).
+(~1 saat kelipan glob), sebaliknya kemas SATU kad di tempatnya (`52e83b2`); tab **Simpan &
+Sejarah** pada halaman Tersimpan — bahagian "Telah dibaca" ambil
+`read_history()` dan papar sebagai kad dwibahasa (klik 🔖 simpan terus,
+`open_by_ref` buka detail), togol tab `filterChip` (`4546090`).
 Kerja 25 Ogos kekal (halaman utama AQUA + rak kitab).
 
 **Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadis → PustakaHadith** —
@@ -171,7 +175,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ## Sesi Terakhir — 26 Ogos 2026 (9 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **10 commit** (glassy scrim +
+Versi semasa: **v1.0**. Kerja 26 Ogos — **11 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
 Hadis):
 
@@ -253,9 +257,20 @@ Hadis):
    `simpanChip`↔`simpanChip_aktif` + `unpolish/polish`); bila penapis
    "tersimpan", buang kad itu dari senarai. `_load_kitab_page` langsung
    TIDAK dipanggil. Disahkan offscreen: 2 kad kekal 2, butang flip, 0
-   muat semula; penapis tersimpan: 2→1 kad, 0 muat semula.
+    muat semula; penapis tersimpan: 2→1 kad, 0 muat semula.
 
-**Kiraan telus:** 26 Ogos = **10 commit**.
+11. **Tab Simpan & Sejarah** (`4546090`) — halaman Tersimpan diberi togol
+    dua tab: **Tersimpan** (penanda buku, `_render_bookmarks_simpan`) dan
+    **Telah dibaca** (`_render_sejarah_simpan`). Bahagian sejarah ambil
+    `read_history()` lalu `api.get_hadis_by_id(slug, n)` untuk setiap
+    entri, dipapar sebagai kad dwibahasa sama; klik 🔖 simpan/masuk
+    terus, klik kad `open_by_ref` buka detail. Label tab & sub-tajuk
+    dikemas dengan kiraan (`_kemas_tab_simpan`). Nav "Tersimpan"
+    ditukar "Simpan & Sejarah". Disahkan offscreen: tab Simpan 3 kad,
+    tab Baca 10 kad (sejarah sebenar), tukar tab + klik/kunci 🔖 tiada
+    ralat.
+
+**Kiraan telus:** 26 Ogos = **11 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
