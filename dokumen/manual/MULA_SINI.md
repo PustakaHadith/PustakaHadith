@@ -181,7 +181,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ---
 
-## Sesi Terakhir — 26 Ogos 2026 (47 commit)
+## Sesi Terakhir — 26 Ogos 2026 (49 commit)
 
 Versi semasa: **v1.0**. Kerja 26 Ogos — **47 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
@@ -382,7 +382,18 @@ Hadis):
      SMTP → buka URL Gmail compose ke pustakahadith@gmail.com, subjek
      "LAPOR RALAT", badan ada "Daripada".
 
-**Kiraan telus:** 26 Ogos = **47 commit**.
+22. **Binaan installer (onedir) + selenggara git** (`564c92d`) —
+    tambah `Output/`, `Screenshot/`, `mockup/selected_*` ke `.gitignore`
+    (menyelesaikan kegagalan berdiri semak.py #9 untracked). Binaan
+    PyInstaller **onedir BERJAYA** (`pyinstaller PustakaHadith.spec`):
+    `dist/PustakaHadith/` ~1.8 GB, 7036 fail, `PustakaHadith.exe` ada
+    (teras Fasa 3 selesai; Fasa 0–2 sudah lulus 20 Ogos). **Baki
+    installer:** EXE Setup (Inno Setup `iscc` BELUM dipasang) + sijil
+    penandatanganan + MSIX/Store (akaun Partner Center). Skrip Inno
+    sudah wujud (`installer/PustakaHadith.iss`). `uji_visual_kiraan.py`
+    kekal langkah manual (perlu skrin fizikal + DB penuh).
+
+**Kiraan telus:** 26 Ogos = **49 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
