@@ -27,15 +27,15 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**17 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**18 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
 fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail
 + halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis + tab Simpan
 & Sejarah + tarikh simpan & navigasi Kembali + isi semula tarikh lama +
 kotak semak buang pukal sejarah + kilat chip aktif + tarikh dibaca sejarah
-+ fiks kembali dari Utama).
++ fiks kembali dari Utama + kiraan Tersimpan Utama selari).
 
-**Kerja 26 Ogos (17 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (18 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
@@ -182,7 +182,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ## Sesi Terakhir — 26 Ogos 2026 (9 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **17 commit** (glassy scrim +
+Versi semasa: **v1.0**. Kerja 26 Ogos — **18 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
 Hadis):
 
@@ -337,7 +337,15 @@ Hadis):
      Disahkan offscreen: `dari="home"` → `_detail_from="home"` →
      `BACK_PETA["home"]`=("Utama","home"); lalai carian kekal "search".
 
-**Kiraan telus:** 26 Ogos = **17 commit**.
+18. **Kiraan Tersimpan Utama selari** (`d247b98`) — badge "Tersimpan" di
+     halaman Utama dikira SEKALI pada binaan (`n_simpan = len(self
+     .bookmarks)`) dan tidak disegar; bila simpan/buang dari halaman lain,
+     kiraan tidak padan dengan tab Tersimpan. Simpan rujukan badge
+     (`_kad_tersimpan_badge`) dan segarkan melalui `_kemas_kiraan_home`
+     yang dipanggil setiap `_render_sejarah` (go("home")). Disahkan
+     offscreen: 3→4→2 sepadan `len(self.bookmarks)`.
+
+**Kiraan telus:** 26 Ogos = **18 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
