@@ -27,7 +27,7 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**20 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**21 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
 fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail
 + halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis + tab Simpan
@@ -36,7 +36,7 @@ kotak semak buang pukal sejarah + kilat chip aktif + tarikh dibaca sejarah
 + fiks kembali dari Utama + kiraan Tersimpan Utama selari + maklum balas
 Rawak + nombor carian kitab buka terus).
 
-**Kerja 26 Ogos (20 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (21 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
@@ -181,9 +181,9 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ---
 
-## Sesi Terakhir — 26 Ogos 2026 (9 commit)
+## Sesi Terakhir — 26 Ogos 2026 (21 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **20 commit** (glassy scrim +
+Versi semasa: **v1.0**. Kerja 26 Ogos — **21 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
 Hadis):
 
@@ -365,7 +365,18 @@ Hadis):
      No." sidebar. Disahkan offscreen: "433"→indeks kekal kitab (bukan
      search 3); "riba"→Pencarian (3).
 
-**Kiraan telus:** 26 Ogos = **20 commit**.
+21. **Dialog 'Lapor Ralat'** (`134a5fc`) — butang "🐞 Lapor Ralat" di
+     bahagian **Tetapan → Tentang** membuka `LaporRalatDialog` (QDialog,
+     tajuk "Lapor Ralat"). Kandungan: nota "Laporkan ralat anda di sini."
+     (juga placeholder kotak mesej), medan "Daripada (e-mel)" (USER EMAIL),
+     medan "Tajuk" terisi "LAPOR RALAT", dan kotak mesej. "Hantar"
+     menyusun `mailto:pustakahadis@gmail.com?subject=...&body=...` lalu
+     buka klien e-mel lalai (tiada SMTP). E-mel pengguna disertakan dalam
+     badan ("Daripada: <email>") supaya pembangun boleh balas. "Batal"
+     tutup dialog. Disahkan offscreen: butang wujud; URL mailto ke
+     pustakahadis@gmail.com, subjek "LAPOR RALAT", From + mesej dalam badan.
+
+**Kiraan telus:** 26 Ogos = **21 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
