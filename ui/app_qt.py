@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import (
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from ui.helpers import (                                             # noqa: E402
-    BOOKMARKS, LANG_PARAM, PAGES, SETTINGS,
+    BOOKMARKS, LANG_PARAM, PAGES, SETTINGS, backfill_saved_at,
     _parse_lompat, _read_json, _slug_dari_awalan, _write_json,
 )
 from ui.pages_kitab import PagesKitab                                    # noqa: E402
@@ -69,6 +69,10 @@ class PustakaApp(PagesKitab, PagesRak, PagesCarian, PagesDetail,
 
         self.settings = _read_json(SETTINGS, {})
         self.bookmarks = _read_json(BOOKMARKS, [])
+        self.bookmarks, _bm_changed = backfill_saved_at(
+            self.bookmarks, BOOKMARKS)
+        if _bm_changed:
+            _write_json(BOOKMARKS, self.bookmarks)
 
         self.ui_idx = int(self.settings.get("font_scale_idx", 1))
         # Keputusan Sesi 55 lanjutan: lalai saiz teks Arab = KECIL (0.85)

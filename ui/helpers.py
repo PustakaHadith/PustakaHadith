@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import os
 import re
+from datetime import datetime
 
 from config import (                                       # noqa: E402
     BOOKMARKS_PATH, READING_HISTORY_PATH, SETTINGS_PATH, SUNNAH_MAP,
@@ -27,6 +28,29 @@ from ui.theme import COLLECTION_META  # metadata kitab -- BUKAN warna
 # DATA_DIR (mod frozen: %LOCALAPPDATA%\PustakaHadis), peta sunnah di ASSET_DIR.
 SETTINGS = SETTINGS_PATH
 BOOKMARKS = BOOKMARKS_PATH
+
+
+def backfill_saved_at(bookmarks, path=BOOKMARKS):
+    """Isi semula `saved_at` untuk penanda buku lama tanpa rujukan masa.
+
+    Sebelum ciri tarikh simpan wujud, penanda buku tidak menyimpan masa
+    simpan. Untuk hadis lama yang tiada `saved_at`, gunakan *mtime* fail
+    sebagai anggaran ("disimpan sekitar tarikh fail diubah suai").
+    Pulangkan (senarai, telah_berubah).
+    """
+    if not bookmarks:
+        return bookmarks, False
+    try:
+        mtime = os.path.getmtime(path)
+        fallback = datetime.fromtimestamp(mtime).isoformat(timespec="seconds")
+    except Exception:
+        fallback = datetime.now().isoformat(timespec="seconds")
+    changed = False
+    for b in bookmarks:
+        if not b.get("saved_at"):
+            b["saved_at"] = fallback
+            changed = True
+    return bookmarks, changed
 
 # 25 Ogos: "rak" = index 5 (halaman Rak Digital, dibina di hujung
 # stack). "settings" dialih ke 6 — halaman itu TIDAK lagi dibina
