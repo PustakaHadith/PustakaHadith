@@ -516,7 +516,7 @@ class SettingsPanel(QFrame):
                                   "smtp-mail.outlook.com")
         self._lapor_port = _baris("Port", "smtp_port", "587")
         self._lapor_user = _baris("E-mel pengirim", "smtp_user",
-                                  "pustaka.hadis@outlook.com")
+                                  "pustaka.hadith@outlook.com")
         self._lapor_pw = _baris("Kata laluan apl", "smtp_pass",
                                 password=True)
 
