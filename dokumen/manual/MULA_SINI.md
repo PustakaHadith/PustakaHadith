@@ -27,13 +27,15 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**4 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
-spec + Senarai Hadis).
+**5 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass).
 
-**Kerja 26 Ogos (4 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (5 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
-BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`).
+BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
+Halaman Pencarian diubah suai — BackgroundCanvas glob + kad dwibahasa +
+togol kaedah carian Kata kunci/Makna/Kedua-dua (`4f1de4d`).
 Kerja 25 Ogos kekal (halaman utama AQUA + rak kitab).
 
 **Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadis → PustakaHadith** —
@@ -155,7 +157,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ---
 
-## Sesi Terakhir — 26 Ogos 2026 (4 commit)
+## Sesi Terakhir — 26 Ogos 2026 (5 commit)
 
 Versi semasa: **v1.0**. Kerja 26 Ogos — **4 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
@@ -182,12 +184,24 @@ Hadis):
    (tanda buku) / Belum dibaca (sejarah) + togol Nombor ↓/↑. Carian
    banner buka Pencarian tertapis kitab; Lompat No. dipindah ke sidebar
    (Ctrl+G kekal). API: `get_bab_list` + `get_hadis_list(book/order/
-   ids/exclude_ids)` + `ListWorker` sokong param.
+    ids/exclude_ids)` + `ListWorker` sokong param.
 
-**Kiraan telus:** 26 Ogos = **4 commit**.
+5. **Halaman Pencarian diubah suai** (`4f1de4d`) — gaya Aqua Glass: akar
+   `BackgroundCanvas` glob AQUA (hero telus) + kad hasil dwibahasa
+   (`hadith_card_dwibahasa`, terjemahan kiri | Arab kanan, butang 🔖
+   simpan) di atas `BackgroundCanvas`. Togol kaedah carian 3-mod **Kata
+   kunci / Makna / Kedua-dua** (lalai, disimpan `carian_mod` ke
+   `user_settings.json`); mod `kata` melangkau semantik, `makna`
+   melangkau keyword. Draf jawapan AI kekal sebelum hasil (mod Makna/
+   Kedua-dua). Spesifikasi:
+   `docs/superpowers/specs/2026-08-26-halaman-pencarian-design.md`.
 
-**Gate:** semak.py SEMUA semakan kod LULUS · API senarai 12/12 · ujian
-fungsional `uji_api_senarai.py` (DB memori) · ujian berdata
+**Kiraan telus:** 26 Ogos = **5 commit**.
+
+**Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
+halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
+· API senarai 12/12 · ujian fungsional `uji_api_senarai.py` (DB memori) ·
+ujian mod carian kata/makna (offscreen, routing enjin sah) · ujian berdata
 (uji_tukar_tema/uji_pra_hantar) menunggu hadis.db penuh di
 persekitaran ini. `uji_visual_kiraan.py` dijangka perlu dikemas
 (banner baharu) — jalankan manual selepas sync DB.
