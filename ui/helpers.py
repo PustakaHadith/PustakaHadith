@@ -278,7 +278,8 @@ def record_reading(slug: str, n: int, label: str = "") -> None:
         return
     senarai = [e for e in read_history()
                if not (e.get("slug") == slug and e.get("n") == n)]
-    senarai.insert(0, {"slug": slug, "n": n, "label": label or ""})
+    senarai.insert(0, {"slug": slug, "n": n, "label": label or "",
+                       "read_at": datetime.now().isoformat(timespec="seconds")})
     _write_json(READING_HISTORY, senarai[:_HAD_SEJARAH])
 
 
@@ -289,6 +290,28 @@ def remove_reading(slug: str, n: int) -> None:
     senarai = [e for e in read_history()
                if not (e.get("slug") == slug and e.get("n") == n)]
     _write_json(READING_HISTORY, senarai)
+
+
+def backfill_reading_at(entries, path=READING_HISTORY):
+    """Isi semula `read_at` untuk entri sejarah lama tanpa rujukan masa.
+
+    Sebelum ciri tarikh bacaan wujud, entri sejarah tidak menyimpan masa
+    bacaan. Untuk entri lama tiada `read_at`, gunakan *mtime* fail sebagai
+    anggaran. Pulangkan (senarai, telah_berubah).
+    """
+    if not entries:
+        return entries, False
+    try:
+        mtime = os.path.getmtime(path)
+        fallback = datetime.fromtimestamp(mtime).isoformat(timespec="seconds")
+    except Exception:
+        fallback = datetime.now().isoformat(timespec="seconds")
+    changed = False
+    for e in entries:
+        if not e.get("read_at"):
+            e["read_at"] = fallback
+            changed = True
+    return entries, changed
 
 
 def _clear(layout):

@@ -505,7 +505,8 @@ def hadith_card_dwibahasa(hadis: dict, kitab_name: str = "",
                           scale: float = 1.0, arabic_font: str | None = None,
                           tersimpan: bool = False,
                           papar_melayu=None,
-                          tarikh_simpan: str | None = None) -> ClickCard:
+                          tarikh_simpan: str | None = None,
+                          tarikh_label: str = "disimpan") -> ClickCard:
     """Kad dwibahasa halaman Senarai Hadis (mockup 26 Ogos).
 
     Susunan SEBELAH-MENYEBELAH — berbeza daripada hadith_card (Arab
@@ -567,7 +568,7 @@ def hadith_card_dwibahasa(hadis: dict, kitab_name: str = "",
     if tarikh_simpan:
         _ts = _fmt_tarikh_simpan(tarikh_simpan)
         if _ts:
-            meta_txt += f"  ·  disimpan {_ts}"
+            meta_txt += f"  ·  {tarikh_label} {_ts}"
     meta = QLabel(meta_txt)
     meta.setObjectName("faint")
     kl.addWidget(meta)

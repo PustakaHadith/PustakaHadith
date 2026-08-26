@@ -230,12 +230,14 @@ class PagesTersimpan:
                 h, COLLECTION_META.get(slug, {}).get("name", slug),
                 self.ar_scale, arabic_font=self.ar_font,
                 tersimpan=self._is_saved(slug, nid),
-                papar_melayu=self._papar_melayu)
+                papar_melayu=self._papar_melayu,
+                tarikh_simpan=e.get("read_at"), tarikh_label="dibaca")
             c._hid = nid
             c.clicked.connect(
                 lambda s=slug, i=nid: self.open_by_ref(s, i, "saved"))
-            c.simpan_clicked.connect(
-                lambda _, s=slug, i=nid, hh=h: self._bookmark_toggle(s, i, hh))
+            # Tiada butang Simpan pada sejarah — buang pukal guna kotak
+            # semak; klik kad masih buka detail.
+            c.simpan_btn.hide()
             chk = QCheckBox()
             chk.setCursor(Qt.PointingHandCursor)
             chk.stateChanged.connect(self._sejarah_kemas_buang)
