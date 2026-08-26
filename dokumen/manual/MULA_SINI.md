@@ -381,7 +381,7 @@ Hadis):
      badan ("Daripada: <email>"). "Batal" tutup dialog. (Asalnya dicadang
      di Tetapan, dipindah ke butiran hadis seperti permintaan.) Disahkan
      offscreen: seksyen SMTP wujud; tanpa SMTP → mailto; dengan SMTP →
-     hantar_emel_smtp ke pustakahadis@gmail.com + toast "Laporan dihantar",
+     hantar_emel_smtp ke pustakahadith@gmail.com + toast "Laporan dihantar",
      mailto TIDAK dipanggil. Lalai pelayan ditetapkan **Outlook**
      (smtp-mail.outlook.com:587, pustaka.hadis@outlook.com) — pengguna
      cuma isi kata laluan apl Outlook di Tetapan.

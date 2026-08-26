@@ -1,7 +1,7 @@
 """Dialog 'Lapor Ralat' — pengguna laporkan masalah kepada pembangun.
 
 Buka klien e-mel lalai melalui pautan `mailto:` (tiada pelayan SMTP /
-kredential diperlukan). Penerima dikunci `pustakahadis@gmail.com`, tajuk
+kredential diperlukan). Penerima dikunci `pustakahadith@gmail.com`, tajuk
 lalai "LAPOR RALAT", dan e-mel pengguna disertakan dalam badan supaya
 pembangun boleh membalas.
 """
@@ -22,7 +22,7 @@ from ui.theme import (
     TEXT_MUTED, TEXT_PRIMARY, TEXT_SECONDARY,
 )
 
-DEV_EMAIL = "pustakahadis@gmail.com"
+DEV_EMAIL = "pustakahadith@gmail.com"
 SUBJEK_LALAI = "LAPOR RALAT"
 
 
