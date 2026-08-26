@@ -486,6 +486,118 @@ def hadith_card(hadis: dict, kitab_name: str = "", scale: float = 1.0,
     return card
 
 
+def hadith_card_dwibahasa(hadis: dict, kitab_name: str = "",
+                          scale: float = 1.0, arabic_font: str | None = None,
+                          tersimpan: bool = False,
+                          papar_melayu=None) -> ClickCard:
+    """Kad dwibahasa halaman Senarai Hadis (mockup 26 Ogos).
+
+    Susunan SEBELAH-MENYEBELAH — berbeza daripada hadith_card (Arab
+    atas, terjemahan bawah gaya hadis.my):
+
+        [No]  TERJEMAHAN            |   النص العربي
+              terjemahan Melayu …   |   …
+              Bukhari 1 · bab       |   Baca penuh →        [🔖]
+
+    Digunakan HALAMAN SENARAI SAHAJA (keputusan pengguna); halaman
+    carian/tersimpan/rak kekal hadith_card. Butang 🔖 memancar
+    `simpan_clicked` — halaman yang mengendalikan _toggle_save sendiri
+    (widget ini bebas logik bookmarks).
+    """
+    card = ClickCard()
+    card.setObjectName("kadDwi")
+    lo = QHBoxLayout(card)
+    lo.setContentsMargins(16, 14, 16, 14)
+    lo.setSpacing(14)
+
+    no = QLabel(str(hadis.get("id", "")))
+    no.setObjectName("noBadge")
+    no.setFixedSize(44, 44)
+    no.setAlignment(Qt.AlignCenter)
+    lo.addWidget(no, 0, Qt.AlignTop)
+
+    # ── kolum kiri: terjemahan ───────────────────────────────────────
+    kiri = QWidget()
+    kl = QVBoxLayout(kiri)
+    kl.setContentsMargins(0, 0, 0, 0)
+    kl.setSpacing(6)
+    ek = QLabel("TERJEMAHAN")
+    ek.setObjectName("eyebrow")
+    kl.addWidget(ek)
+
+    _ms = (hadis.get("melayu") or "").strip()
+    if _ms:
+        # "Shallallahu" (Indonesia) -> "Sallallahu" (DBP) + ligatur
+        # selawat ikut tetapan — paparan sahaja, pola sama hadith_card.
+        if papar_melayu is not None:
+            _ms = papar_melayu(_ms)
+        else:
+            from utils.bahasa import betulkan_melayu
+            _ms = betulkan_melayu(_ms)
+    trans = _pilih_terjemahan(_ms, hadis.get("indonesia"),
+                              hadis.get("english"))
+    tlbl = QLabel(elide(trans or "", 230))
+    tlbl.setWordWrap(True)
+    tlbl.setStyleSheet(
+        f"font-size: {int(13 * scale)}px; color: {TEXT_PRIMARY};"
+        f"line-height: 155%;")
+    kl.addWidget(tlbl)
+    kl.addStretch(1)
+
+    bab = (hadis.get("nama_bab") or "").strip()
+    meta_txt = f"{kitab_name} {hadis.get('id', '')}"
+    if bab:
+        meta_txt += f"  ·  {elide(bab, 36)}"
+    meta = QLabel(meta_txt)
+    meta.setObjectName("faint")
+    kl.addWidget(meta)
+    lo.addWidget(kiri, 11)
+
+    # ── pembahagi menegak ────────────────────────────────────────────
+    garis = QFrame()
+    garis.setObjectName("lineV")
+    garis.setFixedWidth(1)
+    lo.addWidget(garis)
+
+    # ── kolum kanan: Arab + tindakan ─────────────────────────────────
+    kanan = QWidget()
+    kn = QVBoxLayout(kanan)
+    kn.setContentsMargins(0, 0, 0, 0)
+    kn.setSpacing(6)
+    arab = (hadis.get("arab") or "").strip()
+    al = QLabel(elide(arab, 200))
+    al.setWordWrap(True)
+    al.setAlignment(Qt.AlignRight | Qt.AlignTop)
+    al.setLayoutDirection(Qt.RightToLeft)
+    fam = arabic_font or ARABIC_FONTS[0]
+    al.setStyleSheet(
+        f'font-family: "{fam}"; font-size: {int(16 * scale)}px;'
+        f"color: {TEXT_PRIMARY}; line-height: 190%;")
+    kn.addWidget(al)
+    kn.addStretch(1)
+
+    bawah = QWidget()
+    bl = QHBoxLayout(bawah)
+    bl.setContentsMargins(0, 0, 0, 0)
+    bl.setSpacing(6)
+    baca = QLabel("Baca penuh →")
+    baca.setObjectName("bacaLink")
+    bl.addWidget(baca)
+    bl.addStretch()
+    simpan = QPushButton("🔖")
+    simpan.setObjectName("simpanChip_aktif" if tersimpan else "simpanChip")
+    simpan.setCursor(Qt.PointingHandCursor)
+    simpan.setFixedSize(30, 30)
+    simpan.setToolTip("Simpan / buang dari tersimpan")
+    bl.addWidget(simpan, 0, Qt.AlignBottom)
+    kn.addWidget(bawah)
+    lo.addWidget(kanan, 9)
+
+    card.simpan_btn = simpan
+    card.simpan_clicked = simpan.clicked
+    return card
+
+
 class FilterChips(QWidget):
     """Bar penapis kitab mendatar — meniru hadis.my."""
 

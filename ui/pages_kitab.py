@@ -1,18 +1,24 @@
-"""Halaman Kitab + lompat ke hadis — mixin PustakaApp (Sesi 30 refactor).
+"""Halaman Senarai Hadis — mixin PustakaApp (reka bentuk 26 Ogos 2026).
 
-Dipisahkan dari `ui/app_qt.py`. Kelas `PagesKitab` menyediakan kaedah
-halaman kitab dan lompat nombor hadis; digabungkan ke `PustakaApp`
-melalui MRO: `class PustakaApp(PagesKitab, PagesCarian, QMainWindow)`.
+Susun atur Split Command Center (mockup terkunci): banner kaca +
+sidebar "KITAB SEMASA / PILIH BAB" + panel senarai dwibahasa, di atas
+BackgroundCanvas (glob AQUA; tema lain permukaan pepejal) — pola sama
+halaman Utama/rak. Kad dwibahasa (terjemahan kiri | Arab kanan) hanya
+di halaman ini (keputusan pengguna).
 
-Kaedah di sini bergantung pada state dan kaedah pada `self` (PustakaApp):
-stack, _run, _tok, _kitab_*, toast, per_page(), ar_scale, ar_font,
-_papar_melayu, _total_of, open_detail, go.
+Dipisahkan dari `ui/app_qt.py` (Sesi 30 refactor). Kelas `PagesKitab`
+digabungkan ke `PustakaApp` melalui MRO. Kaedah di sini bergantung pada
+state/kaedah `self` (PustakaApp): stack, _run, _tok, _kitab_*, toast,
+per_page(), ar_scale, ar_font, _papar_melayu, _total_of, open_detail,
+go, bookmarks, search_bar, _do_search, _toggle_save.
 
 GANDINGAN RENTAS MIXIN: kaedah lompat di sini (`_sahkan_lompat`,
 `_lompat_ke`, `_kira_halaman_lompat`) turut dipanggil oleh `PagesCarian`
 (`_buka_hadis_terus`, `_hantar_carian`) dan halaman Utama
 (`_from_home_search`). Jangan alih keluar kaedah ini tanpa mengemas
-pemanggilnya.
+pemanggilnya. Nama atribut `_kitab_root`, `_kitab_container`,
+`_kitab_list`, `_kitab_pager`, `_kitab_go_box`, `_kitab_sa` KEKAL —
+skrip uji visual & semak.py merujuknya.
 
 Modul ini TIDAK import warna dari `ui.theme` (hanya COLLECTION_META,
 metadata kitab) tetapi didaftar dalam `_THEMED_MODULES` supaya kekal
@@ -21,16 +27,20 @@ konsisten dengan modul UI lain.
 
 from __future__ import annotations
 
-from PyQt5.QtCore import QPoint, Qt, QTimer
+from PyQt5.QtCore import QPoint, Qt, QTimer, pyqtSignal
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import (
-    QHBoxLayout, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget,
+    QFrame, QHBoxLayout, QLabel, QLineEdit, QPushButton, QScrollArea,
+    QVBoxLayout, QWidget,
 )
 
-from ui.helpers import PAGES, _clear, click_sound
-from ui.pages import Hero, Pager, _label_kiraan, breadcrumb, empty_state
+from ui.helpers import PAGES, _clear, click_sound, read_history
+from ui.pages import Pager, _label_kiraan, empty_state
 from ui.theme import COLLECTION_META
-from ui.widgets import BookCover, centered_column, hadith_card, make_scroll
+from ui.widgets import (
+    BackgroundCanvas, ClickCard, attach_copy_menu, elide,
+    hadith_card_dwibahasa, make_scroll,
+)
 from ui.workers import ListWorker
 
 
@@ -45,12 +55,42 @@ def _julat_lompat(total) -> str:
     return f"0–{total}"
 
 
+class _Pautan(QLabel):
+    """Pautan teks kecil boleh klik ("← Kembali ke rak" dsb.)."""
+
+    clicked = pyqtSignal()
+
+    def __init__(self, teks: str, parent=None):
+        super().__init__(teks, parent)
+        self.setObjectName("bacaLink")
+        self.setCursor(Qt.PointingHandCursor)
+
+    def mouseReleaseEvent(self, e):
+        if e.button() == Qt.LeftButton and self.rect().contains(e.pos()):
+            self.clicked.emit()
+        super().mouseReleaseEvent(e)
+
+
 class PagesKitab:
-    # ── HALAMAN: Kitab ───────────────────────────────────────────────
+    # ── HALAMAN: Senarai Hadis ───────────────────────────────────────
     def _page_kitab(self):
-        sa = make_scroll()
-        self.stack.addWidget(sa)
+        # Pola sama Utama/rak (25 Ogos): BackgroundCanvas akar, skrol
+        # telus di atasnya — glob AQUA kelihatan di belakang panel kaca.
+        kanvas = BackgroundCanvas()
+        self.stack.addWidget(kanvas)
+        sa = make_scroll(kanvas)
+        sa.setObjectName("homeScroll")          # QSS telus sama dgn Utama
+        body = QWidget()
+        body.setObjectName("homeBody")
+        sa.setWidget(body)
+        vl = QVBoxLayout(kanvas)
+        vl.setContentsMargins(0, 0, 0, 0)
+        vl.addWidget(sa)
+
         self._kitab_sa = sa
+        self._kitab_root = QVBoxLayout(body)
+        self._kitab_root.setContentsMargins(24, 20, 24, 20)
+        self._kitab_root.setSpacing(14)
 
         # Butang terapung "↑ ke atas" (Sesi 34) — kelihatan bila pengguna
         # skrol ke bawah senarai hadis; klik untuk kembali ke hadis
@@ -76,21 +116,27 @@ class PagesKitab:
 
         sa.resizeEvent = _on_resize
 
-        body = QWidget()
-        body.setObjectName("page")
-        sa.setWidget(body)
-        self._kitab_root = QVBoxLayout(body)
-        self._kitab_root.setContentsMargins(0, 0, 0, 16)
-        self._kitab_root.setSpacing(0)
+        # State penapis (reset bila kitab lain dibuka — lihat open_kitab)
+        self._kitab_bab = None          # book terpilih (None = semua)
+        self._kitab_tapis = "semua"     # semua | tersimpan | belum
+        self._kitab_urutan = "asc"      # asc | desc
+        self._kitab_bab_data: list = []
 
     def open_kitab(self, slug, page=1):
         click_sound()
+        if slug != getattr(self, "_kitab_slug", None):
+            # Kitab baharu: reset penapis supaya pengguna sentiasa mula
+            # dengan pandangan penuh (keputusan spec 26 Ogos).
+            self._kitab_bab = None
+            self._kitab_tapis = "semua"
+            self._kitab_urutan = "asc"
         self._kitab_slug = slug
         self._kitab_page = page
         self.go("kitab")
         self._render_kitab_shell()
         self._load_kitab_page(page)
 
+    # ── bina shell: banner + sidebar + panel senarai ─────────────────
     def _render_kitab_shell(self):
         _clear(self._kitab_root)
         meta = COLLECTION_META.get(self._kitab_slug, {})
@@ -104,49 +150,269 @@ class PagesKitab:
             except Exception:
                 pass
 
-        # Ilustrasi buku (Sesi 15/18) -- kad warna kitab + tajuk Arab,
-        # 100% milik sendiri. Dipapar SEKALI di dalam banner halaman
-        # kitab, di sebelah kiri tajuk (bukan blok berasingan antara
-        # breadcrumb dan senarai).
-        cover = BookCover(meta, self.ar_scale) if meta.get("arabic") else None
-        self._kitab_root.addWidget(Hero(
-            f'{meta.get("icon","")}  {meta.get("name", self._kitab_slug)}',
-            meta.get("desc", ""),
-            subtitle=_label_kiraan(total, "hadis", ""),
-            compact=True,
-            side=cover))
+        # Senarai buku/kitab dalam koleksi (DB tempatan sahaja; kosong
+        # bila dalam talian tanpa DB — bahagian bab disembunyi).
+        self._kitab_bab_data = self.api.get_bab_list(self._kitab_slug) \
+            if getattr(self.api, "conn", None) else []
 
-        col, cl = centered_column()
-        cl.setContentsMargins(0, 18, 0, 0)
-        cl.addWidget(breadcrumb([("Utama", lambda: self.go("home")),
-                                 (meta.get("name", self._kitab_slug), None)]))
+        self._kitab_root.addWidget(self._kitab_banner(meta, total))
+        baris = QWidget()
+        hl = QHBoxLayout(baris)
+        hl.setContentsMargins(0, 0, 0, 0)
+        hl.setSpacing(16)
+        hl.addWidget(self._kitab_sidebar(meta, total))
+        hl.addWidget(self._kitab_panel(), 1)
+        # TIADA addStretch pada _kitab_root — senarai 25 kad melebihi
+        # viewport; stretch menuntut ruang tetap dan menjadikan kawasan
+        # bawah pager kawasan skrol KOSONG (diukur, Sesi 34).
+        self._kitab_root.addWidget(baris)
 
-        # Kotak carian nombor hadis (Sesi 34) — lompat terus ke hadis
-        # kesukaan tanpa skrol. Placeholder kabur menunjukkan julat
-        # kitab semasa (cth. "0–7008" untuk Bukhari). Kotak "Pergi"
-        # lama di pager bawah DIBUANG (Sesi 34) — lompat nombor kini
-        # melalui kotak atas ini sahaja, memanggil _lompat_hadis yang
-        # menyahkan julat + skrol ke kad.
-        go_baris = QWidget()
-        gl = QHBoxLayout(go_baris)
-        gl.setContentsMargins(0, 0, 0, 0)
-        gl.setSpacing(8)
-        gl.addStretch(1)
-        lbl = QLabel("Lompat No. hadis:")
-        lbl.setObjectName("muted")
-        gl.addWidget(lbl)
+    # ── banner atas ──────────────────────────────────────────────────
+    def _kitab_banner(self, meta: dict, total) -> QFrame:
+        b = QFrame()
+        b.setObjectName("glassPanel")
+        h = QHBoxLayout(b)
+        h.setContentsMargins(24, 16, 24, 16)
+        h.setSpacing(16)
+
+        kiri = QWidget()
+        kl = QVBoxLayout(kiri)
+        kl.setContentsMargins(0, 0, 0, 0)
+        kl.setSpacing(2)
+        nama = meta.get("name", self._kitab_slug)
+        eyebrow = QLabel(f"JELAJAH KITAB  /  {nama.upper()}")
+        eyebrow.setObjectName("eyebrow")
+        kl.addWidget(eyebrow)
+        t = QLabel("Senarai Hadis")
+        t.setObjectName("homeH1")
+        kl.addWidget(t)
+        mtxt = nama
+        kiraan = _label_kiraan(total, "hadis", "")
+        if kiraan:
+            mtxt += f"  ·  {kiraan}"
+        if self._kitab_bab_data:
+            mtxt += f"  ·  {len(self._kitab_bab_data)} kitab"
+        m = QLabel(mtxt)
+        m.setObjectName("muted")
+        kl.addWidget(m)
+        h.addWidget(kiri, 1)
+
+        # Carian dalam kitab — buka Pencarian dengan slug dikunci
+        # (keputusan pengguna 26 Ogos; ciri sedia ada diguna semula).
+        self._kitab_carian = QLineEdit()
+        self._kitab_carian.setPlaceholderText(
+            f"Cari dalam {meta.get('short', nama)}…")
+        self._kitab_carian.setFixedWidth(280)
+        self._kitab_carian.setMinimumHeight(40)
+        self._kitab_carian.setClearButtonEnabled(True)
+        attach_copy_menu(self._kitab_carian)
+        self._kitab_carian.returnPressed.connect(self._kitab_hantar_carian)
+        h.addWidget(self._kitab_carian)
+
+        btn = QPushButton("Cari")
+        btn.setObjectName("primary")
+        btn.setCursor(Qt.PointingHandCursor)
+        btn.setMinimumHeight(40)
+        btn.clicked.connect(self._kitab_hantar_carian)
+        h.addWidget(btn)
+        return b
+
+    def _kitab_hantar_carian(self):
+        q = self._kitab_carian.text().strip()
+        if not q:
+            return
+        # Kunci skop kitab pada halaman Pencarian (chip aktif).
+        if getattr(self, "search_bar", None) is not None \
+                and self.search_bar.chips is not None:
+            self.search_bar.chips.set_active(self._kitab_slug, emit=False)
+        self.search_bar.input.setText(q)
+        self.go("search")
+        self._do_search(1)
+
+    # ── sidebar kiri ─────────────────────────────────────────────────
+    def _kitab_sidebar(self, meta: dict, total) -> QFrame:
+        s = QFrame()
+        s.setObjectName("glassPanel")
+        s.setFixedWidth(300)
+        sl = QVBoxLayout(s)
+        sl.setContentsMargins(16, 14, 16, 14)
+        sl.setSpacing(10)
+
+        kiraan = _label_kiraan(total, "hadis", "")
+
+        ek_kitab = QLabel("KITAB SEMASA")
+        ek_kitab.setObjectName("panelSection")
+        sl.addWidget(ek_kitab, 0, Qt.AlignLeft)
+
+        # Kad kitab semasa: lencana kod + nama + kiraan
+        kad = QFrame()
+        kad.setObjectName("sideCard")
+        kl = QHBoxLayout(kad)
+        kl.setContentsMargins(12, 10, 12, 10)
+        kl.setSpacing(12)
+        no_urut = list(COLLECTION_META).index(self._kitab_slug) + 1 \
+            if self._kitab_slug in COLLECTION_META else 0
+        kod = meta.get("short", self._kitab_slug)[:2].upper()
+        lencana = QLabel(f"""<div align="center">
+<span style="font-size:9px;letter-spacing:1px;">{kod}</span><br>
+<span style="font-size:15px;font-weight:800;">{no_urut:02d}</span></div>""")
+        lencana.setObjectName("noBadge")
+        lencana.setFixedSize(46, 46)
+        lencana.setAlignment(Qt.AlignCenter)
+        kl.addWidget(lencana, 0, Qt.AlignTop)
+        info = QWidget()
+        il = QVBoxLayout(info)
+        il.setContentsMargins(0, 0, 0, 0)
+        il.setSpacing(1)
+        nm = QLabel(meta.get("name", self._kitab_slug))
+        nm.setObjectName("h3")
+        nm.setWordWrap(True)
+        il.addWidget(nm)
+        if kiraan:
+            k1 = QLabel(kiraan)
+            k1.setObjectName("muted")
+            il.addWidget(k1)
+        if self._kitab_bab_data:
+            k2 = QLabel(f"{len(self._kitab_bab_data)} kitab")
+            k2.setObjectName("muted")
+            il.addWidget(k2)
+        kl.addWidget(info, 1)
+        sl.addWidget(kad)
+
+        ke_rak = _Pautan("← Kembali ke rak")
+        ke_rak.clicked.connect(lambda: self.go("rak"))
+        sl.addWidget(ke_rak, 0, Qt.AlignLeft)
+
+        # ── PILIH BAB (sembunyi bila tiada data bab) ─────────────────
+        if self._kitab_bab_data:
+            ek_bab = QLabel("PILIH BAB")
+            ek_bab.setObjectName("panelSection")
+            sl.addWidget(ek_bab, 0, Qt.AlignLeft)
+            skrol = QScrollArea()
+            skrol.setObjectName("babScroll")
+            skrol.setWidgetResizable(True)
+            skrol.setFrameShape(QFrame.NoFrame)
+            skrol.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+            skrol.setMaximumHeight(238)
+            bekas = QWidget()
+            bl = QVBoxLayout(bekas)
+            bl.setContentsMargins(0, 0, 0, 0)
+            bl.setSpacing(4)
+            self._kitab_bab_rows: list = []
+            self._tambah_bab_row(bl, None, "Semua hadis",
+                                 total if isinstance(total, int) else
+                                 sum(b["kiraan"] for b in self._kitab_bab_data))
+            for b in self._kitab_bab_data:
+                self._tambah_bab_row(bl, b.get("book"),
+                                     b.get("nama_bab") or f"Buku {b.get('book')}",
+                                     b.get("kiraan", 0))
+            bl.addStretch(1)
+            skrol.setWidget(bekas)
+            sl.addWidget(skrol)
+
+        # ── LOMPAT NO. HADIS (dipindah ke sidebar; Ctrl+G kekal) ─────
+        ek_lompat = QLabel("LOMPAT NO. HADIS")
+        ek_lompat.setObjectName("panelSection")
+        sl.addWidget(ek_lompat, 0, Qt.AlignLeft)
         self._kitab_go_box = QLineEdit()
         self._kitab_go_box.setPlaceholderText(_julat_lompat(total))
         self._kitab_go_box.setToolTip(
             "Taip nombor hadis lalu tekan Enter — contoh: 7008\n"
             "(pintasan: Ctrl+G)")
-        self._kitab_go_box.setFixedWidth(120)
         self._kitab_go_box.setAlignment(Qt.AlignCenter)
         self._kitab_go_box.setValidator(QIntValidator(1, 999999, self))
         self._kitab_go_box.returnPressed.connect(self._hantar_go_box)
-        gl.addWidget(self._kitab_go_box)
-        gl.addStretch(1)
-        cl.addWidget(go_baris)
+        sl.addWidget(self._kitab_go_box)
+
+        sl.addStretch(1)
+        if self._kitab_bab_data:
+            semua = _Pautan(f"Lihat semua {len(self._kitab_bab_data)} kitab →")
+            semua.clicked.connect(lambda: self.go("rak"))
+            sl.addWidget(semua, 0, Qt.AlignLeft)
+        return s
+
+    def _tambah_bab_row(self, bl: QVBoxLayout, book, nama: str, kiraan):
+        row = ClickCard()
+        row.setObjectName(
+            "babRow_active"
+            if book == self._kitab_bab else "babRow")
+        rl = QHBoxLayout(row)
+        rl.setContentsMargins(10, 7, 10, 7)
+        rl.setSpacing(6)
+        nl = QLabel(elide(nama, 22))
+        nl.setToolTip(nama)
+        rl.addWidget(nl, 1)
+        if isinstance(kiraan, int):
+            cl = QLabel(f"{kiraan:,}")
+            cl.setObjectName("faint" if book != self._kitab_bab else "teal")
+            rl.addWidget(cl)
+        row.clicked.connect(lambda _, bk=book: self._kitab_pilih_bab(bk))
+        self._kitab_bab_rows.append((book, row))
+        bl.addWidget(row)
+
+    def _kitab_pilih_bab(self, book):
+        if self._kitab_bab == book:
+            return
+        self._kitab_bab = book
+        self._kemas_bab_rows()
+        self._load_kitab_page(1)
+
+    def _kemas_bab_rows(self):
+        for book, row in getattr(self, "_kitab_bab_rows", []):
+            aktif = book == self._kitab_bab
+            row.setObjectName("babRow_active" if aktif else "babRow")
+            row.style().unpolish(row)
+            row.style().polish(row)
+
+    # ── panel senarai kanan ──────────────────────────────────────────
+    def _kitab_panel(self) -> QFrame:
+        p = QFrame()
+        p.setObjectName("glassPanel")
+        pl = QVBoxLayout(p)
+        pl.setContentsMargins(18, 16, 18, 14)
+        pl.setSpacing(10)
+
+        kepala = QWidget()
+        kl = QHBoxLayout(kepala)
+        kl.setContentsMargins(0, 0, 0, 0)
+        kl.setSpacing(8)
+        kiri = QWidget()
+        kv = QVBoxLayout(kiri)
+        kv.setContentsMargins(0, 0, 0, 0)
+        kv.setSpacing(2)
+        ek_sen = QLabel("SENARAI DWIBAHASA")
+        ek_sen.setObjectName("panelSection")
+        kv.addWidget(ek_sen)
+        sub = QLabel("Terjemahan di kiri  ·  Petikan teks Arab di kanan")
+        sub.setObjectName("muted")
+        kv.addWidget(sub)
+        kl.addWidget(kiri, 1)
+
+        # Chips penapis — Semua / Tersimpan / Belum dibaca (berfungsi)
+        # + togol susunan nombor. Dalam talian tanpa DB: dinyahaktif.
+        self._kitab_chip_btns: dict = {}
+        for kunci, label in (("semua", "Semua"),
+                             ("tersimpan", "Tersimpan"),
+                             ("belum", "Belum dibaca")):
+            cb = QPushButton(label)
+            cb.setCursor(Qt.PointingHandCursor)
+            cb.setObjectName(
+                "filterChip_active" if kunci == self._kitab_tapis
+                else "filterChip")
+            cb.clicked.connect(lambda _, k=kunci: self._kitab_set_tapis(k))
+            if kunci != "semua" and not getattr(self.api, "conn", None):
+                cb.setEnabled(False)
+                cb.setToolTip("Perlu pangkalan data tempatan")
+            kl.addWidget(cb)
+            self._kitab_chip_btns[kunci] = cb
+        self._kitab_urut_btn = QPushButton(
+            "Nombor ↓" if self._kitab_urutan == "asc" else "Nombor ↑")
+        self._kitab_urut_btn.setCursor(Qt.PointingHandCursor)
+        self._kitab_urut_btn.setObjectName("filterChip")
+        self._kitab_urut_btn.setToolTip("Tukar susunan nombor hadis")
+        self._kitab_urut_btn.clicked.connect(self._kitab_toggle_urutan)
+        kl.addWidget(self._kitab_urut_btn)
+        pl.addWidget(kepala)
 
         # Bungkus senarai dalam QWidget, bukan addLayout terus.
         # QWidget mempunyai sizeHint sendiri yang boleh diukur; layout
@@ -155,23 +421,45 @@ class PagesKitab:
         self._kitab_container = QWidget()
         self._kitab_list = QVBoxLayout(self._kitab_container)
         self._kitab_list.setContentsMargins(0, 0, 0, 0)
-        self._kitab_list.setSpacing(10)
-        cl.addWidget(self._kitab_container)
+        self._kitab_list.setSpacing(12)
+        pl.addWidget(self._kitab_container)
 
-        self._kitab_pager = Pager(lambda p: self._load_kitab_page(p))
-        cl.addWidget(self._kitab_pager)
-        # JANGAN addStretch(1) di sini. Diukur: apabila kandungan
-        # melebihi viewport, stretch tetap menuntut ruang (794px) dan
-        # QScrollArea menjadikannya kawasan BOLEH SKROL yang kosong --
-        # pengguna skrol ke bawah dan jumpa ruang lompong.
-        #
-        # `col` sudah Expanding menegak, jadi ia mengisi viewport bila
-        # kandungan pendek. Stretch tidak diperlukan langsung.
-        # TIADA addStretch: diukur 572px kawasan skrol KOSONG di bawah
-        # pager (kandungan tamat y=2742, body=3314). Hero tidak lagi
-        # meregang kerana tingginya dikunci dalam Hero.resizeEvent.
-        self._kitab_root.addWidget(col)
+        # Kaki: maklumat julat + halaman (mockup 26 Ogos)
+        kaki = QWidget()
+        fl = QHBoxLayout(kaki)
+        fl.setContentsMargins(0, 0, 0, 0)
+        fl.setSpacing(8)
+        self._kitab_kaki = QLabel("")
+        self._kitab_kaki.setObjectName("muted")
+        fl.addWidget(self._kitab_kaki)
+        fl.addStretch(1)
+        self._kitab_halaman = QLabel("")
+        self._kitab_halaman.setObjectName("muted")
+        fl.addWidget(self._kitab_halaman)
+        pl.addWidget(kaki)
 
+        self._kitab_pager = Pager(lambda pg: self._load_kitab_page(pg))
+        pl.addWidget(self._kitab_pager)
+        return p
+
+    def _kitab_set_tapis(self, kunci: str):
+        if self._kitab_tapis == kunci:
+            return
+        self._kitab_tapis = kunci
+        for k, b in self._kitab_chip_btns.items():
+            b.setObjectName(
+                "filterChip_active" if k == kunci else "filterChip")
+            b.style().unpolish(b)
+            b.style().polish(b)
+        self._load_kitab_page(1)
+
+    def _kitab_toggle_urutan(self):
+        self._kitab_urutan = "desc" if self._kitab_urutan == "asc" else "asc"
+        self._kitab_urut_btn.setText(
+            "Nombor ↓" if self._kitab_urutan == "asc" else "Nombor ↑")
+        self._load_kitab_page(1)
+
+    # ── muat data ────────────────────────────────────────────────────
     def _load_kitab_page(self, page):
         self._kitab_page = page
         self._tok += 1
@@ -182,29 +470,63 @@ class PagesKitab:
         lbl.setAlignment(Qt.AlignCenter)
         self._kitab_list.addWidget(lbl)
 
-        self._run(ListWorker(self.api, self._kitab_slug, page,
-                             self.per_page(), self.lang_param, tok),
+        # Penapis chips (26 Ogos): Tersimpan = tanda buku kitab ini;
+        # Belum dibaca = tiada dalam sejarah bacaan (≤50 terkini).
+        ids = exclude = None
+        slug = self._kitab_slug
+        if self._kitab_tapis == "tersimpan":
+            ids = [b.get("id") for b in self.bookmarks
+                   if b.get("slug") == slug]
+        elif self._kitab_tapis == "belum":
+            exclude = [e.get("n") for e in read_history()
+                       if e.get("slug") == slug]
+
+        self._run(ListWorker(self.api, slug, page, self.per_page(),
+                             self.lang_param, tok, book=self._kitab_bab,
+                             order=self._kitab_urutan, ids=ids,
+                             exclude_ids=exclude),
                   self._on_kitab_page)
 
     def _on_kitab_page(self, items, meta, tok):
         if tok != self._tok:
             return
         _clear(self._kitab_list)
-        name = COLLECTION_META.get(self._kitab_slug, {}).get("name", "")
+        short = COLLECTION_META.get(self._kitab_slug, {}).get(
+            "short", self._kitab_slug)
         if not items:
-            self._kitab_list.addWidget(
-                empty_state("📭", "Tiada hadis", "Koleksi ini kosong."))
+            msg = {"tersimpan": ("🔖", "Tiada hadis tersimpan",
+                                 "Tandai hadis dalam kitab ini untuk "
+                                 "melihatnya di sini."),
+                   "belum": ("📖", "Semua telah dibaca",
+                             "Tiada hadis belum dibaca pada penapis ini.")}
+            e, t, d = msg.get(self._kitab_tapis,
+                              ("📭", "Tiada hadis", "Koleksi ini kosong."))
+            self._kitab_list.addWidget(empty_state(e, t, d))
+            self._kitab_kaki.setText("")
+            self._kitab_pager.set_state(1, 1)
+            self._laras_tinggi(self._kitab_sa)
             return
         for h in items:
             h.setdefault("collection", self._kitab_slug)
-            c = hadith_card(h, name, self.ar_scale, show_chip=False,
-                            arabic_font=self.ar_font,
-                            papar_melayu=self._papar_melayu)
+            c = hadith_card_dwibahasa(
+                h, short, self.ar_scale, arabic_font=self.ar_font,
+                tersimpan=self._is_saved(self._kitab_slug, h.get("id")),
+                papar_melayu=self._papar_melayu)
             c._hid = h.get("id")
             c.clicked.connect(lambda hh=h: self.open_detail(hh, "kitab"))
+            c.simpan_clicked.connect(
+                lambda _, hh=h: self._kitab_toggle_simpan(hh))
             self._kitab_list.addWidget(c)
-        self._kitab_pager.set_state(meta.get("current_page", 1),
-                                    meta.get("last_page", 1))
+        total = meta.get("total", 0)
+        mula = (self._kitab_page - 1) * meta.get("per_page",
+                                                 self.per_page()) + 1
+        tamat = mula + len(items) - 1
+        self._kitab_kaki.setText(
+            f"Menunjukkan {mula}–{tamat} daripada {total:,} hadis")
+        last = meta.get("last_page", 1)
+        self._kitab_halaman.setText(
+            f"Halaman {meta.get('current_page', 1)} / {last}")
+        self._kitab_pager.set_state(meta.get("current_page", 1), last)
         self._laras_tinggi(self._kitab_sa)
         # Lompatan "Pergi ke nombor hadis": skrol ke kad sasaran supaya
         # pengguna terus nampak hadis yang diminta. Skrol manual dan
@@ -235,6 +557,15 @@ class PagesKitab:
             self._skrol_ke_kad(sasaran)
 
         bar.rangeChanged.connect(_bila_range)
+
+    def _kitab_toggle_simpan(self, h: dict):
+        """Butang 🔖 pada kad — toggle tanda buku, muat semula halaman.
+
+        Muat semula (bukan kemas widget tunggal) supaya chip "Tersimpan"
+        dan keadaan 🔖 semua kad sentiasa konsisten dengan bookmarks.
+        """
+        self._toggle_save(h)
+        self._load_kitab_page(self._kitab_page)
 
     def _skrol_ke_kad(self, sasaran: int):
         """Skrol senarai kitab supaya kad sasaran kelihatan ~1/3 dari atas.
@@ -296,7 +627,7 @@ class PagesKitab:
         return page, total
 
     def _lompat_hadis(self, n: int):
-        """Lompat ke nombor hadis dalam kitab aktif (kotak atas senarai)."""
+        """Lompat ke nombor hadis dalam kitab aktif (kotak sidebar)."""
         slug = self._kitab_slug
         nama = COLLECTION_META.get(slug, {}).get("name", slug)
         r = self._sahkan_lompat(slug, n, nama)
@@ -390,7 +721,7 @@ class PagesKitab:
         self.open_kitab(slug, page)
 
     def _focus_lompat(self):
-        """Pintasan Ctrl+G: fokus ke kotak carian nombor di atas senarai.
+        """Pintasan Ctrl+G: fokus ke kotak carian nombor di sidebar.
 
         Jika belum di halaman kitab, buka kitab aktif dahulu (senarai
         dimuat semula); kemudian skrol kotak ke dalam pandangan dan

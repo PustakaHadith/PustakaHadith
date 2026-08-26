@@ -667,4 +667,42 @@ QLabel#badgeNumb {{
 QLabel#petikanText {{
     font-size: {s(14)}; font-weight: 600; color: {TEXT_PRIMARY};
 }}
+
+/* ── Halaman Senarai Hadis (26 Ogos 2026) ────────────────────────── */
+QFrame#kadDwi {{
+    background-color: {CARD_BG};
+    border: 1px solid {BORDER};
+    border-radius: {s(12)};
+}}
+QFrame#kadDwi:hover {{
+    background-color: {CARD_BG_HOVER}; border-color: {TEAL};
+}}
+QLabel#noBadge {{
+    background-color: {TEAL_PALE}; color: {TEAL};
+    font-size: {s(17)}; font-weight: 800;
+    border: 1px solid {BORDER_GLASS}; border-radius: {s(10)};
+}}
+QFrame#lineV {{ background-color: {BORDER}; border: none; max-width: 1px; }}
+QFrame#babRow {{
+    background-color: transparent; border: 1px solid transparent;
+    border-radius: {s(8)};
+}}
+QFrame#babRow:hover {{ background-color: {CARD_BG_HOVER}; }}
+QFrame#babRow_active {{
+    background-color: {CARD_BG_HOVER}; border: 1px solid {TEAL};
+    border-radius: {s(8)};
+}}
+QPushButton#simpanChip {{
+    background-color: transparent; color: {TEXT_MUTED};
+    border: 1px solid {BORDER}; border-radius: {s(15)};
+    font-size: {s(13)};
+}}
+QPushButton#simpanChip:hover {{ border-color: {TEAL}; }}
+QPushButton#simpanChip_aktif {{
+    background-color: {TEAL_PALE}; border: 1px solid {TEAL};
+    border-radius: {s(15)}; font-size: {s(13)};
+}}
+QScrollArea#babScroll, QScrollArea#babScroll > QWidget > QWidget {{
+    background: transparent;
+}}
 """

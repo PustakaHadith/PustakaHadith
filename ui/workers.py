@@ -42,18 +42,29 @@ class CollectionsWorker(_Base):
 
 
 class ListWorker(_Base):
-    """Muat satu halaman hadis. Emit (senarai, meta, token)."""
+    """Muat satu halaman hadis. Emit (senarai, meta, token).
+
+    book/order/ids/exclude_ids: penapis halaman Senarai Hadis (26 Ogos)
+    — dihantar terus ke get_hadis_list (DB tempatan sahaja).
+    """
     done = pyqtSignal(list, dict, int)
 
-    def __init__(self, api, slug, page, limit, lang=None, token=0, parent=None):
+    def __init__(self, api, slug, page, limit, lang=None, token=0, parent=None,
+                 book=None, order: str = "asc", ids: list | None = None,
+                 exclude_ids: list | None = None):
         super().__init__(api, parent)
         self.slug, self.page, self.limit, self.lang = slug, page, limit, lang
         self.token = token
+        self.book, self.order = book, order
+        self.ids, self.exclude_ids = ids, exclude_ids
 
     def run(self):
         try:
             r = self.api.get_hadis_list(self.slug, page=self.page,
-                                        limit=self.limit, lang=self.lang)
+                                        limit=self.limit, lang=self.lang,
+                                        book=self.book, order=self.order,
+                                        ids=self.ids,
+                                        exclude_ids=self.exclude_ids)
             if not self._cancelled:
                 self.done.emit(r.get("hadis", []), r.get("meta", {}), self.token)
         except Exception as e:

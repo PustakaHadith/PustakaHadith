@@ -386,24 +386,76 @@ class HadisAPI:
         except NotFound:
             return None
 
+    def get_bab_list(self, slug: str) -> list[dict]:
+        """Senarai buku/kitab dalam koleksi + kiraan hadis (DB tempatan).
+
+        Sidebar "PILIH BAB" halaman Senarai Hadis (26 Ogos). nama_bab
+        diambil MIN() (nama seksyen pertama buku itu — Inggeris apa
+        adanya dari CDN, pola sama kad hadis). Tiada DB / tiada jadual
+        bab / ralat → [] (UI sembunyi bahagian bab).
+        """
+        if not self.conn:
+            return []
+        try:
+            rows = self.conn.execute(
+                "SELECT b.book, MIN(b.nama_bab) AS nama_bab, COUNT(*) AS kiraan "
+                "FROM bab b WHERE b.collection=? AND b.book IS NOT NULL "
+                "GROUP BY b.book ORDER BY b.book", (slug,)).fetchall()
+        except Exception:
+            return []
+        return [{"book": r["book"], "nama_bab": r["nama_bab"],
+                 "kiraan": r["kiraan"]} for r in rows]
+
     def get_hadis_list(self, slug: str, page: int = 1,
                        limit: int = DEFAULT_PER_PAGE,
-                       lang: str | None = None) -> dict:
-        """Pulangkan {'hadis': [...], 'meta': {...}}. lang='ms' jimat ~30% data."""
+                       lang: str | None = None, book=None, order: str = "asc",
+                       ids: list | None = None,
+                       exclude_ids: list | None = None) -> dict:
+        """Pulangkan {'hadis': [...], 'meta': {...}}. lang='ms' jimat ~30% data.
+
+        Param halaman Senarai Hadis (26 Ogos) — DB tempatan SAHAJA;
+        mod dalam talian (tiada conn) param diabaikan dan UI menyahaktif
+        kawalan berkaitan:
+          book       → b.book=? (tapis bab/kitab dalam koleksi)
+          order      → "desc" susunan hadis_id menurun ("asc" lalai)
+          ids        → hadis_id IN (...) — penapis "Tersimpan";
+                       senarai KOSONG → pulangkan hasil kosong
+          exclude_ids→ hadis_id NOT IN (...) — penapis "Belum dibaca"
+        """
         limit = max(1, min(limit, MAX_PER_PAGE))
         lang = self._norm_lang(lang)
 
         if self.conn:
+            syarat = ["h.collection=?"]
+            params: list = [slug]
+            if book is not None:
+                syarat.append("b.book=?")
+                params.append(book)
+            if ids is not None:
+                if not ids:
+                    return {"hadis": [],
+                            "meta": {"current_page": page, "per_page": limit,
+                                     "total": 0, "last_page": 1}}
+                syarat.append(
+                    f"h.hadis_id IN ({','.join('?' * len(ids))})")
+                params.extend(int(i) for i in ids)
+            if exclude_ids:
+                syarat.append(
+                    f"h.hadis_id NOT IN ({','.join('?' * len(exclude_ids))})")
+                params.extend(int(i) for i in exclude_ids)
+            urutan = "DESC" if order == "desc" else "ASC"
+            where = " AND ".join(syarat)
             rows = self.conn.execute(
                 "SELECT h.hadis_id,h.collection,h.arab,h.melayu,h.indonesia,"
                 "b.book,b.nama_bab FROM hadis h "
                 "LEFT JOIN bab b ON b.collection=h.collection AND b.hadis_id=h.hadis_id "
-                "WHERE h.collection=? ORDER BY h.hadis_id LIMIT ? OFFSET ?",
-                (slug, limit, (page - 1) * limit),
+                f"WHERE {where} ORDER BY h.hadis_id {urutan} LIMIT ? OFFSET ?",
+                (*params, limit, (page - 1) * limit),
             ).fetchall()
             total = self.conn.execute(
-                "SELECT COUNT(*) FROM hadis WHERE collection=?", (slug,)
-            ).fetchone()[0]
+                f"SELECT COUNT(*) FROM hadis h "
+                "LEFT JOIN bab b ON b.collection=h.collection AND b.hadis_id=h.hadis_id "
+                f"WHERE {where}", params).fetchone()[0]
             return {"hadis": [self._row(r, lang) for r in rows],
                     "meta": {"current_page": page, "per_page": limit, "total": total,
                              "last_page": max(1, -(-total // limit))}}
@@ -412,6 +464,8 @@ class HadisAPI:
         if lang:
             params["lang"] = lang
         d = self._request(f"/collections/{slug}/hadis", params)
+        if order == "desc":
+            d["data"]["hadis"] = list(reversed(d["data"]["hadis"]))
         return {"hadis": d["data"]["hadis"], "meta": d.get("meta", {})}
 
     def get_hadis_by_id(self, slug: str, hadis_id: int,

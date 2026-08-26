@@ -3234,17 +3234,23 @@ def semak_kitab_shell() -> None:
         else:
             salah(f"_julat_lompat: {nama}")
 
-    # --- _render_kitab_shell guna fungsi, bukan literal ---
+    # --- _render_kitab_shell guna fungsi kongsi, bukan literal ---
+    # 26 Ogos: banner dipecahkan ke _kitab_banner(); semakan ini kini
+    # mengesahkan _label_kiraan DAN _julat_lompat digunakan di mana-mana
+    # dalam modul (bukan corak Hero lama yang dibuang).
     cari = _cari_fungsi("_render_kitab_shell")
     if cari is None:
         salah("_render_kitab_shell TIADA")
         return
-    badan = ast.get_source_segment(cari[0], cari[1]) or ""
-    if 'subtitle=_label_kiraan(total, "hadis", "")' in badan \
-            and "_julat_lompat(total)" in badan:
+    src_k = open("ui/pages_kitab.py", encoding="utf-8").read()
+    if "_label_kiraan(total, \"hadis\", \"\")" in src_k \
+            and "_julat_lompat(total)" in src_k:
         lulus("_render_kitab_shell guna _label_kiraan + _julat_lompat")
     else:
         salah("_render_kitab_shell TIADA guna fungsi -- literal?")
+    # Literal format total HANYA diharamkan dalam badan _render_kitab_shell
+    # (banner meta dahulu). Footer "Menunjukkan X–Y daripada Z hadis" di
+    # luar metod itu adalah teks sah. Carian skop ke `badan`, bukan src_k.
     if 'f"{total:,} hadis"' not in badan and 'f"0–{total}"' not in badan:
         lulus("tiada literal format total dibenamkan dalam render")
     else:

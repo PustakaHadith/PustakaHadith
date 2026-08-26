@@ -16,7 +16,7 @@
 
 ---
 
-## Keadaan projek — ringkasan satu muka (akhir 25 Ogos 2026)
+## Keadaan projek — ringkasan satu muka (akhir 26 Ogos 2026)
 
 **Apa ini:** Aplikasi desktop **PustakaHadith v1.0** — PyQt5, berjalan
 sepenuhnya di luar talian selepas sync: **62,169 hadis** (9 kitab
@@ -27,14 +27,14 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**2 commit** pada 25 Ogos (halaman utama AQUA + rak kitab).
+**4 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+spec + Senarai Hadis).
 
-**Kerja 25 Ogos (2 commit):** redesign UI/UX fasa 1 mengikut
-`UIUX_PustakaHadith/SELECTED_UIUX.md` — halaman utama Split Command
-Center + tema AQUA (tema ke-5, lalai baharu) + latar glob + sejarah
-bacaan (`ae3e418`); Rak Digital 9 Kitab — halaman `rak` baharu, 9 jilid
-pada satu rak, nav "Jelajah Kitab" menuju rak (`6b62d3b`). Tetapan
-KEKAL tanpa perubahan (keputusan pengguna).
+**Kerja 26 Ogos (4 commit):** glassy scrim glob (`bb5a912`); latar peta
+dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
+(`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
+BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`).
+Kerja 25 Ogos kekal (halaman utama AQUA + rak kitab).
 
 **Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadis → PustakaHadith** —
 update 40+ fail Python (main, ui/*, config, sync_*, test_*), installer
@@ -155,33 +155,42 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ---
 
-## Sesi Terakhir — 25 Ogos 2026 (2 commit)
+## Sesi Terakhir — 26 Ogos 2026 (4 commit)
 
-Versi semasa: **v1.0**. Kerja 25 Ogos — **2 commit** (redesign UI/UX fasa 1: halaman utama + rak kitab):
+Versi semasa: **v1.0**. Kerja 26 Ogos — **4 commit** (glassy scrim +
+latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
+Hadis):
 
-1. **Halaman utama baharu: Split Command Center + tema AQUA** (`ae3e418`) —
-   palet AQUA tema ke-5 (lalai pengguna baharu; 4 tema lama kekal),
-   `BackgroundCanvas` latar glob + scrim kontras AA, panel kaca alpha
-   20/255 tanpa blur, header baharu (nav + Jelajah Kitab; Rawak pindah
-   ke panel kanan), sejarah bacaan `reading_history.json` + hook
-   automatik pada render butiran, Pilihan Hari Ini (worker DB),
-   panel Tetapan 3 butang tema. Reka bentuk:
-   `UIUX_PustakaHadith/SELECTED_UIUX.md` + spesifikasi
-   `docs/superpowers/specs/2026-08-25-halaman-utama-aqua-design.md`.
+1. **Scrim latar dikurangkan (glassy)** (`bb5a912`) — alpha glob 150→85,
+   gradient 200→120; glob lebih jelas menembusi panel kaca pada Utama/
+   rak/Makluman/Tetapan. Teks kekal terbaca (imej asas navy gelap).
 
-2. **Rak Digital 9 Kitab** (`6b62d3b`) — halaman `rak` baharu
-   (index 5; indeks halaman lama kekal), 9 jilid dilukis custom
-   `paintEvent` (teks menegak, warna kitab, kiraan hadis), pilihan
-   klik + papan kekunci ←→/Enter, panel pratonton kitab (nombor,
-   pengarang, terakhir dibaca), carian dalam banner. Nav "Jelajah
-   Kitab" kini menuju rak; senarai hadis dibuka melalui "Buka kitab".
+2. **Latar peta dunia: Makluman + Tetapan SAHAJA** (`eaf6f07`) — imej
+   `latar_globe_dunia.png` (bg_03 daripada pengguna) dipakai pada
+   dialog Makluman (`BackgroundCanvas(dunia=)`) dan panel Tetapan sahaja;
+   Utama/rak kekal `latar_globe_timeline.png` (bg_04). `_GLOB_CACHE`
+   ikut laluan imej; `lukis_latar_dunia()` baharu.
 
-**Kiraan telus:** 25 Ogos = **2 commit** (halaman utama + rak).
+3. **Spesifikasi Senarai Hadis** (`629ac49`) —
+   `docs/superpowers/specs/2026-08-26-halaman-senarai-hadis-design.md`.
 
-**Gate:** semak.py SEMUA semakan kod LULUS (kontras 90 pasangan/5 tema,
-6 tema melancar, 8d muat 730px) · ujian fungsional halaman 7/7 +
-rak 4/4 · ujian berdata (uji_tukar_tema/uji_pra_hantar) menunggu
-hadis.db penuh di persekitaran ini.
+4. **Halaman Senarai Hadis diubah suai** (`[hadapan ini]`) — susun atur
+   Split Command Center: banner kaca + sidebar KITAB SEMASA/PILIH BAB
+   (senarai buku + kiraan dari `get_bab_list`) + panel senarai dwibahasa
+   (terjemahan kiri | Arab kanan, `hadith_card_dwibahasa`), di atas
+   `BackgroundCanvas` glob AQUA. Chips berfungsi: Semua / Tersimpan
+   (tanda buku) / Belum dibaca (sejarah) + togol Nombor ↓/↑. Carian
+   banner buka Pencarian tertapis kitab; Lompat No. dipindah ke sidebar
+   (Ctrl+G kekal). API: `get_bab_list` + `get_hadis_list(book/order/
+   ids/exclude_ids)` + `ListWorker` sokong param.
+
+**Kiraan telus:** 26 Ogos = **4 commit**.
+
+**Gate:** semak.py SEMUA semakan kod LULUS · API senarai 12/12 · ujian
+fungsional `uji_api_senarai.py` (DB memori) · ujian berdata
+(uji_tukar_tema/uji_pra_hantar) menunggu hadis.db penuh di
+persekitaran ini. `uji_visual_kiraan.py` dijangka perlu dikemas
+(banner baharu) — jalankan manual selepas sync DB.
 
 ---
 
