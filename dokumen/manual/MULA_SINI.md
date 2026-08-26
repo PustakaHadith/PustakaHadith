@@ -27,13 +27,13 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**11 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**12 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
 fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail
 + halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis + tab Simpan
-& Sejarah).
+& Sejarah + tarikh simpan & navigasi Kembali).
 
-**Kerja 26 Ogos (11 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (12 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
@@ -51,7 +51,12 @@ Hadis — butang 🔖 pada kad tidak lagi muat semula seluruh halaman
 (~1 saat kelipan glob), sebaliknya kemas SATU kad di tempatnya (`52e83b2`); tab **Simpan &
 Sejarah** pada halaman Tersimpan — bahagian "Telah dibaca" ambil
 `read_history()` dan papar sebagai kad dwibahasa (klik 🔖 simpan terus,
-`open_by_ref` buka detail), togol tab `filterChip` (`4546090`).
+`open_by_ref` buka detail), togol tab `filterChip` (`4546090`); pada
+bahagian **Tersimpan**, setiap kad papar **tarikh disimpan** di sebelah
+nama + nombor hadis (`hadith_card_dwibahasa` terima `tarikh_simpan`,
+format `_fmt_tarikh_simpan`), dan `open_by_ref` terima `from_page` supaya
+butang **Kembali** detail pulang ke halaman asal — `BACK_PETA["saved"]`
+→ `go("saved")` (`03674bc`).
 Kerja 25 Ogos kekal (halaman utama AQUA + rak kitab).
 
 **Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadis → PustakaHadith** —
@@ -175,7 +180,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ## Sesi Terakhir — 26 Ogos 2026 (9 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **11 commit** (glassy scrim +
+Versi semasa: **v1.0**. Kerja 26 Ogos — **12 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
 Hadis):
 
@@ -270,7 +275,20 @@ Hadis):
     tab Baca 10 kad (sejarah sebenar), tukar tab + klik/kunci 🔖 tiada
     ralat.
 
-**Kiraan telus:** 26 Ogos = **11 commit**.
+12. **Tarikh simpan + navigasi Kembali** (`03674bc`) — bahagian **Tersimpan**
+    papar **tarikh disimpan** di sebelah nama + nombor hadis: `_toggle_save`
+    simpan `saved_at` (ISO) bila simpan; `hadith_card_dwibahasa` terima
+    `tarikh_simpan` dan tambah `· disimpan <DD Bulan YYYY>` (helper
+    `_fmt_tarikh_simpan`); kad disusun mengikut `saved_at` terkini dulu.
+    Butang **Kembali** pada halaman detail pulang ke halaman asal: `open_by_ref`
+    terima `from_page` (pemanggil Tersimpan hantar `"saved"`, Carian
+    `"search"`), lalu `BACK_PETA["saved"]` → `go("saved")`. Bonus: buang/
+    simpan dari tab **Telah dibaca** kini bawa data hadis penuh supaya kad
+    tersimpan ada teks. Disahkan offscreen: meta kad = "Sunan Abu Daud 2906
+    · … · disimpan 26 Ogos 2026"; `_detail_from` = "saved" (Kembali →
+    halaman simpan), kekal bila buka hadis seterusnya.
+
+**Kiraan telus:** 26 Ogos = **12 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
