@@ -27,15 +27,17 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**5 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
-spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass).
+**6 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
+fiks dedupe carian).
 
-**Kerja 26 Ogos (5 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (6 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
 Halaman Pencarian diubah suai — BackgroundCanvas glob + kad dwibahasa +
-togol kaedah carian Kata kunci/Makna/Kedua-dua (`4f1de4d`).
+togol kaedah carian Kata kunci/Makna/Kedua-dua (`4f1de4d`); fiks dedupe
+carian keyword `hadis_id`→`id` supaya SEMUA hasil dipapar (`319787f`).
 Kerja 25 Ogos kekal (halaman utama AQUA + rak kitab).
 
 **Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadis → PustakaHadith** —
@@ -157,7 +159,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ---
 
-## Sesi Terakhir — 26 Ogos 2026 (5 commit)
+## Sesi Terakhir — 26 Ogos 2026 (6 commit)
 
 Versi semasa: **v1.0**. Kerja 26 Ogos — **4 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
@@ -196,7 +198,13 @@ Hadis):
    Kedua-dua). Spesifikasi:
    `docs/superpowers/specs/2026-08-26-halaman-pencarian-design.md`.
 
-**Kiraan telus:** 26 Ogos = **5 commit**.
+6. **Fiks dedupe carian keyword** (`319787f`) — `search_hadis` pulang `id`
+   (bukan `hadis_id`), maka kunci dedupe `(collection, hadis_id)` sentiasa
+   `None` → hanya 1 kad setiap koleksi dipapar (cth. "riba" 20 hasil jadi
+   7). Guna `hadis_id or id` supaya SEMUA 20 hasil setiap halaman dipapar.
+   Bug ini juga menjejaskan kad lama (hadith_card) sebelum ubah suai.
+
+**Kiraan telus:** 26 Ogos = **6 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
