@@ -603,22 +603,28 @@ SmartScreen/tandatangan.
 
 ## 10. Daftar Microsoft Store dan Tempah Identiti
 
+> **Panduan langkah demi langkah penuh:** `dokumen/rujukan/DAFTAR_MSIX_STORE.md`
+> (tugas pengguna — akaun, pengesahan, tempah nama, salin 3 nilai
+> identiti). Seksyen ini ringkasan sahaja.
+
 1. Buka `https://storedeveloper.microsoft.com/`.
-2. Daftar akaun pembangun dan lengkapkan pengesahan identiti.
-3. Partner Center → **Apps and games**.
-4. **New product** → **MSIX or PWA app**.
-5. Semak dan tempah nama **Pustaka Hadis**.
-6. Buka **Product management → Product identity**.
-7. Salin tepat:
+2. Daftar akaun pembangun (Individual memadai untuk apl percuma) dan
+   lengkapkan pengesahan identiti (telefon + e-mel; kad mungkin untuk
+   pengesahan $0–1 — yuran $19/$99 dibuang 2026).
+3. Partner Center → **Apps and games** → **Create app** (MSIX or PWA app).
+4. Tempah nama **`PustakaHadith`** (tanpa jarak; paparan boleh "Pustaka
+   Hadis").
+5. **Product management → Product identity** → salin TEPAT:
 
 ```text
-Package/Identity/Name              = __________________________
-Package/Identity/Publisher         = __________________________
-Package/Properties/PublisherDisplayName = _____________________
+Package/Identity/Name              = PustakaHadith
+Package/Identity/Publisher         = CN=..., O=...   (dari Partner Center)
+Package/Properties/PublisherDisplayName = PustakaHadith
 ```
 
-Jangan reka sendiri `Publisher`. Nilai manifest/pakej mesti sepadan tepat
-dengan Partner Center.
+6. Simpan ke `installer/msix_identity.txt` dan serahkan ke pembangun.
+   Jangan reka sendiri `Publisher` — mesti sepadan tepat dengan Partner
+   Center, jika tidak `Add-AppxPackage` gagal dan upload Store ditolak.
 
 Versi MSIX mesti empat bahagian:
 

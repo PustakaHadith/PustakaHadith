@@ -48,7 +48,8 @@ This application is distributed as a **standalone Windows application** — **no
 
 Open **Microsoft Store** → search **"PustakaHadith"** → click **Install**.
 
-> *Requires Partner Center registration — in progress.*
+> *Requires Partner Center registration — in progress. Panduan daftar:
+> `dokumen/rujukan/DAFTAR_MSIX_STORE.md`.*
 
 ### 2. Inno Setup EXE — **Ready**
 

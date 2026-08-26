@@ -24,10 +24,13 @@
 | 5 | ZIP portable | Untuk penguji dalaman sahaja | ☑ |
 | 6 | Wizard permulaan | Ya — sebelum beta | ☑ |
 
-**Tugas pengguna (Fasa 0, masih terbuka):** ⏳
-- ☐ Daftar akaun Microsoft Store: https://storedeveloper.microsoft.com/
+**Tugas pengguna (Fasa 0, masih terbuka):** ⏳ — panduan langkah demi
+langkah: `dokumen/rujukan/DAFTAR_MSIX_STORE.md`
+- ☐ Daftar akaun Microsoft Store: https://storedeveloper.microsoft.com/ (rujuk DAFTAR_MSIX_STORE.md langkah 1–4)
 - ☐ Tempah nama "PustakaHadith" (segera — nama boleh diambil orang lain)
-- ☐ Pilih nama Publisher (akan direkod sebagai identiti MSIX)
+- ☐ Salin 3 nilai identiti (Package/Identity/Name, Publisher,
+  PublisherDisplayName) → `installer/msix_identity.txt` (rujuk
+  DAFTAR_MSIX_STORE.md langkah 5–7)
 
 ---
 
@@ -141,7 +144,7 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
 - [ ] Pasang ZIP / EXE / MSIX
 - [ ] Uji matriks §8: launch, settings, sync, carian Melayu/Arab, makna, bookmark, offline, tutup/relaunch
 - [ ] Rekod keputusan
-- ⛔ **MENUNGGU tugas pengguna:** daftar Microsoft Store + tempah nama + pilih Publisher (perlu beri 3 nilai: `Package/Identity/Name`, `Package/Identity/Publisher`, `Package/Properties/PublisherDisplayName`)
+- ⛔ **MENUNGGU tugas pengguna:** daftar Microsoft Store + tempah nama + pilih Publisher (perlu beri 3 nilai: `Package/Identity/Name`, `Package/Identity/Publisher`, `Package/Properties/PublisherDisplayName`) — panduan: `dokumen/rujukan/DAFTAR_MSIX_STORE.md`
 - ☑ MSIX Packaging Tool dipasang (winget, v1.2024.405.0) + WinApp CLI 0.6.1 (tandatangan ujian tempatan)
 - ☐ MSIX Packaging Tool Driver — perlu diaktifkan (Optional Features; wizard boleh cuba sendiri 2 kali semasa 'Prepare computer')
 - ☑ Aset PNG MSIX dijana dari app.ico → `installer\Assets\` (StoreLogo 50 · Square44x44 · Square150x150 · Wide310x150)
@@ -156,7 +159,7 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
 
 ## FASA 6 — Partner Center + Ujian Naik Taraf (INSTALLER §10, §13–§16) ☐ BELUM
 
-- ☐ Daftar akaun + tempah nama (tugas pengguna, Fasa 0)
+- ☐ Daftar akaun + tempah nama (tugas pengguna, Fasa 0) — panduan: `dokumen/rujukan/DAFTAR_MSIX_STORE.md`
 - ☐ Rekod `Identity Name`, `Publisher`, `PublisherDisplayName`
 - ☐ Bina versi 1.0.0.0 · pasang · cipta settings/bookmark + sync data ujian
 - ☐ Bina versi 1.0.1.0 (identiti sama) · pasang kemas kini
