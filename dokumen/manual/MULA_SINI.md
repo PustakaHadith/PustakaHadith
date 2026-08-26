@@ -393,7 +393,9 @@ Hadis):
     ditandatangani — SmartScreen mungkin beri amaran). **Baki
     installer:** sijil penandatanganan kod + MSIX/Store (akaun Partner
     Center). `uji_visual_kiraan.py` kekal langkah manual (perlu skrin
-    fizikal + DB penuh).
+    fizikal + DB penuh). **Ujian pasang (sandbox):** pasang senyap ke
+    folder sementara + lancar (`PustakaHadith - Makluman`, CPU aktif)
+    berjaya; uninstall bersih.
 
 **Kiraan telus:** 26 Ogos = **49 commit**.
 
