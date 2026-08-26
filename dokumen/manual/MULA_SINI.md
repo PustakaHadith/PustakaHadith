@@ -371,22 +371,16 @@ Hadis):
      `LaporRalatDialog` (QDialog, tajuk "Lapor Ralat"). Kandungan: nota
      "Laporkan ralat anda di sini." (juga placeholder kotak mesej), medan
      "Daripada (e-mel)" (USER EMAIL), medan "Tajuk" terisi "LAPOR RALAT",
-     dan kotak mesej berlatar putih + teks hitam. "Hantar"
-     **menghantar terus** via SMTP jika pelayan dikonfigurasi di
-     **Tetapan → Pelayan E-mel (Lapor Ralat)** (host/port/e-mel pengirim/
-     kata laluan apl; disimpan ke user_settings.json yang di-gitignore).
-     Jika tiada SMTP dikonfigurasi/gagal, jatuh balik ke **buka Gmail
-     compose dalam browser** (`https://mail.google.com/mail/?view=cm&to=…`)
-     — tiada klien e-mel diperlukan; pengguna klik Hantar sekali dalam
-     browser. Modul `ui/smtp_mail.py` (`hantar_emel_smtp`) guna STARTTLS;
-     'From' dikuatkuasakan akaun SMTP, jadi e-mel pelapor disertakan dalam
-     badan ("Daripada: <email>"). "Batal" tutup dialog. (Asalnya dicadang
-     di Tetapan, dipindah ke butiran hadis seperti permintaan.) Disahkan
-     offscreen: seksyen SMTP wujud; tanpa SMTP → mailto; dengan SMTP →
-     hantar_emel_smtp ke pustakahadith@gmail.com + toast "Laporan dihantar",
-     mailto TIDAK dipanggil. Lalai pelayan ditetapkan **Outlook**
-     (smtp-mail.outlook.com:587, pustaka.hadith@outlook.com) — pengguna
-     cuma isi kata laluan apl Outlook di Tetapan.
+     dan kotak mesej berlatar putih + teks hitam. "Hantar" **membuka Gmail
+     compose dalam browser yang pra-isi** (`https://mail.google.com/mail/
+     ?view=cm&to=pustakahadith@gmail.com&su=LAPOR%20RALAT&body=…`) — tiada
+     klien e-mel / kredential diperlukan; pengguna klik Hantar sekali dalam
+     browser. E-mel pelapor disertakan dalam badan ("Daripada: <email>").
+     "Batal" tutup dialog. (Asalnya dicadang di Tetapan, dipindah ke butiran
+     hadis; ciri SMTP terus dibuang kerana susah difail — kekal Gmail
+     compose.) Tetapan "Pelayan E-mel" di buang. Disahkan offscreen: tanpa
+     SMTP → buka URL Gmail compose ke pustakahadith@gmail.com, subjek
+     "LAPOR RALAT", badan ada "Daripada".
 
 **Kiraan telus:** 26 Ogos = **21 commit**.
 

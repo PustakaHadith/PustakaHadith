@@ -111,42 +111,15 @@ class LaporRalatDialog(QDialog):
         if email:
             body = f"Daripada: {email}\n\n{body}"
 
-        cfg = self._smtp_cfg()
-        if cfg:
-            try:
-                from ui.smtp_mail import hantar_emel_smtp
-                hantar_emel_smtp(DEV_EMAIL, subjek, body, cfg)
-                self._maklum("Laporan dihantar. Terima kasih.")
-                self.accept()
-                return
-            except Exception as e:  # gagal SMTP -> jatuh balik ke Gmail
-                self._maklum(f"Gagal hantar ({e}). Membuka Gmail…")
-        # Fallback: buka Gmail compose dalam browser (tiada klien e-mel
-        # diperlukan). Pengguna klik Hantar sekali dalam browser.
+        # Buka Gmail compose dalam browser (pra-isi). Tiada klien e-mel
+        # atau kredential SMTP diperlukan; pengguna klik Hantar sekali
+        # dalam browser.
         self._maklum("Membuka Gmail (pra-isi)…")
         gurl = (f"https://mail.google.com/mail/?view=cm&fs=1"
                 f"&to={quote(DEV_EMAIL)}&su={quote(subjek)}"
                 f"&body={quote(body)}")
         webbrowser.open(gurl)
         self.accept()
-
-    def _smtp_cfg(self):
-        app = self._app
-        if app is None:
-            return None
-        s = getattr(app, "settings", None) or {}
-        host = s.get("smtp_host")
-        user = s.get("smtp_user")
-        pw = s.get("smtp_pass")
-        if not (host and user and pw):
-            return None
-        return {
-            "host": host,
-            "port": s.get("smtp_port", 587),
-            "user": user,
-            "pass": pw,
-            "from": s.get("smtp_from") or user,
-        }
 
     def _maklum(self, msg):
         app = self._app
