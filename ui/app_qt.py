@@ -288,7 +288,8 @@ class PustakaApp(PagesKitab, PagesRak, PagesCarian, PagesDetail,
         # Kitab" → halaman RAK DIGITAL (bukan senarai terus); "Rawak"
         # dipindah ke panel kanan halaman utama.
         for label, key in [("Utama", "home"), ("Pencarian", "search"),
-                           ("Jelajah Kitab", "rak"), ("Tersimpan", "saved")]:
+                            ("Jelajah Kitab", "rak"),
+                            ("Simpan & Sejarah", "saved")]:
             b = QPushButton(label)
             b.setObjectName("nav")
             b.setCursor(Qt.PointingHandCursor)

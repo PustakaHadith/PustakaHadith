@@ -1,17 +1,18 @@
-"""Halaman Tersimpan (penanda buku) — mixin PustakaApp (Sesi 30).
+"""Halaman Tersimpan (penanda buku) + Sejarah Bacaan — mixin PustakaApp.
 
-Dipisahkan dari `ui/app_qt.py`. Kelas `PagesTersimpan` menyediakan
-halaman "Hadis Tersimpan": senarai penanda buku (`self.bookmarks`)
-dipaparkan sebagai kad hadis. Digabungkan ke `PustakaApp` melalui MRO:
-`class PustakaApp(..., PagesTersimpan, ..., QMainWindow)`.
-
-GANDINGAN RENTAS MIXIN: modul ini TIDAK berdiri sendiri —
-`_render_saved` memanggil `open_by_ref` (buka butiran hadis) yang
-tinggal dalam `PagesDetail`. Mesti digabungkan bersama PagesDetail.
+Halaman "Simpan & Sejarah" memaparkan dua bahagian dipilih melalui togol
+tabs:
+  • Tersimpan    — senarai penanda buku (`self.bookmarks`) sebagai kad
+                   dwibahasa; 🔖 buang/masuk terus dari halaman.
+  • Telah dibaca — sejarah bacaan (`read_history()`); setiap entri diambil
+                   semula melalui `api.get_hadis_by_id` dan dipapar sebagai
+                   kad dwibahasa yang sama.
+Digabungkan ke `PustakaApp` melalui MRO. `_render_saved` memanggil
+`open_by_ref` (PagesDetail) — mesti digabungkan bersama PagesDetail.
 
 Peraturan tema: modul ini TIDAK import warna dari `ui.theme` (hanya
-widget), namun didaftar dalam `_THEMED_MODULES` (ui/theme.py) untuk
-konsisten dengan modul UI yang lain.
+widget + `COLLECTION_META`), namun didaftar dalam `_THEMED_MODULES`
+(ui/theme.py) untuk konsisten dengan modul UI yang lain.
 """
 
 from __future__ import annotations
@@ -21,9 +22,9 @@ from PyQt5.QtWidgets import (
     QHBoxLayout, QLabel, QPushButton, QSizePolicy, QVBoxLayout, QWidget,
 )
 
-from ui.helpers import _clear
+from ui.helpers import _clear, read_history
 from ui.pages import Hero, empty_state
-from ui.theme import ada_latar_imej
+from ui.theme import ada_latar_imej, COLLECTION_META
 from ui.widgets import BackgroundCanvas, hadith_card_dwibahasa, make_scroll
 
 
@@ -39,9 +40,8 @@ class PagesTersimpan:
         self._tersimpan_sa = sa
 
         # Butang terapung "↑ ke atas" (Sesi 34) — corak sama halaman
-        # kitab/carian: kelihatan bila senarai tanda buku panjang dan
-        # pengguna skrol ke bawah; klik untuk kembali ke atas dengan
-        # animasi lancar. Anak kepada QScrollArea supaya ia terapung.
+        # kitab/carian: kelihatan bila senarai panjang dan pengguna skrol
+        # ke bawah; klik untuk kembali ke atas dengan animasi lancar.
         if getattr(self, "_top_timer_tersimpan", None) is not None:
             self._top_timer_tersimpan.stop()
         self._tersimpan_top_btn = QPushButton("↑")
@@ -70,7 +70,7 @@ class PagesTersimpan:
         bl.setContentsMargins(0, 0, 0, 16)
         bl.setSpacing(0)
 
-        hero = Hero("Hadis Tersimpan", compact=True)
+        hero = Hero("Simpan & Sejarah", compact=True)
         # Aqua Glass: hero telus supaya glob tembus (hanya teks atas glob).
         if ada_latar_imej():
             hero.setStyleSheet(
@@ -80,6 +80,10 @@ class PagesTersimpan:
         self._saved_sub.setAlignment(Qt.AlignCenter)
         hero.body.addWidget(self._saved_sub)
         bl.addWidget(hero)
+
+        # Togol tabs: Tersimpan | Telah dibaca
+        self._saved_tab = "simpan"
+        bl.addWidget(self._bina_tab_simpan())
 
         # Lajur kandungan berpusat (TELUS — biar glob AQUA kelihatan).
         col = QWidget()
@@ -102,12 +106,58 @@ class PagesTersimpan:
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(sa)
 
+    def _bina_tab_simpan(self):
+        bar = QWidget()
+        lo = QHBoxLayout(bar)
+        lo.setContentsMargins(0, 4, 0, 4)
+        lo.setSpacing(8)
+        self._tab_simpan = QPushButton("")
+        self._tab_baca = QPushButton("")
+        for b in (self._tab_simpan, self._tab_baca):
+            b.setCursor(Qt.PointingHandCursor)
+            b.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self._tab_simpan.clicked.connect(
+            lambda: self._pilih_tab_simpan("simpan"))
+        self._tab_baca.clicked.connect(
+            lambda: self._pilih_tab_simpan("baca"))
+        lo.addWidget(self._tab_simpan)
+        lo.addWidget(self._tab_baca)
+        lo.addStretch(1)
+        self._kemas_tab_simpan()
+        return bar
+
+    def _kemas_tab_simpan(self):
+        self._tab_simpan.setText(f"Tersimpan ({len(self.bookmarks)})")
+        self._tab_baca.setText(f"Telah dibaca ({len(read_history())})")
+        self._tab_simpan.setObjectName(
+            "filterChip_active" if self._saved_tab == "simpan"
+            else "filterChip")
+        self._tab_baca.setObjectName(
+            "filterChip_active" if self._saved_tab == "baca"
+            else "filterChip")
+        for b in (self._tab_simpan, self._tab_baca):
+            b.style().unpolish(b)
+            b.style().polish(b)
+
+    def _pilih_tab_simpan(self, tab):
+        if self._saved_tab == tab:
+            return
+        self._saved_tab = tab
+        self._kemas_tab_simpan()
+        self._render_saved()
+
     def _render_saved(self):
+        self._kemas_tab_simpan()
         _clear(self._saved_col)
+        if self._saved_tab == "baca":
+            self._render_sejarah_simpan()
+        else:
+            self._render_bookmarks_simpan()
+
+    def _render_bookmarks_simpan(self):
         n = len(self.bookmarks)
         self._saved_sub.setText(
             f"{n} hadis disimpan" if n else "Tiada hadis disimpan")
-
         if not self.bookmarks:
             # stretch=1 supaya empty_state mengisi & berpusat menegak
             self._saved_col.addWidget(empty_state(
@@ -131,6 +181,38 @@ class PagesTersimpan:
                 lambda s=slug, i=hid: self.open_by_ref(s, i))
             c.simpan_clicked.connect(
                 lambda _, s=slug, i=hid: self._bookmark_toggle(s, i))
+            self._saved_col.addWidget(c)
+        self._saved_col.addStretch(1)
+
+    def _render_sejarah_simpan(self):
+        hist = read_history()
+        n = len(hist)
+        self._saved_sub.setText(
+            f"{n} hadis dibaca" if n else "Tiada sejarah bacaan")
+        if not hist:
+            self._saved_col.addWidget(empty_state(
+                "📖", "Belum ada sejarah bacaan",
+                "Buka mana-mana hadis — ia direkodkan di sini."), 1)
+            return
+
+        for e in hist:
+            slug = e.get("slug")
+            nid = e.get("n")
+            h = self.api.get_hadis_by_id(slug, nid)
+            if not h:
+                continue
+            h["collection"] = slug
+            h["id"] = nid
+            c = hadith_card_dwibahasa(
+                h, COLLECTION_META.get(slug, {}).get("name", slug),
+                self.ar_scale, arabic_font=self.ar_font,
+                tersimpan=self._is_saved(slug, nid),
+                papar_melayu=self._papar_melayu)
+            c._hid = nid
+            c.clicked.connect(
+                lambda s=slug, i=nid: self.open_by_ref(s, i))
+            c.simpan_clicked.connect(
+                lambda _, s=slug, i=nid: self._bookmark_toggle(s, i))
             self._saved_col.addWidget(c)
         self._saved_col.addStretch(1)
 
