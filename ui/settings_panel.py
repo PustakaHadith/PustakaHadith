@@ -22,6 +22,7 @@ from PyQt5.QtWidgets import (
 
 from ui.widgets import attach_copy_menu, BackgroundCanvas
 from ui.deklarasi import DeklarasiDialog
+from ui.lapor_ralat import LaporRalatDialog
 from ui.theme import (
     AMBER_BG, AMBER_BORDER, AMBER_TEXT, BORDER, CARD_BG, CARD_BG_HOVER,
     DEFAULT_TEMA, FONT_SCALE_LABELS, GREEN_TEXT, HEADER_BG, PAGE_BG,
@@ -508,7 +509,36 @@ class SettingsPanel(QFrame):
         rl.addWidget(arrow)
         g.addWidget(row)
 
-    
+        # Butang "Lapor Ralat" — buka dialog e-mel kepada pembangun.
+        r2 = QWidget()
+        r2.setStyleSheet("background: transparent;")
+        rl2 = QHBoxLayout(r2)
+        rl2.setContentsMargins(0, 0, 0, 0)
+        rl2.setSpacing(8)
+
+        lapor = QPushButton("  🐞   Lapor Ralat")
+        lapor.setCursor(Qt.PointingHandCursor)
+        lapor.setFixedHeight(38)
+        lapor.setStyleSheet(f"""
+            QPushButton {{ background-color: {CARD_BG}; color: {TEXT_SECONDARY};
+                           border: 1px solid {BORDER}; border-radius: 8px;
+                           font-size: 12px; font-weight: 600;
+                           text-align: left; padding-left: 10px; }}
+            QPushButton:hover {{ background-color: {CARD_BG_HOVER};
+                                 border-color: {TEAL_PALE};
+                                 color: {TEXT_PRIMARY}; }}
+        """)
+        lapor.clicked.connect(
+            lambda: LaporRalatDialog(parent=self.app).exec_())
+        rl2.addWidget(lapor, 1)
+
+        arrow2 = QLabel("›")
+        arrow2.setStyleSheet(f"color: {TEXT_FAINT}; font-size: 16px;")
+        rl2.addWidget(arrow2)
+        g.addWidget(r2)
+
+
+
 
 
     def _open_api_dialog(self):
