@@ -62,3 +62,8 @@ PustakaHadith.spec
 
 # Sejarah bacaan (data pengguna, 25 Ogos)
 reading_history.json
+
+# Artefak binaan & tangkapan skrin (luaran, bukan kod projek)
+Output/
+Screenshot/
+mockup/selected_*
