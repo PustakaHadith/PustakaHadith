@@ -301,7 +301,7 @@ class PagesCarian:
         # minimum 1800ms paparan (pengguna sempat baca maklum balas).
         self._buka_toast_t0 = time.monotonic()
         self.toast.show_msg(f"📖 Membuka {nama} No. {n}…", 0)
-        self.open_by_ref(slug, n)
+        self.open_by_ref(slug, n, "search")
 
     def _do_search(self, page=1):
         q = self.search_bar.text()

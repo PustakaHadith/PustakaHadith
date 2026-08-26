@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from datetime import datetime
 
 from PyQt5.QtCore import QEvent, QObject, QSize, Qt, QTimer, pyqtSignal
 from PyQt5.QtGui import (QColor, QFont, QIcon, QLinearGradient, QPainter,
@@ -486,10 +487,25 @@ def hadith_card(hadis: dict, kitab_name: str = "", scale: float = 1.0,
     return card
 
 
+def _fmt_tarikh_simpan(iso: str | None) -> str:
+    """Format ISO timestamp (saved_at) ke tarikh Melayu: '12 Ogos 2026'."""
+    if not iso:
+        return ""
+    try:
+        dt = datetime.fromisoformat(iso)
+    except Exception:
+        return ""
+    bulan = ["Januari", "Februari", "Mac", "April", "Mei", "Jun",
+             "Julai", "Ogos", "September", "Oktober", "November",
+             "Disember"]
+    return f"{dt.day} {bulan[dt.month - 1]} {dt.year}"
+
+
 def hadith_card_dwibahasa(hadis: dict, kitab_name: str = "",
                           scale: float = 1.0, arabic_font: str | None = None,
                           tersimpan: bool = False,
-                          papar_melayu=None) -> ClickCard:
+                          papar_melayu=None,
+                          tarikh_simpan: str | None = None) -> ClickCard:
     """Kad dwibahasa halaman Senarai Hadis (mockup 26 Ogos).
 
     Susunan SEBELAH-MENYEBELAH — berbeza daripada hadith_card (Arab
@@ -548,6 +564,10 @@ def hadith_card_dwibahasa(hadis: dict, kitab_name: str = "",
     meta_txt = f"{kitab_name} {hadis.get('id', '')}"
     if bab:
         meta_txt += f"  ·  {elide(bab, 36)}"
+    if tarikh_simpan:
+        _ts = _fmt_tarikh_simpan(tarikh_simpan)
+        if _ts:
+            meta_txt += f"  ·  disimpan {_ts}"
     meta = QLabel(meta_txt)
     meta.setObjectName("faint")
     kl.addWidget(meta)

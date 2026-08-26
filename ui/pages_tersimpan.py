@@ -166,7 +166,8 @@ class PagesTersimpan:
                 "Buka mana-mana hadis dan tekan Simpan."), 1)
             return
 
-        for b in reversed(self.bookmarks):
+        for b in sorted(self.bookmarks,
+                        key=lambda x: x.get("saved_at") or "", reverse=True):
             slug = b.get("slug")
             hid = b.get("id")
             h = {"collection": slug, "id": hid,
@@ -176,10 +177,11 @@ class PagesTersimpan:
             c = hadith_card_dwibahasa(
                 h, b.get("kitab_name", ""), self.ar_scale,
                 arabic_font=self.ar_font, tersimpan=True,
-                papar_melayu=self._papar_melayu)
+                papar_melayu=self._papar_melayu,
+                tarikh_simpan=b.get("saved_at"))
             c._hid = hid
             c.clicked.connect(
-                lambda s=slug, i=hid: self.open_by_ref(s, i))
+                lambda s=slug, i=hid: self.open_by_ref(s, i, "saved"))
             c.simpan_clicked.connect(
                 lambda _, s=slug, i=hid: self._bookmark_toggle(s, i))
             self._saved_col.addWidget(c)
@@ -211,15 +213,23 @@ class PagesTersimpan:
                 papar_melayu=self._papar_melayu)
             c._hid = nid
             c.clicked.connect(
-                lambda s=slug, i=nid: self.open_by_ref(s, i))
+                lambda s=slug, i=nid: self.open_by_ref(s, i, "saved"))
             c.simpan_clicked.connect(
-                lambda _, s=slug, i=nid: self._bookmark_toggle(s, i))
+                lambda _, s=slug, i=nid, hh=h: self._bookmark_toggle(s, i, hh))
             self._saved_col.addWidget(c)
         self._saved_col.addStretch(1)
 
-    def _bookmark_toggle(self, slug, hid):
+    def _bookmark_toggle(self, slug, hid, h=None):
         """Buang/masuk semula tanda buku terus dari halaman Tersimpan."""
-        self._toggle_save({"collection": slug, "id": hid})
+        if h is None:
+            h = {"collection": slug, "id": hid}
+        else:
+            h = {"collection": slug, "id": hid,
+                 "arab": h.get("arab", ""), "melayu": h.get("melayu", ""),
+                 "indonesia": h.get("indonesia", ""),
+                 "book": h.get("book"), "nama_bab": h.get("nama_bab", ""),
+                 "kitab_name": h.get("kitab_name", "")}
+        self._toggle_save(h)
         self._render_saved()
 
     def _kemas_butang_atas_tersimpan(self):

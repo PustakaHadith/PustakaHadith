@@ -29,6 +29,7 @@ tidak mengimport semula (tiada pemanggil luar untuk nama-nama itu).
 from __future__ import annotations
 
 import webbrowser
+from datetime import datetime
 
 from PyQt5.QtCore import QUrl, Qt, QTimer
 from PyQt5.QtGui import QCursor
@@ -287,7 +288,9 @@ class PagesDetail:
             self._detail_h = h
             self._render_detail(h)
 
-    def open_by_ref(self, slug, hid):
+    def open_by_ref(self, slug, hid, from_page=None):
+        if from_page is not None:
+            self._detail_from = from_page
         self._tok += 1
         tok = self._tok
 
@@ -1332,7 +1335,8 @@ class PagesDetail:
                 "arab": h.get("arab", ""), "melayu": h.get("melayu", ""),
                 "indonesia": h.get("indonesia", ""),
                 "book": h.get("book"), "nama_bab": h.get("nama_bab", ""),
-                "kitab_name": COLLECTION_META.get(slug, {}).get("name", slug)})
+                "kitab_name": COLLECTION_META.get(slug, {}).get("name", slug),
+                "saved_at": datetime.now().isoformat(timespec="seconds")})
             self.toast.show_msg("Disimpan")
         _write_json(BOOKMARKS, self.bookmarks)
         # _save_btn hanya wujud di halaman detail; abaikan di halaman
