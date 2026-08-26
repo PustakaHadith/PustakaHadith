@@ -378,7 +378,8 @@ Hadis):
      Tetapan, dipindah ke butiran hadis seperti permintaan.) Disahkan
      offscreen: tiada butang di Tetapan; pautan butiran buka dialog; URL
      mailto ke pustakahadis@gmail.com, subjek "LAPOR RALAT", From + mesej
-     dalam badan.
+     dalam badan. Medan input berlatar putih + teks hitam (bukan warna
+     tema gelap) supaya laporan kelihatan.
 
 **Kiraan telus:** 26 Ogos = **21 commit**.
 
