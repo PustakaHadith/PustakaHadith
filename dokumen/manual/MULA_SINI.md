@@ -27,13 +27,14 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**13 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**15 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
 fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail
 + halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis + tab Simpan
-& Sejarah + tarikh simpan & navigasi Kembali + isi semula tarikh lama).
+& Sejarah + tarikh simpan & navigasi Kembali + isi semula tarikh lama +
+kotak semak buang pukal sejarah + kilat chip aktif).
 
-**Kerja 26 Ogos (13 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (15 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
@@ -180,7 +181,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ## Sesi Terakhir — 26 Ogos 2026 (9 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **13 commit** (glassy scrim +
+Versi semasa: **v1.0**. Kerja 26 Ogos — **15 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
 Hadis):
 
@@ -296,7 +297,25 @@ Hadis):
      `datetime.now()`. Idempoten. Disahkan: lama dapat mtime, baru kekal,
      backfill kedua tiada ubah; boot app semua penanda ada `saved_at`.
 
-**Kiraan telus:** 26 Ogos = **13 commit**.
+14. **Kotak semak buang pukal (Telah dibaca)** (`42ef681`) — bahagian
+     **Telah dibaca** (`_render_sejarah_simpan`) dapat bar kawalan:
+     `☐ Pilih semua` + butang `🗑 Buang dipilih (N)` (lumpuh bila N=0).
+     Setiap kad dibalut baris `[☐][kad]`; tanda semak dikira ke N dan
+     `Pilih semua` segerak. `helpers.remove_reading(slug, n)` buang
+     ikut `(slug, n)`; `_sejarah_buang_pilih` panggil untuk setiap
+     pilihan lalu `_render_saved` semula. Klik kad masih buka detail
+     (☐ berasingan). Disahkan offscreen: 14 entri→14 ☐, tick 2→butang
+     "(2)" aktif, Pilih Semua→"(11)", buang panggil `remove_reading` 11×.
+
+15. **Kilat chip aktif (bukan teks hitam)** (`f77506e`) — `filterChip_active`
+     (theme.py) tukar `color: PAGE_BG` (hitam, mengelirukan) kepada
+     `#ffffff` + sempadan `TEAL_GLOW`. Chip aktif kini teal penuh + teks
+     putih jelas. Objek nama ini dikongsi tab Tersimpan/Telah dibaca DAN
+     togol Arab/Transliterasi + mod Pencarian di **halaman detail**, jadi
+     satu pembetulan QSS membaiki kedua-dua tempat (permintaan "buat juga
+     pada detail page").
+
+**Kiraan telus:** 26 Ogos = **15 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
