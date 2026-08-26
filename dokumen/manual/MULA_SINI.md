@@ -27,17 +27,19 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**6 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**7 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
-fiks dedupe carian).
+fiks dedupe carian + fiks klik kad).
 
-**Kerja 26 Ogos (6 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (7 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
 Halaman Pencarian diubah suai — BackgroundCanvas glob + kad dwibahasa +
 togol kaedah carian Kata kunci/Makna/Kedua-dua (`4f1de4d`); fiks dedupe
-carian keyword `hadis_id`→`id` supaya SEMUA hasil dipapar (`319787f`).
+carian keyword `hadis_id`→`id` supaya SEMUA hasil dipapar (`319787f`);
+fiks klik kad carian/kitab — lambda sepadan isyarat `ClickCard.clicked`
+(0 arg) (`d157235`).
 Kerja 25 Ogos kekal (halaman utama AQUA + rak kitab).
 
 **Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadis → PustakaHadith** —
@@ -159,7 +161,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ---
 
-## Sesi Terakhir — 26 Ogos 2026 (6 commit)
+## Sesi Terakhir — 26 Ogos 2026 (7 commit)
 
 Versi semasa: **v1.0**. Kerja 26 Ogos — **4 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
@@ -204,7 +206,16 @@ Hadis):
    7). Guna `hadis_id or id` supaya SEMUA 20 hasil setiap halaman dipapar.
    Bug ini juga menjejaskan kad lama (hadith_card) sebelum ubah suai.
 
-**Kiraan telus:** 26 Ogos = **6 commit**.
+7. **Fiks klik kad** (`d157235`) — `ClickCard.clicked` ialah `pyqtSignal()`
+   (0 arg), tetapi lambda sambungan guna param wajib `lambda _, hh=h:`
+   (carian) dan `lambda _, bk=book:` (senarai kitab). Klik mana-mana kad
+   → `TypeError: missing 1 required positional argument: '_'` → apl
+   terus keluar. Betulkan ke `lambda hh=h:` / `lambda bk=book:` (param
+   ada nilai lalai). Disahkan: klik kad carian & baris kitab tiada lagi
+   pecah (CRASH LIST: NONE, `_detail_from='search'`). Senarai Hadis
+   (`lambda hh=h:`, baris 516) sudah betul sejak mula.
+
+**Kiraan telus:** 26 Ogos = **7 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
