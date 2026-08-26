@@ -27,14 +27,14 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**15 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**16 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
 fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail
 + halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis + tab Simpan
 & Sejarah + tarikh simpan & navigasi Kembali + isi semula tarikh lama +
-kotak semak buang pukal sejarah + kilat chip aktif).
+kotak semak buang pukal sejarah + kilat chip aktif + tarikh dibaca sejarah).
 
-**Kerja 26 Ogos (15 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (16 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
@@ -181,7 +181,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ## Sesi Terakhir — 26 Ogos 2026 (9 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **15 commit** (glassy scrim +
+Versi semasa: **v1.0**. Kerja 26 Ogos — **16 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
 Hadis):
 
@@ -315,7 +315,18 @@ Hadis):
      satu pembetulan QSS membaiki kedua-dua tempat (permintaan "buat juga
      pada detail page").
 
-**Kiraan telus:** 26 Ogos = **15 commit**.
+16. **Tarikh dibaca + buang butang Simpan (sejarah)** (`67e9271`) — pada
+     bahagian **Telah dibaca**: (a) `record_reading` kini simpan `read_at`
+     (ISO); `backfill_reading_at` (helpers.py, sama corak `backfill_saved_at`)
+     isi `read_at` lama dengan mtime fail pada permulaan (`app_qt.py`); kad
+     papar `· dibaca <DD Bulan YYYY>` guna `tarikh_label="dibaca"` pada
+     `hadith_card_dwibahasa`; (b) butang 🔖 **disembunyikan** (`c.simpan_btn
+     .hide()`) kerana buang pukal kini guna kotak semak — klik kad masih
+     buka detail. Tab **Tersimpan** tidak berubah (🔖 + "disimpan" kekal).
+     Disahkan offscreen: 13 kad sejarah, semua `simpan_btn` tersembunyi,
+     meta "Sahih al-Bukhari 1 · … · dibaca 26 Ogos 2026".
+
+**Kiraan telus:** 26 Ogos = **16 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
