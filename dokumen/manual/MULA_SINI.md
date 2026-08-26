@@ -27,16 +27,16 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**19 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**20 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
 fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail
 + halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis + tab Simpan
 & Sejarah + tarikh simpan & navigasi Kembali + isi semula tarikh lama +
 kotak semak buang pukal sejarah + kilat chip aktif + tarikh dibaca sejarah
 + fiks kembali dari Utama + kiraan Tersimpan Utama selari + maklum balas
-Rawak).
+Rawak + nombor carian kitab buka terus).
 
-**Kerja 26 Ogos (19 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (20 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
@@ -183,7 +183,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ## Sesi Terakhir — 26 Ogos 2026 (9 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **19 commit** (glassy scrim +
+Versi semasa: **v1.0**. Kerja 26 Ogos — **20 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
 Hadis):
 
@@ -356,7 +356,16 @@ Hadis):
      setempat dalam `open_by_ref`). Disahkan offscreen: toast kelihatan →
      detail (indeks 2) → toast disembunyi; tiada hadis → toast ralat.
 
-**Kiraan telus:** 26 Ogos = **19 commit**.
+20. **Nombor carian kitab buka terus** (`28f40d6`) — kotak carian
+     halaman **Senarai Hadis** (`_kitab_hantar_carian`) dahulu SELALU ke
+     halaman Pencarian walaupun input nombor. Kini: input nombor sahaja
+     (`q.replace(" ","").isdigit()`) → `_buka_hadis_terus(self._kitab_slug,
+     n, dari="kitab")` (buka butiran terus, Kembali → Senarai Hadis);
+     teks lain → ke Pencarian seperti sedia ada. Sama corak kotak "Pergi ke
+     No." sidebar. Disahkan offscreen: "433"→indeks kekal kitab (bukan
+     search 3); "riba"→Pencarian (3).
+
+**Kiraan telus:** 26 Ogos = **20 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
