@@ -27,12 +27,12 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**9 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**10 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
 fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail
-+ halaman Tersimpan diubah suai).
++ halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis).
 
-**Kerja 26 Ogos (9 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (10 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
@@ -44,7 +44,10 @@ fiks klik kad carian/kitab — lambda sepadan isyarat `ClickCard.clicked`
 sama seperti Tetapan) untuk dialog Tetapan API, dialog Tentang, dan
 halaman Detail (`360c74b`); halaman **Tersimpan (bookmark)** diubah suai
 — glob garisan masa (sama Carian/Senarai), hero telus, kad dwibahasa +
-togol 🔖 buang terus dari halaman (`6ab1f5a`).
+togol 🔖 buang terus dari halaman (`6ab1f5a`); fiks kelipan Senarai
+Hadis — butang 🔖 pada kad tidak lagi muat semula seluruh halaman
+(`_load_kitab_page`) yang mengosongkan senarai + putar ListWorker semula
+(~1 saat kelipan glob), sebaliknya kemas SATU kad di tempatnya (`52e83b2`).
 Kerja 25 Ogos kekal (halaman utama AQUA + rak kitab).
 
 **Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadis → PustakaHadith** —
@@ -168,7 +171,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ## Sesi Terakhir — 26 Ogos 2026 (9 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **9 commit** (glassy scrim +
+Versi semasa: **v1.0**. Kerja 26 Ogos — **10 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
 Hadis):
 
@@ -243,7 +246,16 @@ Hadis):
    selamat dipanggil dari halaman lain (tiada butang detail). Disahkan
    offscreen: 3 tanda buku → 3 kad dwibahasa; togol 🔖 → 2 kad + 2 bookmark.
 
-**Kiraan telus:** 26 Ogos = **9 commit**.
+10. **Fiks kelipan Senarai Hadis** (`52e83b2`) — butang 🔖 pada kad
+   (`_kitab_toggle_simpan`) asal memanggil `_load_kitab_page` yang
+   mengosongkan senarai lalu memutar `ListWorker` semula (~1 saat kelipan
+   glob). Diganti: kemas SATU kad di tempatnya (tukar `objectName`
+   `simpanChip`↔`simpanChip_aktif` + `unpolish/polish`); bila penapis
+   "tersimpan", buang kad itu dari senarai. `_load_kitab_page` langsung
+   TIDAK dipanggil. Disahkan offscreen: 2 kad kekal 2, butang flip, 0
+   muat semula; penapis tersimpan: 2→1 kad, 0 muat semula.
+
+**Kiraan telus:** 26 Ogos = **10 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
