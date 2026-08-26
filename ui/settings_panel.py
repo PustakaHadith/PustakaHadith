@@ -486,7 +486,7 @@ class SettingsPanel(QFrame):
         note = QLabel(
             "Isi sekali supaya pengguna boleh hantar laporan terus "
             "(tanpa membuka klien e-mel). Guna <b>kata laluan apl</b> "
-            "Gmail, bukan kata laluan login biasa.")
+            "akaun e-mel (cth. Outlook), bukan kata laluan login biasa.")
         note.setObjectName("muted")
         note.setWordWrap(True)
         g.addWidget(note)
@@ -513,9 +513,10 @@ class SettingsPanel(QFrame):
             return le
 
         self._lapor_host = _baris("Pelayan (host)", "smtp_host",
-                                  "smtp.gmail.com")
+                                  "smtp-mail.outlook.com")
         self._lapor_port = _baris("Port", "smtp_port", "587")
-        self._lapor_user = _baris("E-mel pengirim", "smtp_user", "")
+        self._lapor_user = _baris("E-mel pengirim", "smtp_user",
+                                  "pustaka.hadis@outlook.com")
         self._lapor_pw = _baris("Kata laluan apl", "smtp_pass",
                                 password=True)
 
