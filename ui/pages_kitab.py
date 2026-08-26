@@ -346,7 +346,7 @@ class PagesKitab:
             cl = QLabel(f"{kiraan:,}")
             cl.setObjectName("faint" if book != self._kitab_bab else "teal")
             rl.addWidget(cl)
-        row.clicked.connect(lambda _, bk=book: self._kitab_pilih_bab(bk))
+        row.clicked.connect(lambda bk=book: self._kitab_pilih_bab(bk))
         self._kitab_bab_rows.append((book, row))
         bl.addWidget(row)
 

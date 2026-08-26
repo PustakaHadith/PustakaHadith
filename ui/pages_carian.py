@@ -245,7 +245,7 @@ class PagesCarian:
             tersimpan=self._is_saved(slug, hid),
             papar_melayu=self._papar_melayu)
         c._hid = hid
-        c.clicked.connect(lambda _, hh=h: self.open_detail(hh, "search"))
+        c.clicked.connect(lambda hh=h: self.open_detail(hh, "search"))
         c.simpan_clicked.connect(
             lambda _, hh=h, cc=c, s=slug, i=hid:
             self._carian_toggle_simpan(hh, cc, s, i))
