@@ -27,14 +27,15 @@ susun atur RTL.
 **Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
 · `semak.py` SEMUA LULUS (**395 semakan**) ·
 `uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**16 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
+**17 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
 spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
 fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail
 + halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis + tab Simpan
 & Sejarah + tarikh simpan & navigasi Kembali + isi semula tarikh lama +
-kotak semak buang pukal sejarah + kilat chip aktif + tarikh dibaca sejarah).
+kotak semak buang pukal sejarah + kilat chip aktif + tarikh dibaca sejarah
++ fiks kembali dari Utama).
 
-**Kerja 26 Ogos (16 commit):** glassy scrim glob (`bb5a912`); latar peta
+**Kerja 26 Ogos (17 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
 (`629ac49`); Halaman Senarai Hadis diubah suai — banner + sidebar PILIH
 BAB + panel dwibahasa atas BackgroundCanvas glob AQUA (`[hadapan ini]`);
@@ -181,7 +182,7 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ## Sesi Terakhir — 26 Ogos 2026 (9 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **16 commit** (glassy scrim +
+Versi semasa: **v1.0**. Kerja 26 Ogos — **17 commit** (glassy scrim +
 latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
 Hadis):
 
@@ -326,7 +327,17 @@ Hadis):
      Disahkan offscreen: 13 kad sejarah, semua `simpan_btn` tersembunyi,
      meta "Sahih al-Bukhari 1 · … · dibaca 26 Ogos 2026".
 
-**Kiraan telus:** 26 Ogos = **16 commit**.
+17. **Fiks kembali dari Utama** (`e19f216`) — klik "Terakhir dibaca" (atau
+     pintasan nombor) di halaman Utama buka detail tetapi butang Kembali
+     menuju Carian, bukan Utama. Punca: `_buka_hadis_terus` (`pages_carian
+     .py`) tetapkan `self._detail_from = dari` BETUL, namun talian
+     berikutnya memanggil `open_by_ref(slug, n, "search")` (keras) yang
+     menulis semula `_detail_from="search"`. Diubah kepada `open_by_ref
+     (slug, n, dari)` supaya sumber sebenar (home/carian) dihormati.
+     Disahkan offscreen: `dari="home"` → `_detail_from="home"` →
+     `BACK_PETA["home"]`=("Utama","home"); lalai carian kekal "search".
+
+**Kiraan telus:** 26 Ogos = **17 commit**.
 
 **Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
 halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
