@@ -172,7 +172,7 @@ selepas selesai, bahagian 'Sesi Terakhir' di bawah DAN ringkasan ini
 MESTI dikemas (semak #12 + #15 akan GAGAL jika tidak).
 
 **Pautan dokumen:** pengguna — `dokumen/manual/MULA_CEPAT.md` ·
-`dokumen/manual/MANUAL_PENGGUNAAN.md` · `dokumen/manual/MANUAL_INSTALASI.md`
+`dokumen/manual/manual/manual/MANUAL_PENGGUNAAN.md` · `dokumen/manual/manual/manual/MANUAL_INSTALASI.md`
 · transformasi paparan — `dokumen/manual/TRANSFORMASI_DETAIL.md` ·
 audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 `dokumen/audit/SIASATAN_TAFSIR_BM.md` · log harian —
@@ -582,7 +582,7 @@ persekitaran ini. `uji_visual_kiraan.py` dijangka perlu dikemas
 
 1. **Galeri 5 tema kad 114px + ujian saiz/DPI (komit 2)** —
    `dokumen/imej/tema_home_*.png` (5 tema) dikemas ke reka bentuk kad
-   114px — galeri MANUAL_PENGGUNAAN.md otomatis seiring; bukti visual
+   114px — galeri manual/manual/MANUAL_PENGGUNAAN.md otomatis seiring; bukti visual
    `lihat_5tema_home.html`. Ujian tetingkap kecil 1024×600: grid 3×3
    kekal, kad 114px, **tiada skrol mengufuk** (hbar_max 0), skrol
    menegak sahaja, DESC_KLIP 0. Ujian DPI 125%/150%
@@ -730,7 +730,7 @@ baca konteks penuh hari itu dahulu):
    MANUAL_INSTALASI → BACA_SAYA.
 8. **Semakan dokumen vs UI (`1b1390c`)** — `semak_dokumen_ui.py`
    **74 semakan, 0 gagal**: setiap tuntutan `MULA_CEPAT.md` +
-   `MANUAL_PENGGUNAAN.md` disahkan terhadap UI sebenar offscreen
+   `manual/manual/MANUAL_PENGGUNAAN.md` disahkan terhadap UI sebenar offscreen
    (angka DB, dua lajur, cip warna, bar teks, menu Salin, 2 enjin
    carian, panel Tetapan, deklarasi, fail .bat, Python 3.14) — semua
    TEPAT, tiada dokumen ketinggalan kod.
@@ -1389,7 +1389,7 @@ suite rasmi 13/13 SEMUA LULUS, pokok bersih, baki #7 kunci API
 >   semak.py **9b** (peraturan fail sisa untracked) sentiasa GAGAL
 >   dalam edaran kerana folder pengguna BUKAN repo git — kini melangkau
 >   bila tiada `.git`, kekal aktif dalam repo pembangunan.
-> - **Senarai rasmi fail ZIP** — `MANUAL_INSTALASI.md` seksyen 9:
+> - **Senarai rasmi fail ZIP** — `manual/manual/MANUAL_INSTALASI.md` seksyen 9:
 >   jadual 7 bahagian (Akar 51, api 2, core 9, ui 16, utils 3, scripts
 >   3, dokumen 36 = 120 fail) + senarai penuh + pengecualian telus +
 >   seksyen 10 prosedur pengesahan edaran. Pembetulan pembinaan ZIP:

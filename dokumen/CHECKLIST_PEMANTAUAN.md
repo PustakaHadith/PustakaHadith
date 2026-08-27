@@ -8,7 +8,7 @@
 > disekat/menunggu keputusan.
 > **Rujukan utama:** `dokumen/rujukan/INSTALLER.md` (§ = panduan),
 > `dokumen/rujukan/PLAN_BINA_EDARAN.md` (kawalan fasa/gate),
-> `dokumen/rujukan/PERMOHONAN_LESEN_AHMAD.md` (lesen Inggeris).
+> `dokumen/surat/kebenaran/PERMOHONAN_LESEN_AHMAD.md` (lesen Inggeris).
 > **Log harian:** `dokumen/perubahan/PERUBAHAN_20OGOS.md`.
 
 ---
@@ -119,11 +119,11 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
 - ☑ Hasil: `installer\output\PustakaHadis-Setup-1.0.0-x64.exe` = **0.50 GB** (~34 minit lzma2/ultra64)
 
 ### Dokumentasi Pengguna (Gate 6 — INSTALLER §18)
-- ☑ **MANUAL_INSTALASI.md** — 3 cara pasang (Store/MSIX ⏳, Setup EXE ✓, Zip penguji), kali pertama buka, lokasi data `%LOCALAPPDATA%\PustakaHadis`, masalah lazim, atribusi
-- ☑ **MANUAL_PENGGUNAAN.md** — skrin utama, carian kata kunci + makna (AI), lompat hadis, membaca hadis (dua lajur, tab bahasa, darjat, huraian), tindakan (lapor/kongsi/salin/WhatsApp/TTS), penanda halaman, tetapan, mod luar talian, masalah lazim
-- ☑ **DASAR_PRIVASI.md** — tiada data dikumpul, data tempatan, kunci API tertutup, AI luar talian, sambungan hanya sync hadis.my
-- ☑ **PAUTAN_SOKONGAN.md** — templat GitHub Issues, maklumat diperlukan, templat respons
-- ☑ **TANGKAPAN_SKRIN.md** — senarai 4 wajib + 4 disyorkan, spesifikasi 1366×768/1920×1080, folder output
+- ☑ **manual/manual/MANUAL_INSTALASI.md** — 3 cara pasang (Store/MSIX ⏳, Setup EXE ✓, Zip penguji), kali pertama buka, lokasi data `%LOCALAPPDATA%\PustakaHadis`, masalah lazim, atribusi
+- ☑ **manual/manual/MANUAL_PENGGUNAAN.md** — skrin utama, carian kata kunci + makna (AI), lompat hadis, membaca hadis (dua lajur, tab bahasa, darjat, huraian), tindakan (lapor/kongsi/salin/WhatsApp/TTS), penanda halaman, tetapan, mod luar talian, masalah lazim
+- ☑ **surat/sokongan/surat/sokongan/DASAR_PRIVASI.md** — tiada data dikumpul, data tempatan, kunci API tertutup, AI luar talian, sambungan hanya sync hadis.my
+- ☑ **surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md** — templat GitHub Issues, maklumat diperlukan, templat respons
+- ☑ **penerbitan/penerbitan/TANGKAPAN_SKRIN.md** — senarai 4 wajib + 4 disyorkan, spesifikasi 1366×768/1920×1080, folder output
 - ☐ URL sebenar (GitHub Issues / laman web) dimasukkan ke Partner Center
 
 ### 5C — MSIX (utama, INSTALLER §11–§12) ☑ SELESAI (binaan + ujian lokal lulus)
@@ -140,8 +140,8 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
 - ☑ Aset PNG MSIX di `installer/Assets/` (StoreLogo · Square44x44 · Square150x150 · Wide310x150)
 - ☑ Audit inventori `dist\PustakaHadith`: **0 fail terlarang**; peringkat atas = `_internal` + `PustakaHadith.exe`
 - ☐ **Fasa 6/7 (Store rasmi):** muat naik MSIX ke Partner Center; Microsoft **TANDATANGAN
-  semula** pakej (tiada amaran SmartScreen). Perlu: `DASAR_PRIVASI.md` +
-  `PAUTAN_SOKONGAN.md` + `TANGKAPAN_SKRIN.md` (lesen Ahmad **tidak diperlukan**
+  semula** pakej (tiada amaran SmartScreen). Perlu: `surat/sokongan/surat/sokongan/DASAR_PRIVASI.md` +
+  `surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md` + `penerbitan/penerbitan/TANGKAPAN_SKRIN.md` (lesen Ahmad **tidak diperlukan**
   — English koleksi Ahmad diabaikan secara kekal).
 
 ### Uji Windows 10 (Gate 4 Matrix)
@@ -181,7 +181,7 @@ tiada amaran biasa ✓
 
 ## FASA 7 — Edaran Awam (INSTALLER §15, §18) ⏳ MENUNGGU DOKUMEN
 
-- ⏳ Menunggu: `DASAR_PRIVASI.md` + `PAUTAN_SOKONGAN.md` + `TANGKAPAN_SKRIN.md`
+- ⏳ Menunggu: `surat/sokongan/surat/sokongan/DASAR_PRIVASI.md` + `surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md` + `penerbitan/penerbitan/TANGKAPAN_SKRIN.md`
   (lesen Ahmad **tidak diperlukan** — English koleksi Ahmad diabaikan kekal)
 - ☐ Upload MSIX ke Store · listing · ikon · screenshots · notas pensijilan
 - ☐ Private audience/flight jika tersedia
@@ -207,5 +207,5 @@ tiada amaran biasa ✓
 **Halangan aktif:** ☑ identiti Microsoft Store **SELESAI** (MSIX 5C lulus).
 ☑ **English koleksi Ahmad diabaikan secara kekal** (tiada perancangan lesen
 Darussalam) — tab English Ahmad kekal kelabu; **bukan lagi blocker** Fasa 6/7.
-⏳ Fasa 6/7 (Store rasmi) menunggu `DASAR_PRIVASI.md` + `PAUTAN_SOKONGAN.md`
-+ `TANGKAPAN_SKRIN.md` (MSIX + identiti Store sudah sedia).
+⏳ Fasa 6/7 (Store rasmi) menunggu `surat/sokongan/surat/sokongan/DASAR_PRIVASI.md` + `surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md`
++ `penerbitan/penerbitan/TANGKAPAN_SKRIN.md` (MSIX + identiti Store sudah sedia).

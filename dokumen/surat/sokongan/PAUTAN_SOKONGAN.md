@@ -59,4 +59,4 @@
 
 ---
 
-*Dokumen: `dokumen\PAUTAN_SOKONGAN.md` · Untuk Microsoft Store (Gate 6)*
+*Dokumen: `dokumen\surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md` · Untuk Microsoft Store (Gate 6)*

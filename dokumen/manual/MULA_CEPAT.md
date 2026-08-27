@@ -2,8 +2,8 @@
 
 > Ringkasan pantas: **apa yang sudah disahkan**, **cara menjalankan
 > app**, dan **cara memulakan carian**. Manual penuh:
-> `dokumen/manual/MANUAL_PENGGUNAAN.md` · pemasangan:
-> `dokumen/manual/MANUAL_INSTALASI.md` · panduan langkah pertama
+> `dokumen/manual/manual/manual/MANUAL_PENGGUNAAN.md` · pemasangan:
+> `dokumen/manual/manual/manual/MANUAL_INSTALASI.md` · panduan langkah pertama
 > pemasangan: `BACA_SAYA.txt`.
 
 **Pustaka Hadis** = koleksi **9 kitab hadis, 62,169 hadis** (Bukhari,
@@ -25,7 +25,7 @@ Pengesahan terkini (17 Ogos 2026) — semua lulus pada mesin sebenar:
 | Huraian SemakHadis 4,237 hadis (BM) + darjat 63,930 | ✅ dipapar dengan atribusi |
 | Penanda buku (Tersimpan) — simpan, kekal selepas tutup, buka semula | ✅ diuji dengan data sebenar |
 | Carian kata kunci + carian makna (AI) | ✅ |
-| **5 tema, semua ≥ kontras WCAG AA** — 🌙 Neutral (lalai) · 📜 Kertas · ☀ Neutral terang · ☀ Terang · 🌓 Ikut sistem | ✅ galeri visual 5 tema dalam `MANUAL_PENGGUNAAN.md` §3 TEMA |
+| **5 tema, semua ≥ kontras WCAG AA** — 🌙 Neutral (lalai) · 📜 Kertas · ☀ Neutral terang · ☀ Terang · 🌓 Ikut sistem | ✅ galeri visual 5 tema dalam `manual/manual/MANUAL_PENGGUNAAN.md` §3 TEMA |
 | **Paparan responsif** — kandungan betul pada sebarang saiz tetingkap dan penskalaan Windows (100%–150%) | ✅ pepijat paparan terpotong dibaiki (17 Ogos 2026) |
 | Suite ujian pra-hantar 14 ujian | ✅ SEMUA LULUS |
 | App berjalan pada Windows (Python 3.14) | ✅ |
@@ -120,7 +120,7 @@ tiada, dengan jujur.
      Neutral, terang → ☀ Neutral terang (bertukar hampir serta-merta)
 3. Semua tema lulus kontras WCAG AA (≥ 4.5:1). Perbandingan visual
    kelima-lima tema (halaman Utama + Detail) ada dalam
-   `MANUAL_PENGGUNAAN.md` §3 TEMA.
+   `manual/manual/MANUAL_PENGGUNAAN.md` §3 TEMA.
 
 **Paparan responsif:** app kini memaparkan kandungan dengan betul
 pada sebarang saiz tetingkap — termasuk tetingkap kecil (1024×600)
@@ -171,7 +171,7 @@ telah dibaiki dan diuji penuh (17 Ogos 2026).
   makna (AI) sesuai untuk soalan.
 
 **Masih bermasalah?** — hantar kandungan `NYAHPEPIJAT.bat` kepada
-pembangun; butiran penuh dalam `MANUAL_INSTALASI.md`
+pembangun; butiran penuh dalam `manual/manual/MANUAL_INSTALASI.md`
 §Penyelesaian masalah.
 
 ---
@@ -180,8 +180,8 @@ pembangun; butiran penuh dalam `MANUAL_INSTALASI.md`
 
 | Perlu | Buka |
 |---|---|
-| Manual penuh | `dokumen/manual/MANUAL_PENGGUNAAN.md` |
-| Pemasangan terperinci | `dokumen/manual/MANUAL_INSTALASI.md` |
+| Manual penuh | `dokumen/manual/manual/manual/MANUAL_PENGGUNAAN.md` |
+| Pemasangan terperinci | `dokumen/manual/manual/manual/MANUAL_INSTALASI.md` |
 | Langkah pertama pasang | `BACA_SAYA.txt` |
-| Penyelesaian masalah penuh | `MANUAL_INSTALASI.md` §Penyelesaian masalah |
+| Penyelesaian masalah penuh | `manual/manual/MANUAL_INSTALASI.md` §Penyelesaian masalah |
 | Peta dokumen pembangunan | `dokumen/manual/MANUAL_REFERENSI_DEV.md` |

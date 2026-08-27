@@ -19,7 +19,7 @@
   1. **Galeri 5 tema halaman utama** — `dokumen/imej/tema_home_*.png`
      (5 tema: neutral, kertas, neutral_terang, terang, sistem) dikemas
      ke reka bentuk kad 114px semasa — galeri dalam
-     `MANUAL_PENGGUNAAN.md` (seksyen TEMA) otomatis seiring. Bukti
+     `manual/manual/MANUAL_PENGGUNAAN.md` (seksyen TEMA) otomatis seiring. Bukti
      visual `lihat_5tema_home.html` (dibuka untuk semakan, dibuang
      sebelum commit — semak #9).
 
@@ -249,7 +249,7 @@ galeri 5 tema dan pembetulan responsif terkini.
 - **§1 'Apa yang sudah disahkan'** — tarikh dikemas 14 → **17 Ogos
   2026**; dua baris baharu: (1) **5 tema, semua ≥ kontras WCAG AA**
   (Neutral lalai · Kertas · Neutral terang · Terang · Ikut sistem)
-  dengan pautan galeri visual `MANUAL_PENGGUNAAN.md` §3 TEMA; (2)
+  dengan pautan galeri visual `manual/manual/MANUAL_PENGGUNAAN.md` §3 TEMA; (2)
   **paparan responsif** — kandungan betul pada sebarang saiz tetingkap
   dan penskalaan Windows (100%–150%), selepas pembaikan pepijat
   viewport tersekat (komit `5d6a786`).

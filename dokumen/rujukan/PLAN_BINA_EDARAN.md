@@ -442,8 +442,8 @@ Tukar `--console` kepada `--windowed`; ulang semua ujian ringkas.
   cache/log) — bersih untuk capture.
 - **ZIP mudah alih** dicipta → `installer\output\PustakaHadis-portable-1.0.0-x64.zip`
   (0.54 GB) untuk penguji dalaman.
-- **Dokumentasi capture**: `VM_MSIX_CAPTURE.md` (persediaan VM, snapshot,
-  wizard manual, capture, Package Editor) + `MSIX_CAPTURE_PROSES.md`
+- **Dokumentasi capture**: `penerbitan/penerbitan/VM_MSIX_CAPTURE.md` (persediaan VM, snapshot,
+  wizard manual, capture, Package Editor) + `penerbitan/penerbitan/MSIX_CAPTURE_PROSES.md`
   (checklist 6 fasa, rollback, output Gate 6).
 - ⛔ Menunggu identiti Partner Center (tugas pengguna Fasa 0): daftar
   Store + tempah nama + Publisher → beri `Package/Identity/Name`,

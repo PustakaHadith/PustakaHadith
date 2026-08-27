@@ -177,4 +177,4 @@ Restore-VMSnapshot -VMName "PustakaHadith-VM" -Name "Pre-MSIX-Capture"
 
 ---
 
-*Dokumen: `dokumen\VM_MSIX_CAPTURE.md` · Folder binaan installer*
+*Dokumen: `dokumen\penerbitan/penerbitan/VM_MSIX_CAPTURE.md` · Folder binaan installer*

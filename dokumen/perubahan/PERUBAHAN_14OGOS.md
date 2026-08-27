@@ -36,7 +36,7 @@
    ditanggalkan; bookmarks.json dipulihkan.
 5. **Semakan konsistensi dokumen manual vs UI sebenar** (offscreen) —
    skrip audit baharu `semak_dokumen_ui.py` (**74 semakan, 0 gagal**):
-   setiap tuntutan `MULA_CEPAT.md` + `MANUAL_PENGGUNAAN.md` disahkan
+   setiap tuntutan `MULA_CEPAT.md` + `manual/manual/MANUAL_PENGGUNAAN.md` disahkan
    terhadap UI sebenar — angka data dari hadis.db (62,169 / 31,833 /
    4,237 / 63,930 / English 7 kitab sahaja), nav + gear, kad kitab,
    halaman kitab (pager, kotak Lompat, Ctrl+G, backTop, 20/halaman),
@@ -202,7 +202,7 @@ ujian offscreen".
 
 Pendekatan:
 1. **Katalog tuntutan** — setiap ayat fakta dalam `MULA_CEPAT.md` +
-   `MANUAL_PENGGUNAAN.md` disenaraikan (angka data, label butang, tab,
+   `manual/manual/MANUAL_PENGGUNAAN.md` disenaraikan (angka data, label butang, tab,
    pintasan, tingkah laku). `MULA_SINI.md` ialah dokumen developer
    (rekod sejarah, bukan tuntutan UI) — dikecualikan, tetapi rujukan
    failnya disahkan wujud.
@@ -281,7 +281,7 @@ Commit petang 14 Ogos: `82cb4c1` · `c0b8020` · `f359ea9` · `80b7abf` ·
    kecuali URL kunci API: `developer.hadis.my/dashboard/keys`
    (tidak disahkan) diganti dengan arahan selaras MANUAL_INSTALASI:
    daftar di <https://hadis.my> → **Developer / API**.
-2. **MANUAL_INSTALASI.md + BACA_SAYA.txt disahkan vs skrip .bat
+2. **manual/manual/MANUAL_INSTALASI.md + BACA_SAYA.txt disahkan vs skrip .bat
    sebenar** — SEMUA tuntutan padan: PASANG.bat (4 langkah, "SIAP",
    pintasan "Hadis" via pintasan.ps1, gear → Tetapan API) ·
    BUAT_PINTASAN/JALANKAN/NYAHPEPIJAT · BUANG.bat (2 soalan + taip
@@ -461,7 +461,7 @@ sebenar: Windows gelap 16.5:1 vs kertas hangat 13.3:1; tier malap lama
 - **Semakan #14 semak.py: audit susun atur RTL dokumen** — sebarang
   tuntutan susun atur lama ("Arab di kiri", "terjemahan di kanan",
   "lajur kiri membawa teks Arab", "terjemahan > x Arab", dsb.) dalam
-  TRANSFORMASI_DETAIL.md / MANUAL_PENGGUNAAN.md → GAGAL. Nota sejarah
+  TRANSFORMASI_DETAIL.md / manual/manual/MANUAL_PENGGUNAAN.md → GAGAL. Nota sejarah
   berpetik (rujukan "Arab kiri / terjemahan kanan" dalam nota RTL)
   tidak dipadan (corak khusus tanpa "di"/"membawa").
 - **Dikunci uji_negatif_8z 49/0 (32 cabang)** — mutasi #32: "Arab di

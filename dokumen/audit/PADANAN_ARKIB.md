@@ -33,7 +33,7 @@ Fasa 1 (padanan) dijawab dalam §3–§5. Fasa 2 (penilaian + penyelamatan) dija
 | PERMOHONAN_HADISMY.md | 0.65 (dalaman) | subset SUMBER_hadis-my | **SUBSET** — digugurkan (lihat §7) |
 | **INSTALLER.md** | 0.02 | `dokumen/rujukan/INSTALLER.md` | **DISIMPAN** (11 Ogos) |
 | **SUMBER_hadis-my.md** | 0.03 | `dokumen/rujukan/SUMBER_hadis-my.md` | **DISIMPAN** (11 Ogos) |
-| **PERMOHONAN_LESEN_SEMAKHADIS.md** | 0.04 | `dokumen/rujukan/PERMOHONAN_LESEN_SEMAKHADIS.md` | **DISIMPAN** (11 Ogos) |
+| **PERMOHONAN_LESEN_SEMAKHADIS.md** | 0.04 | `dokumen/surat/kebenaran/PERMOHONAN_LESEN_SEMAKHADIS.md` | **DISIMPAN** (11 Ogos) |
 | **ISU_TERJEMAHAN_MELAYU.md** | 0.04 | `dokumen/rujukan/ISU_TERJEMAHAN_MELAYU.md` | **DISIMPAN** (11 Ogos) |
 | **DORAR_NET.md** | 0.04 | `dokumen/audit/DORAR_NET.md` | **DISIMPAN** (11 Ogos) |
 | **ANALISA_6OGOS.md** | 0.03 | `dokumen/rujukan/ANALISA_6OGOS.md` | **DISIMPAN** (11 Ogos) |
@@ -81,7 +81,7 @@ Setiap dokumen UNIK dibaca penuh dan dinilai terhadap keadaan semasa projek (kod
 |---|---|---|---|
 | **INSTALLER.md** | **TINGGI** | Pelan reka bentuk installer (Nuitka, Inno Setup, `%LOCALAPPDATA%`, bundel indeks FAISS elak 3 jam, wizard permulaan, SmartScreen, GitHub Releases) — **belum dilaksanakan**, pelan aktif masa depan | **DISIMPAN** → `dokumen/rujukan/INSTALLER.md` |
 | **SUMBER_hadis-my.md** | **TINGGI** | Dokumen induk sumber teras: hadith.my = hadis.my (pemilik sama), pelan percuma, endpoint + 9 koleksi, hujah bundel, **draf e-mel + WhatsApp + lampiran 55 hadis** (status: belum dihantar — pengguna uruskan sendiri) | **DISIMPAN** → `dokumen/rujukan/SUMBER_hadis-my.md` |
-| **PERMOHONAN_LESEN_SEMAKHADIS.md** | **TINGGI** | Permohonan **aktif**: DM Facebook dihantar (tiada balasan), saluran rasmi (Ede Fahmin Rezuan, `fahmin@semakhadis.com`, MUHIM), draf e-mel + susulan telefon, had masa 2 minggu | **DISIMPAN** → `dokumen/rujukan/PERMOHONAN_LESEN_SEMAKHADIS.md` |
+| **PERMOHONAN_LESEN_SEMAKHADIS.md** | **TINGGI** | Permohonan **aktif**: DM Facebook dihantar (tiada balasan), saluran rasmi (Ede Fahmin Rezuan, `fahmin@semakhadis.com`, MUHIM), draf e-mel + susulan telefon, had masa 2 minggu | **DISIMPAN** → `dokumen/surat/kebenaran/PERMOHONAN_LESEN_SEMAKHADIS.md` |
 | **ISU_TERJEMAHAN_MELAYU.md** | **TINGGI** | Isu terbuka: 80 hadis matn tidak diterjemah (0.13%), kaedah pengesanan (ambang 40 aksara Arab), taburan per kitab, **senarai penuh 80 ID** untuk dilaporkan ke hadis.my (pilihan A+C disyorkan) | **DISIMPAN** → `dokumen/rujukan/ISU_TERJEMAHAN_MELAYU.md` |
 | **DORAR_NET.md** | **SEDERHANA** | Penilaian terperinci Dorar + sunnah.com: `Content-Signal: use=reference` (kebenaran eksplisit), widget rasmi, keputusan "pautan keluar sahaja" + corak 4 sumber, **nota kaki penangguhan Sesi 18.8** (liputan per kitab, padanan salah Bukhari #50, kos 8–12 jam), ringkasan status 8 sumber. Ringkasan ada di `DAPATAN_WEB.md` §8 tetapi butiran keputusan + nota kaki TIDAK | **DISIMPAN** → `dokumen/audit/DORAR_NET.md` |
 | **ANALISA_6OGOS.md** | **SEDERHANA** | Analisis 7 kekurangan v1.0 — **5/7 sudah selesai**, 2 terbuka (lihat status di bawah). Nilai: rekod keputusan + 2 isu terbuka | **DISIMPAN** → `dokumen/rujukan/ANALISA_6OGOS.md` |

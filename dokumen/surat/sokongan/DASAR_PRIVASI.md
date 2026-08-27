@@ -100,4 +100,4 @@ GitHub Issues: https://github.com/opencodemk/PustakaHadith/issues
 
 ---
 
-*Dokumen: `dokumen\DASAR_PRIVASI.md` · Untuk Microsoft Store (Gate 6)*
+*Dokumen: `dokumen\surat/sokongan/surat/sokongan/DASAR_PRIVASI.md` · Untuk Microsoft Store (Gate 6)*

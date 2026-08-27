@@ -26,7 +26,7 @@
 **Keputusan pengguna 31 Jul (selepas ZIP dibina):** folder `hadis/`
 ialah workspace Developer. Banyak penambahbaikan tertangguh akan
 dilakukan apabila developer menjalankan app untuk semakan. Manual
-pengguna akhir: `dokumen/manual/MANUAL_INSTALASI.md` (pemasangan) + `dokumen/manual/MANUAL_PENGGUNAAN.md` (cara guna).
+pengguna akhir: `dokumen/manual/manual/manual/MANUAL_INSTALASI.md` (pemasangan) + `dokumen/manual/manual/manual/MANUAL_PENGGUNAAN.md` (cara guna).
 
 ---
 
@@ -414,7 +414,7 @@ sertakan audit sunnah. Tidak mengubah apa-apa.
 
 **Semakan dokumen manual vs UI (14 Ogos 2026):** `python
 semak_dokumen_ui.py` — offscreen, 74 semakan. Mengesahkan SETIAP
-tuntutan `dokumen/manual/MULA_CEPAT.md` + `MANUAL_PENGGUNAAN.md`
+tuntutan `dokumen/manual/MULA_CEPAT.md` + `manual/manual/MANUAL_PENGGUNAAN.md`
 terhadap UI sebenar: angka data dari hadis.db (62,169 · 9 kitab ·
 31,833 english · 4,237 SemakHadis · 63,930 darjat · English 7 kitab
 sahaja), nav + gear, skrin utama, halaman kitab (pager, kotak Lompat,
@@ -524,8 +524,8 @@ pembolehubah dan periksa dahulu sebelum `Test-Path`.
 | Dokumen | Isi |
 |---|---|
 | **`dokumen/manual/MANUAL_REFERENSI_DEV.md`** | Dokumen ini — rujukan utama |
-| `dokumen/manual/MANUAL_INSTALASI.md` | Manual pemasangan pengguna (keperluan, pasang, kunci API, kemas kini, nyahpasang) |
-| `dokumen/manual/MANUAL_PENGGUNAAN.md` | Manual cara guna aplikasi (antara muka, carian, tetapan) |
+| `dokumen/manual/manual/manual/MANUAL_INSTALASI.md` | Manual pemasangan pengguna (keperluan, pasang, kunci API, kemas kini, nyahpasang) |
+| `dokumen/manual/manual/manual/MANUAL_PENGGUNAAN.md` | Manual cara guna aplikasi (antara muka, carian, tetapan) |
 | `dokumen/manual/TRANSFORMASI_DETAIL.md` | Transformasi paparan detail LAMA → BARU (Sesi 55) + tangkapan skrin (lama vs baru) |
 | `dokumen/manual/MULA_SINI.md` | 6 peraturan keras + senarai semak + fakta (baca dahulu) |
 | `dokumen/rujukan/RANCANGAN_4FASA.md` | Keputusan fasa, keutamaan paparan, isu belum selesai |
@@ -538,7 +538,7 @@ pembolehubah dan periksa dahulu sebelum `Test-Path`.
 | `dokumen/audit/PADANAN_ARKIB.md` | Jejak padanan 11 dokumen arkib ↔ dokumen projek + penilaian penyelamatan (11 Ogos 2026) |
 | `dokumen/rujukan/INSTALLER.md` | Reka bentuk installer (Nuitka, Inno Setup, `%LOCALAPPDATA%`, bundel indeks FAISS, wizard) — belum dilaksanakan |
 | `dokumen/rujukan/SUMBER_hadis-my.md` | Sumber teras hadis.my/hadith.my + draf permohonan bundel + lampiran 55 hadis (belum dihantar) |
-| `dokumen/rujukan/PERMOHONAN_LESEN_SEMAKHADIS.md` | Permohonan SemakHadis (DM dihantar, e-mel siap — aktif, belum dijawab) |
+| `dokumen/surat/kebenaran/PERMOHONAN_LESEN_SEMAKHADIS.md` | Permohonan SemakHadis (DM dihantar, e-mel siap — aktif, belum dijawab) |
 | `dokumen/rujukan/ISU_TERJEMAHAN_MELAYU.md` | 80 hadis matn tidak diterjemah + senarai ID penuh untuk laporan hadis.my |
 | `dokumen/audit/DORAR_NET.md` | Penilaian terperinci Dorar + sunnah.com (robots.txt, keputusan pautan keluar, nota kaki penangguhan) |
 | `dokumen/rujukan/ANALISA_6OGOS.md` | Analisis 7 kekurangan v1.0 (5 selesai, 2 terbuka — lesen SemakHadis + model/installer) |
@@ -559,14 +559,14 @@ pembolehubah dan periksa dahulu sebelum `Test-Path`.
 ## 12A. Imej tangkap layar — `dokumen/imej/` (19 fail)
 
 Tiga kumpulan imej dalam `dokumen/imej/` — semua dirujuk oleh dokumen
-manual dan dibundel dalam ZIP edaran (senarai rasmi: `MANUAL_INSTALASI.md`
+manual dan dibundel dalam ZIP edaran (senarai rasmi: `manual/manual/MANUAL_INSTALASI.md`
 seksyen 9, **130 fail** — imej 19):
 
 | Kumpulan | Fail | Asal & pengesahan |
 |---|---|---|
 | **Baseline regresi (7)** | `baru_detail_*` (gelap 3 + terang 4) | Dijana & dibandingkan oleh `bina_tangkapan_dokumentasi.py` — `SENARAI_GELAP`/`SENARAI_TERANG` (Sesi 55); regresi: `python bina_tangkapan_dokumentasi.py`, kemas selepas perubahan reka bentuk SAH: `--kemas` |
 | **Rujukan LAMA (2)** | `lama_detail_*` (gelap + terang) | Tangkapan 7 Ogos, rujukan perbandingan LAMA→BARU dalam `TRANSFORMASI_DETAIL.md` — bukan sebahagian regresi |
-| **Galeri tema (10)** | `tema_{home,detail}_{neutral,kertas,neutral_terang,terang,sistem}.png` | Tangkapan 14 Ogos — halaman SAMA (Utama + Detail Abu Daud #3982, 1100×780) untuk perbandingan adil 5 tema; dirujuk oleh `MANUAL_PENGGUNAAN.md` seksyen TEMA → "Rujukan visual (5 tema)" via `../imej/`. Susun atur semasa: **RTL — Arab di kanan, terjemahan di kiri** (14 Ogos); bila susun atur berubah, tangkap semula |
+| **Galeri tema (10)** | `tema_{home,detail}_{neutral,kertas,neutral_terang,terang,sistem}.png` | Tangkapan 14 Ogos — halaman SAMA (Utama + Detail Abu Daud #3982, 1100×780) untuk perbandingan adil 5 tema; dirujuk oleh `manual/manual/MANUAL_PENGGUNAAN.md` seksyen TEMA → "Rujukan visual (5 tema)" via `../imej/`. Susun atur semasa: **RTL — Arab di kanan, terjemahan di kiri** (14 Ogos); bila susun atur berubah, tangkap semula |
 
 **Proses kemas kini galeri tema** (bukan sebahagian suite — tiada regresi):
 1. Lancarkan `PustakaApp` (skrin sebenar), `set_theme()` setiap 5 tema
@@ -576,8 +576,8 @@ seksyen 9, **130 fail** — imej 19):
    (selepas RTL: Arab di kanan).
 2. Salin ke `dokumen/imej/tema_*.png` — NAMA MESTI padan rujukan
    manual (jangan ubah nama fail sahaja tanpa kemas kini
-   `MANUAL_PENGGUNAAN.md`).
-3. Kemas kini `MANUAL_INSTALASI.md` senarai ZIP (kiraan dokumen/imej
+   `manual/manual/MANUAL_PENGGUNAAN.md`).
+3. Kemas kini `manual/manual/MANUAL_INSTALASI.md` senarai ZIP (kiraan dokumen/imej
    + jumlah fail) — semakan `semak_bersih` semak.py menandai imej
    baharu sehingga di-commit.
 4. Imej galeri TIDAK dikunci semak kontras/baseline — ia dokumentasi

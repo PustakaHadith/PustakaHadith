@@ -102,7 +102,7 @@ Beri 3 nilai di atas (atau fail `msix_identity.txt`) kepada pembangun
 untuk:
 
 - **Fasa 5C** — isi manifest MSIX Packaging Tool (INSTALLER.md §11,
-  VM_MSIX_CAPTURE.md).
+  penerbitan/penerbitan/VM_MSIX_CAPTURE.md).
 - **Fasa 6** — upload + submission Store.
 
 ---
@@ -112,10 +112,10 @@ untuk:
 1. **Fasa 5C — Bina MSIX:** pembangun jalankan MSIX Packaging Tool dalam
    VM Windows bersih, isi 3 nilai di atas, capture `dist/PustakaHadith`
    → `PustakaHadith_1.0.0.0_x64.msix` (rujuk INSTALLER.md §11,
-   MSIX_CAPTURE_PROSES.md).
+   penerbitan/penerbitan/MSIX_CAPTURE_PROSES.md).
 2. **Fasa 6 — Partner Center:** upload MSIX, isi listing, muat naik
-   tangkapan skrin (TANGKAPAN_SKRIN.md), pautan sokongan
-   (PAUTAN_SOKONGAN.md), dasar privasi (DASAR_PRIVASI.md).
+   tangkapan skrin (penerbitan/penerbitan/TANGKAPAN_SKRIN.md), pautan sokongan
+   (surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md), dasar privasi (surat/sokongan/surat/sokongan/DASAR_PRIVASI.md).
 3. Microsoft **menandatangani semula** pakej → tiada amaran SmartScreen
    (percuma untuk Store rasmi).
 
@@ -125,6 +125,6 @@ untuk:
 
 - `dokumen/rujukan/INSTALLER.md` §10 (daftar), §11 (capture MSIX)
 - `dokumen/CHECKLIST_PEMANTAUAN.md` — Fasa 0, 5C, 6
-- `dokumen/VM_MSIX_CAPTURE.md`, `dokumen/MSIX_CAPTURE_PROSES.md`
-- `dokumen/TANGKAPAN_SKRIN.md`, `dokumen/DASAR_PRIVASI.md`,
-  `dokumen/PAUTAN_SOKONGAN.md`
+- `dokumen/penerbitan/penerbitan/penerbitan/VM_MSIX_CAPTURE.md`, `dokumen/penerbitan/penerbitan/penerbitan/MSIX_CAPTURE_PROSES.md`
+- `dokumen/penerbitan/penerbitan/penerbitan/TANGKAPAN_SKRIN.md`, `dokumen/surat/sokongan/surat/sokongan/surat/sokongan/DASAR_PRIVASI.md`,
+  `dokumen/surat/sokongan/surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md`

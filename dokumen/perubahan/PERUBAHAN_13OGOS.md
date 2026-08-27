@@ -160,7 +160,7 @@ LULUS 0 GAGAL** + app_qt diimport (VERSI 1.0). Folder ujian dibuang;
 ZIP akhir `PustakaHadis.zip` (120 fail, 1,103,530 bytes).
 
 **SENARAI RASMI FAIL ZIP + 2 PEMBETULAN PEMBINAAN (13 Ogos, petang):**
-`MANUAL_INSTALASI.md` seksyen 9 baharu "Kandungan ZIP edaran (senarai
+`manual/manual/MANUAL_INSTALASI.md` seksyen 9 baharu "Kandungan ZIP edaran (senarai
 rasmi)" — jadual ringkasan 7 bahagian (Akar 51, `api/` 2, `core/` 9,
 `ui/` 16, `utils/` 3, `scripts/` 3, `dokumen/` 36 = 120 fail) +
 senarai penuh dalam blok kod + pengecualian telus + seksyen 10

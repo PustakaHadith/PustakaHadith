@@ -113,7 +113,7 @@ Keputusan:
 - hOCR besar-besaran ditangguhkan kerana menghasilkan teks berhak cipta yang
   sama;
 - permohonan bertulis disediakan dalam
-  `dokumen/rujukan/PERMOHONAN_LESEN_AHMAD.md`.
+  `dokumen/surat/kebenaran/PERMOHONAN_LESEN_AHMAD.md`.
 
 ## 8. Kesan kepada Kerja OCR
 

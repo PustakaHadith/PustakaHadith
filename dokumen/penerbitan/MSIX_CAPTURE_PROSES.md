@@ -10,13 +10,13 @@
 | Item | Status | Nota |
 |---|---|---|
 | Identiti Partner Center | ⛔ **Menunggu pengguna** | `Package/Identity/Name`, `Publisher`, `PublisherDisplayName` |
-| VM bersih + snapshot | ☐ | Dokumentasi: `VM_MSIX_CAPTURE.md` |
+| VM bersih + snapshot | ☐ | Dokumentasi: `penerbitan/penerbitan/VM_MSIX_CAPTURE.md` |
 | Payload `dist\PustakaHadis` | ✅ | 0.54 GB ZIP sedia, audit bersih |
 | Aset PNG (50, 44, 150, 310×150) | ✅ | `installer\Assets\` |
 | MSIX Packaging Tool + WinApp CLI | ✅ | Dipasang (winget) |
-| Dasar privasi | ✅ | `DASAR_PRIVASI.md` |
-| Pautan sokongan | ☐ | `PAUTAN_SOKONGAN.md` — perlu URL sebenar |
-| Tangkapan skrin (4-8) | ☐ | `TANGKAPAN_SKRIN.md` — perlu ambil skrin |
+| Dasar privasi | ✅ | `surat/sokongan/surat/sokongan/DASAR_PRIVASI.md` |
+| Pautan sokongan | ☐ | `surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md` — perlu URL sebenar |
+| Tangkapan skrin (4-8) | ☐ | `penerbitan/penerbitan/TANGKAPAN_SKRIN.md` — perlu ambil skrin |
 
 ---
 
@@ -105,17 +105,17 @@ Restore-VMSnapshot -VMName "PustakaHadith-VM" -Name "Pre-MSIX-Capture"
 | `PustakaHadis_1.0.0.0_x64.msix` | `installer\output\` | MSIX ditandatangani ujian |
 | `TestCert.pfx` | `installer\certs\` | Sijil ujian (simpan selamat) |
 | Tangkapan skrin (4-8) | `installer\StoreAssets\Screenshots\` | Untuk Store |
-| Dasar privasi (URL) | `DASAR_PRIVASI.md` | URL raw GitHub / laman web |
-| Pautan sokongan (URL) | `PAUTAN_SOKONGAN.md` | URL GitHub Issues / Form |
+| Dasar privasi (URL) | `surat/sokongan/surat/sokongan/DASAR_PRIVASI.md` | URL raw GitHub / laman web |
+| Pautan sokongan (URL) | `surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md` | URL GitHub Issues / Form |
 
 ---
 
 ## Rujukan Teknikal
 
-- `dokumen\VM_MSIX_CAPTURE.md` — langkah penuh VM
+- `dokumen\penerbitan/penerbitan/VM_MSIX_CAPTURE.md` — langkah penuh VM
 - `dokumen\rujukan\INSTALLER.md` §11–§13 — spesifikasi rasmi
 - `dokumen\CHECKLIST_PEMANTAUAN.md` — status Gate 5C/6
 
 ---
 
-*Dokumen: `dokumen\MSIX_CAPTURE_PROSES.md` · Folder binaan installer*
+*Dokumen: `dokumen\penerbitan/penerbitan/MSIX_CAPTURE_PROSES.md` · Folder binaan installer*

@@ -332,7 +332,7 @@ Penyediaan yang boleh dilakukan tanpa identiti Partner Center:
 Dokumentasi pengguna untuk binaan edaran dicipta (Gate 6, INSTALLER
 §18 — "dokumentasi pengguna/privasi/sokongan sedia"):
 
-1. **`dokumen/MANUAL_INSTALASI.md`** — keperluan (Windows 10/11 x64,
+1. **`dokumen/manual/manual/manual/MANUAL_INSTALASI.md`** — keperluan (Windows 10/11 x64,
    tiada Python); 3 cara pasang: Microsoft Store (MSIX — status:
    sedang disediakan), pemasang EXE (`PustakaHadis-Setup-1.0.0-x64.exe`,
    per-user, naik taraf tidak padam data, nyahpasang tidak padam data),
@@ -343,7 +343,7 @@ Dokumentasi pengguna untuk binaan edaran dicipta (Gate 6, INSTALLER
    (lambat kali pertama, tab English kelabu, mod luar talian); sumber &
    atribusi.
 
-2. **`dokumen/MANUAL_PENGGUNAAN.md`** — pengenalan 9 kitab + 62,169
+2. **`dokumen/manual/manual/manual/MANUAL_PENGGUNAAN.md`** — pengenalan 9 kitab + 62,169
    hadis; skrin utama (carian, kitab, gear, bintang, dadu rawak);
    carian kata kunci + carian makna (AI, soalan penuh); lompat terus
    hadis (433 / bukhari 433 / B433 / b:433 / Ctrl+G); membaca hadis
@@ -355,15 +355,15 @@ Dokumentasi pengguna untuk binaan edaran dicipta (Gate 6, INSTALLER
    talian (data tempatan, carian makna setempat); masalah lazim;
    sumber & atribusi.
 
-3. **`dokumen/DASAR_PRIVASI.md`** — tiada data peribadi dikumpul,
+3. **`dokumen/surat/sokongan/surat/sokongan/surat/sokongan/DASAR_PRIVASI.md`** — tiada data peribadi dikumpul,
    tiada telemetri/analitik, data hanya tempatan (`%LOCALAPPDATA%\
    PustakaHadis`), kunci API tertutup, carian makna AI sepenuhnya luar
    talian, sambungan hanya untuk sync hadis.my, hak padam/akses/portabiliti.
 
-4. **`dokumen/PAUTAN_SOKONGAN.md`** — cadangan GitHub Issues, maklumat
+4. **`dokumen/surat/sokongan/surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md`** — cadangan GitHub Issues, maklumat
    diperlukan (URL, e-mel, laman web), templat respons sokongan.
 
-5. **`dokumen/TANGKAPAN_SKRIN.md`** — senarai 4 wajib (skrin utama,
+5. **`dokumen/penerbitan/penerbitan/penerbitan/TANGKAPAN_SKRIN.md`** — senarai 4 wajib (skrin utama,
    butiran hadis, carian makna, tetapan) + 4 disyorkan (penanda halaman,
    splash, lompat hadis, tema), spesifikasi 1366×768/1920×1080 PNG,
    folder `installer\StoreAssets\Screenshots\`.
@@ -377,7 +377,7 @@ Dokumentasi pengguna untuk binaan edaran dicipta (Gate 6, INSTALLER
    (0.54 GB, 7,027 fail) dicipta dari `dist\PustakaHadis` untuk
    penguji dalaman (keputusan Fasa 0).
 
-2. **VM_MSIX_CAPTURE.md** — dokumentasi penuh persediaan VM bersih:
+2. **penerbitan/penerbitan/VM_MSIX_CAPTURE.md** — dokumentasi penuh persediaan VM bersih:
    spesifikasi VM, pemasangan alatan (winget MSIX Packaging Tool +
    WinApp CLI), salin payload + aset PNG, cipta snapshot wajib,
    wizard Manual installation, capture hanya buka/tutup aplikasi (tiada
@@ -386,7 +386,7 @@ Dokumentasi pengguna untuk binaan edaran dicipta (Gate 6, INSTALLER
    ujian (winappcert + SignTool), uji Add-AppxPackage, rollback ke
    snapshot.
 
-3. **MSIX_CAPTURE_PROSES.md** — checklist 6 fasa (prasyarat → uji)
+3. **penerbitan/penerbitan/MSIX_CAPTURE_PROSES.md** — checklist 6 fasa (prasyarat → uji)
    dengan status kotak semak, output diperlukan untuk Gate 6 (MSIX,
    sijil ujian, tangkapan skrin, URL privasi/sokongan).
 

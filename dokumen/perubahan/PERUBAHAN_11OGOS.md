@@ -15,8 +15,8 @@
 | `dokumen/rujukan/PANDANGAN_RISIKO.md` | Jadual versi + ciri → v1.0 |
 | `dokumen/perubahan/PERUBAHAN_11OGOS.md` | Fail ini (rujukan) |
 | `dokumen/perubahan/CHANGELOG.md` | Fail rujukan baharu — log perubahan versi (1.0–1.3 + reset) |
-| `dokumen/manual/MANUAL_INSTALASI.md` | Manual baharu — pemasangan pengguna (pecah dari MANUAL_PENGGUNA.md) |
-| `dokumen/manual/MANUAL_PENGGUNAAN.md` | Manual baharu — cara guna aplikasi (pecah dari MANUAL_PENGGUNA.md) |
+| `dokumen/manual/manual/manual/MANUAL_INSTALASI.md` | Manual baharu — pemasangan pengguna (pecah dari MANUAL_PENGGUNA.md) |
+| `dokumen/manual/manual/manual/MANUAL_PENGGUNAAN.md` | Manual baharu — cara guna aplikasi (pecah dari MANUAL_PENGGUNA.md) |
 
 ## Kandungan Sesi 54
 
@@ -32,7 +32,7 @@
   tetingkap); pengawal manual hilang dalam 8z (GAGAL bersih, bukan
   ranap).
 - Manual pengguna dipecah dua: `MANUAL_PENGGUNA.md` →
-  `dokumen/manual/MANUAL_INSTALASI.md` (pemasangan) + `dokumen/manual/MANUAL_PENGGUNAAN.md` (cara
+  `dokumen/manual/manual/manual/MANUAL_INSTALASI.md` (pemasangan) + `dokumen/manual/manual/manual/MANUAL_PENGGUNAAN.md` (cara
   guna); `MANUAL_PENGGUNA_EN.md` digugurkan (terjemahan manual lama).
 
 ## Versi apl → 1.0

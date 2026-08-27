@@ -90,4 +90,4 @@ installer\StoreAssets\Screenshots\
 
 ---
 
-*Dokumen: `dokumen\TANGKAPAN_SKRIN.md` · Untuk Microsoft Store (Gate 6)*
+*Dokumen: `dokumen\penerbitan/penerbitan/TANGKAPAN_SKRIN.md` · Untuk Microsoft Store (Gate 6)*
