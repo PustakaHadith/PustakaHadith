@@ -8335,5 +8335,33 @@ Item tertangguh: nombor hadis A/B/C; kebenaran hadis.my; build dist ditangguh.
 
 ---
 
-*sesi_index.md — dikemas kini 27 Ogos 2026*
+## Sesi 58 - 27 Ogos 2026 (petang)
+
+**Tema: Penyeragaman jenama `PustakaHadith`**
+
+- **Arahan:** pengguna membetulkan — "semua mesti kekal guna `PustakaHadith`"
+  (satu perkataan, 't' betul), bukan `Pustaka Hadis` / `PustakaHadis`.
+- **Ganti massa:** 601 kemunculan / 96 fail (dokumen + sumber + skrip binaan)
+  `Pustaka Hadis` / `PUSTAKA HADIS` / `Pustaka Hadith` (berjarak) /
+  `PustakaHadis` → **`PustakaHadith`** (`fix_brand2.py`). Domain `hadis.my`
+  (261) tidak disentuh.
+- **Fail binaan dinamakan semula:** `PustakaHadis-Debug.spec` →
+  `PustakaHadith-Debug.spec`, `PustakaHadis-Fasa4.wsb` →
+  `PustakaHadith-Fasa4.wsb`.
+- **Sumber:** `config.py` (`DATA_DIR=%LOCALAPPDATA%\PustakaHadith`),
+  `ui/app_qt.py` (tajuk), `installer/msix_identity.txt` + `.iss`,
+  `*.bat`/`*.ps1`/`*.py` dikemas kini.
+- **PDF:** `EMEL_HADISMY.pdf`, `DASAR_PRIVASI.pdf`, `PAUTAN_SOKONGAN.pdf`
+  dijana semula (`buat_pdf2.py`); `SURAT_HADISMY*.pdf` masih terkunci → tertangguh.
+- Commit `e9ff349`.
+
+**Status:** jenama seragam `PustakaHadith` di repo; binaan akan guna nama
+sama bila dibina. Tertangguh: SURAT PDF (tutup pelihat), nombor hadis A/B/C,
+kebenaran hadis.my, build dist.
+
+**Log harian:** `dokumen/perubahan/PERUBAHAN_27OGOS.md`
+
+---
+
+ *sesi_index.md — dikemas kini 27 Ogos 2026*
 

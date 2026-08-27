@@ -48,3 +48,24 @@
 - Build dist (online-only) ditangguh atas arahan pengguna.
 - `SURAT_HADISMY.pdf` asal terkunci dalam pelihat PDF; versi bersih =
   `SURAT_HADISMY_kemas.pdf` (ganti bila ditutup).
+
+## Penyeragaman Jenama `PustakaHadith` (petang)
+- Arahan pengguna: **"semua mesti kekal guna `PustakaHadith`"** (satu
+  perkataan, 't' betul) — pembetulan dari `Pustaka Hadis` / `PustakaHadis`.
+- Skrip ganti massa (`fix_brand2.py`) seragamkan **601 kemunculan / 96 fail**
+  merentas dokumen + sumber: `Pustaka Hadis` / `PUSTAKA HADIS` / `Pustaka Hadith`
+  (berjarak) / `PustakaHadis` (camelCase salah) → **`PustakaHadith`**.
+- Fail binaan dinamakan semula: `PustakaHadis-Debug.spec` →
+  `PustakaHadith-Debug.spec`, `PustakaHadis-Fasa4.wsb` →
+  `PustakaHadith-Fasa4.wsb`.
+- Sumber kemaskini: `config.py` (`DATA_DIR = %LOCALAPPDATA%\PustakaHadith`),
+  `ui/app_qt.py` (tajuk tetingkap), `installer/msix_identity.txt`,
+  `installer/PustakaHadith.iss`, pelbagai `*.bat`/`*.ps1`/`*.py`.
+- PDF hadis.my dijana semula: `EMEL_HADISMY.pdf`, `DASAR_PRIVASI.pdf`,
+  `PAUTAN_SOKONGAN.pdf` (guna `buat_pdf2.py`). Domain `hadis.my` (261)
+  **tidak disentuh**.
+- Commit `e9ff349`.
+- **Tertangguh:** `SURAT_HADISMY.pdf` & `SURAT_HADISMY_kemas.pdf` masih
+  terkunci dalam pelihat → belum dijana semula; perlu tutup pelihat.
+- Binaan seterusnya (exe/MSIX) akan keluar sebagai `PustakaHadith` (tiada
+  rebuild dibuat buat masa ini).
