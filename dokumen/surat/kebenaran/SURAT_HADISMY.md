@@ -2,7 +2,7 @@
 
 **Kepada:** Pengurus / Tim Teknikal hadis.my (Dayabumi Creative Network)  
 **Dari:** Pembangun Pustaka Hadis  
-**Tarikh:** 21 Ogos 2026  
+**Tarikh:** 27 Ogos 2026  
 **Perihal:** Pengesahan Penggunaan **API Hadis Malaysia (service.hadis.my)** dan Permohonan Kebenaran **Membundel Snapshot Data** untuk Aplikasi Pustaka Hadis v1.0
 
 ---
@@ -143,14 +143,59 @@ nasai      : 468
 
 ---
 
-## Lampiran (Boleh Dihantar Ikut Permintaan)
+## Status Semasa (27 Ogos 2026)
 
-1. **Dasar Privasi** aplikasi (tiada telemetri, data hanya tempatan)
-2. **Manual Penggunaan** (sertai atribusi hadis.my)
-3. **Skema pangkalan data** (jadual `hadis`, `kitab`, `bab`, `darjat`, `terjemahan_eng`)
-4. **Contoh permintaan API** (batch sync, single hadis lookup)
-5. **Tangkapan skrin** aplikasi dengan atribusi hadis.my
-6. **Senarai 55 hadis** terjemahan Melayu tidak lengkap (format CSV/JSON)
+- Aplikasi sudah siap dibina (MSIX + Setup EXE) untuk edaran Microsoft Store.
+- **Buat masa ini binaan awam TIDAK membundel `hadis.db`** — pengguna memperoleh
+  data melalui kunci API mereka sendiri (sync dari `service.hadis.my`). Ini langkah
+  sementara **menunggu kebenaran bertulis** dari hadis.my (surat ini).
+- Sebaik kebenaran diterima, snapshot data akan dibundel supaya pengguna boleh
+  terus membaca tanpa kunci API (terperinci dalam "Permohonan Utama" di atas).
+
+## Tangkapan Skrin Aplikasi (v1.0.0 — Tema Aqua)
+
+Berikut tangkapan skrin sebenar dari aplikasi yang berjalan, supaya pihak hadis.my
+melihat rupa dan aliran penggunaan. Setiap paparan memaparkan atribusi "hadis.my".
+
+**1. Skrin Utama (Perpustakaan)**  
+![Skrin Utama](../../penerbitan/tangkapan/01_utama.png)  
+Halaman selamat datang dengan akses pantas ke kitab, carian dan profil pembaca;
+atribusi "Data hadis bersumber daripada hadis.my" dipaparkan di bahagian bawah.
+
+**2. Rak Digital (Jelajah Kitab)**  
+![Rak Digital](../../penerbitan/tangkapan/02_rak_digital.png)  
+Senarai 9 kitab utama (Kutub al-Tis'ah) dengan kiraan hadis setiap koleksi.
+
+**3. Halaman Kitab — Bukhari (bar sisi senarai Bab)**  
+![Kitab Bukhari](../../penerbitan/tangkapan/03_kitab_bukhari.png)  
+Bar sisi kiri memaparkan pemetaan bab ("PILIH BAB") yang dijana dari data hadis.my;
+pengguna boleh lompat ke bab tertentu.
+
+**4. Butiran Hadis — Bukhari #1**  
+![Butiran Hadis](../../penerbitan/tangkapan/04_detail_bukhari_1.png)  
+Teks Arab, terjemahan Melayu & Indonesia, darjat, dan atribusi "Sumber: hadis.my".
+Bar sisi kiri menyediakan "Lompat No. hadis" dan pemetaan.
+
+**5. Carian**  
+![Carian](../../penerbitan/tangkapan/05_carian.png)  
+Carian kata kunci (FTS5) dan carian makna AI (on-device, tanpa internet).
+
+**6. Simpan & Sejarah**  
+![Simpan & Sejarah](../../penerbitan/tangkapan/06_simpan_sejarah.png)  
+Penanda buku dan sejarah bacaan pengguna (disimpan hanya dalam peranti).
+
+> Nota: Tangkapan diambil dari binaan pembangunan (Windows 10/11, 1280×749).
+> Tiada data peribadi dipaparkan; halaman menggunakan data sampel awam.
+
+## Lampiran (Disertakan Bersama Surat Ini)
+
+1. **Tangkapan skrin** — 6 imej dalam `dokumen/penerbitan/tangkapan/`
+   (`01_utama.png` … `06_simpan_sejarah.png`); lihat seksyen di atas.
+2. **Dasar Privasi** — `dokumen/surat/sokongan/DASAR_PRIVASI.md`
+3. **Pautan Sokongan** — `dokumen/surat/sokongan/PAUTAN_SOKONGAN.md`
+4. **Manual Penggunaan** — `dokumen/manual/MANUAL_PENGGUNAAN.md`
+5. **Skema pangkalan data** (jadual `hadis`, `kitab`, `bab`, `darjat`)
+6. **Senarai 55 hadis** terjemahan Melayu tidak lengkap (CSV/JSON)
 
 ---
 
@@ -170,6 +215,7 @@ nasai      : 468
 ## Sebelum Menghantar (Checklist)
 
 - [ ] Isi butiran sebenar: `[NAMA]`, `[E-MEL]`, `[TELEFON]`
+- [ ] Sertakan 6 tangkapan skrin (folder `dokumen/penerbitan/tangkapan/`)
 - [ ] Sahkan atribusi "hadis.my" memang wujud di skrin utama & butiran hadis
 - [ ] Nada: meminta izin, bukan menuntut hak (semua pelan percuma)
 - [ ] Lampiran 55 ID hadis — menunjukkan niat baik, memberi nilai balik

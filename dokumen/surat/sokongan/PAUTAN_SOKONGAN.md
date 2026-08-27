@@ -1,6 +1,6 @@
 # Pautan Sokongan — PustakaHadith
 
-**Untuk Microsoft Store (Gate 6)**
+**Untuk Microsoft Store (Gate 6) — turut disertakan sebagai dokumen sokongan permohonan kebenaran hadis.my**
 
 ---
 
@@ -59,4 +59,4 @@
 
 ---
 
-*Dokumen: `dokumen\surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md` · Untuk Microsoft Store (Gate 6)*
+*Dokumen: `dokumen\surat/sokongan/PAUTAN_SOKONGAN.md` · Untuk Microsoft Store (Gate 6)*

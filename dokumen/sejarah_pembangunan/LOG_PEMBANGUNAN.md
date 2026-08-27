@@ -121,6 +121,19 @@ Struktur kategori baharu (lihat `dokumen/STRUKTUR_DOSUMENTASI.md`):
 5. **Penterjemahan nama bab** (Inggeris → Melayu) untuk `ahmad`/`darimi` (0 bab).
 6. **`uji_visual_kiraan.py`** — re-baseline (perlu skrin fizikal + DB penuh).
 
+## 9. Penyediaan Surat & Dokumen Sokongan hadis.my (27 Ogos 2026)
+
+- Kemaskini `dokumen/surat/kebenaran/SURAT_HADISMY.md`: tarikh → 27 Ogos,
+  tambah **Tangkapan Skrin** (6 imej), **Status Semasa** (build interim
+  online-only menunggu kebenaran), dan senarai Lampiran yang merujuk fail sebenar.
+- Tangkapan skrin dijana secara deterministik (`tangkap_layar.py` memandu
+  `PustakaApp` via `go()` / `open_kitab()` / `open_by_ref()` + `QWidget.grab()`):
+  `dokumen/penerbitan/tangkapan/01_utama.png` … `06_simpan_sejarah.png`.
+- Kemaskini `dokumen/surat/sokongan/DASAR_PRIVASI.md` (tarikh, seksyen
+  "Pembundelan Snapshot Data", baiki footer) & `PAUTAN_SOKONGAN.md` (footer).
+- Semua fail di atas dirujuk merentas satu sama lain untuk penghantaran kepada
+  hadis.my.
+
 ---
 
 *Log ini dikemas kini setiap sesi kerja. Sila rujuk fail kategori di atas untuk

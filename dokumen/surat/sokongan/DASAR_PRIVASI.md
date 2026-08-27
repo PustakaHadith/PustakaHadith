@@ -1,6 +1,6 @@
 # Dasar Privasi — PustakaHadith
 
-**Tarikh berkuat kuasa:** 20 Ogos 2026  
+**Tarikh berkuat kuasa:** 27 Ogos 2026  
 **Versi:** 1.0  
 **Pemilik:** PustakaHadith
 
@@ -71,6 +71,20 @@ Tiada sambungan lain (tiada pemeriksaan kemas kini automatik, tiada telemetri).
 
 ---
 
+## Pembundelan Snapshot Data (Menunggu Kebenaran hadis.my)
+
+Pada masa ini aplikasi **tidak** membundel pangkalan data hadis. Pengguna
+memperoleh data melalui kunci API mereka sendiri (sync dari `service.hadis.my`).
+Kami telah memohon kebenaran untuk membundel snapshot data hadis.my (lihat surat
+permohonan). Sekiranya kebenaran diberi:
+
+- Snapshot disimpan **hanya baca** dalam `%LOCALAPPDATA%\PustakaHadith\hadis.db`
+- Tiada pengubahsuaian teks; atribusi "hadis.my" kekal pada setiap paparan
+- Data tidak dikongsi ke server selain hadis.my
+- Aplikasi kekal berfungsi luar talian sepenuhnya
+
+---
+
 ## Hak Anda
 
 - **Akses**: Semua data anda dalam peranti anda.
@@ -100,4 +114,4 @@ GitHub Issues: https://github.com/opencodemk/PustakaHadith/issues
 
 ---
 
-*Dokumen: `dokumen\surat/sokongan/surat/sokongan/DASAR_PRIVASI.md` · Untuk Microsoft Store (Gate 6)*
+*Dokumen: `dokumen\surat/sokongan/DASAR_PRIVASI.md` · Untuk Microsoft Store (Gate 6)*
