@@ -139,9 +139,10 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
   `C:\Program Files\WindowsApps\...\PustakaHadith.exe`) → `Remove-AppxPackage` nyahpasang bersih
 - ☑ Aset PNG MSIX di `installer/Assets/` (StoreLogo · Square44x44 · Square150x150 · Wide310x150)
 - ☑ Audit inventori `dist\PustakaHadith`: **0 fail terlarang**; peringkat atas = `_internal` + `PustakaHadith.exe`
-- ☐ **Fasa 6 (Store rasmi):** muat naik MSIX ke Partner Center; Microsoft **TANDATANGAN
-  semula** pakej (tiada amaran SmartScreen). Perlu: lesen Ahmad (Perumusan Darussalam) +
-  `DASAR_PRIVASI.md` + `PAUTAN_SOKONGAN.md` + `TANGKAPAN_SKRIN.md`
+- ☐ **Fasa 6/7 (Store rasmi):** muat naik MSIX ke Partner Center; Microsoft **TANDATANGAN
+  semula** pakej (tiada amaran SmartScreen). Perlu: `DASAR_PRIVASI.md` +
+  `PAUTAN_SOKONGAN.md` + `TANGKAPAN_SKRIN.md` (lesen Ahmad **tidak diperlukan**
+  — English koleksi Ahmad diabaikan secara kekal).
 
 ### Uji Windows 10 (Gate 4 Matrix)
 - ☐ VM Windows 10 bersih / snapshot
@@ -199,10 +200,11 @@ tiada amaran biasa ✓
 | Fasa 3 — Pengoptimuman | ☑ GATE 3 LULUS | 20 Ogos |
 | Fasa 4 — Uji mesin bersih | ☑ GATE 4 LULUS | 20 Ogos |
 | Fasa 5 — Bina pakej edaran | ☑ 5A ✓ + 5B ✓ + 5C ✓ SELESAI (MSIX uji lokal lulus) | 27 Ogos |
-| Fasa 6 — Partner Center | ⏳ menunggu lesen Ahmad + dasar privasi (MSIX sedia) | — |
+| Fasa 6 — Partner Center | ⏳ menunggu DASAR_PRIVASI + PAUTAN_SOKONGAN + TANGKAPAN_SKRIN (MSIX + identiti sedia) | — |
 | Fasa 7 — Edaran awam | ☐ | — |
 
 **Halangan aktif:** ☑ identiti Microsoft Store **SELESAI** (MSIX 5C lulus).
-⛔ lesen terjemahan Inggeris Ahmad (Perumusan Darussalam) — tab English kekal
-kelabu sehingga kebenaran diterima; Fasa 6 (Store rasmi) juga menunggu
-lesen + `DASAR_PRIVASI.md`.
+☑ **English koleksi Ahmad diabaikan secara kekal** (tiada perancangan lesen
+Darussalam) — tab English Ahmad kekal kelabu; **bukan lagi blocker** Fasa 6/7.
+⏳ Fasa 6/7 (Store rasmi) menunggu `DASAR_PRIVASI.md` + `PAUTAN_SOKONGAN.md`
++ `TANGKAPAN_SKRIN.md` (MSIX + identiti Store sudah sedia).

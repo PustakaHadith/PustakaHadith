@@ -2,7 +2,10 @@
 
 **Tarikh draf:** 15 Ogos 2026  
 **Projek:** Pustaka Hadis — aplikasi desktop Windows berbahasa Melayu  
-**Status:** Jangan edarkan teks sehingga kebenaran bertulis diterima
+**Status:** **DITUTUP — English koleksi Ahmad diabaikan secara kekal (27 Ogos 2026).**
+Tiada perancangan menghantar permohonan ke Darussalam/Sunnah.com; teks Inggeris
+Ahmad tidak akan disertakan dalam mana-mana keluaran. Tab English Ahmad kekal kelabu.
+Dokumen ini disimpan sebagai rekod keputusan sahaja.
 
 ---
 
@@ -175,17 +178,17 @@ Jangan anggap ketiadaan jawapan sebagai kebenaran.
 
 ---
 
-## 5. Tindakan Sementara
+## 5. Keputusan Muktamad (27 Ogos 2026)
 
-Sehingga kebenaran diterima:
+Diputuskan: **abaikan English koleksi Ahmad secara kekal**, tiada rancangan
+memohon kebenaran bertulis Darussalam/Sunnah.com.
 
-1. Kekalkan tab English Ahmad kelabu.
-2. Jangan masukkan teks Inggeris ke `terjemahan_eng` produksi.
-3. Pemetaan SHA/nombor boleh dikekalkan untuk audit dalaman.
-4. Jangan teruskan OCR besar-besaran; ia tetap menghasilkan teks Darussalam
-   yang tertakluk kepada isu hak yang sama.
-5. Boleh pautkan pengguna ke halaman sunnah.com dalam pelayar, tetapi jangan
-   salin koleksi ke aplikasi.
+1. Tab English Ahmad kekal kelabu (tiada teks Inggeris Ahmad dalam apl).
+2. Jangan masukkan teks Inggeris Ahmad ke `terjemahan_eng` produksi.
+3. Pemetaan SHA/nombor (1,345–1,359 entri) disimpan untuk audit dalaman sahaja.
+4. Ini **membuang lesen Ahmad sebagai blocker** Fasa 6/7 — MSIX & Store boleh
+   diteruskan tanpanya.
+5. Jika pada masa hadapan mahu sertakan, buka semula permohonan §2–§3.
 
 ---
 
