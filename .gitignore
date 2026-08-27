@@ -71,3 +71,6 @@ reading_history.json
 Output/
 Screenshot/
 mockup/selected_*
+
+# Fail data pengguna (PII) - jangan commit
+bf9c0680-b5ff-4d53-8fb8-376e148cbdee.json
