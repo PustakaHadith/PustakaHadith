@@ -1,9 +1,9 @@
 # Surat Permohonan Kebenaran / Pengesahan Penggunaan API — hadis.my (API Hadis Malaysia)
 
 **Kepada:** Pengurus / Tim Teknikal hadis.my (Dayabumi Creative Network)  
-**Dari:** Pembangun Pustaka Hadis  
+**Dari:** Pembangun Pustaka Hadith  
 **Tarikh:** 27 Ogos 2026  
-**Perihal:** Pengesahan Penggunaan **API Hadis Malaysia (service.hadis.my)** dan Permohonan Kebenaran **Membundel Snapshot Data** untuk Aplikasi Pustaka Hadis v1.0
+**Perihal:** Pengesahan Penggunaan **API Hadis Malaysia (service.hadis.my)** dan Permohonan Kebenaran **Membundel Snapshot Data** untuk Aplikasi Pustaka Hadith v1.0
 
 ---
 
@@ -20,11 +20,11 @@
 
 ## Salam Sejahtera,
 
-Saya menulis untuk **mengesahkan dan memohon kebenaran rasmi** penggunaan **API Hadis Malaysia (https://hadis.my / https://service.hadis.my)** dalam aplikasi desktop **Pustaka Hadis** versi 1.0 yang akan diedarkan melalui Microsoft Store dan saluran lain.
+Saya menulis untuk **mengesahkan dan memohon kebenaran rasmi** penggunaan **API Hadis Malaysia (https://hadis.my / https://service.hadis.my)** dalam aplikasi desktop **Pustaka Hadith** versi 1.0 yang akan diedarkan melalui Microsoft Store dan saluran lain.
 
 ### Latar Belakang Aplikasi
 
-**Pustaka Hadis** adalah aplikasi desktop sumber terbuka (MIT License) untuk Windows 10/11 yang menyediakan:
+**Pustaka Hadith** adalah aplikasi desktop sumber terbuka (MIT License) untuk Windows 10/11 yang menyediakan:
 - **62,169 hadis** daripada 9 kitab utama (Kutub al-Tis'ah) — **termasuk Musnad Ahmad (26,363) & Sunan Darimi (3,367)**
 - Carian kata kunci (FTS5 SQLite) + carian makna AI (semantic search, on-device, model `intfloat/multilingual-e5-small`)
 - Terjemahan **Melayu & Indonesia** (bersumber daripada hadis.my API)
@@ -49,7 +49,7 @@ Saya menulis untuk **mengesahkan dan memohon kebenaran rasmi** penggunaan **API 
 
 ```
 1. Pengguna daftar akaun di https://developer.hadis.my → dapatkan Kunci API
-2. Buka Pustaka Hadis → Tetapan → Masukkan Kunci API
+2. Buka Pustaka Hadith → Tetapan → Masukkan Kunci API
 3. Klik "Uji" → Aplikasi sahkan kunci dengan hadis.my (1 request)
 4. Klik "Sync" → Aplikasi muat turun 62,169 hadis (batch requests, throttle 1.1s)
    → 622 permintaan API per pengguna untuk sync penuh
@@ -132,7 +132,7 @@ nasai      : 468
 
 | Item | Butiran |
 |---|---|
-| **Nama aplikasi** | Pustaka Hadis |
+| **Nama aplikasi** | Pustaka Hadith |
 | **Versi** | 1.0.0 |
 | **Platform** | Windows 10/11 (x64) |
 | **Format edaran** | MSIX (Microsoft Store), EXE (Inno Setup per-user), ZIP portable |

@@ -29,7 +29,7 @@ Package/Properties/PublisherDisplayName = PustakaHadith
 ```
 
 > **Nama:** identiti pakej = `PustakaHadith` (tanpa jarak). Nama paparan
-> (Display name) boleh `Pustaka Hadis` (dengan jarak) — ditetapkan bila
+> (Display name) boleh `Pustaka Hadith` (dengan jarak) — ditetapkan bila
 > isi manifest MSIX, bukan di sini.
 
 ---

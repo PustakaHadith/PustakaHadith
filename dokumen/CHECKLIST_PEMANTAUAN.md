@@ -73,7 +73,7 @@ uji_carian_arab ✓ · main.py melancar ✓
 | 1 | Buang duplikat HF `blobs/` (470 MB) — diuji empirik model masih muat penuh | ☑ |
 | 2 | Buang cv2 (138 MB) + PIL (13 MB) via `--exclude-module` (lazy import selamat) | ☑ |
 | 3 | Hasil optimum: `dist\PustakaHadis-Debug` = **1,399.9 MB / 7,027 fail** (jimat 622.9 MB, 31%) | ☑ |
-| 4 | Ujian: model e5 dimuat penuh (stderr 100%, RAM 929–937 MB, `muat_s 35.0`), tetingkap 'Pustaka Hadis', tiada ralat | ☑ |
+| 4 | Ujian: model e5 dimuat penuh (stderr 100%, RAM 929–937 MB, `muat_s 35.0`), tetingkap 'Pustaka Hadith', tiada ralat | ☑ |
 | 5 | Ujian fungsi penuh automatik: FTS5 'puasa' 816 · 'صلاة' 2,443 · 62,169 hadis · carian makna (riba→darimi#2467; puasa→malik#587) · 4 tema · user_settings.json | ☑ |
 | 6 | Boot pertama lambat (~110–120 s) = Windows Defender scan 1.4 GB — bukan ralat | ☑ |
 
@@ -104,7 +104,7 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
 
 ### 5A — Binaan keluaran `--windowed` (INSTALLER §7.3) ☑ SELESAI (20 Ogos)
 - ☑ Bina `dist\PustakaHadis\PustakaHadis.exe` (--windowed, tiada konsol; spec `PustakaHadis.spec`, upx=False, exclude cv2/PIL)
-- ☑ Ujian ringkas: exe hidup · disclaimer (tajuk guna EM DASH 8212) · tetingkap 'Pustaka Hadis' TEPAT · model dimuat dari cache (`muat_s 39.5`, `dari_cache true`) · DATA_DIR betul
+- ☑ Ujian ringkas: exe hidup · disclaimer (tajuk guna EM DASH 8212) · tetingkap 'Pustaka Hadith' TEPAT · model dimuat dari cache (`muat_s 39.5`, `dari_cache true`) · DATA_DIR betul
 - ☑ warn-*.txt: tiada regresi vs Debug (set diff missing module = kosong)
 - ☑ semak.py **386 SEMUA LULUS** (15 bahagian; +1 kerana CHECKLIST_PEMANTAUAN.md — semak #8m lulus per fail .md)
 
@@ -113,7 +113,7 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
 - ☑ Per-user install (`PrivilegesRequired=lowest`, `{localappdata}\Programs\PustakaHadis`), AppId tetap `{{7DF2553E-9E62-4ED4-929A-61C71AD1047F}`
 - ☑ Start Menu + Desktop pilihan (task desktopicon)
 - ☑ Silent install berfungsi (`/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-`; kod keluar 0, 7,029 fail dipasang)
-- ☑ Launch app terpasang: tetingkap 'Pustaka Hadis' terbuka, DATA_DIR betul
+- ☑ Launch app terpasang: tetingkap 'Pustaka Hadith' terbuka, DATA_DIR betul
 - ☑ Uninstall senyap: kod keluar 0 · folder app dipadam · **DATA_DIR KEKAL** · pintasan dipadam
 - ☑ Naik taraf kekalkan DATA_DIR: belum diuji penuh (perlu 1.0.1.0 di Fasa 6) — mekanisme terbukti (DATA_DIR berasingan, uninstall kekalkan)
 - ☑ Hasil: `installer\output\PustakaHadis-Setup-1.0.0-x64.exe` = **0.50 GB** (~34 minit lzma2/ultra64)

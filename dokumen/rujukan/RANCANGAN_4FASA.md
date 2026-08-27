@@ -1,4 +1,4 @@
-# Rancangan 4 Fasa — Pustaka Hadis
+# Rancangan 4 Fasa — Pustaka Hadith
 
 > **Kemas kini 3 Ogos 2026 (v1.0).** Fasa 3 SIAP pada data
 > sebenar (31,833 terjemahan, 98%). **Huraian auto (Fasa 4 HadeethEnc +

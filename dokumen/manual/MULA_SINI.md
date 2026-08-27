@@ -62,7 +62,7 @@ butang **Kembali** detail pulang ke halaman asal — `BACK_PETA["saved"]`
 → `go("saved")` (`03674bc`).
 Kerja 25 Ogos kekal (halaman utama AQUA + rak kitab).
 
-**Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadis → PustakaHadith** —
+**Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadith → PustakaHadith** —
 update 40+ fail Python (main, ui/*, config, sync_*, test_*), installer
 (.iss, .spec), README.md (section Pemasangan pengguna akhir), dokumen
 surat (emel rasmi Outlook/Gmail/Proton). Rename file: `PustakaHadis.iss`
@@ -78,7 +78,7 @@ dari panel Tetapan (`b292515`) · dialog disclaimer baharu
 terus · disclaimer selepas model + tajuk splash/disclaimer/header
 sepadan (`e6d867b`) · fix disclaimer pythonw.exe —
 `setQuitOnLastWindowClosed(False)` + papar sebelum splash (`6c9f855`) ·
-Tentang Pustaka Hadis QTableWidget 2 lajur (Kandungan + Sumber dan
+Tentang Pustaka Hadith QTableWidget 2 lajur (Kandungan + Sumber dan
 atribusi) (`5dd6990`) · **baiki gate: semak.py semakan atribusi
 diselaraskan ke format jadual Tentang + kiraan semakan 394
 (README, MULA_SINI, mutasi #27/#30/#34/#35/#36) + PERUBAHAN_19OGOS.md
@@ -1580,7 +1580,7 @@ Perbandingan ini hanya bertujuan membantu pengguna memahami perbezaan
 fungsi utama setiap platform dalam konteks carian dan semakan hadis.
 Setiap platform ada kelebihan masing-masing.
 
-| Fungsi | Pustaka Hadis (apps ini) | MyHadith (JAKIM) | Sunnah.com | SemakHadis.com |
+| Fungsi | Pustaka Hadith (apps ini) | MyHadith (JAKIM) | Sunnah.com | SemakHadis.com |
 |---|---|---|---|---|
 | **1. Carian keyword & semantik** | ✅ Keyword (FTS5) **+ Semantik AI** (e5-small, skor 0.84–0.88) | ✅ Carian kata kunci hadith sahih | ✅ Carian Lucene (quotes, wildcard, fuzzy, boolean) | ✅ Carian/semak hadis |
 | **2. Jumlah data** | ✅ 62,169 hadis, 9 kitab (kutub al-tis'ah) | Koleksi hadith sahih rasmi JAKIM | ✅ Paling banyak: 20+ koleksi, 30,000+ riwayat | Koleksi hadis disahkan pengkaji |
@@ -1590,7 +1590,7 @@ Setiap platform ada kelebihan masing-masing.
 | **6. Semakan oleh pakar hadis** | ⚠️ Data darjat dari SemakHadis + sumber hadis.my (bukan panel sendiri) | ✅ JAKIM (berautoriti) | ⚠️ Grading al-Albani / Darussalam (sebahagian) | ✅ Ulama / pengkaji hadis |
 | **7. Semakan tanpa had** | ✅ Pangkalan tempatan 62,169 + offline | ⚠️ Bergantung portal | ✅ Carian bebas | ✅ Semak sebelum sebar |
 
-**Kedudukan ringkas:** Pustaka Hadis unik pada **Carian Semantik AI + jawapan
+**Kedudukan ringkas:** Pustaka Hadith unik pada **Carian Semantik AI + jawapan
 tersusun** dan **data lengkap offline dalam Bahasa Melayu**; MyHadith dan
 SemakHadis.com unggul pada **autoriti semakan pakar**; Sunnah.com unggul pada
 **keluasan data dan carian teknikal**.

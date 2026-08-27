@@ -1,4 +1,4 @@
-# Changelog — Pustaka Hadis
+# Changelog — Pustaka Hadith
 
 > Log perubahan versi aplikasi. Cap versi tunggal: `VERSI.py`.
 > Butiran penuh setiap sesi: `dokumen/sesi/sesi_index.md`. Rujukan ringkas sesi
@@ -188,7 +188,7 @@ end-to-end 18/18, tema 19/19.
   (False)` + 200ms delay, `6c9f855`); selepas muat model pada mulanya
   (`e6d867b`); tajuk splash/disclaimer/header disepadankan (Pustaka
   bold teal + Hadis light teal + v1.0).
-- **Tentang Pustaka Hadis table** (`5dd6990`) — QTableWidget 2 lajur
+- **Tentang Pustaka Hadith table** (`5dd6990`) — QTableWidget 2 lajur
   untuk Kandungan + Sumber dan atribusi; grid line, padding, warna
   tema; hyperlink pautan HTML dalam sel.
 - **Gate semak.py dibaiki** — semakan atribusi 8aa diselaraskan ke
@@ -237,7 +237,7 @@ Ditanda pada `c3249bf`. Ciri utama:
 ## 1.0 — 7 Ogos 2026
 
 Ditanda pada `2970234` (komit pertama). Keluaran pertama Pustaka
-Hadis: koleksi kitab hadis lengkap, carian kata kunci FTS5 + carian
+Hadis Hadith: koleksi kitab hadis lengkap, carian kata kunci FTS5 + carian
 semantik FAISS, huraian SemakHadis/syarah, tema gelap/terang,
 penanda buku (Tersimpan), tetapan bahasa + saiz fon, cap versi
 `VERSI.py`.

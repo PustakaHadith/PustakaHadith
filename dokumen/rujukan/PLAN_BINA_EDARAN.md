@@ -1,4 +1,4 @@
-# PLAN BINA VERSI EDARAN — Pustaka Hadis v1.0
+# PLAN BINA VERSI EDARAN — Pustaka Hadith v1.0
 
 **Tarikh asal:** 15 Ogos 2026  
 **Diselaraskan:** 15 Ogos 2026  
@@ -128,7 +128,7 @@ Keputusan yang perlu direkod sebelum menyentuh kod:
 | 1 | Bundel model e5 + indeks FAISS untuk profil ujian? | **Ya** — elak bina berjam-jam; awam tunggu lesen |
 | 2 | Microsoft Store = saluran utama? | **Ya** — signing Microsoft, update terurus |
 | 3 | Inno EXE = saluran sekunder/penguji? | **Ya** — mesin tanpa Store |
-| 4 | Akaun Partner Center + nama Publisher? | **WAJIB di Fasa 5** — daftar sekarang (percuma) + tempah nama Pustaka Hadis segera; nama Publisher: pilihan pengguna (nama peribadi/badan) |
+| 4 | Akaun Partner Center + nama Publisher? | **WAJIB di Fasa 5** — daftar sekarang (percuma) + tempah nama Pustaka Hadith segera; nama Publisher: pilihan pengguna (nama peribadi/badan) |
 | 5 | Portable ZIP selepas MSIX? | **Ya — untuk penguji dalaman sahaja** (bukan saluran awam rasmi) |
 | 6 | Wizard permulaan (deklarasi → kunci API → sync)? | **Bina sebelum beta** — penguji perlu menguji aliran pengguna sebenar |
 
@@ -260,10 +260,10 @@ bina onedir --console, semak warn-*.txt).
 - `warn-*.txt`: 1,144 baris; 313 "missing module" — semua pilihan
   (torch extras, accelerate, bitsandbytes, dll). Tiada amaran untuk
   modul yang benar-benar digunakan. Missing `torch._C.*` = normal.
-- Ujian automatik exe: tetingkap 'Pustaka Hadis - Makluman' muncul →
+- Ujian automatik exe: tetingkap 'Pustaka Hadith - Makluman' muncul →
   disclaimer diluluskan (user_settings.json `disclaimer_dibaca:true`
   di DATA_DIR) → model e5 dimuat (RAM 78 → 596 MB) → tetingkap utama
-  'Pustaka Hadis' terbuka. DATA_DIR `%LOCALAPPDATA%\PustakaHadis`
+  'Pustaka Hadith' terbuka. DATA_DIR `%LOCALAPPDATA%\PustakaHadis`
   digunakan; folder EXE tiada hadis.db. Indeks FAISS binaan dimuat:
   62,169 vektor × 384 dimensi.
 - `semak.py` selepas perubahan: SEMUA LULUS — 385 semakan.
@@ -309,7 +309,7 @@ dicetuskan.
   - Model e5 dimuat penuh (stderr `Loading weights: 100% 199/199`;
     RAM 78 → 929–937 MB; `profil_model.json` dikemas `muat_s: 35.0,
     dari_cache: true` di DATA_DIR).
-  - Tetingkap utama 'Pustaka Hadis' terbuka (MainWindowTitle tepat).
+  - Tetingkap utama 'Pustaka Hadith' terbuka (MainWindowTitle tepat).
   - Tiada ralat/traceback.
   - `semak.py` SEMUA LULUS — 385 semakan (15 bahagian).
   - Boot pertama lambat (~110–120 s) — Windows Defender mengimbas
@@ -413,7 +413,7 @@ Tukar `--console` kepada `--windowed`; ulang semua ujian ringkas.
   `upx=False`; kekal exclude cv2/PIL + collect-all + aset profil.
 - Hasil `dist\PustakaHadis` = 1,399.9 MB / 7,027 fail (~21 minit).
 - Ujian ringkas LULUS: exe hidup · disclaimer (tajuk EM DASH U+2014) ·
-  tetingkap utama 'Pustaka Hadis' tepat · model dimuat dari cache
+  tetingkap utama 'Pustaka Hadith' tepat · model dimuat dari cache
   (profil_model.json: muat_s 39.5, dari_cache true) · DATA_DIR betul ·
   warn tiada regresi vs Debug · semak.py 386 SEMUA LULUS.
 
@@ -427,7 +427,7 @@ Tukar `--console` kepada `--windowed`; ulang semua ujian ringkas.
 - Hasil `installer\output\PustakaHadis-Setup-1.0.0-x64.exe` = 0.50 GB
   (~34 minit).
 - Ujian LULUS: silent install (0, 7,029 fail) · launch app terpasang
-  (tetingkap 'Pustaka Hadis') · uninstall senyap (0) — folder app
+  (tetingkap 'Pustaka Hadith') · uninstall senyap (0) — folder app
   dipadam, **DATA_DIR kekal**, pintasan dipadam. Naik taraf ujian penuh
   di Fasa 6 (1.0.0→1.0.1).
 
@@ -475,7 +475,7 @@ Tukar `--console` kepada `--windowed`; ulang semua ujian ringkas.
 ### Kerja
 
 1. Daftar akaun pembangun Microsoft Store.
-2. Tempah nama Pustaka Hadis.
+2. Tempah nama Pustaka Hadith.
 3. Rekod `Identity Name`, `Publisher` dan `PublisherDisplayName`.
 4. Bina versi `1.0.0.0`.
 5. Pasang, cipta settings/bookmark dan sync data ujian.

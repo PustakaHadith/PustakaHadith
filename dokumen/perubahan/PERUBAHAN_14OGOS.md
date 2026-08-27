@@ -221,7 +221,7 @@ awal):
 - **F3 — butang ↑ Tersimpan**
 - **G5 — 8 label panel Tetapan** (Saiz antara muka, Saiz teks Arab,
   Saiz terjemahan, Fon Arab, Bahasa dimuat, Selawat, Tetapan API,
-  Tentang Pustaka Hadis)
+  Tentang Pustaka Hadith)
 - **H4 — deklarasi larian pertama dengan butang "Faham"**
 - **A6–A8 — English 7 kitab sahaja (Ahmad/Darimi 0), Python 3.14,
   suite pra-hantar 12 ujian**

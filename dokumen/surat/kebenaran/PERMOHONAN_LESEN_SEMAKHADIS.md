@@ -56,7 +56,7 @@ seminggu, susul melalui telefon.
 ## E-MEL RASMI
 
 **Kepada:** fahmin@semakhadis.com
-**Subjek:** Permohonan kebenaran penggunaan data — aplikasi Pustaka Hadis (percuma, bukan komersial)
+**Subjek:** Permohonan kebenaran penggunaan data — aplikasi Pustaka Hadith (percuma, bukan komersial)
 
 ---
 
@@ -64,7 +64,7 @@ Assalamualaikum warahmatullah, Encik Ede Fahmin Rezuan.
 
 **Pengenalan**
 
-Saya [NAMA], pembangun **Pustaka Hadis** — aplikasi desktop Windows
+Saya [NAMA], pembangun **Pustaka Hadith** — aplikasi desktop Windows
 yang menghimpunkan 62,169 hadis daripada sembilan kitab utama (kutub
 al-tis'ah) dalam Bahasa Melayu. Aplikasi ini dibangunkan secara
 persendirian, **diedarkan percuma**, dan **tiada unsur komersial**
@@ -76,7 +76,7 @@ kepada pihak yang berkenaan. Maaf jika ini pengulangan.
 
 **Skop aplikasi**
 
-Pustaka Hadis ialah **rujukan/ensiklopedia** sembilan kitab hadis untuk
+Pustaka Hadith ialah **rujukan/ensiklopedia** sembilan kitab hadis untuk
 pelajar, pengkaji, dan pengguna awam. Ia **bukan** alat semakan hadis
 palsu — untuk tujuan itu, aplikasi **memautkan pengguna terus ke
 SemakHadis.com** (butiran di bawah).
@@ -151,7 +151,7 @@ Wassalam,
 
 > Assalamualaikum, boleh saya bercakap dengan Encik Ede Fahmin?
 >
-> Saya [NAMA], pembangun aplikasi Pustaka Hadis. Saya ada hantar e-mel
+> Saya [NAMA], pembangun aplikasi Pustaka Hadith. Saya ada hantar e-mel
 > ke fahmin@semakhadis.com berkenaan permohonan kebenaran menggunakan
 > data SemakHadis dalam aplikasi rujukan hadis yang saya bina —
 > percuma, bukan komersial.

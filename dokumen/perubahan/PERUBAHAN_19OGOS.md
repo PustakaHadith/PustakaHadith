@@ -25,7 +25,7 @@
   splash) + 200ms delay; dialog 540×600; papar setiap kali larian;
   buang semua debug trace.
 
-- **Komit 4 (`5dd6990`) — Tentang Pustaka Hadis table.**
+- **Komit 4 (`5dd6990`) — Tentang Pustaka Hadith table.**
   QTableWidget 2 lajur untuk Kandungan + Sumber dan atribusi; grid
   line, padding, warna tema; hyperlink pautan HTML dalam sel.
 
@@ -76,7 +76,7 @@
   (1) bundel model e5 + indeks FAISS untuk profil ujian = ya; (2) Store
   = saluran utama = ya; (3) Inno EXE = sekunder/penguji = ya; (4) akaun
   Partner Center = WAJIB di Fasa 5 (daftar sekarang, percuma, tempah
-  nama Pustaka Hadis segera); (5) portable ZIP = untuk penguji dalaman
+  nama Pustaka Hadith segera); (5) portable ZIP = untuk penguji dalaman
   sahaja; (6) wizard permulaan = bina sebelum beta. Direkod dalam
   `PLAN_BINA_EDARAN.md` Fasa 0 + `PERBANDINGAN_INSTALLER.md` §5.
   Gate Fasa 0: LULUS. Langkah seterusnya: Fasa 1 (pisahkan laluan data).

@@ -3,7 +3,7 @@
 > Ditulis 14 Ogos 2026, dikemas kini 15 Ogos 2026. Susulan
 > `dokumen/rujukan/SUMBER_hadis-my.md` § "Kitab tidak tersedia" — menjawab
 > soalan: bolehkah jurang 0% terjemahan Inggeris untuk Ahmad & Darimi dalam
-> Pustaka Hadis diisi daripada sumber lain?
+> Pustaka Hadith diisi daripada sumber lain?
 
 > **KEMAS KINI PENTING — 15 Ogos 2026:** Bahagian audit Ahmad di bawah
 > merekodkan urutan siasatan dan sebahagiannya kini **digantikan** oleh
