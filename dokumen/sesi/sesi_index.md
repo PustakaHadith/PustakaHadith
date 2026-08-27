@@ -8303,5 +8303,38 @@ AKTIF sengaja; jurang Tafsir 843 dipantau; installer Fasa 0 TERTUNDA.
 
 ---
 
-*sesi_index.md — dikemas kini 26 Ogos 2026*
+## Sesi 57 - 27 Ogos 2026
+
+**Tema: Pembinaan MSIX/Fasa 5C + gerbang lesen hadis.my + dokumentasi & PDF**
+
+- **MSIX + Fasa 5C:** MSIX dibina; Fasa 5C LULUS (`DAFTAR_MSIX_STORE.md`);
+  `CHECKLIST_PEMANTAUAN.md` dikemas (Fasa 5 ✓, Fasa 6/7 dibetulkan, `43ad8d2`);
+  `PERMOHONAN_LESEN_AHMAD.md` DITUTUP (Ahmad dikecualikan kekal).
+- **Regresi UI → punca akar:** binaan dist tiada `hadis.db`
+  (`DATA_DIR=%LOCALAPPDATA%\PustakaHadith` kosong) → tiada bab. Fix ujian:
+  salin DB+indeks ke sana. `PustakaHadith.spec` `datas` **dikembalikan** —
+  JANGAN bundel data hadis.my sehingga kebenaran bertulis
+  (`installer/PustakaHadith.iss` salin dist→%LOCALAPPDATA%).
+- **Perbincangan Bab & Nombor:** `PERBINCANGAN_BAB_NOMBOR_HADIS.md`
+  (`82cb845`, `e1104df`) — asal senarai Bab + isu Bukhari #858=kanonik #909;
+  pilihan **A/B/C TERTANGGUH**.
+- **Susun dokumentasi:** kategori `sejarah_pembangunan/`, `surat/kebenaran/`,
+  `surat/sokongan/`, `perbincangan/`, `penerbitan/`; pindah + kemas rujukan
+  (`be0af4f`); `.gitignore` PII (`6eb5fff`).
+- **Manual & hadis.my:** `MANUAL_PENGGUNAAN.md` dikemas + 6 tangkapan
+  (`d030151`); `SURAT_HADISMY.md`+`EMEL_HADISMY.md` + tangkapan
+  (`tangkap_layar.py`) + `DASAR_PRIVASI`/`PAUTAN_SOKONGAN` (`d7ee299`, `9dee026`);
+  folder `surat/hadis.my/`: logo `logo_pustakahadith.png` (Segoe UI
+  #5CBF85/#7FD39A/#9C9589) + PDF (xhtml2pdf berterabur → reportlab
+  `buat_pdf2.py`): `SURAT_HADISMY_kemas.pdf`, `EMEL_HADISMY.pdf`,
+  `DASAR_PRIVASI.pdf`, `PAUTAN_SOKONGAN.pdf` (`999a27e`, `1fa9a44`).
+
+**Status:** binaan interim online-only (tiada bundel) menunggu kebenaran hadis.my.
+Item tertangguh: nombor hadis A/B/C; kebenaran hadis.my; build dist ditangguh.
+
+**Log harian:** `dokumen/perubahan/PERUBAHAN_27OGOS.md`
+
+---
+
+*sesi_index.md — dikemas kini 27 Ogos 2026*
 
