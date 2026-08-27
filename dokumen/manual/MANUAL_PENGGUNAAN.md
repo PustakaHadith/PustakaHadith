@@ -14,24 +14,29 @@ ulama, huraian ringkas, dan carian makna (AI).
 
 | Kitab | Bilangan hadis |
 |---|---|
-| Sahih al-Bukhari | 7,563 |
-| Sahih Muslim | 7,563 |
-| Sunan Abu Daud | 5,274 |
-| Jami' al-Tirmizi | 3,998 |
-| Sunan al-Nasa'i | 5,765 |
-| Sunan Ibnu Majah | 4,343 |
+| Sahih al-Bukhari | 7,008 |
+| Sahih Muslim | 5,362 |
+| Sunan Abu Daud | 4,590 |
+| Jami' al-Tirmidzi | 3,891 |
+| Sunan al-Nasa'i | 5,662 |
+| Sunan Ibnu Majah | 4,332 |
 | Musnad Ahmad | 26,363 |
-| Sunan al-Darimi | 3,350 |
-| Muwatta' Malik | 1,858 |
+| Sunan al-Darimi | 3,367 |
+| Muwatta' Malik | 1,594 |
 
-*(jumlah sebenar mengikut penomboran sumber)*
+*(jumlah: 62,169 hadis. Nombor hadis mengikut **penomboran set data sumber**
+(hadis.my). Bagi sesetengah kitab, nombor ini mungkin berbeza daripada
+penomboran buku cetak atau sunnah.com; rujukan dalam aplikasi adalah
+konsisten dengan data yang dipaparkan.)*
 
 ---
 
 ## Skrin Utama
 
 - **Bar carian** — di tengah skrin utama. Taip soalan atau kata kunci.
-- **Senarai kitab** — 9 kad kitab; klik untuk masuk.
+- **Senarai kitab** — 9 kitab utama; klik **Jelajah Kitab** (nav atas) untuk
+  buka **Rak Digital**, kemudian pilih kitab untuk masuk ke halamannya
+  (dengan senarai Bab di bar sisi).
 - **Ikon gear (⚙)** — atas kanan: panel Tetapan.
 - **Ikon bintang** — buka senarai penanda halaman anda.
 - **Ikon dadu (⚄)** — hadis rawak.
@@ -71,6 +76,16 @@ Taip nombor atau gabungan kitab+nombor di bar carian:
 | `bukhari 433` | Buka kitab Bukhari pada hadis 433 |
 | `B433` / `b:433` | Sama seperti di atas |
 | `Ctrl+G` | Kotak "Lompat No. hadis" pada halaman kitab |
+
+### Meneroka mengikut Bab
+
+Pada halaman sesebuah kitab, bar sisi kiri memaparkan **senarai Bab**
+("PILIH BAB") yang dijana daripada data sumber. Klik mana-mana bab untuk
+lompat terus ke hadis pertama bab tersebut. Ciri ini membantu navigasi
+mengikut topik (cth. "Wuduk", "Solat") dan bukan nombor hadis semata-mata.
+
+> Nota: senarai Bab tersedia untuk kebanyakan kitab; Musnad Ahmad dan
+> Sunan al-Darimi tiada data bab dalam set data semasa.
 
 ---
 
@@ -153,12 +168,25 @@ Klik ikon **gear (⚙)** di penjuru atas kanan.
 
 ---
 
-## Mod Luar Talian
+## Keperluan Data & Mod Luar Talian
 
-Selepas data hadis dimuat turun (selepas kali pertama), aplikasi boleh
-digunakan **tanpa internet**. Carian kata kunci, membaca hadis, penanda
-halaman dan tema semua berfungsi. Carian makna (AI) juga berjalan
-setempat kerana model sudah dimuat semasa pemasangan.
+Pada **binaan semasa**, pangkalan data hadis **tidak dibundel** bersama
+aplikasi. Untuk membaca hadis, pengguna perlu memperoleh data terlebih
+dahulu:
+
+1. Dapatkan kunci API percuma di <https://developer.hadis.my>.
+2. **Tetapan → Sambungan → Tetapan API**: masukkan kunci, klik **Uji**,
+   kemudian **Sync**.
+3. Selepas *sync* selesai, aplikasi berfungsi **sepenuhnya luar talian**.
+
+Carian kata kunci, membaca hadis, penanda halaman dan tema semua berfungsi
+tanpa internet. Carian makna (AI) juga berjalan setempat kerana model
+(`intfloat/multilingual-e5-small`) sudah dimuat semasa pemasangan.
+
+> **Status pembundelan:** Pembangun telah memohon **kebenaran bertulis
+> daripada hadis.my** untuk membundel *snapshot* data ke dalam pemasang.
+> Sebaik kebenaran diterima, pengguna boleh terus membaca tanpa kunci API.
+> Rujuk `dokumen/surat/kebenaran/SURAT_HADISMY.md`.
 
 ---
 
@@ -180,7 +208,7 @@ setempat kerana model sudah dimuat semasa pemasangan.
 |---|---|
 | Aplikasi lambat buka | Kali pertama sahaja; larian seterusnya laju. |
 | Tiada hasil carian kata kunci | Cuba soalan penuh untuk carian makna (AI). |
-| Tab English kelabu | Tidak disertakan dalam binaan edaran buat masa ini (menunggu lesen). |
+| Tab English kelabu (Musnad Ahmad) | Terjemahan Inggeris Musnad Ahmad (Darussalam) tidak disertakan dalam binaan edaran buat masa ini — menunggu lesen. |
 | Ralat sambungan | Semak internet; hadis yang dimuat masih boleh dicari. |
 
 ---
@@ -194,8 +222,11 @@ setempat kerana model sudah dimuat semasa pemasangan.
 - **Huraian ringkas:** SemakHadis.com — atribusi dipaparkan pada setiap
   huraian
 - **Carian makna (AI):** model `intfloat/multilingual-e5-small`
+- **Pembundelan data:** snapshot data hadis.my sedang dimohon kebenaran
+  penulis; binaan semasa memperoleh data melalui kunci API pengguna
+  (rujuk seksyen "Keperluan Data & Mod Luar Talian").
 
 ---
 
-*Dokumen: `dokumen/manual/manual/manual/MANUAL_PENGGUNAAN.md` · Folder binaan installer ·
-Versi: 1.0 · 20 Ogos 2026*
+*Dokumen: `dokumen/manual/MANUAL_PENGGUNAAN.md` · Untuk aplikasi PustakaHadith ·
+Versi: 1.0 · 27 Ogos 2026*

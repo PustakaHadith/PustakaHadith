@@ -134,6 +134,14 @@ Struktur kategori baharu (lihat `dokumen/STRUKTUR_DOSUMENTASI.md`):
 - Semua fail di atas dirujuk merentas satu sama lain untuk penghantaran kepada
   hadis.my.
 
+## 10. Kemaskini Manual Pengguna (27 Ogos 2026)
+
+- `dokumen/manual/MANUAL_PENGGUNAAN.md`: betulkan jadual kiraan kitab kepada
+  nombor sebenar apl (Bukhari 7,008 … jumlah 62,169) + nota penomboran sumber;
+  kemaskini navigasi (Jelajah Kitab → Rak Digital), seksyen "Meneroka mengikut
+  Bab", "Keperluan Data & Mod Luar Talian" (sync API perlu; bundel menunggu
+  kebenaran hadis.my), jelaskan tab English = Musnad Ahmad, baiki footer.
+
 ---
 
 *Log ini dikemas kini setiap sesi kerja. Sila rujuk fail kategori di atas untuk
