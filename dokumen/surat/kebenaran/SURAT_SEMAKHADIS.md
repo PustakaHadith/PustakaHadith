@@ -1,15 +1,15 @@
 # Surat Permohonan Kebenaran — SemakHadis.com
 
 **Kepada:** Pengurus / Pemilik SemakHadis.com  
-**Dari:** Pembangun Pustaka Hadith  
+**Dari:** Pembangun Pustaka Hadis  
 **Tarikh:** 21 Ogos 2026  
-**Perihal:** Permohonan Kebenaran Menggunakan Huraian Ringkas Hadis untuk Aplikasi Pustaka Hadith
+**Perihal:** Permohonan Kebenaran Menggunakan Huraian Ringkas Hadis untuk Aplikasi Pustaka Hadis
 
 ---
 
 ## Salam Sejahtera,
 
-Saya menulis surat ini atas nama pasukan pembangunan **Pustaka Hadith**, sebuah aplikasi desktop sumber terbuka (open-source) untuk membaca dan mencari hadis daripada 9 kitab utama (Kutub al-Tis'ah) — **62,169 hadis** — dengan carian kata kunci, carian makna (AI), transliterasi, darjat ulama, dan huraian ringkas.
+Saya menulis surat ini atas nama pasukan pembangunan **Pustaka Hadis**, sebuah aplikasi desktop sumber terbuka (open-source) untuk membaca dan mencari hadis daripada 9 kitab utama (Kutub al-Tis'ah) — **62,169 hadis** — dengan carian kata kunci, carian makna (AI), transliterasi, darjat ulama, dan huraian ringkas.
 
 ### Latar Belakang
 
@@ -46,7 +46,7 @@ Aplikasi ini dibangunkan untuk kegunaan am umat Islam di Malaysia dan serantau, 
 
 Kami mohon dengan hormat **kebenaran bertulis** daripada SemakHadis.com untuk:
 
-1. ✅ **Menggunakan huraian ringkas** (4,237 rekod) dalam aplikasi Pustaka Hadith
+1. ✅ **Menggunakan huraian ringkas** (4,237 rekod) dalam aplikasi Pustaka Hadis
 2. ✅ **Mengedarkan aplikasi** melalui Microsoft Store dan saluran lain (percuma)
 3. ✅ **Mengekalkan atribusi** "Sumber: SemakHadis.com" pada setiap huraian
 4. ✅ **Tidak mengubahsuai** teks huraian asal (dipaparkan sebagaimana adanya)

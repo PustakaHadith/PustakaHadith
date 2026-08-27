@@ -149,7 +149,7 @@
    - Model e5 dimuat SEPENUHNYA (stderr: `Loading weights: 100%
      199/199`; RAM naik 78 → 929–937 MB; `profil_model.json` dikemas
      dengan `muat_s: 35.0, dari_cache: true`).
-   - Tetingkap utama **'Pustaka Hadith'** terbuka (MainWindowTitle
+   - Tetingkap utama **'Pustaka Hadis'** terbuka (MainWindowTitle
      tepat).
    - Tiada traceback/ralat (stderr kosong selain progress loading).
    - DATA_DIR `%LOCALAPPDATA%\PustakaHadis` digunakan.
@@ -177,7 +177,7 @@ dari `dist\_internal`):
 | Carian makna 'kelebihan puasa ramadhan' | Hadis puasa: malik #587, darimi #1698, ahmad #23097 (skor 0.86) |
 | Tema dark/light/neutral/lightneutral | Semua dipanggil tanpa ralat, palet berbeza |
 | user_settings.json (DATA_DIR) | Dibaca: disclaimer_dibaca, deklarasi_dibaca, theme |
-| Exe tetingkap utama | 'Pustaka Hadith' terbuka, model dimuat penuh |
+| Exe tetingkap utama | 'Pustaka Hadis' terbuka, model dimuat penuh |
 
 Kesimpulan: fungsi AI (carian makna), carian teks (FTS5), tema, dan
 pemisahan data (DATA_DIR) SEMUA berfungsi pada rantai binaan Fasa 3.
@@ -241,9 +241,9 @@ pemisahan data (DATA_DIR) SEMUA berfungsi pada rantai binaan Fasa 3.
    (tiada missing module baharu/hilang; semua pilihan).
 
 5. **Ujian exe windowed (semua LULUS):**
-   - Proses hidup selepas 3 s; disclaimer 'Pustaka Hadith — Makluman'
+   - Proses hidup selepas 3 s; disclaimer 'Pustaka Hadis — Makluman'
      muncul (~6–12 s; tajuk guna EM DASH U+2014, bukan sempang);
-   - Enter lulus disclaimer → tetingkap utama **'Pustaka Hadith'**
+   - Enter lulus disclaimer → tetingkap utama **'Pustaka Hadis'**
      (padanan tepat) terbuka; model dimuat dari cache dibundel
      (`profil_model.json` kemasukan baharu: `muat_s 39.5`,
      `import_s 35.0`, `dari_cache true` — model TIDAK dimuat turun);
@@ -278,8 +278,8 @@ pemisahan data (DATA_DIR) SEMUA berfungsi pada rantai binaan Fasa 3.
 4. **Uji silent install + uninstall (semua LULUS):**
    - `/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-` → kod keluar 0;
      7,029 fail dipasang ke `%LOCALAPPDATA%\Programs\PustakaHadis`;
-     pintasan Start Menu 'Pustaka Hadith' wujud;
-   - Launch app terpasang → tetingkap 'Pustaka Hadith' terbuka; DATA_DIR
+     pintasan Start Menu 'Pustaka Hadis' wujud;
+   - Launch app terpasang → tetingkap 'Pustaka Hadis' terbuka; DATA_DIR
      betul (user_settings.json);
    - Uninstall senyap (`unins000.exe /VERYSILENT`) → kod keluar 0;
      folder app dipadam; **DATA_DIR `%LOCALAPPDATA%\PustakaHadis`
@@ -313,8 +313,7 @@ Penyediaan yang boleh dilakukan tanpa identiti Partner Center:
    `_internal` + `PustakaHadis.exe` sahaja — bersih untuk capture.
 
 4. **Menunggu pengguna (⛔):** daftar akaun Microsoft Store
-   (https://storedeveloper.microsoft.com/) + tempah nama "Pustaka
- Hadith" + pilih nama Publisher. Selepas itu berikan 3 nilai:
+   (https://storedeveloper.microsoft.com/) + tempah nama "Pustaka Hadis" + pilih nama Publisher. Selepas itu berikan 3 nilai:
    `Package/Identity/Name`, `Package/Identity/Publisher`,
    `Package/Properties/PublisherDisplayName` (INSTALLER §10).
 
@@ -463,9 +462,9 @@ akan bosan menunggu melihat ia memuat model setiap kali hendak guna?"
 |---|---|
 | Binaan PyInstaller onedir --console | Selesai tanpa ralat (~19 minit) |
 | `warn-*.txt` | Tiada amaran kritikal (313 pilihan sahaja) |
-| Exe dilancarkan | HIDUP — tetingkap 'Pustaka Hadith - Makluman' muncul |
+| Exe dilancarkan | HIDUP — tetingkap 'Pustaka Hadis - Makluman' muncul |
 | Disclaimer diluluskan (Enter) | user_settings.json `disclaimer_dibaca:true` ditulis |
-| Model e5 dimuat | RAM naik 78 → 596 MB; tetingkap utama 'Pustaka Hadith' terbuka |
+| Model e5 dimuat | RAM naik 78 → 596 MB; tetingkap utama 'Pustaka Hadis' terbuka |
 | DATA_DIR frozen | `%LOCALAPPDATA%\PustakaHadis` — user_settings.json + profil_model.json ditulis DI SINI |
 | Folder EXE bersih | Tiada hadis.db dalam dist — data dipisah (Fasa 1 berfungsi dalam binaan sebenar) |
 | Aset dalam `_internal\` | app.ico, sunnah_map, .cache_models, hadis_faiss.index, hadis_id_map.pkl, profil_model.json SEMUA ADA |
@@ -487,5 +486,4 @@ dijalankan pada mesin pembangun bila selesa.
   dalam VM bersih, identiti Partner Center, x64, runFullTrust; MSIX
   install/launch/uninstall lulus; aset pakej = inventori.
 - **Fasa 0 tugas pengguna:** daftar akaun Microsoft Store
-  (https://storedeveloper.microsoft.com/) + tempah nama "Pustaka
- Hadith" + pilih nama Publisher — WAJIB sebelum 5C/6 (identiti MSIX).
+  (https://storedeveloper.microsoft.com/) + tempah nama "Pustaka Hadis" + pilih nama Publisher — WAJIB sebelum 5C/6 (identiti MSIX).

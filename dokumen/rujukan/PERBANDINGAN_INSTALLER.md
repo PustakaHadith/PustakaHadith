@@ -119,7 +119,7 @@ Keputusan pengguna akan direkod di bawah ini apabila perbincangan selesai:
       2. Store = saluran utama — **Ya**.
       3. Inno EXE = sekunder/penguji — **Ya**.
       4. Akaun Partner Center — **WAJIB di Fasa 5; daftar sekarang (percuma) +
-         tempah nama Pustaka Hadith; nama Publisher pilihan pengguna**.
+         tempah nama Pustaka Hadis; nama Publisher pilihan pengguna**.
       5. Portable ZIP — **Ya untuk penguji dalaman sahaja**.
       6. Wizard permulaan — **Bina sebelum beta**.
 - [x] Tarikh keputusan pengguna: **19 Ogos 2026**.
@@ -165,7 +165,7 @@ atau hala tuju A dengan GitHub sebagai penguji dalaman dahulu.
 ### Hala tuju A — Microsoft Store
 
 1. Buka **Microsoft Store** (sudah terbina dalam Windows 10/11).
-2. Cari **"Pustaka Hadith"** → halaman listing (ikon, screenshot, penerangan, dasar privasi).
+2. Cari **"Pustaka Hadis"** → halaman listing (ikon, screenshot, penerangan, dasar privasi).
 3. Klik **Dapatkan** → pemasangan automatik, **tiada amaran SmartScreen**.
 4. Buka app → wizard permulaan (keputusan Fasa 0 #6): deklarasi → kunci API
    → sync koleksi (~12 minit, bar kemajuan, boleh dijeda) → siap.

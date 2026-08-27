@@ -1,7 +1,7 @@
 # Panduan Langkah demi Langkah — Installer Windows dan MSIX
 
 **Tarikh kemas kini:** 15 Ogos 2026  
-**Aplikasi:** Pustaka Hadith  
+**Aplikasi:** Pustaka Hadis  
 **Sasaran:** Windows 10 22H2 / Windows 11, x64  
 **Status:** Panduan teknikal; belum dibina pada mesin Windows bersih  
 **Dokumen kawalan/gate:** `PLAN_BINA_EDARAN.md`  
@@ -31,7 +31,7 @@ Jika terdapat percanggahan, ikut urutan dan keputusan alat dalam
 ### Mengapa bukan Nuitka sekarang?
 
 Nuitka 4.1 mempunyai sokongan Python 3.14 yang masih ditanda eksperimen dan
-halaman rasminya mengakui PyQt5 mempunyai isu callback/threading. Pustaka Hadith
+halaman rasminya mengakui PyQt5 mempunyai isu callback/threading. Pustaka Hadis
 menggunakan banyak `QThread`, torch dan sentence-transformers. PyInstaller
 6.22 pula menyokong Python 3.8–3.15 dan menyenaraikan PyQt5 sebagai pakej yang
 dibundel secara rasmi.
@@ -169,7 +169,7 @@ FASA 6 — Edaran awam (§15, §18)
 
 Jangan terus menjalankan PyInstaller. Selesaikan dahulu:
 
-- [ ] Tutup semua aplikasi/proses Pustaka Hadith.
+- [ ] Tutup semua aplikasi/proses Pustaka Hadis.
 - [ ] `python semak.py` lulus.
 - [ ] `python semak_versi.py` lulus.
 - [ ] `python uji_lompat.py` lulus.
@@ -540,7 +540,7 @@ ialah bug yang mesti dibaiki sebelum MSIX.
 Buat `installer\PustakaHadis.iss`:
 
 ```ini
-#define MyAppName "Pustaka Hadith"
+#define MyAppName "Pustaka Hadis"
 #define MyAppVersion "1.0.0"
 #define MyAppExeName "PustakaHadis.exe"
 
@@ -549,7 +549,7 @@ AppId={{7DF2553E-9E62-4ED4-929A-61C71AD1047F}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 DefaultDirName={localappdata}\Programs\PustakaHadis
-DefaultGroupName=Pustaka Hadith
+DefaultGroupName=Pustaka Hadis
 PrivilegesRequired=lowest
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
@@ -566,8 +566,8 @@ Source: "..\dist\PustakaHadis\*"; DestDir: "{app}"; `
     Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{group}\Pustaka Hadith"; Filename: "{app}\{#MyAppExeName}"
-Name: "{autodesktop}\Pustaka Hadith"; Filename: "{app}\{#MyAppExeName}"; `
+Name: "{group}\Pustaka Hadis"; Filename: "{app}\{#MyAppExeName}"
+Name: "{autodesktop}\Pustaka Hadis"; Filename: "{app}\{#MyAppExeName}"; `
     Tasks: desktopicon
 
 [Tasks]
@@ -575,7 +575,7 @@ Name: "desktopicon"; Description: "Cipta pintasan Desktop"; `
     GroupDescription: "Pilihan tambahan:"
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "Buka Pustaka Hadith"; `
+Filename: "{app}\{#MyAppExeName}"; Description: "Buka Pustaka Hadis"; `
     Flags: nowait postinstall skipifsilent
 ```
 
@@ -612,8 +612,7 @@ SmartScreen/tandatangan.
    lengkapkan pengesahan identiti (telefon + e-mel; kad mungkin untuk
    pengesahan $0–1 — yuran $19/$99 dibuang 2026).
 3. Partner Center → **Apps and games** → **Create app** (MSIX or PWA app).
-4. Tempah nama **`PustakaHadith`** (tanpa jarak; paparan boleh "Pustaka
- Hadith").
+4. Tempah nama **`PustakaHadith`** (tanpa jarak; paparan boleh "Pustaka Hadis").
 5. **Product management → Product identity** → salin TEPAT:
 
 ```text
@@ -647,7 +646,7 @@ Windows Update, antivirus, cache dan program lain boleh termasuk dalam hasil.
 
 1. Ambil snapshot VM.
 2. Pasang MSIX Packaging Tool.
-3. Jangan pasang Pustaka Hadith terlebih dahulu.
+3. Jangan pasang Pustaka Hadis terlebih dahulu.
 4. Pastikan tiada `hadis.db`, API key atau data pengguna dalam VM.
 
 ### 11.2 Jalankan wizard — kaedah manual disyorkan
@@ -664,7 +663,7 @@ registry Inno ke dalam MSIX. MSIX sendiri mengurus pemasangan/nyahpasang.
 6. Isi maklumat pakej:
    - Package name: nilai `Package/Identity/Name` Partner Center;
    - Publisher: nilai `Package/Identity/Publisher` Partner Center;
-   - Display name: `Pustaka Hadith`;
+   - Display name: `Pustaka Hadis`;
    - Publisher display name: nilai Partner Center;
    - Version: `1.0.0.0`;
    - Architecture: x64;
@@ -789,7 +788,7 @@ semasa submission Partner Center.
 
 ## 15. Hantar ke Microsoft Store
 
-Partner Center → produk Pustaka Hadith → submission baharu.
+Partner Center → produk Pustaka Hadis → submission baharu.
 
 Lengkapkan:
 

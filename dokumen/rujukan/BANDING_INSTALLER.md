@@ -85,7 +85,7 @@ Rujukan:
 https://nuitka.net/posts/nuitka-release-41.html
 ```
 
-Pustaka Hadith menggunakan:
+Pustaka Hadis menggunakan:
 
 ```text
 Python 3.14
@@ -111,7 +111,7 @@ Rujukan:
 https://nuitka.net/pages/pyqt5.html
 ```
 
-Pustaka Hadith banyak bergantung pada:
+Pustaka Hadis banyak bergantung pada:
 
 ```text
 QThread
@@ -223,7 +223,7 @@ Nuitka mungkin memberikan:
 - kod Python dikompil;
 - pengendalian sesetengah pakej native yang lebih baik.
 
-Namun saiz Pustaka Hadith banyak didominasi oleh:
+Namun saiz Pustaka Hadis banyak didominasi oleh:
 
 ```text
 torch

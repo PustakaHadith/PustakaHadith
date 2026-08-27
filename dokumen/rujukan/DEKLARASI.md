@@ -1,4 +1,4 @@
-# Deklarasi Pustaka Hadith
+# Deklarasi Pustaka Hadis
 
 **Versi:** 1.0 (rasmi)
 **Tarikh:** 8 Ogos 2026
@@ -23,7 +23,7 @@ Papar **sekali** pada larian pertama, dengan butang "Faham".
 
 ---
 
-### Pustaka Hadith
+### Pustaka Hadis
 
 **Rujukan digital 9 kitab hadis dalam Bahasa Melayu**
 
@@ -59,7 +59,7 @@ memilih antara mereka.
 
 ---
 
-### Tentang Pustaka Hadith
+### Tentang Pustaka Hadis
 
 **Versi 1.0** — aplikasi desktop percuma, berjalan sepenuhnya luar
 talian.
@@ -165,7 +165,7 @@ memang tiada asal.
 
 Untuk rujukan dalaman — bukan untuk dipapar dalam aplikasi.
 
-| | Pustaka Hadith | sunnah.com | SemakHadis | HadithXpert | MyHadith |
+| | Pustaka Hadis | sunnah.com | SemakHadis | HadithXpert | MyHadith |
 |---|---|---|---|---|---|
 | Fokus | ensiklopedia 9 kitab | ensiklopedia luas | hadis daif/palsu | jawapan ulama | hadis pilihan |
 | Saiz kandungan | 62,169 hadis | 20+ koleksi | 8,000+ semakan | ~48 semakan | terhad |
@@ -183,7 +183,7 @@ AI, tetapi untuk kerja yang berbeza:
 
 | | soalan yang dijawab AI |
 |---|---|
-| Pustaka Hadith | *hadis mana yang berkaitan dengan soalan ini?* |
+| Pustaka Hadis | *hadis mana yang berkaitan dengan soalan ini?* |
 | HadithXpert | *apakah status hadis ini, dan mengapa?* |
 
 Yang pertama ialah **retrieval** — mencari dokumen yang sudah ada.
@@ -198,7 +198,7 @@ kerana ia tidak membuat sebarang penilaian. Ia hanya mencari.
 Setiap platform menjawab soalan yang berbeza:
 
 ```
-"Apa bunyi hadis ini?"          -> Pustaka Hadith
+"Apa bunyi hadis ini?"          -> Pustaka Hadis
 "Hadis WhatsApp ini betul?"     -> SemakHadis.com
 "Apa hukumnya? Kenapa daif?"    -> HadithXpert
 ```

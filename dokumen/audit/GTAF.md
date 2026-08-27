@@ -3,7 +3,7 @@
 > Ditulis 14 Ogos 2026. Hasil siasatan mendalam terhadap aplikasi
 > "Hadith Collection (All in One)" oleh Greentech Apps Foundation
 > (GTAF, https://gtaf.org/apps/hadith/), dicetuskan oleh perbandingan
-> pesaing untuk Pustaka Hadith. Rujukan silang: `DEKLARASI.md`
+> pesaing untuk Pustaka Hadis. Rujukan silang: `DEKLARASI.md`
 > (jadual perbandingan platform), `INSTALLER.md` (rancangan pemasang
 > Windows), `db.py` (skema FTS5).
 
@@ -42,7 +42,7 @@ di kedua-dua versi**:
 
 **Kesimpulan penting:** perihalan kedai app (listing) diterjemah Google Play secara automatik
 ke Bahasa Indonesia, tapi **kandungan hadis sebenar dalam app kekal Inggeris/Bengali/Urdu
-sahaja** — tiada Melayu, tiada Indonesia. Ini mengukuhkan kedudukan Pustaka Hadith sebagai
+sahaja** — tiada Melayu, tiada Indonesia. Ini mengukuhkan kedudukan Pustaka Hadis sebagai
 **satu-satunya** pilihan lengkap 9-kitab dalam Bahasa Melayu dengan carian AI di pasaran ini.
 
 App kecil lain "Kumpulan Hadist Shahih Lengkap" (developer berbeza, tidak dikenali) ada dakwaan
@@ -93,7 +93,7 @@ projek ini **berfungsi sempurna untuk aksen Latin** tapi **tidak berkesan langsu
 harakat Arab** (U+064B–U+065F) — had reka bentuk ciri SQLite itu sendiri (fokus blok
 Latin-1/Latin Extended), bukan isu versi/pemasangan.
 
-### Kesan sebenar pada Pustaka Hadith
+### Kesan sebenar pada Pustaka Hadis
 Data `hadis.arab` disimpan **penuh dengan tashkeel** (ikut `DEKLARASI.md`) dan diindeks
 terus dalam `hadis_fts`. Bermakna: **carian Arab tanpa harakat (cara biasa orang taip)
 tidak akan menemui hadis walaupun perkataan itu wujud tepat**. Carian makna (AI) tidak
@@ -170,7 +170,7 @@ pengesahan dua-hala berbanding padanan teks ringkas.
 
 ### 6b.2 Perbandingan algoritma
 
-| | GTAF | Pustaka Hadith |
+| | GTAF | Pustaka Hadis |
 |---|---|---|
 | Kaedah | Sørensen-Dice (n-gram aksara, 2-gram & 3-gram serentak) | Jaccard (token perkataan) |
 | Ambang | 0.75 | 0.55–0.95 ikut lapisan |
@@ -244,16 +244,16 @@ Dari halaman hadis individu (`hadith.gtaf.org/bukhari/1/1`):
 - **"Narration chain"** — paparan rantaian sanad berasingan daripada teks utama
   (bukan sekadar teks mentah tertanam dalam matan macam pendekatan semasa).
 
-Kedua-dua ciri ini **bukan keutamaan semasa** untuk Pustaka Hadith (skop sedia ada
+Kedua-dua ciri ini **bukan keutamaan semasa** untuk Pustaka Hadis (skop sedia ada
 sudah luas), tapi wajar direkod sebagai idea *roadmap* jangka panjang jika projek
 berkembang selepas keperluan teras (lesen, installer, carian Arab) selesai.
 
 ### 6c.3 ⚠️ AMARAN METODOLOGI — Kiraan Jumlah Hadis Berbeza Merentas Sumber
 
 Jumlah hadis per-kitab yang dipaparkan `hadith.gtaf.org` **berbeza ketara** daripada
-hadis.my (sumber Pustaka Hadith):
+hadis.my (sumber Pustaka Hadis):
 
-| Kitab | GTAF web | Pustaka Hadith (hadis.my) |
+| Kitab | GTAF web | Pustaka Hadis (hadis.my) |
 |---|---|---|
 | Bukhari | 7,563 | 7,008 |
 | **Muslim** | **3,033** | **5,362** |
@@ -269,7 +269,7 @@ berlainan sanad bagi matan sama). **Ini bukan penunjuk mana sumber "lebih betul"
 
 **AMARAN PENTING untuk `DEKLARASI.md`:** JANGAN bandingkan "jumlah hadis" merentas
 platform secara terus tanpa nyatakan kaedah kiraan — berisiko mengelirukan pembaca
-(cth. Pustaka Hadith kelihatan "lebih sedikit" untuk Ahmad walhal 26,363 vs 4,376
+(cth. Pustaka Hadis kelihatan "lebih sedikit" untuk Ahmad walhal 26,363 vs 4,376
 mungkin sebenarnya lebih LENGKAP, bukan kurang, bergantung definisi kiraan).
 Jadual perbandingan (§7) perlu tambah nota kaki menjelaskan ini.
 
@@ -278,7 +278,7 @@ Jadual perbandingan (§7) perlu tambah nota kaki menjelaskan ini.
 ## 7. Jadual Perbandingan (Cadangan Tambahan `DEKLARASI.md`)
 
 ```markdown
-| | Pustaka Hadith | GTAF Hadith Collection |
+| | Pustaka Hadis | GTAF Hadith Collection |
 |---|---|---|
 | Fokus | ensiklopedia 9 kitab, BM | ensiklopedia 15+ kitab, antarabangsa |
 | Pengguna sedia ada | belum dilancar | 1.5 juta+ (9 tahun) |

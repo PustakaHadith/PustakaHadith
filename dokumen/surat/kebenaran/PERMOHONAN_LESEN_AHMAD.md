@@ -1,7 +1,7 @@
 # Permohonan Kebenaran — Terjemahan Inggeris Musnad Ahmad
 
 **Tarikh draf:** 15 Ogos 2026  
-**Projek:** Pustaka Hadith — aplikasi desktop Windows berbahasa Melayu  
+**Projek:** Pustaka Hadis — aplikasi desktop Windows berbahasa Melayu  
 **Status:** **DITUTUP — English koleksi Ahmad diabaikan secara kekal (27 Ogos 2026).**
 Tiada perancangan menghantar permohonan ke Darussalam/Sunnah.com; teks Inggeris
 Ahmad tidak akan disertakan dalam mana-mana keluaran. Tab English Ahmad kekal kelabu.
@@ -53,7 +53,7 @@ teks Inggeris tidak boleh dimasukkan ke keluaran awam tanpa kebenaran jelas.
 ### Tajuk
 
 ```text
-Request for API/offline redistribution permission — Pustaka Hadith (Malay Windows app)
+Request for API/offline redistribution permission — Pustaka Hadis (Malay Windows app)
 ```
 
 ### Teks permohonan
@@ -61,7 +61,7 @@ Request for API/offline redistribution permission — Pustaka Hadith (Malay Wind
 ```text
 Assalamu alaikum wa rahmatullahi wa barakatuh,
 
-I am developing Pustaka Hadith, a free Windows desktop application for Malay-
+I am developing Pustaka Hadis, a free Windows desktop application for Malay-
 speaking users. The application provides offline access to nine major hadith
 collections, with Arabic and Malay text sourced separately from hadis.my.
 
@@ -122,7 +122,7 @@ I am requesting written permission concerning the English Translation of
 Musnad Imam Ahmad bin Hanbal, translated by Nasiruddin Al-Khattab and edited by
 Huda Al-Khattab, published by Darussalam.
 
-I am developing Pustaka Hadith, a free Windows desktop application for Malay-
+I am developing Pustaka Hadis, a free Windows desktop application for Malay-
 speaking users. It contains Arabic and Malay text for nine major collections
 and is designed for offline study. I would like to include the available
 English Musnad Ahmad translations as an optional language layer.

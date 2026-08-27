@@ -1,4 +1,4 @@
-# Pandangan & Risiko — Pustaka Hadith
+# Pandangan & Risiko — Pustaka Hadis
 
 > Ditulis 7–8 Ogos 2026 (Sesi 29). Hasil analisis keseluruhan projek.
 > Bukan senarai tugasan wajib — konteks untuk sesi akan datang supaya

@@ -1,4 +1,4 @@
-# Manual Rujukan Developer — Pustaka Hadith
+# Manual Rujukan Developer — Pustaka Hadis
 
 > **Satu dokumen rujukan utama.** Meringkaskan segala keputusan, aliran
 > modul, senarai semak, dan status. Guna dokumen ini sebagai titik mula
@@ -13,7 +13,7 @@
 
 | Perkara | Nilai |
 |---|---|
-| Nama | Pustaka Hadith — koleksi 9 kitab hadis |
+| Nama | Pustaka Hadis — koleksi 9 kitab hadis |
 | Root | `D:\Pustaka Quran Hadis\hadis\` — **workspace Developer** |
 | Status | **BUKAN untuk pengguna akhir lagi** — semakan developer belum selesai |
 | Versi | v1.0 (`VERSI.py`) |
@@ -546,7 +546,7 @@ pembolehubah dan periksa dahulu sebelum `Test-Path`.
 | `dokumen/perubahan/PERUBAHAN_11OGOS.md` | Perubahan 11 Ogos (Sesi 54 — penyatuan label, semakan statik, ujian visual, versi 1.0) |
 | `dokumen/perubahan/PERUBAHAN_12OGOS.md` | Perubahan 12 Ogos (Sesi 55 — 4 mockup halaman detail, dua lajur, palet hangat, cip warna, finalise) |
 | `dokumen/perubahan/PERUBAHAN_13OGOS.md` | Perubahan 13 Ogos (Sesi 55 lanjutan — buang tab Sebelah + teks sama paras, lalai Arab Kecil, pembetulan draf jawapan AI) |
-| `dokumen/rujukan/DEKLARASI.md` | Deklarasi Pustaka Hadith (skrin permulaan + Tentang; Versi 1.0 rasmi) |
+| `dokumen/rujukan/DEKLARASI.md` | Deklarasi Pustaka Hadis (skrin permulaan + Tentang; Versi 1.0 rasmi) |
 | `README.md` | Pintu masuk repositori (akar projek) |
 | `dokumen/rujukan/PANDANGAN_RISIKO.md` | Analisis keseluruhan + risiko (7–8 Ogos; risiko #1–3 ditutup) |
 | `dokumen/rujukan/RANCANGAN_REFACTOR.md` | Pelan pecahan `ui/app_qt.py` — 5 langkah SELESAI (8 Ogos) |

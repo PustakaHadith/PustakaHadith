@@ -1,4 +1,4 @@
-# Mula Cepat — Pustaka Hadith (untuk pengguna)
+# Mula Cepat — Pustaka Hadis (untuk pengguna)
 
 > Ringkasan pantas: **apa yang sudah disahkan**, **cara menjalankan
 > app**, dan **cara memulakan carian**. Manual penuh:
@@ -6,7 +6,7 @@
 > `dokumen/manual/manual/manual/MANUAL_INSTALASI.md` · panduan langkah pertama
 > pemasangan: `BACA_SAYA.txt`.
 
-**Pustaka Hadith** = koleksi **9 kitab hadis, 62,169 hadis** (Bukhari,
+**Pustaka Hadis** = koleksi **9 kitab hadis, 62,169 hadis** (Bukhari,
 Muslim, Abu Daud, Tirmidzi, Nasai, Ibnu Majah, Ahmad, Darimi, Malik)
 dengan teks Arab, terjemahan Melayu/Indonesia/English, transliterasi,
 huraian SemakHadis, darjat ulama, dan carian makna (AI) — semua

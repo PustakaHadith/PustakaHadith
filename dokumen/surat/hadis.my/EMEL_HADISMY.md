@@ -2,13 +2,13 @@
 
 **Kepada:** hadisapi@gmail.com  
 **CC:** khai@webmaster.my  
-**Subjek:** Permohonan Kebenaran Menggunakan API & Membundel Snapshot Data — Aplikasi Pustaka Hadith (Microsoft Store)
+**Subjek:** Permohonan Kebenaran Menggunakan API & Membundel Snapshot Data — Aplikasi Pustaka Hadis (Microsoft Store)
 
 ---
 
 Assalamu 'alaikum / Salam Sejahtera,
 
-Saya pembangun aplikasi desktop **Pustaka Hadith** (Windows 10/11, sumber
+Saya pembangun aplikasi desktop **Pustaka Hadis** (Windows 10/11, sumber
 terbuka — lesen MIT) yang menyediakan bacaan dan carian **62,169 hadis**
 daripada 9 kitab utama (Kutub al-Tis'ah), dengan terjemahan **Melayu &
 Indonesia** bersumber daripada **hadis.my (service.hadis.my)**.

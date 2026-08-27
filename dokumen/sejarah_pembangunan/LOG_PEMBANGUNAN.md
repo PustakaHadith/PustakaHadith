@@ -10,10 +10,10 @@ memahami keseluruhan perjalanan projek.
 
 ## 0. Profil Projek
 
-- **Nama:** Pustaka Hadith — aplikasi desktop Windows berbahasa Melayu untuk
+- **Nama:** Pustaka Hadis — aplikasi desktop Windows berbahasa Melayu untuk
   pembacaan, carian dan kajian hadis.
 - **Platform:** PyQt5 (Python 3.14), SQLite + FTS5, FAISS (carian semantik).
-- **Pemilik / pembangun:** MUHAMAD KHAIRULLAH ABDUL WAHAB (Pustaka Hadith).
+- **Pemilik / pembangun:** MUHAMAD KHAIRULLAH ABDUL WAHAB (Pustaka Hadis).
 - **Sumber data:** API awam `https://service.hadis.my/api/v1` (hadis.my) +
   terjemahan Inggeris dari CDN Sunnah.com.
 - **Sasaran edaran:** Microsoft Store (Fasa 5–7) + Setup EXE (Inno Setup).

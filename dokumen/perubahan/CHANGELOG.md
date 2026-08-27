@@ -1,4 +1,4 @@
-# Changelog — Pustaka Hadith
+# Changelog — Pustaka Hadis
 
 > Log perubahan versi aplikasi. Cap versi tunggal: `VERSI.py`.
 > Butiran penuh setiap sesi: `dokumen/sesi/sesi_index.md`. Rujukan ringkas sesi
@@ -188,7 +188,7 @@ end-to-end 18/18, tema 19/19.
   (False)` + 200ms delay, `6c9f855`); selepas muat model pada mulanya
   (`e6d867b`); tajuk splash/disclaimer/header disepadankan (Pustaka
   bold teal + Hadis light teal + v1.0).
-- **Tentang Pustaka Hadith table** (`5dd6990`) — QTableWidget 2 lajur
+- **Tentang Pustaka Hadis table** (`5dd6990`) — QTableWidget 2 lajur
   untuk Kandungan + Sumber dan atribusi; grid line, padding, warna
   tema; hyperlink pautan HTML dalam sel.
 - **Gate semak.py dibaiki** — semakan atribusi 8aa diselaraskan ke
