@@ -127,16 +127,35 @@ itu sendiri guna edisi berbeza-beza per koleksi** — bukan silap kod semata-mat
 ## 3. Status & Tindakan
 - ✅ Dokumen ini dihasilkan.
 - ✅ Fix segera DB (salin `hadis.db` + indeks ke `%LOCALAPPDATA%\PustakaHadith`)
-  — app berjalan kini memaparkan `PILIH BAB`.
-- ⏳ **Binaan semula dist + Setup** dengan `hadis.db` dibundel (menyambung kerja
-  tertangguh — lihat Fasa binaan semula di bawah).
+  — **ujian setempat sahaja** (salinan peranti pengguna, TIDAK diagihkan).
+- ⛔ **TIDAK membundel `hadis.db` / indeks FAISS ke dalam installer** buat masa
+  ini — data ini berasal dari **service.hadis.my**; mengagihkannya memerlukan
+  **kebenaran bertulis hadis.my** terlebih dahulu (lihat Seksyen 4).
 - ⏳ Keputusan pengguna untuk Isu #2 (pilihan A / B / C) — menentukan sama ada
   perlu muat turun data bernombor kanonik sebelum binaan akhir.
 
-### Fasa binaan semula (tertangguh)
-1. `PustakaHadith.spec` — pastikan `datas` mengandungi
-   `('hadis.db', '.'), ('hadis_faiss.index', '.'), ('hadis_id_map.pkl', '.')`.
-2. PyInstaller: `pyinstaller PustakaHadith.spec --noconfirm` → `dist/PustakaHadith/`.
-3. Inno Setup: `iscc installer/PustakaHadith.iss` →
-   `Output/PustakaHadith-Setup-1.0.0-x64.exe` (kini menyertakan `hadis.db`
+### Fasa binaan semula (DI TANGGUHKAN — menunggu kebenaran hadis.my)
+1. `PustakaHadith.spec` — `datas` **telah dikembalikan** (buang
+   `('hadis.db','.')`, `('hadis_faiss.index','.')`, `('hadis_id_map.pkl','.')`)
+   supaya binaan interim TIDAK membungkus data hadis.my.
+2. Binaan interim = **mod dalam talian sahaja**: tiada DB/offline, tiada
+   `PILIH BAB`, tiada carian semantik di dalam installer. App tetap berfungsi
+   atas talian melalui API `service.hadis.my`.
+3. Selepas kebenaran hadis.my diperoleh: tambah semula item di atas ke `datas`,
+   jalankan `pyinstaller PustakaHadith.spec --noconfirm` → `dist/PustakaHadith/`,
+   kemudian `iscc installer/PustakaHadith.iss` →
+   `Output/PustakaHadith-Setup-1.0.0-x64.exe` (akan sertakan `hadis.db`
    ~354 MB + indeks FAISS ~91 MB).
+
+## 4. Gerbang Lesen / Kebenaran (PENTING)
+- Kandungan `hadis.db` dan indeks FAISS terbitan dibina dari data
+  **service.hadis.my** (`API_BASE_URL = https://service.hadis.my/api/v1`).
+- Membundel/mengagihkan data ini dalam installer = pengedaran semula data
+  pihak ketiga → **perlu persetujuan hadis.my** (sama seperti keperluan
+  lesen English Ahmad Darussalam yang telah ditangguhkan).
+- **Tindakan:** Draf & hantar permohonan kebenaran ke hadis.my yang meliputi:
+  (a) pengedaran `hadis.db` secara offline dalam installer,
+  (b) pengedaran indeks carian semantik (FAISS) terbitan,
+  (c) penomoran No. hadis (sahkan edisi/penomoran yang dipersetujui — lihat
+      Isu #2, pilihan A/B/C).
+- Hingga kebenaran diberi, binaan kekal mod dalam talian (tiada bundel data).
