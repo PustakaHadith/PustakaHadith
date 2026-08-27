@@ -84,7 +84,7 @@ memahami keseluruhan perjalanan projek.
 - `PustakaHadith.spec` `datas` **dikembalikan** (buang `hadis.db`,
   `hadis_faiss.index`, `hadis_id_map.pkl`). `installer/PustakaHadith.iss`
   menyalin `dist\PustakaHadith\*` → `{app}` = `%LOCALAPPDATA%\PustakaHadith`.
-- Surat permohonan sedia: `dokumen/surat/kebenaran/SURAT_HADISMY.md` (API) &
+- Surat permohonan sedia: `dokumen/surat/hadis.my/SURAT_HADISMY.md` (API) &
   `dokumen/surat/kebenaran/SURAT_SEMAKHADIS.md` (SemakHadis). Status: perlu
   dapatkan persetujuan sebelum bundel.
 - Catatan: `PustakaHadith.spec` & `installer/PustakaHadith.iss` di-gitignore
@@ -123,7 +123,7 @@ Struktur kategori baharu (lihat `dokumen/STRUKTUR_DOSUMENTASI.md`):
 
 ## 9. Penyediaan Surat & Dokumen Sokongan hadis.my (27 Ogos 2026)
 
-- Kemaskini `dokumen/surat/kebenaran/SURAT_HADISMY.md`: tarikh → 27 Ogos,
+- Kemaskini `dokumen/surat/hadis.my/SURAT_HADISMY.md`: tarikh → 27 Ogos,
   tambah **Tangkapan Skrin** (6 imej), **Status Semasa** (build interim
   online-only menunggu kebenaran), dan senarai Lampiran yang merujuk fail sebenar.
 - Tangkapan skrin dijana secara deterministik (`tangkap_layar.py` memandu
@@ -141,6 +141,18 @@ Struktur kategori baharu (lihat `dokumen/STRUKTUR_DOSUMENTASI.md`):
   kemaskini navigasi (Jelajah Kitab → Rak Digital), seksyen "Meneroka mengikut
   Bab", "Keperluan Data & Mod Luar Talian" (sync API perlu; bundel menunggu
   kebenaran hadis.my), jelaskan tab English = Musnad Ahmad, baiki footer.
+
+## 11. Folder hadis.my & PDF + Logo (27 Ogos 2026)
+
+- Cipta `dokumen/surat/hadis.my/` khusus emel & surat kepada hadis.my; pindah
+  `SURAT_HADISMY.md` + `EMEL_HADISMY.md` ke sana (kemas rujukan di STRUKTUR,
+  MANUAL, LOG).
+- Janakan **logo PustakaHadith** (`logo_pustakahadith.png`, 965×261, transparent)
+  guna `buat_logo.py`: "Pustaka" Segoe UI Bold #5CBF85, "Hadith" Light
+  #7FD39A, "v1.0.0" #9C9589 — sepadan header apl.
+- Tukar dokumen ke **PDF** (`buat_pdf.py`, xhtml2pdf): `SURAT_HADISMY.pdf`
+  (dengan 6 tangkapan skrin + logo), `EMEL_HADISMY.pdf` (+logo),
+  `DASAR_PRIVASI.pdf`, `PAUTAN_SOKONGAN.pdf`.
 
 ---
 

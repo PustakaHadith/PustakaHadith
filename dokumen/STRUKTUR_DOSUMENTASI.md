@@ -9,7 +9,8 @@ direkodkan untuk **sejarah pembuatan projek** (lihat
 | Folder | Isi |
 |--------|-----|
 | `dokumen/sejarah_pembangunan/` | **Log sejarah perjalanan projek** (entry point sejarah). |
-| `dokumen/surat/kebenaran/` | Surat permohonan kebenaran / lesen: hadis.my (API), SemakHadis, terjemahan Inggeris Musnad Ahmad. |
+| `dokumen/surat/hadis.my/` | **Emel & surat permohonan kepada hadis.my** (API + pembundelan data), termasuk versi PDF. |
+| `dokumen/surat/kebenaran/` | Surat permohonan kebenaran / lesen lain: SemakHadis, terjemahan Inggeris Musnad Ahmad. |
 | `dokumen/surat/sokongan/` | Dokumen sokongan edaran Store: Dasar Privasi, Pautan Sokongan. |
 | `dokumen/perbincangan/` | Rekod perbincangan teknikal (cth. bab & nombor hadis). |
 | `dokumen/penerbitan/` | Persediaan edaran Store: tangkapan skrin, proses MSIX, VM capture. |
@@ -29,4 +30,4 @@ direkodkan untuk **sejarah pembuatan projek** (lihat
 - `PustakaHadith.spec` & `installer/PustakaHadith.iss` **di-gitignore**
   (konfig binaan tidak di-commit).
 - Data `hadis.db` / indeks FAISS **tidak dibundel** ke installer sehingga
-  kebenaran hadis.my diperoleh (lihat `surat/kebenaran/SURAT_HADISMY.md`).
+  kebenaran hadis.my diperoleh (lihat `surat/hadis.my/SURAT_HADISMY.md`).

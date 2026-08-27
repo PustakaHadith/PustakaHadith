@@ -201,7 +201,7 @@ tanpa internet. Carian makna (AI) juga berjalan setempat kerana model
 > **Status pembundelan:** Pembangun telah memohon **kebenaran bertulis
 > daripada hadis.my** untuk membundel *snapshot* data ke dalam pemasang.
 > Sebaik kebenaran diterima, pengguna boleh terus membaca tanpa kunci API.
-> Rujuk `dokumen/surat/kebenaran/SURAT_HADISMY.md`.
+> Rujuk `dokumen/surat/hadis.my/SURAT_HADISMY.md`.
 
 ---
 
