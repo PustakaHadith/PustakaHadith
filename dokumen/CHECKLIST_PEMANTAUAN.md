@@ -97,7 +97,7 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
 
 ---
 
-## FASA 5 — Bina Pakej Edaran (INSTALLER §7.3, §9, §11) ⏳ SEDANG JALAN
+## FASA 5 — Bina Pakej Edaran (INSTALLER §7.3, §9, §11) ☑ SELESAI (27 Ogos)
 
 **Gate 4 (INSTALLER):** EXE + MSIX install/launch/uninstall lulus · aset pakej
 = inventori
@@ -165,10 +165,10 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
 
 ---
 
-## FASA 6 — Partner Center + Ujian Naik Taraf (INSTALLER §10, §13–§16) ☐ BELUM
+## FASA 6 — Partner Center + Ujian Naik Taraf (INSTALLER §10, §13–§16) ⏳ SEDANG JALAN
 
-- ☐ Daftar akaun + tempah nama (tugas pengguna, Fasa 0) — panduan: `dokumen/rujukan/DAFTAR_MSIX_STORE.md`
-- ☐ Rekod `Identity Name`, `Publisher`, `PublisherDisplayName`
+- ☑ Daftar akaun + tempah nama (tugas pengguna, Fasa 0) — panduan: `dokumen/rujukan/DAFTAR_MSIX_STORE.md`
+- ☑ Rekod `Identity Name` (= `PUSTAKAHADITH.PustakaHadith`), `Publisher` (= `CN=1084A5A8-...`), `PublisherDisplayName` (= `PUSTAKA HADITH`) → `installer/msix_identity.txt`
 - ☐ Bina versi 1.0.0.0 · pasang · cipta settings/bookmark + sync data ujian
 - ☐ Bina versi 1.0.1.0 (identiti sama) · pasang kemas kini
 - ☐ Uji uninstall/reinstall dan tingkah laku data
@@ -179,9 +179,10 @@ tiada amaran biasa ✓
 
 ---
 
-## FASA 7 — Edaran Awam (INSTALLER §15, §18) ☐ BELUM
+## FASA 7 — Edaran Awam (INSTALLER §15, §18) ⏳ MENUNGGU DOKUMEN
 
-- ⛔ Menunggu: lesen data selesai + dasar privasi + pensijilan
+- ⏳ Menunggu: `DASAR_PRIVASI.md` + `PAUTAN_SOKONGAN.md` + `TANGKAPAN_SKRIN.md`
+  (lesen Ahmad **tidak diperlukan** — English koleksi Ahmad diabaikan kekal)
 - ☐ Upload MSIX ke Store · listing · ikon · screenshots · notas pensijilan
 - ☐ Private audience/flight jika tersedia
 - ☐ Dokumentasi pengguna/privasi/sokongan sedia
