@@ -150,9 +150,12 @@ Struktur kategori baharu (lihat `dokumen/STRUKTUR_DOSUMENTASI.md`):
 - Janakan **logo PustakaHadith** (`logo_pustakahadith.png`, 965×261, transparent)
   guna `buat_logo.py`: "Pustaka" Segoe UI Bold #5CBF85, "Hadith" Light
   #7FD39A, "v1.0.0" #9C9589 — sepadan header apl.
-- Tukar dokumen ke **PDF** (`buat_pdf.py`, xhtml2pdf): `SURAT_HADISMY.pdf`
-  (dengan 6 tangkapan skrin + logo), `EMEL_HADISMY.pdf` (+logo),
-  `DASAR_PRIVASI.pdf`, `PAUTAN_SOKONGAN.pdf`.
+- Tukar dokumen ke **PDF**. Cuba pertama (`buat_pdf.py`, xhtml2pdf) hasil
+  berterabur; ganti dengan `buat_pdf2.py` (reportlab platypus) — susun atur
+  bersih & dipaginkan: `SURAT_HADISMY_kemas.pdf` (6 tangkapan skrin + logo),
+  `EMEL_HADISMY.pdf` (+logo), `DASAR_PRIVASI.pdf`, `PAUTAN_SOKONGAN.pdf`.
+  (`SURAT_HADISMY.pdf` lama terkunci dalam pelihat PDF; akan diganti bila
+  ditutup.)
 
 ---
 
