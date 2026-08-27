@@ -59,6 +59,10 @@ installer/output/PustakaHadith-Setup-*.exe
 installer/output/PustakaHadith-portable-*.zip
 installer/PustakaHadith.iss
 PustakaHadith.spec
+installer/output/
+installer/msix_stage/
+installer/msix_temp.pfx
+*.pfx
 
 # Sejarah bacaan (data pengguna, 25 Ogos)
 reading_history.json

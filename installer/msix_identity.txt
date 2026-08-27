@@ -1,0 +1,3 @@
+Package/Identity/Name=PUSTAKAHADITH.PustakaHadith
+Package/Identity/Publisher=CN=1084A5A8-F66F-4B6D-A3EF-455CCC63CDD2
+Package/Properties/PublisherDisplayName=PUSTAKA HADITH

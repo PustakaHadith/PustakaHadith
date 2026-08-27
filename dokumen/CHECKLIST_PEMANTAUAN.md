@@ -126,25 +126,32 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
 - ☑ **TANGKAPAN_SKRIN.md** — senarai 4 wajib + 4 disyorkan, spesifikasi 1366×768/1920×1080, folder output
 - ☐ URL sebenar (GitHub Issues / laman web) dimasukkan ke Partner Center
 
-### 5C — MSIX (utama, INSTALLER §11–§12) ⏳ PENYEDIAAN SELESAI — MENUNGGU IDENTITI STORE
-- ☑ **ZIP mudah alih** — `installer\output\PustakaHadis-portable-1.0.0-x64.zip` (0.54 GB, 7,027 fail)
-- ☑ **VM_MSIX_CAPTURE.md** — persediaan VM bersih, snapshot, payload, aset, wizard manual
-- ☑ **MSIX_CAPTURE_PROSES.md** — checklist 6 fasa (prasyarat → uji), rollback, output Gate 6
-- ☐ MSIX Packaging Tool Driver — wizard cuba sendiri 2× semasa 'Prepare computer'
-- ☑ Aset PNG MSIX dijana → `installer\Assets\` (StoreLogo 50 · Square44x44 · Square150x150 · Wide310x150)
-- ☑ Audit inventori `dist\PustakaHadis`: **0 fail terlarang**; peringkat atas = `_internal` + `PustakaHadis.exe`
-- ☐ Capture dalam VM bersih (Manual installation, install location `C:\Program Files\PustakaHadis`, salin payload, jangan sync/API key, satu entry point `PustakaHadis.exe`)
-- ☐ Package editor: runFullTrust · Windows.Desktop · MinVersion 10.0.19041.0 · tiada DB/rahsia
-- ☐ Simpan `PustakaHadis_1.0.0.0_x64.msix` + tandatangan ujian tempatan (WinApp CLI / SignTool, Subject = Publisher manifest)
-- ☐ MSIX install/launch/uninstall lulus (Add-AppxPackage)
-- ☐ Hasil: `PustakaHadis_1.0.0.0_x64.msix`
+### 5C — MSIX (utama, INSTALLER §11–§12) ☑ SELESAI (binaan + ujian lokal lulus)
+- ☑ **Identiti Store diterima** (panduan `DAFTAR_MSIX_STORE.md`) → disimpan ke
+  `installer/msix_identity.txt`: `Package/Identity/Name = PUSTAKAHADITH.PustakaHadith`,
+  `Publisher = CN=1084A5A8-F66F-4B6D-A3EF-455CCC63CDD2`, `PublisherDisplayName = PUSTAKA HADITH`
+- ☑ **Binaan MSIX:** `makeappx pack` (Windows SDK 10.0.18362) ke atas staging
+  `dist/PustakaHadith` + `installer/Assets` → `installer/output/PustakaHadith_1.0.0.0_x64.msix`
+  (~972 MB; skrip `installer/build_msix.ps1`; `ForegroundText` dibuang kerana skema SDK lama)
+- ☑ **Tandatangan ujian tempatan:** self-signed cert (Subject = Publisher manifest) +
+  `signtool sign /fd SHA256`; import ke `LocalMachine\Root` untuk ujian lokal
+- ☑ **GATE 5C LULUS:** `Add-AppxPackage` pasang → lancar (PID 10848, exe di
+  `C:\Program Files\WindowsApps\...\PustakaHadith.exe`) → `Remove-AppxPackage` nyahpasang bersih
+- ☑ Aset PNG MSIX di `installer/Assets/` (StoreLogo · Square44x44 · Square150x150 · Wide310x150)
+- ☑ Audit inventori `dist\PustakaHadith`: **0 fail terlarang**; peringkat atas = `_internal` + `PustakaHadith.exe`
+- ☐ **Fasa 6 (Store rasmi):** muat naik MSIX ke Partner Center; Microsoft **TANDATANGAN
+  semula** pakej (tiada amaran SmartScreen). Perlu: lesen Ahmad (Perumusan Darussalam) +
+  `DASAR_PRIVASI.md` + `PAUTAN_SOKONGAN.md` + `TANGKAPAN_SKRIN.md`
 
 ### Uji Windows 10 (Gate 4 Matrix)
 - ☐ VM Windows 10 bersih / snapshot
 - [ ] Pasang ZIP / EXE / MSIX
 - [ ] Uji matriks §8: launch, settings, sync, carian Melayu/Arab, makna, bookmark, offline, tutup/relaunch
 - [ ] Rekod keputusan
-- ⛔ **MENUNGGU tugas pengguna:** daftar Microsoft Store + tempah nama + pilih Publisher (perlu beri 3 nilai: `Package/Identity/Name`, `Package/Identity/Publisher`, `Package/Properties/PublisherDisplayName`) — panduan: `dokumen/rujukan/DAFTAR_MSIX_STORE.md`
+- ☑ **Identiti Store diterima** (Package/Identity/Name = `PUSTAKAHADITH.PustakaHadith`,
+  Publisher = `CN=1084A5A8-...`, PublisherDisplayName = `PUSTAKA HADITH`) →
+  `installer/msix_identity.txt` (panduan: `dokumen/rujukan/DAFTAR_MSIX_STORE.md`).
+  MSIX sudah dibina & diuji lokal (lihat 5C).
 - ☑ MSIX Packaging Tool dipasang (winget, v1.2024.405.0) + WinApp CLI 0.6.1 (tandatangan ujian tempatan)
 - ☐ MSIX Packaging Tool Driver — perlu diaktifkan (Optional Features; wizard boleh cuba sendiri 2 kali semasa 'Prepare computer')
 - ☑ Aset PNG MSIX dijana dari app.ico → `installer\Assets\` (StoreLogo 50 · Square44x44 · Square150x150 · Wide310x150)
@@ -191,10 +198,11 @@ tiada amaran biasa ✓
 | Fasa 2 — Bina diagnostik | ☑ GATE 2 LULUS | 20 Ogos |
 | Fasa 3 — Pengoptimuman | ☑ GATE 3 LULUS | 20 Ogos |
 | Fasa 4 — Uji mesin bersih | ☑ GATE 4 LULUS | 20 Ogos |
-| Fasa 5 — Bina pakej edaran | ⏳ 5A ✓ + 5B ✓ selesai — 5C (MSIX) menunggu identiti Store | 20 Ogos |
-| Fasa 6 — Partner Center | ☐ | — |
+| Fasa 5 — Bina pakej edaran | ☑ 5A ✓ + 5B ✓ + 5C ✓ SELESAI (MSIX uji lokal lulus) | 27 Ogos |
+| Fasa 6 — Partner Center | ⏳ menunggu lesen Ahmad + dasar privasi (MSIX sedia) | — |
 | Fasa 7 — Edaran awam | ☐ | — |
 
-**Halangan aktif:** ⛔ identiti Microsoft Store (tugas pengguna Fasa 0) —
-diperlukan untuk 5C (MSIX) dan Fasa 6. ⛔ lesen terjemahan Inggeris Ahmad
-(Perumusan Darussalam) — tab English kekal kelabu sehingga kebenaran diterima.
+**Halangan aktif:** ☑ identiti Microsoft Store **SELESAI** (MSIX 5C lulus).
+⛔ lesen terjemahan Inggeris Ahmad (Perumusan Darussalam) — tab English kekal
+kelabu sehingga kebenaran diterima; Fasa 6 (Store rasmi) juga menunggu
+lesen + `DASAR_PRIVASI.md`.
