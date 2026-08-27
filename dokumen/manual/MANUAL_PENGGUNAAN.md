@@ -41,9 +41,18 @@ konsisten dengan data yang dipaparkan.)*
 - **Ikon bintang** — buka senarai penanda halaman anda.
 - **Ikon dadu (⚄)** — hadis rawak.
 
+![Skrin Utama — Perpustakaan](../penerbitan/tangkapan/01_utama.png)
+
+**Rak Digital (Jelajah Kitab):** senarai 9 kitab utama dengan kiraan hadis
+setiap koleksi.
+
+![Rak Digital](../penerbitan/tangkapan/02_rak_digital.png)
+
 ---
 
 ## Mencari Hadis
+
+![Carian](../penerbitan/tangkapan/05_carian.png)
 
 ### Carian kata kunci
 
@@ -87,9 +96,13 @@ mengikut topik (cth. "Wuduk", "Solat") dan bukan nombor hadis semata-mata.
 > Nota: senarai Bab tersedia untuk kebanyakan kitab; Musnad Ahmad dan
 > Sunan al-Darimi tiada data bab dalam set data semasa.
 
+![Halaman Kitab dengan senarai Bab (PILIH BAB)](../penerbitan/tangkapan/03_kitab_bukhari.png)
+
 ---
 
 ## Membaca Hadis
+
+![Butiran Hadis — Bukhari #1](../penerbitan/tangkapan/04_detail_bukhari_1.png)
 
 Setiap hadis dipapar dalam **dua lajur**:
 
@@ -122,6 +135,8 @@ hadis jiran dalam kitab. **Kembali** untuk kembali ke senarai.
 ---
 
 ## Penanda Halaman (Bookmark)
+
+![Simpan & Sejarah](../penerbitan/tangkapan/06_simpan_sejarah.png)
 
 1. Buka mana-mana hadis.
 2. Klik ikon **bintang/Simpan** — hadis disimpan.
