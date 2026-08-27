@@ -151,7 +151,7 @@ niat baik dan membantu mereka membaiki sumber.
 
 **Kepada:** hadisapi@gmail.com
 **Sk:** khai@webmaster.my
-**Subjek:** Permohonan kebenaran bundel data — aplikasi Pustaka Hadis (percuma, bukan komersial)
+**Subjek:** Permohonan kebenaran bundel data — aplikasi PustakaHadith (percuma, bukan komersial)
 
 ---
 
@@ -159,7 +159,7 @@ Assalamualaikum warahmatullah.
 
 **Pengenalan**
 
-Saya [NAMA], pembangun **Pustaka Hadis** — aplikasi desktop Windows
+Saya [NAMA], pembangun **PustakaHadith** — aplikasi desktop Windows
 untuk membaca dan mencari hadis dalam Bahasa Melayu. Aplikasi ini
 dibangunkan secara persendirian, **diedarkan percuma**, dan **tiada
 unsur komersial** (tiada langganan, iklan, atau pembelian dalam

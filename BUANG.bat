@@ -5,7 +5,7 @@ cd /d "%~dp0"
 
 echo.
 echo   ==========================================
-echo      BUANG PUSTAKA HADIS
+echo      BUANG PustakaHadith
 echo   ==========================================
 echo.
 echo   Folder: %~dp0
@@ -122,8 +122,8 @@ REM %~1 = folder. Padam ikut NAMA TEPAT, bukan wildcard *.lnk,
 REM supaya pintasan orang lain tidak tersentuh.
 if not exist "%~1" goto :eof
 call :satu "%~1\Hadis.lnk"
-call :satu "%~1\Pustaka Hadis.lnk"
-call :satu "%~1\PustakaHadis.lnk"
+call :satu "%~1\PustakaHadith.lnk"
+call :satu "%~1\PustakaHadith.lnk"
 goto :eof
 
 :satu

@@ -16,7 +16,7 @@
 - **The Nine Books** (الكتب التسعة): Sahih al-Bukhari, Sahih Muslim,
   Sunan an-Nasa'i, Sunan Abi Dawud, Jami' at-Tirmidhi, Sunan Ibn Majah,
   Muwatta Malik, Musnad Ahmad, Sunan ad-Darimi — sama dengan 9 kitab
-  dalam aplikasi Pustaka Hadis.
+  dalam aplikasi PustakaHadith.
 - **Koleksi lain:** Ibn Khuzayma, Ibn Hibban, Mustadrak al-Hakim,
   Musannaf 'Abd ar-Razzaq, Musannaf Ibn Abi Shayba, Sunan
   ad-Daraqutni, al-Kubra (Bayhaqi), Nasa'i al-Kubra, al-Adab al-Mufrad,
@@ -26,7 +26,7 @@
   kabur `swore~`, pemberat `pledge^4`, operator boolean
   `("a" OR "b") AND c`.
 - **Bahasa disokong laman:** Inggeris, Arab, Urdu, Bangla — **tiada
-  Melayu/Indonesia**. Implikasi: pautan "Baca penuh" dari Pustaka Hadis membuka halaman Inggeris.
+  Melayu/Indonesia**. Implikasi: pautan "Baca penuh" dari PustakaHadith membuka halaman Inggeris.
 - **Status HTTP:** 200 (HTTPS), halaman berfungsi.
 
 ## 2. Halaman hadis dalam buku — contoh `https://sunnah.com/bukhari/1/1`
@@ -184,7 +184,7 @@ Setiap hadis dalam `result` (rentetan HTML, bukan objek JSON):
   "dalam sanadnya ada perawi daif").
 - Pemisah antara hadis: `--------------`.
 
-### 8.4 Analisis dan implikasi untuk Pustaka Hadis
+### 8.4 Analisis dan implikasi untuk PustakaHadith
 
 **Kekuatan:**
 
@@ -272,7 +272,7 @@ Perbandingan cepat dengan dorar.net (bab 8): SemakHadis pulang JSON
 berstruktur (bukan HTML dalam JSON), **dengan terjemahan Melayu** dan
 status dalam bentuk boleh-baca mesin — jauh lebih mudah disepadukan.
 
-### 9.3 Penggunaan semasa dalam Pustaka Hadis
+### 9.3 Penggunaan semasa dalam PustakaHadith
 
 - `core/sema_source.py` — sumber huraian Melayu aktif: padanan matn
   (Jaccard ≥ 0.55, calon kedua yang rapat DITOLAK), awalan sanad

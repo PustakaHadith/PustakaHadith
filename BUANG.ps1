@@ -1,4 +1,4 @@
-# Buang Pustaka Hadis daripada komputer ini.
+# Buang PustakaHadith daripada komputer ini.
 #
 # Dipanggil oleh BUANG.bat. Jangan klik dua kali fail ini terus.
 #
@@ -35,7 +35,7 @@ $folderPintasan = @(
     [Environment]::GetFolderPath('CommonPrograms')
 ) | Where-Object { $_ -and (Test-Path $_) } | Select-Object -Unique
 
-$namaPintasan = @('Hadis.lnk', 'Pustaka Hadis.lnk', 'PustakaHadis.lnk')
+$namaPintasan = @('Hadis.lnk', 'PustakaHadith.lnk', 'PustakaHadith.lnk')
 $jumlahLnk = 0
 
 foreach ($f in $folderPintasan) {

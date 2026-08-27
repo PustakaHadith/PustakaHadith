@@ -2,7 +2,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 
 FONT_DIR = r"C:\Windows\Fonts"
-OUT = r"dokumen\surat\hadis.my\logo_pustakahadith.png"
+OUT = r"dokumen\surat\hadis.my\logo_PustakaHadith.png"
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 
 TEAL = "#5CBF85"

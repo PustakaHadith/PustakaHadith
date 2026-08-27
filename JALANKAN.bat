@@ -1,5 +1,5 @@
 @echo off
-REM Pustaka Hadis - pelancar sandaran.
+REM PustakaHadith - pelancar sandaran.
 REM Guna fail ini kalau pintasan "Hadis" tidak berfungsi.
 chcp 65001 >nul
 cd /d "%~dp0"

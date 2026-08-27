@@ -1,4 +1,4 @@
-# Kebergantungan Pustaka Hadis — versi disahkan berfungsi dengan Python 3.14
+# Kebergantungan PustakaHadith — versi disahkan berfungsi dengan Python 3.14
 # (Sesi 19 & 20: versi ini diuji, ada wheel Python 3.14)
 
 # UI

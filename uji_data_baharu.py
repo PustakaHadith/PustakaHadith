@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ujian offscreen Pustaka Hadis — data baharu (bab/darjat/sema/hadeethenc).
+"""Ujian offscreen PustakaHadith — data baharu (bab/darjat/sema/hadeethenc).
 
 Lancarkan aplikasi PyQt5 sebenar (QT_QPA_PLATFORM=offscreen), jalankan
 carian gabungan (keyword + semantik), dan periksa kad butiran untuk

@@ -106,7 +106,7 @@ Isi penting:
 
 > Fail-fail ini dicipta sendiri oleh aplikasi. Jangan padam semasa
 > aplikasi sedang berjalan. Untuk memindah ke komputer lain, salin
-> keseluruhan folder `PustakaHadis` ini.
+> keseluruhan folder `PustakaHadith` ini.
 
 ---
 

@@ -26,7 +26,7 @@
 | Item | Contoh |
 |---|---|
 | URL sokongan | `https://github.com/opencodemk/PustakaHadith/issues` |
-| E-mel sokongan (Umum) | `pustakahadith@gmail.com` |
+| E-mel sokongan (Umum) | `PustakaHadith@gmail.com` |
 | E-mel sokongan (MSIX/Store) | `pustaka.hadith@outlook.com` |
 | E-mel backup | `pustaka.hadith@proton.me` |
 | Laman web projek | `https://github.com/opencodemk/PustakaHadith` |

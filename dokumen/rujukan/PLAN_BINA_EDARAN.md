@@ -1,4 +1,4 @@
-# PLAN BINA VERSI EDARAN — Pustaka Hadis v1.0
+# PLAN BINA VERSI EDARAN — PustakaHadith v1.0
 
 **Tarikh asal:** 15 Ogos 2026  
 **Diselaraskan:** 15 Ogos 2026  
@@ -17,8 +17,8 @@ Menghasilkan aplikasi Windows yang boleh dipasang tanpa Python atau `pip`,
 dengan dua hasil:
 
 ```text
-Utama   : PustakaHadis_<versi>_x64.msix  — Microsoft Store
-Sekunder: PustakaHadis-Setup-<versi>-x64.exe — penguji / luar Store
+Utama   : PustakaHadith_<versi>_x64.msix  — Microsoft Store
+Sekunder: PustakaHadith-Setup-<versi>-x64.exe — penguji / luar Store
 ```
 
 Pengguna akhir hanya perlu mendapatkan kunci API, sync koleksi dan menggunakan
@@ -81,7 +81,7 @@ semak_db.py
 | Perkara | Keputusan diselaraskan | Sebab |
 |---|---|---|
 | Bundel `hadis.db` | **Tidak** | Keputusan pengguna; data diselaraskan sendiri |
-| Data boleh tulis | `%LOCALAPPDATA%\PustakaHadis` | Folder MSIX baca sahaja |
+| Data boleh tulis | `%LOCALAPPDATA%\PustakaHadith` | Folder MSIX baca sahaja |
 | Aset aplikasi | Folder pakej | Model/index/ikon baca sahaja |
 | Alat bina utama | **PyInstaller 6.22 `onedir`** | Sokongan rasmi Python 3.14 + PyQt5 |
 | Alat bina fallback | Nuitka | Hanya jika PyInstaller gagal gate torch/FAISS |
@@ -128,7 +128,7 @@ Keputusan yang perlu direkod sebelum menyentuh kod:
 | 1 | Bundel model e5 + indeks FAISS untuk profil ujian? | **Ya** — elak bina berjam-jam; awam tunggu lesen |
 | 2 | Microsoft Store = saluran utama? | **Ya** — signing Microsoft, update terurus |
 | 3 | Inno EXE = saluran sekunder/penguji? | **Ya** — mesin tanpa Store |
-| 4 | Akaun Partner Center + nama Publisher? | **WAJIB di Fasa 5** — daftar sekarang (percuma) + tempah nama Pustaka Hadis segera; nama Publisher: pilihan pengguna (nama peribadi/badan) |
+| 4 | Akaun Partner Center + nama Publisher? | **WAJIB di Fasa 5** — daftar sekarang (percuma) + tempah nama PustakaHadith segera; nama Publisher: pilihan pengguna (nama peribadi/badan) |
 | 5 | Portable ZIP selepas MSIX? | **Ya — untuk penguji dalaman sahaja** (bukan saluran awam rasmi) |
 | 6 | Wizard permulaan (deklarasi → kunci API → sync)? | **Bina sebelum beta** — penguji perlu menguji aliran pengguna sebenar |
 
@@ -146,7 +146,7 @@ Kiraan telus: keputusan ini direkod sebagai komit penutup (langkah-B) 19 Ogos
 2. Dalam mod frozen:
 
 ```text
-DATA_DIR = %LOCALAPPDATA%\PustakaHadis
+DATA_DIR = %LOCALAPPDATA%\PustakaHadith
 ```
 
 3. Dalam mod pembangunan, kekalkan root projek supaya aliran semasa tidak
@@ -213,7 +213,7 @@ kerana semak #12/#9 git + cache pengguna dilangkau):
 - `config.py` kini pusat laluan: `ASSET_DIR` (aset baca sahaja) vs
   `DATA_DIR` (data pengguna boleh tulis). Mod pembangunan: DATA_DIR =
   ASSET_DIR (tingkah laku tidak berubah). Mod frozen:
-  `%LOCALAPPDATA%\PustakaHadis`.
+  `%LOCALAPPDATA%\PustakaHadith`.
 - Fail dipusatkan: `db.py`, `api/hadis_api.py`, `ui/helpers.py`,
   `ui/splash.py`, `ui/disclaimer.py`, `core/sema_source.py`,
   `core/hadeethenc_api.py`, `core/semantic_search.py`.
@@ -231,7 +231,7 @@ kerana semak #12/#9 git + cache pengguna dilangkau):
   tiada beza tingkah laku). Akan dipusatkan dalam Fasa 6 (pembersihan)
   jika perlu.
 - Ujian `uji_fasa1_data.py` mensimulasikan `sys.frozen=True` dalam
-  subproses: DATA_DIR == `%LOCALAPPDATA%\PustakaHadis`, semua pemalar
+  subproses: DATA_DIR == `%LOCALAPPDATA%\PustakaHadith`, semua pemalar
   boleh tulis di DATA_DIR, semua aset di ASSET_DIR, dan TIADA fail
   baharu ditulis ke ASSET_DIR semasa larian frozen.
 
@@ -252,7 +252,7 @@ bina onedir --console, semak warn-*.txt).
   torch 2.13.0+cpu, faiss, sentence_transformers, PyQt5 5.15.11).
   Python 3.14.6 x64; PyInstaller 6.22.0 + hooks-contrib; rekod
   `installer_requirements-build-lock.txt`; TIADA PySide/PyQt6.
-- Binaan onedir --console `PustakaHadis-Debug` (~19 minit):
+- Binaan onedir --console `PustakaHadith-Debug` (~19 minit):
   2,022.8 MB, 7,065 fail. Aset profil lengkap dibundel dalam
   `_internal\` (app.ico, sunnah_map, .cache_models 941 MB,
   hadis_faiss.index 91 MB, hadis_id_map.pkl, profil_model.json).
@@ -260,10 +260,10 @@ bina onedir --console, semak warn-*.txt).
 - `warn-*.txt`: 1,144 baris; 313 "missing module" — semua pilihan
   (torch extras, accelerate, bitsandbytes, dll). Tiada amaran untuk
   modul yang benar-benar digunakan. Missing `torch._C.*` = normal.
-- Ujian automatik exe: tetingkap 'Pustaka Hadis - Makluman' muncul →
+- Ujian automatik exe: tetingkap 'PustakaHadith - Makluman' muncul →
   disclaimer diluluskan (user_settings.json `disclaimer_dibaca:true`
   di DATA_DIR) → model e5 dimuat (RAM 78 → 596 MB) → tetingkap utama
-  'Pustaka Hadis' terbuka. DATA_DIR `%LOCALAPPDATA%\PustakaHadis`
+  'PustakaHadith' terbuka. DATA_DIR `%LOCALAPPDATA%\PustakaHadith`
   digunakan; folder EXE tiada hadis.db. Indeks FAISS binaan dimuat:
   62,169 vektor × 384 dimensi.
 - `semak.py` selepas perubahan: SEMUA LULUS — 385 semakan.
@@ -272,7 +272,7 @@ bina onedir --console, semak warn-*.txt).
 
 ### Gate Fasa 2
 
-`PustakaHadis-Debug.exe` pada mesin pembangun mesti lulus:
+`PustakaHadith-Debug.exe` pada mesin pembangun mesti lulus:
 
 - launch; ✅ (dilancar tanpa Python pada PATH)
 - tema; ⏳ ujian manual
@@ -302,14 +302,14 @@ dicetuskan.
   --exclude-module PIL`. cv2 (138 MB) ditarik transformers untuk
   video/OCR — aplikasi hanya teks, tidak guna; import cv2 ialah lazy
   (dalam fungsi), selamat. PIL (13 MB) juga pilihan.
-- **Hasil:** `dist\PustakaHadis-Debug` = **1,399.9 MB / 7,027 fail**
+- **Hasil:** `dist\PustakaHadith-Debug` = **1,399.9 MB / 7,027 fail**
   (sebelum: 2,022.8 MB / 7,065) — jimat 622.9 MB (31%). Semua aset
   lengkap; tiada data pengguna/hadis.db dalam pakej.
 - **Ujian binaan optimum:**
   - Model e5 dimuat penuh (stderr `Loading weights: 100% 199/199`;
     RAM 78 → 929–937 MB; `profil_model.json` dikemas `muat_s: 35.0,
     dari_cache: true` di DATA_DIR).
-  - Tetingkap utama 'Pustaka Hadis' terbuka (MainWindowTitle tepat).
+  - Tetingkap utama 'PustakaHadith' terbuka (MainWindowTitle tepat).
   - Tiada ralat/traceback.
   - `semak.py` SEMUA LULUS — 385 semakan (15 bahagian).
   - Boot pertama lambat (~110–120 s) — Windows Defender mengimbas
@@ -409,25 +409,25 @@ pilih kekalkan reka bentuk.)
 
 Tukar `--console` kepada `--windowed`; ulang semua ujian ringkas.
 
-- Spec `PustakaHadis.spec`: `name='PustakaHadis'`, `console=False`,
+- Spec `PustakaHadith.spec`: `name='PustakaHadith'`, `console=False`,
   `upx=False`; kekal exclude cv2/PIL + collect-all + aset profil.
-- Hasil `dist\PustakaHadis` = 1,399.9 MB / 7,027 fail (~21 minit).
+- Hasil `dist\PustakaHadith` = 1,399.9 MB / 7,027 fail (~21 minit).
 - Ujian ringkas LULUS: exe hidup · disclaimer (tajuk EM DASH U+2014) ·
-  tetingkap utama 'Pustaka Hadis' tepat · model dimuat dari cache
+  tetingkap utama 'PustakaHadith' tepat · model dimuat dari cache
   (profil_model.json: muat_s 39.5, dari_cache true) · DATA_DIR betul ·
   warn tiada regresi vs Debug · semak.py 386 SEMUA LULUS.
 
 ### 4B. Inno Setup EXE — sekunder ☑ SELESAI (20 Ogos)
 
 - Inno Setup 6.7.3 dipasang di `D:\Inno Setup 6` (~20 MB).
-- `installer\PustakaHadis.iss` ikut INSTALLER §9: per-user
-  (`{localappdata}\Programs\PustakaHadis`), `PrivilegesRequired=lowest`,
+- `installer\PustakaHadith.iss` ikut INSTALLER §9: per-user
+  (`{localappdata}\Programs\PustakaHadith`), `PrivilegesRequired=lowest`,
   AppId tetap `{{7DF2553E-9E62-4ED4-929A-61C71AD1047F}`, task
   desktopicon, lzma2/ultra64.
-- Hasil `installer\output\PustakaHadis-Setup-1.0.0-x64.exe` = 0.50 GB
+- Hasil `installer\output\PustakaHadith-Setup-1.0.0-x64.exe` = 0.50 GB
   (~34 minit).
 - Ujian LULUS: silent install (0, 7,029 fail) · launch app terpasang
-  (tetingkap 'Pustaka Hadis') · uninstall senyap (0) — folder app
+  (tetingkap 'PustakaHadith') · uninstall senyap (0) — folder app
   dipadam, **DATA_DIR kekal**, pintasan dipadam. Naik taraf ujian penuh
   di Fasa 6 (1.0.0→1.0.1).
 
@@ -438,9 +438,9 @@ Tukar `--console` kepada `--windowed`; ulang semua ujian ringkas.
   wizard 'Prepare computer').
 - Aset PNG MSIX dijana → `installer\Assets\` (StoreLogo 50,
   Square44x44, Square150x150, Wide310x150).
-- Audit `dist\PustakaHadis`: 0 fail terlarang (tiada DB/settings/
+- Audit `dist\PustakaHadith`: 0 fail terlarang (tiada DB/settings/
   cache/log) — bersih untuk capture.
-- **ZIP mudah alih** dicipta → `installer\output\PustakaHadis-portable-1.0.0-x64.zip`
+- **ZIP mudah alih** dicipta → `installer\output\PustakaHadith-portable-1.0.0-x64.zip`
   (0.54 GB) untuk penguji dalaman.
 - **Dokumentasi capture**: `penerbitan/penerbitan/VM_MSIX_CAPTURE.md` (persediaan VM, snapshot,
   wizard manual, capture, Package Editor) + `penerbitan/penerbitan/MSIX_CAPTURE_PROSES.md`
@@ -449,9 +449,9 @@ Tukar `--console` kepada `--windowed`; ulang semua ujian ringkas.
   Store + tempah nama + Publisher → beri `Package/Identity/Name`,
   `Package/Identity/Publisher`, `Package/Properties/PublisherDisplayName`.
 - Seterusnya: capture VM bersih (Manual installation, Program Files,
-  satu entry point PustakaHadis.exe, jangan sync/API key), Package
+  satu entry point PustakaHadith.exe, jangan sync/API key), Package
   editor (runFullTrust, Windows.Desktop, MinVersion 10.0.19041.0),
-  simpan `PustakaHadis_1.0.0.0_x64.msix`, tandatangan ujian tempatan
+  simpan `PustakaHadith_1.0.0.0_x64.msix`, tandatangan ujian tempatan
   (Subject = Publisher manifest), uji Add-AppxPackage.
 
 ### 4D. Uji Windows 10 (Gate 4 Matrix) ⏳
@@ -475,7 +475,7 @@ Tukar `--console` kepada `--windowed`; ulang semua ujian ringkas.
 ### Kerja
 
 1. Daftar akaun pembangun Microsoft Store.
-2. Tempah nama Pustaka Hadis.
+2. Tempah nama PustakaHadith.
 3. Rekod `Identity Name`, `Publisher` dan `PublisherDisplayName`.
 4. Bina versi `1.0.0.0`.
 5. Pasang, cipta settings/bookmark dan sync data ujian.

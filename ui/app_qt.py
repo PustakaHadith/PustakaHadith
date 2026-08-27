@@ -1,4 +1,4 @@
-"""Pustaka Hadis — tetingkap utama (PyQt5), gaya hadis.my.
+"""PustakaHadith — tetingkap utama (PyQt5), gaya hadis.my.
 
 Semua I/O rangkaian berjalan dalam QThread; UI tidak pernah beku.
 """

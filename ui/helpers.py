@@ -1,4 +1,4 @@
-"""Helper bebas Pustaka Hadis — tiada state Qt, tiada gandingan UI.
+"""Helper bebas PustakaHadith — tiada state Qt, tiada gandingan UI.
 
 Dipisahkan dari `ui/app_qt.py` (Sesi 30 refactor). Semua fungsi di sini
 tulen dan boleh diuji unit. app_qt.py mengimport semula nama-nama ini
@@ -25,7 +25,7 @@ from config import (                                       # noqa: E402
 from ui.theme import COLLECTION_META  # metadata kitab -- BUKAN warna
 
 # Laluan pusat daripada config.py (INSTALLER.md §3): data pengguna di
-# DATA_DIR (mod frozen: %LOCALAPPDATA%\PustakaHadis), peta sunnah di ASSET_DIR.
+# DATA_DIR (mod frozen: %LOCALAPPDATA%\PustakaHadith), peta sunnah di ASSET_DIR.
 SETTINGS = SETTINGS_PATH
 BOOKMARKS = BOOKMARKS_PATH
 

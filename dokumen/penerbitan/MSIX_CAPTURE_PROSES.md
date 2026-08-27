@@ -11,7 +11,7 @@
 |---|---|---|
 | Identiti Partner Center | ⛔ **Menunggu pengguna** | `Package/Identity/Name`, `Publisher`, `PublisherDisplayName` |
 | VM bersih + snapshot | ☐ | Dokumentasi: `penerbitan/penerbitan/VM_MSIX_CAPTURE.md` |
-| Payload `dist\PustakaHadis` | ✅ | 0.54 GB ZIP sedia, audit bersih |
+| Payload `dist\PustakaHadith` | ✅ | 0.54 GB ZIP sedia, audit bersih |
 | Aset PNG (50, 44, 150, 310×150) | ✅ | `installer\Assets\` |
 | MSIX Packaging Tool + WinApp CLI | ✅ | Dipasang (winget) |
 | Dasar privasi | ✅ | `surat/sokongan/surat/sokongan/DASAR_PRIVASI.md` |
@@ -27,25 +27,25 @@
 - [ ] Snapshot `Pre-MSIX-Capture` dibuat
 - [ ] MSIX Packaging Tool dipasang (winget)
 - [ ] WinApp CLI dipasang (winget)
-- [ ] Payload disalin ke `C:\Payload\PustakaHadis`
+- [ ] Payload disalin ke `C:\Payload\PustakaHadith`
 - [ ] Aset PNG disalin ke lokasi akses mudah
 
 ### Fasa 2: Wizard MSIX Packaging Tool
 - [ ] Buka MSIX Packaging Tool → **Create package** → **Manual installation**
 - [ ] **Package details**:
-  - [ ] Name: `PustakaHadis`
+  - [ ] Name: `PustakaHadith`
   - [ ] Publisher: `CN=<Publisher dari Partner Center>` (mesti sepadan!)
   - [ ] Version: `1.0.0.0`
   - [ ] Architecture: `x64`
 - [ ] **Installation**:
   - [ ] Installer: **KOSONGKAN** (Manual installation)
-  - [ ] Install location: `C:\Program Files\PustakaHadis`
+  - [ ] Install location: `C:\Program Files\PustakaHadith`
   - [ ] **Prepare computer** — biarkan wizard cuba aktifkan driver (2×)
 - [ ] Klik **Next** → "Ready to capture"
 
 ### Fasa 3: Capture Installation
 - [ ] **JANGAN klik Next** dalam wizard lagi
-- [ ] Buka `C:\Payload\PustakaHadis\PustakaHadis.exe`
+- [ ] Buka `C:\Payload\PustakaHadith\PustakaHadith.exe`
 - [ ] **Dalam aplikasi**:
   - [ ] Terima notis (Enter)
   - [ ] **JANGAN** masukkan API key
@@ -59,7 +59,7 @@
 ### Fasa 4: Package Editor (Semak Kritikal)
 | Item | Perlu | Tindakan Jika Tidak |
 |---|---|---|
-| Entry point: `PustakaHadis.exe` | ✅ 1 sahaja | Delete entry point lebihan |
+| Entry point: `PustakaHadith.exe` | ✅ 1 sahaja | Delete entry point lebihan |
 | Capability: `runFullTrust` | ✅ | Tambah dalam Capabilities |
 | Device capability: `Windows.Desktop` | ✅ | Tambah |
 | Min version: `10.0.19041.0` | ✅ | Set dalam Properties |
@@ -68,23 +68,23 @@
 | **Tiada** `hadis.db`, `.env`, `settings`, `bookmarks`, cache, log | ✅ | Delete jika wujud |
 
 ### Fasa 5: Simpan & Tandatangan
-- [ ] **Save package** → `C:\Output\PustakaHadis_1.0.0.0_x64.msix`
+- [ ] **Save package** → `C:\Output\PustakaHadith_1.0.0.0_x64.msix`
 - [ ] **Jana sijil ujian**:
 ```powershell
 winappcert create --publisher "CN=<Publisher>" --output "C:\Certs\TestCert.pfx" --password "test123"
 ```
 - [ ] **Tandatangani**:
 ```powershell
-SignTool sign /fd SHA256 /f "C:\Certs\TestCert.pfx" /p "test123" "C:\Output\PustakaHadis_1.0.0.0_x64.msix"
+SignTool sign /fd SHA256 /f "C:\Certs\TestCert.pfx" /p "test123" "C:\Output\PustakaHadith_1.0.0.0_x64.msix"
 ```
 
 ### Fasa 6: Uji Pemasangan
-- [ ] `Add-AppxPackage -Path "C:\Output\PustakaHadis_1.0.0.0_x64.msix"` → **Kod 0**
+- [ ] `Add-AppxPackage -Path "C:\Output\PustakaHadith_1.0.0.0_x64.msix"` → **Kod 0**
 - [ ] Lancar dari Start Menu → **Splash → Notis → UI utama**
 - [ ] Semak: **Tiada API key diminta automatik**, carian kata kunci berfungsi
 - [ ] Tetapan → API key → Uji → **Berjaya**
-- [ ] Nyahpasang: `Get-AppxPackage -Name "PustakaHadis" | Remove-AppxPackage` → **Kod 0**
-- [ ] Semak: **Tiada** folder `C:\Program Files\PustakaHadis` tinggal
+- [ ] Nyahpasang: `Get-AppxPackage -Name "PustakaHadith" | Remove-AppxPackage` → **Kod 0**
+- [ ] Semak: **Tiada** folder `C:\Program Files\PustakaHadith` tinggal
 
 ---
 
@@ -102,7 +102,7 @@ Restore-VMSnapshot -VMName "PustakaHadith-VM" -Name "Pre-MSIX-Capture"
 
 | Fail | Lokasi | Keterangan |
 |---|---|---|
-| `PustakaHadis_1.0.0.0_x64.msix` | `installer\output\` | MSIX ditandatangani ujian |
+| `PustakaHadith_1.0.0.0_x64.msix` | `installer\output\` | MSIX ditandatangani ujian |
 | `TestCert.pfx` | `installer\certs\` | Sijil ujian (simpan selamat) |
 | Tangkapan skrin (4-8) | `installer\StoreAssets\Screenshots\` | Untuk Store |
 | Dasar privasi (URL) | `surat/sokongan/surat/sokongan/DASAR_PRIVASI.md` | URL raw GitHub / laman web |

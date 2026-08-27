@@ -1,18 +1,18 @@
 @echo off
 setlocal
-REM Pasang kemas kini Pustaka Hadis dari ZIP.
+REM Pasang kemas kini PustakaHadith dari ZIP.
 REM Guna -Force: Expand-Archive TANPA -Force GAGAL pada fail sedia ada
 REM dan meninggalkan kod LAMA tanpa amaran.
 
 set "ZIP=%~1"
-if "%ZIP%"=="" set "ZIP=%USERPROFILE%\Downloads\PustakaHadis.zip"
+if "%ZIP%"=="" set "ZIP=%USERPROFILE%\Downloads\PustakaHadith.zip"
 
 if not exist "%ZIP%" (
   echo.
   echo   ZIP tidak dijumpai: %ZIP%
   echo.
   echo   Seret ZIP ke atas fail ini, atau:
-  echo     KEMASKINI.bat "C:\laluan\ke\PustakaHadis.zip"
+  echo     KEMASKINI.bat "C:\laluan\ke\PustakaHadith.zip"
   echo.
   pause
   exit /b 1

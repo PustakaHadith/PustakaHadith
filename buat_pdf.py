@@ -5,7 +5,7 @@ TMP = r"C:\ph_aset"
 os.makedirs(TMP, exist_ok=True)
 
 BASE = os.path.abspath("dokumen/surat/hadis.my")
-LOGO = os.path.abspath("dokumen/surat/hadis.my/logo_pustakahadith.png")
+LOGO = os.path.abspath("dokumen/surat/hadis.my/logo_PustakaHadith.png")
 SRC = [
     ("SURAT_HADISMY.md", "SURAT_HADISMY.pdf", True),
     ("EMEL_HADISMY.md", "EMEL_HADISMY.pdf", True),

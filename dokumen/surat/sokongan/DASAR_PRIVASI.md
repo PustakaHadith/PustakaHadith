@@ -106,7 +106,7 @@ Soalan mengenai privasi:
 
 | Jenis | E-mel |
 |---|---|
-| **Umum / Surat menyurat** | `pustakahadith@gmail.com` |
+| **Umum / Surat menyurat** | `PustakaHadith@gmail.com` |
 | **Microsoft Store / MSIX** | `pustaka.hadith@outlook.com` |
 | **Backup / Selamat** | `pustaka.hadith@proton.me` |
 

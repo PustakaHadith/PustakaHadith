@@ -37,7 +37,7 @@
   dijana (`tangkap_layar.py` pandu `PustakaApp`); `DASAR_PRIVASI` /
   `PAUTAN_SOKONGAN` dikemaskini (`d7ee299`, `9dee026`).
 - Cipta `dokumen/surat/hadis.my/`: pindah SURAT + EMEL; logo
-  `logo_pustakahadith.png` (Segoe UI Bold #5CBF85 / Light #7FD39A / muted
+  `logo_PustakaHadith.png` (Segoe UI Bold #5CBF85 / Light #7FD39A / muted
   #9C9589, `buat_logo.py`); tukar ke **PDF** (xhtml2pdf berterabur →
   reportlab `buat_pdf2.py`): `SURAT_HADISMY_kemas.pdf`, `EMEL_HADISMY.pdf`,
   `DASAR_PRIVASI.pdf`, `PAUTAN_SOKONGAN.pdf` (`999a27e`, `1fa9a44`).

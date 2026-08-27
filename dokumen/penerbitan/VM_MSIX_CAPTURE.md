@@ -36,18 +36,18 @@ winappcert --version
 
 ## Persediaan Payload
 
-Salinkan folder payload ke VM (contoh: `C:\Payload\PustakaHadis`):
+Salinkan folder payload ke VM (contoh: `C:\Payload\PustakaHadith`):
 
 ```powershell
 # Dari mesin binaan, salin:
-# dist\PustakaHadis\*  →  VM:C:\Payload\PustakaHadis\
+# dist\PustakaHadith\*  →  VM:C:\Payload\PustakaHadith\
 ```
 
 Struktur payload yang bersih (sudah disahkan audit):
 ```
-C:\Payload\PustakaHadis\
+C:\Payload\PustakaHadith\
 ├── _internal\           # Semua kebergantungan Python/PyQt/FAISS/model
-├── PustakaHadis.exe     # Entry point tunggal
+├── PustakaHadith.exe     # Entry point tunggal
 ```
 
 **Tiada** fail terlarang: hadis.db, .env, user_settings.json, bookmarks.json, .cache_*, *.bak, __pycache__, log.
@@ -83,20 +83,20 @@ Checkpoint-VM -Name "PustakaHadith-VM" -SnapshotName "Pre-MSIX-Capture"
 1. Buka **MSIX Packaging Tool** (Start Menu).
 2. Pilih **Create package** → **Manual installation**.
 3. **Package details**:
-   - Package name: `PustakaHadis`
+   - Package name: `PustakaHadith`
    - Publisher: `CN=<Publisher dari Partner Center>` (contoh: `CN=12345678-ABCD-...`)
    - Version: `1.0.0.0`
    - Architecture: x64
 4. **Installation**:
    - Installer: **kosongkan** (Manual)
-   - Install location: `C:\Program Files\PustakaHadis`
+   - Install location: `C:\Program Files\PustakaHadith`
    - **Prepare computer** — wizard akan cuba aktifkan driver (2 kali cuba)
 5. Klik **Next** → wizard bersedia untuk capture.
 
 ### Capture Installation
 
 1. Wizard papar: "Ready to capture" — **jangan klik Next lagi**.
-2. Buka Explorer → `C:\Payload\PustakaHadis` → jalankan `PustakaHadis.exe`.
+2. Buka Explorer → `C:\Payload\PustakaHadith` → jalankan `PustakaHadith.exe`.
 3. **Dalam aplikasi**:
    - Terima notis (Enter)
    - **JANGAN** masukkan API key
@@ -109,12 +109,12 @@ Checkpoint-VM -Name "PustakaHadith-VM" -SnapshotName "Pre-MSIX-Capture"
 
 | Item | Nilai Diperlukan |
 |---|---|
-| Entry point | `PustakaHadis.exe` (satu sahaja) |
+| Entry point | `PustakaHadith.exe` (satu sahaja) |
 | Capabilities | `runFullTrust` ✓ |
 | Device capabilities | `Windows.Desktop` ✓ |
 | Min version | `10.0.19041.0` (Windows 10 2004) |
 | Target device family | `Windows.Desktop` |
-| Applications | 1 aplikasi: `PustakaHadis` |
+| Applications | 1 aplikasi: `PustakaHadith` |
 | Visual assets | 4 PNG (50, 44, 150, 310×150) ✓ |
 | **Tiada** | DB, .env, settings, bookmarks, cache, log |
 
@@ -124,14 +124,14 @@ Jika ada item tidak perlu → **Delete** dalam Package Editor.
 
 ## Simpan & Tandatangan Ujian
 
-1. **Save package** → lokasi output (contoh: `C:\Output\PustakaHadis_1.0.0.0_x64.msix`)
+1. **Save package** → lokasi output (contoh: `C:\Output\PustakaHadith_1.0.0.0_x64.msix`)
 2. **Sign package** (ujian tempatan):
 ```powershell
 # Jana sijil ujian tempatan
 winappcert create --publisher "CN=<Publisher>" --output "C:\Certs\TestCert.pfx" --password "test123"
 
 # Tandatangani MSIX
-SignTool sign /fd SHA256 /f "C:\Certs\TestCert.pfx" /p "test123" "C:\Output\PustakaHadis_1.0.0.0_x64.msix"
+SignTool sign /fd SHA256 /f "C:\Certs\TestCert.pfx" /p "test123" "C:\Output\PustakaHadith_1.0.0.0_x64.msix"
 ```
 Atau guna **Package Editor → Sign** dengan sijil yang sama.
 
@@ -141,10 +141,10 @@ Atau guna **Package Editor → Sign** dengan sijil yang sama.
 
 ```powershell
 # Pasang
-Add-AppxPackage -Path "C:\Output\PustakaHadis_1.0.0.0_x64.msix"
+Add-AppxPackage -Path "C:\Output\PustakaHadith_1.0.0.0_x64.msix"
 
 # Lancar
-Start-Process "shell:AppsFolder\<PackageFamilyName>!PustakaHadis"
+Start-Process "shell:AppsFolder\<PackageFamilyName>!PustakaHadith"
 
 # Semak
 # - Splash papar
@@ -153,7 +153,7 @@ Start-Process "shell:AppsFolder\<PackageFamilyName>!PustakaHadis"
 # - Tetapan → API key boleh dimasukkan
 
 # Nyahpasang
-Get-AppxPackage -Name "PustakaHadis" | Remove-AppxPackage
+Get-AppxPackage -Name "PustakaHadith" | Remove-AppxPackage
 ```
 
 ---

@@ -3544,7 +3544,7 @@ def semak_logo_palet() -> None:
 
 
 def semak_deklarasi() -> None:
-    """Deklarasi Pustaka Hadis dikunci: teks + cantuman UI.
+    """Deklarasi PustakaHadith dikunci: teks + cantuman UI.
 
     DEKLARASI.md (8 Ogos 2026) diterima pakai sebagai skrin permulaan
     (sekali) + halaman Tentang. Semakan ini mengunci: (1) ui/deklarasi.py
@@ -3554,7 +3554,7 @@ def semak_deklarasi() -> None:
     showEvent; (4) panel Tetapan ada butang Tentang; (5) halaman Carian
     memaut SemakHadis.com pada keadaan tiada hasil.
     """
-    tajuk("8aa. Deklarasi Pustaka Hadis: teks + cantuman dikunci")
+    tajuk("8aa. Deklarasi PustakaHadith: teks + cantuman dikunci")
 
     if not os.path.exists("ui/deklarasi.py"):
         salah("ui/deklarasi.py TIADA -- deklarasi hilang")
@@ -3824,7 +3824,7 @@ def main() -> int:
     global LULUS_CNT, TAJUK_NAMA
     LULUS_CNT, TAJUK_NAMA = 0, []
     print("\n" + "=" * 60)
-    print("  SEMAKAN PRA-HANTAR — Pustaka Hadis")
+    print("  SEMAKAN PRA-HANTAR — PustakaHadith")
     print("=" * 60)
 
     semak_sintaks()

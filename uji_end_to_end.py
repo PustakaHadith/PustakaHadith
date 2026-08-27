@@ -50,7 +50,7 @@ if os.path.exists(BM):
     shutil.copy2(BM, BM_SANDARAN)
 
 print("=" * 62)
-print("  PENGESAHAN END-TO-END — Pustaka Hadis")
+print("  PENGESAHAN END-TO-END — PustakaHadith")
 print("=" * 62)
 
 from ui.app_qt import PustakaApp, PAGES

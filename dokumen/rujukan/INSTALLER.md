@@ -1,7 +1,7 @@
 # Panduan Langkah demi Langkah — Installer Windows dan MSIX
 
 **Tarikh kemas kini:** 15 Ogos 2026  
-**Aplikasi:** Pustaka Hadis  
+**Aplikasi:** PustakaHadith  
 **Sasaran:** Windows 10 22H2 / Windows 11, x64  
 **Status:** Panduan teknikal; belum dibina pada mesin Windows bersih  
 **Dokumen kawalan/gate:** `PLAN_BINA_EDARAN.md`  
@@ -25,13 +25,13 @@ Jika terdapat percanggahan, ikut urutan dan keputusan alat dalam
 | Model + indeks FAISS | Boleh dibundel untuk ujian persendirian; edaran awam tunggu izin data |
 | Seni bina | x64 sahaja untuk keluaran pertama |
 | Mod PyInstaller | `onedir`, bukan `onefile` — permulaan lebih cepat dan tiada ekstrak hampir 1 GB setiap pelancaran |
-| Data boleh tulis | `%LOCALAPPDATA%\PustakaHadis` |
+| Data boleh tulis | `%LOCALAPPDATA%\PustakaHadith` |
 | Aset baca sahaja | Folder pakej PyInstaller/MSIX |
 
 ### Mengapa bukan Nuitka sekarang?
 
 Nuitka 4.1 mempunyai sokongan Python 3.14 yang masih ditanda eksperimen dan
-halaman rasminya mengakui PyQt5 mempunyai isu callback/threading. Pustaka Hadis
+halaman rasminya mengakui PyQt5 mempunyai isu callback/threading. PustakaHadith
 menggunakan banyak `QThread`, torch dan sentence-transformers. PyInstaller
 6.22 pula menyokong Python 3.8–3.15 dan menyenaraikan PyQt5 sebagai pakej yang
 dibundel secara rasmi.
@@ -96,7 +96,7 @@ FASA 2 — Bina PyInstaller diagnostik (§5–§7)
    │   venv 3.14 bersih; main.py freeze_support(); onedir --console;
    │   --collect-all sentence_transformers/transformers/tokenizers/faiss
    ▼
-   GATE 2: PustakaHadis-Debug.exe lulus semua fungsi pada mesin pembangun
+   GATE 2: PustakaHadith-Debug.exe lulus semua fungsi pada mesin pembangun
    │        (gagal selepas pembetulan munasabah → FALLBACK Nuitka, §4)
    │
 FASA 3 — Ujian Windows bersih (§8)
@@ -129,12 +129,12 @@ FASA 6 — Edaran awam (§15, §18)
 |---|---|---|---|---|
 | Fasa 0 | Jawab 6 keputusan skop | Keputusan direkod | Pengguna luluskan | PLAN §8, PERBANDINGAN §4 |
 | Fasa 1 | `ASSET_DIR`/`DATA_DIR` dalam config.py; audit 11 fail | Semua data boleh tulis ke `%LOCALAPPDATA%` | Gate 1 lulus | §3 |
-| Fasa 2 | venv bersih; `freeze_support()`; bina debug | `dist\PustakaHadis-Debug\*.exe` | Gate 2 lulus | §5–§7 |
+| Fasa 2 | venv bersih; `freeze_support()`; bina debug | `dist\PustakaHadith-Debug\*.exe` | Gate 2 lulus | §5–§7 |
 | Fallback | Jika PyInstaller gagal gate fungsi | Bina Nuitka di venv kedua | Gate 2 sama | §4, BANDING §4 |
 | Fasa 3 | Uji pada Windows 10/11 bersih | Matriks ujian penuh | Gate 3 lulus | §8 |
-| Fasa 4A | Bina `--windowed` | `dist\PustakaHadis\PustakaHadis.exe` | Gate 4 lulus | §7.3 |
-| Fasa 4B | Inno Setup EXE | `PustakaHadis-Setup-<versi>-x64.exe` | Gate 4 lulus | §9 |
-| Fasa 4C | MSIX manual dalam VM bersih | `PustakaHadis_<versi>_x64.msix` | Gate 4 lulus | §11–§12 |
+| Fasa 4A | Bina `--windowed` | `dist\PustakaHadith\PustakaHadith.exe` | Gate 4 lulus | §7.3 |
+| Fasa 4B | Inno Setup EXE | `PustakaHadith-Setup-<versi>-x64.exe` | Gate 4 lulus | §9 |
+| Fasa 4C | MSIX manual dalam VM bersih | `PustakaHadith_<versi>_x64.msix` | Gate 4 lulus | §11–§12 |
 | Fasa 5 | Daftar Store; tempah nama; ujian naik taraf | Identiti + pakej 1.0.0.0/1.0.1.0 | Gate 5 lulus | §10, §13–§16 |
 | Fasa 6 | Upload; listing; pensijilan | MSIX diterbitkan Store | Gate 6 lulus | §15, §18 |
 
@@ -169,7 +169,7 @@ FASA 6 — Edaran awam (§15, §18)
 
 Jangan terus menjalankan PyInstaller. Selesaikan dahulu:
 
-- [ ] Tutup semua aplikasi/proses Pustaka Hadis.
+- [ ] Tutup semua aplikasi/proses PustakaHadith.
 - [ ] `python semak.py` lulus.
 - [ ] `python semak_versi.py` lulus.
 - [ ] `python uji_lompat.py` lulus.
@@ -216,7 +216,7 @@ def _data_dir() -> Path:
         asas = os.environ.get("LOCALAPPDATA")
         if not asas:
             asas = str(Path.home() / "AppData" / "Local")
-        d = Path(asas) / "PustakaHadis"
+        d = Path(asas) / "PustakaHadith"
     else:
         # Mod pembangunan kekal seperti sekarang.
         d = ASSET_DIR
@@ -282,7 +282,7 @@ MSIX tidak menjalankan wizard nyahpasang tersuai. Jangan bergantung pada dialog
 - paparan lokasi data;
 - amaran sebelum padam.
 
-Uji sama ada `%LOCALAPPDATA%\PustakaHadis` kekal selepas uninstall pada pakej
+Uji sama ada `%LOCALAPPDATA%\PustakaHadith` kekal selepas uninstall pada pakej
 sebenar. Jangan menjanjikan pengekalan sehingga ujian itu dibuat kerana MSIX
 boleh memvirtualkan lokasi AppData.
 
@@ -430,7 +430,7 @@ python -m PyInstaller `
   --clean `
   --onedir `
   --console `
-  --name PustakaHadis-Debug `
+  --name PustakaHadith-Debug `
   --icon app.ico `
   --add-data "app.ico;." `
   --add-data "sunnah_map;sunnah_map" `
@@ -458,14 +458,14 @@ Jangan guna UPX pada binaan pertama; ia boleh merosakkan DLL Qt/torch.
 ### 7.2 Uji binaan diagnostik
 
 ```powershell
-.\dist\PustakaHadis-Debug\PustakaHadis-Debug.exe
+.\dist\PustakaHadith-Debug\PustakaHadith-Debug.exe
 ```
 
 Uji:
 
 - aplikasi dibuka tanpa Python pada `PATH`;
 - tema gelap/cerah;
-- API key disimpan dalam `%LOCALAPPDATA%\PustakaHadis`;
+- API key disimpan dalam `%LOCALAPPDATA%\PustakaHadith`;
 - sync mencipta DB di lokasi data, bukan folder EXE;
 - carian Melayu dan Arab;
 - carian makna FAISS;
@@ -477,7 +477,7 @@ Uji:
 Semak amaran:
 
 ```powershell
-Get-Content .\build\PustakaHadis-Debug\warn-PustakaHadis-Debug.txt
+Get-Content .\build\PustakaHadith-Debug\warn-PustakaHadith-Debug.txt
 ```
 
 Jangan abaikan amaran modul yang benar-benar digunakan.
@@ -488,13 +488,13 @@ Selepas diagnostik lulus, tukar:
 
 ```text
 --console  ->  --windowed
---name PustakaHadis-Debug  ->  --name PustakaHadis
+--name PustakaHadith-Debug  ->  --name PustakaHadith
 ```
 
 Jalankan arahan sama. Hasil:
 
 ```text
-dist\PustakaHadis\PustakaHadis.exe
+dist\PustakaHadith\PustakaHadith.exe
 ```
 
 ### 7.4 Mengapa bukan `--onefile`?
@@ -512,7 +512,7 @@ Gunakan Windows Sandbox atau VM tanpa Python/PyQt/torch.
 Salin seluruh folder:
 
 ```text
-dist\PustakaHadis\
+dist\PustakaHadith\
 ```
 
 Bukan EXE sahaja.
@@ -537,24 +537,24 @@ ialah bug yang mesti dibaiki sebelum MSIX.
 
 ## 9. Pilihan EXE — Inno Setup
 
-Buat `installer\PustakaHadis.iss`:
+Buat `installer\PustakaHadith.iss`:
 
 ```ini
-#define MyAppName "Pustaka Hadis"
+#define MyAppName "PustakaHadith"
 #define MyAppVersion "1.0.0"
-#define MyAppExeName "PustakaHadis.exe"
+#define MyAppExeName "PustakaHadith.exe"
 
 [Setup]
 AppId={{7DF2553E-9E62-4ED4-929A-61C71AD1047F}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-DefaultDirName={localappdata}\Programs\PustakaHadis
-DefaultGroupName=Pustaka Hadis
+DefaultDirName={localappdata}\Programs\PustakaHadith
+DefaultGroupName=PustakaHadith
 PrivilegesRequired=lowest
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 OutputDir=output
-OutputBaseFilename=PustakaHadis-Setup-{#MyAppVersion}-x64
+OutputBaseFilename=PustakaHadith-Setup-{#MyAppVersion}-x64
 Compression=lzma2/ultra64
 SolidCompression=yes
 WizardStyle=modern
@@ -562,12 +562,12 @@ SetupIconFile=..\app.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
 
 [Files]
-Source: "..\dist\PustakaHadis\*"; DestDir: "{app}"; `
+Source: "..\dist\PustakaHadith\*"; DestDir: "{app}"; `
     Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{group}\Pustaka Hadis"; Filename: "{app}\{#MyAppExeName}"
-Name: "{autodesktop}\Pustaka Hadis"; Filename: "{app}\{#MyAppExeName}"; `
+Name: "{group}\PustakaHadith"; Filename: "{app}\{#MyAppExeName}"
+Name: "{autodesktop}\PustakaHadith"; Filename: "{app}\{#MyAppExeName}"; `
     Tasks: desktopicon
 
 [Tasks]
@@ -575,7 +575,7 @@ Name: "desktopicon"; Description: "Cipta pintasan Desktop"; `
     GroupDescription: "Pilihan tambahan:"
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "Buka Pustaka Hadis"; `
+Filename: "{app}\{#MyAppExeName}"; Description: "Buka PustakaHadith"; `
     Flags: nowait postinstall skipifsilent
 ```
 
@@ -586,13 +586,13 @@ Bina:
 
 ```powershell
 & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" `
-  ".\installer\PustakaHadis.iss"
+  ".\installer\PustakaHadith.iss"
 ```
 
 Uji silent install kerana MSIX Packaging Tool memerlukannya:
 
 ```powershell
-.\installer\output\PustakaHadis-Setup-1.0.0-x64.exe `
+.\installer\output\PustakaHadith-Setup-1.0.0-x64.exe `
   /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-
 ```
 
@@ -612,7 +612,7 @@ SmartScreen/tandatangan.
    lengkapkan pengesahan identiti (telefon + e-mel; kad mungkin untuk
    pengesahan $0–1 — yuran $19/$99 dibuang 2026).
 3. Partner Center → **Apps and games** → **Create app** (MSIX or PWA app).
-4. Tempah nama **`PustakaHadith`** (tanpa jarak; paparan boleh "Pustaka Hadis").
+4. Tempah nama **`PustakaHadith`** (tanpa jarak; paparan boleh "PustakaHadith").
 5. **Product management → Product identity** → salin TEPAT:
 
 ```text
@@ -646,7 +646,7 @@ Windows Update, antivirus, cache dan program lain boleh termasuk dalam hasil.
 
 1. Ambil snapshot VM.
 2. Pasang MSIX Packaging Tool.
-3. Jangan pasang Pustaka Hadis terlebih dahulu.
+3. Jangan pasang PustakaHadith terlebih dahulu.
 4. Pastikan tiada `hadis.db`, API key atau data pengguna dalam VM.
 
 ### 11.2 Jalankan wizard — kaedah manual disyorkan
@@ -663,18 +663,18 @@ registry Inno ke dalam MSIX. MSIX sendiri mengurus pemasangan/nyahpasang.
 6. Isi maklumat pakej:
    - Package name: nilai `Package/Identity/Name` Partner Center;
    - Publisher: nilai `Package/Identity/Publisher` Partner Center;
-   - Display name: `Pustaka Hadis`;
+   - Display name: `PustakaHadith`;
    - Publisher display name: nilai Partner Center;
    - Version: `1.0.0.0`;
    - Architecture: x64;
-   - Install location: `C:\Program Files\PustakaHadis`.
+   - Install location: `C:\Program Files\PustakaHadith`.
 7. Mulakan proses capture.
 8. Dalam PowerShell pentadbir, salin payload ketika capture aktif:
 
 ```powershell
-New-Item -ItemType Directory -Force "C:\Program Files\PustakaHadis"
-Copy-Item ".\dist\PustakaHadis\*" `
-  "C:\Program Files\PustakaHadis" -Recurse -Force
+New-Item -ItemType Directory -Force "C:\Program Files\PustakaHadith"
+Copy-Item ".\dist\PustakaHadith\*" `
+  "C:\Program Files\PustakaHadith" -Recurse -Force
 ```
 
 9. Jangan salin `hadis.db`, `.env`, settings, bookmarks, log atau cache
@@ -684,7 +684,7 @@ Copy-Item ".\dist\PustakaHadis\*" `
 11. Teruskan wizard. Pada pengesanan entry point, pilih:
 
 ```text
-C:\Program Files\PustakaHadis\PustakaHadis.exe
+C:\Program Files\PustakaHadith\PustakaHadith.exe
 ```
 
 12. Semak Package editor:
@@ -746,7 +746,7 @@ Cara moden:
 winget install -e --id Microsoft.WinAppCLI --source winget
 winapp cert generate --manifest .\AppxManifest.xml `
   --output .\devcert.pfx --install
-winapp sign .\PustakaHadis_1.0.0.0_x64.msix --cert .\devcert.pfx
+winapp sign .\PustakaHadith_1.0.0.0_x64.msix --cert .\devcert.pfx
 ```
 
 WinApp CLI masih boleh berubah; jika gagal, gunakan PowerShell + SignTool
@@ -759,7 +759,7 @@ manifest.
 Pasang pakej ujian:
 
 ```powershell
-Add-AppxPackage .\PustakaHadis_1.0.0.0_x64.msix
+Add-AppxPackage .\PustakaHadith_1.0.0.0_x64.msix
 ```
 
 ---
@@ -769,7 +769,7 @@ Add-AppxPackage .\PustakaHadis_1.0.0.0_x64.msix
 Selepas dipasang:
 
 - launch dari Start Menu;
-- `PustakaHadis.exe` tidak meminta Administrator;
+- `PustakaHadith.exe` tidak meminta Administrator;
 - lokasi aplikasi baca sahaja;
 - DB/settings berada di data pengguna;
 - sync boleh disambung selepas app ditutup paksa;
@@ -788,7 +788,7 @@ semasa submission Partner Center.
 
 ## 15. Hantar ke Microsoft Store
 
-Partner Center → produk Pustaka Hadis → submission baharu.
+Partner Center → produk PustakaHadith → submission baharu.
 
 Lengkapkan:
 

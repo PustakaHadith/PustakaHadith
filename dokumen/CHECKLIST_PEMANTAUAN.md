@@ -39,7 +39,7 @@ langkah: `dokumen/rujukan/DAFTAR_MSIX_STORE.md`
 | # | Kerja | Status |
 |---|---|---|
 | 1 | Folder binaan `binaan_installer` dicipta (450 MB, tanpa .git/venv/cache/data peribadi) | ☑ |
-| 2 | `config.py` pusat laluan: `ASSET_DIR` (baca sahaja) vs `DATA_DIR` (`%LOCALAPPDATA%\PustakaHadis` mod frozen) + 16 pemalar | ☑ |
+| 2 | `config.py` pusat laluan: `ASSET_DIR` (baca sahaja) vs `DATA_DIR` (`%LOCALAPPDATA%\PustakaHadith` mod frozen) + 16 pemalar | ☑ |
 | 3 | 8 fail runtime dipusatkan: db.py, api/hadis_api.py, ui/helpers.py, ui/splash.py, ui/disclaimer.py, core/sema_source.py, core/hadeethenc_api.py, core/semantic_search.py | ☑ |
 | 4 | PROFIL_PATH di DATA_DIR (kod menulis log muat model; ASSET_DIR baca sahaja dalam MSIX) | ☑ |
 | 5 | `uji_fasa1_data.py` (22/0) — simulasi `sys.frozen=True` dalam subproses | ☑ |
@@ -57,7 +57,7 @@ uji_carian_arab ✓ · main.py melancar ✓
 | 2 | Venv binaan `.venv-build` (keputusan pengguna: `--system-site-packages`, jimat 2 GB) — Python 3.14.6, PyInstaller 6.22.0 + hooks; hanya PyQt5 (tiada PySide/PyQt6) | ☑ |
 | 3 | Rekod `installer_requirements-build-lock.txt` (pip freeze) | ☑ |
 | 4 | Aset profil lengkap dibundel: .cache_models, hadis_faiss.index (91 MB), hadis_id_map.pkl, profil_model.json, sunnah_map, app.ico | ☑ |
-| 5 | Bina onedir `--console` → `dist\PustakaHadis-Debug` = 2,022.8 MB / 7,065 fail (~19 minit) | ☑ |
+| 5 | Bina onedir `--console` → `dist\PustakaHadith-Debug` = 2,022.8 MB / 7,065 fail (~19 minit) | ☑ |
 | 6 | Semak warn-*.txt: 313 missing module — semua pilihan, tiada kritikal | ☑ |
 | 7 | Uji exe: disclaimer → model e5 (RAM 78→596 MB) → tetingkap utama; FAISS 62,169×384; DATA_DIR betul; tiada hadis.db dalam dist | ☑ |
 
@@ -72,8 +72,8 @@ uji_carian_arab ✓ · main.py melancar ✓
 |---|---|---|
 | 1 | Buang duplikat HF `blobs/` (470 MB) — diuji empirik model masih muat penuh | ☑ |
 | 2 | Buang cv2 (138 MB) + PIL (13 MB) via `--exclude-module` (lazy import selamat) | ☑ |
-| 3 | Hasil optimum: `dist\PustakaHadis-Debug` = **1,399.9 MB / 7,027 fail** (jimat 622.9 MB, 31%) | ☑ |
-| 4 | Ujian: model e5 dimuat penuh (stderr 100%, RAM 929–937 MB, `muat_s 35.0`), tetingkap 'Pustaka Hadis', tiada ralat | ☑ |
+| 3 | Hasil optimum: `dist\PustakaHadith-Debug` = **1,399.9 MB / 7,027 fail** (jimat 622.9 MB, 31%) | ☑ |
+| 4 | Ujian: model e5 dimuat penuh (stderr 100%, RAM 929–937 MB, `muat_s 35.0`), tetingkap 'PustakaHadith', tiada ralat | ☑ |
 | 5 | Ujian fungsi penuh automatik: FTS5 'puasa' 816 · 'صلاة' 2,443 · 62,169 hadis · carian makna (riba→darimi#2467; puasa→malik#587) · 4 tema · user_settings.json | ☑ |
 | 6 | Boot pertama lambat (~110–120 s) = Windows Defender scan 1.4 GB — bukan ralat | ☑ |
 
@@ -86,7 +86,7 @@ uji_carian_arab ✓ · main.py melancar ✓
 | # | Kerja | Status |
 |---|---|---|
 | 1 | Windows Sandbox (Windows 11 Pro) — mesin bersih tanpa Python/PyQt/torch | ☑ |
-| 2 | `PustakaHadis-Fasa4.wsb`: `dist\PustakaHadis-Debug` dipetakan baca sahaja + auto-lancar exe | ☑ |
+| 2 | `PustakaHadith-Fasa4.wsb`: `dist\PustakaHadith-Debug` dipetakan baca sahaja + auto-lancar exe | ☑ |
 | 3 | Maklum balas pengguna: apl lancar · carian OK selepas API key · bookmark OK · lain-lain OK | ☑ |
 | 4 | Siasatan "terjemahan Inggeris tiada" — **DISAHKAN reka bentuk lesen, bukan bug** (hadis.db + .cache_eng 120 MB tidak dibundel §4; sync_english.py skrip pembangunan sahaja; lesen Ahmad §5 + keputusan Sesi 7 "pengguna sync sendiri"; UI kelabukan tab English) | ☑ |
 | 5 | **Keputusan pengguna: biar seperti reka bentuk** — tiada perubahan kod | ☑ |
@@ -103,23 +103,23 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
 = inventori
 
 ### 5A — Binaan keluaran `--windowed` (INSTALLER §7.3) ☑ SELESAI (20 Ogos)
-- ☑ Bina `dist\PustakaHadis\PustakaHadis.exe` (--windowed, tiada konsol; spec `PustakaHadis.spec`, upx=False, exclude cv2/PIL)
-- ☑ Ujian ringkas: exe hidup · disclaimer (tajuk guna EM DASH 8212) · tetingkap 'Pustaka Hadis' TEPAT · model dimuat dari cache (`muat_s 39.5`, `dari_cache true`) · DATA_DIR betul
+- ☑ Bina `dist\PustakaHadith\PustakaHadith.exe` (--windowed, tiada konsol; spec `PustakaHadith.spec`, upx=False, exclude cv2/PIL)
+- ☑ Ujian ringkas: exe hidup · disclaimer (tajuk guna EM DASH 8212) · tetingkap 'PustakaHadith' TEPAT · model dimuat dari cache (`muat_s 39.5`, `dari_cache true`) · DATA_DIR betul
 - ☑ warn-*.txt: tiada regresi vs Debug (set diff missing module = kosong)
 - ☑ semak.py **386 SEMUA LULUS** (15 bahagian; +1 kerana CHECKLIST_PEMANTAUAN.md — semak #8m lulus per fail .md)
 
 ### 5B — Inno Setup EXE (sekunder, INSTALLER §9) ☑ SELESAI (20 Ogos)
 - ☑ Inno Setup 6.7.3 dipasang di `D:\Inno Setup 6` (ISCC.exe; ~20 MB)
-- ☑ Per-user install (`PrivilegesRequired=lowest`, `{localappdata}\Programs\PustakaHadis`), AppId tetap `{{7DF2553E-9E62-4ED4-929A-61C71AD1047F}`
+- ☑ Per-user install (`PrivilegesRequired=lowest`, `{localappdata}\Programs\PustakaHadith`), AppId tetap `{{7DF2553E-9E62-4ED4-929A-61C71AD1047F}`
 - ☑ Start Menu + Desktop pilihan (task desktopicon)
 - ☑ Silent install berfungsi (`/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-`; kod keluar 0, 7,029 fail dipasang)
-- ☑ Launch app terpasang: tetingkap 'Pustaka Hadis' terbuka, DATA_DIR betul
+- ☑ Launch app terpasang: tetingkap 'PustakaHadith' terbuka, DATA_DIR betul
 - ☑ Uninstall senyap: kod keluar 0 · folder app dipadam · **DATA_DIR KEKAL** · pintasan dipadam
 - ☑ Naik taraf kekalkan DATA_DIR: belum diuji penuh (perlu 1.0.1.0 di Fasa 6) — mekanisme terbukti (DATA_DIR berasingan, uninstall kekalkan)
-- ☑ Hasil: `installer\output\PustakaHadis-Setup-1.0.0-x64.exe` = **0.50 GB** (~34 minit lzma2/ultra64)
+- ☑ Hasil: `installer\output\PustakaHadith-Setup-1.0.0-x64.exe` = **0.50 GB** (~34 minit lzma2/ultra64)
 
 ### Dokumentasi Pengguna (Gate 6 — INSTALLER §18)
-- ☑ **manual/manual/MANUAL_INSTALASI.md** — 3 cara pasang (Store/MSIX ⏳, Setup EXE ✓, Zip penguji), kali pertama buka, lokasi data `%LOCALAPPDATA%\PustakaHadis`, masalah lazim, atribusi
+- ☑ **manual/manual/MANUAL_INSTALASI.md** — 3 cara pasang (Store/MSIX ⏳, Setup EXE ✓, Zip penguji), kali pertama buka, lokasi data `%LOCALAPPDATA%\PustakaHadith`, masalah lazim, atribusi
 - ☑ **manual/manual/MANUAL_PENGGUNAAN.md** — skrin utama, carian kata kunci + makna (AI), lompat hadis, membaca hadis (dua lajur, tab bahasa, darjat, huraian), tindakan (lapor/kongsi/salin/WhatsApp/TTS), penanda halaman, tetapan, mod luar talian, masalah lazim
 - ☑ **surat/sokongan/surat/sokongan/DASAR_PRIVASI.md** — tiada data dikumpul, data tempatan, kunci API tertutup, AI luar talian, sambungan hanya sync hadis.my
 - ☑ **surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md** — templat GitHub Issues, maklumat diperlukan, templat respons
@@ -128,8 +128,8 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
 
 ### 5C — MSIX (utama, INSTALLER §11–§12) ☑ SELESAI (binaan + ujian lokal lulus)
 - ☑ **Identiti Store diterima** (panduan `DAFTAR_MSIX_STORE.md`) → disimpan ke
-  `installer/msix_identity.txt`: `Package/Identity/Name = PUSTAKAHADITH.PustakaHadith`,
-  `Publisher = CN=1084A5A8-F66F-4B6D-A3EF-455CCC63CDD2`, `PublisherDisplayName = PUSTAKA HADIS`
+  `installer/msix_identity.txt`: `Package/Identity/Name = PustakaHadith.PustakaHadith`,
+  `Publisher = CN=1084A5A8-F66F-4B6D-A3EF-455CCC63CDD2`, `PublisherDisplayName = PustakaHadith`
 - ☑ **Binaan MSIX:** `makeappx pack` (Windows SDK 10.0.18362) ke atas staging
   `dist/PustakaHadith` + `installer/Assets` → `installer/output/PustakaHadith_1.0.0.0_x64.msix`
   (~972 MB; skrip `installer/build_msix.ps1`; `ForegroundText` dibuang kerana skema SDK lama)
@@ -149,26 +149,26 @@ key ✓ · sync/resume ✓ · carian Melayu/Arab ✓ · carian makna ✓ · book
 - [ ] Pasang ZIP / EXE / MSIX
 - [ ] Uji matriks §8: launch, settings, sync, carian Melayu/Arab, makna, bookmark, offline, tutup/relaunch
 - [ ] Rekod keputusan
-- ☑ **Identiti Store diterima** (Package/Identity/Name = `PUSTAKAHADITH.PustakaHadith`,
-  Publisher = `CN=1084A5A8-...`, PublisherDisplayName = `PUSTAKA HADIS`) →
+- ☑ **Identiti Store diterima** (Package/Identity/Name = `PustakaHadith.PustakaHadith`,
+  Publisher = `CN=1084A5A8-...`, PublisherDisplayName = `PustakaHadith`) →
   `installer/msix_identity.txt` (panduan: `dokumen/rujukan/DAFTAR_MSIX_STORE.md`).
   MSIX sudah dibina & diuji lokal (lihat 5C).
 - ☑ MSIX Packaging Tool dipasang (winget, v1.2024.405.0) + WinApp CLI 0.6.1 (tandatangan ujian tempatan)
 - ☐ MSIX Packaging Tool Driver — perlu diaktifkan (Optional Features; wizard boleh cuba sendiri 2 kali semasa 'Prepare computer')
 - ☑ Aset PNG MSIX dijana dari app.ico → `installer\Assets\` (StoreLogo 50 · Square44x44 · Square150x150 · Wide310x150)
-- ☑ Audit inventori `dist\PustakaHadis`: **0 fail terlarang** (tiada hadis.db/.env/settings/bookmarks/cache/log/__pycache__); peringkat atas = `_internal` + `PustakaHadis.exe` sahaja
-- ☐ Capture dalam VM bersih (Manual installation, install location `C:\Program Files\PustakaHadis`, salin payload, jangan sync/API key, satu entry point PustakaHadis.exe)
+- ☑ Audit inventori `dist\PustakaHadith`: **0 fail terlarang** (tiada hadis.db/.env/settings/bookmarks/cache/log/__pycache__); peringkat atas = `_internal` + `PustakaHadith.exe` sahaja
+- ☐ Capture dalam VM bersih (Manual installation, install location `C:\Program Files\PustakaHadith`, salin payload, jangan sync/API key, satu entry point PustakaHadith.exe)
 - ☐ Semak Package editor: runFullTrust · Windows.Desktop · MinVersion 10.0.19041.0 · tiada DB/rahsia
-- ☐ Simpan `PustakaHadis_<versi>_x64.msix` + tandatangan ujian tempatan (WinApp CLI / SignTool, Subject = Publisher manifest)
+- ☐ Simpan `PustakaHadith_<versi>_x64.msix` + tandatangan ujian tempatan (WinApp CLI / SignTool, Subject = Publisher manifest)
 - ☐ MSIX install/launch/uninstall lulus (Add-AppxPackage)
-- ☐ Hasil: `PustakaHadis_1.0.0.0_x64.msix`
+- ☐ Hasil: `PustakaHadith_1.0.0.0_x64.msix`
 
 ---
 
 ## FASA 6 — Partner Center + Ujian Naik Taraf (INSTALLER §10, §13–§16) ⏳ SEDANG JALAN
 
 - ☑ Daftar akaun + tempah nama (tugas pengguna, Fasa 0) — panduan: `dokumen/rujukan/DAFTAR_MSIX_STORE.md`
-- ☑ Rekod `Identity Name` (= `PUSTAKAHADITH.PustakaHadith`), `Publisher` (= `CN=1084A5A8-...`), `PublisherDisplayName` (= `PUSTAKA HADIS`) → `installer/msix_identity.txt`
+- ☑ Rekod `Identity Name` (= `PustakaHadith.PustakaHadith`), `Publisher` (= `CN=1084A5A8-...`), `PublisherDisplayName` (= `PustakaHadith`) → `installer/msix_identity.txt`
 - ☐ Bina versi 1.0.0.0 · pasang · cipta settings/bookmark + sync data ujian
 - ☐ Bina versi 1.0.1.0 (identiti sama) · pasang kemas kini
 - ☐ Uji uninstall/reinstall dan tingkah laku data

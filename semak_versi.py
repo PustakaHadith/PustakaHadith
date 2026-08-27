@@ -35,7 +35,7 @@ def main() -> int:
     except Exception:
         print("\n  VERSI.py TIADA.")
         print("  Fail ini versi LAMA (sebelum 2026.07.30-3).")
-        print("\n  Ekstrak semula PustakaHadis.zip ke folder INI.")
+        print("\n  Ekstrak semula PustakaHadith.zip ke folder INI.")
         print("  ZIP tidak mempunyai folder bersarang -- isinya patut")
         print("  mendarat terus di sini (config.py, core/, ui/ ...).\n")
         return 1

@@ -10,10 +10,10 @@ memahami keseluruhan perjalanan projek.
 
 ## 0. Profil Projek
 
-- **Nama:** Pustaka Hadis — aplikasi desktop Windows berbahasa Melayu untuk
+- **Nama:** PustakaHadith — aplikasi desktop Windows berbahasa Melayu untuk
   pembacaan, carian dan kajian hadis.
 - **Platform:** PyQt5 (Python 3.14), SQLite + FTS5, FAISS (carian semantik).
-- **Pemilik / pembangun:** MUHAMAD KHAIRULLAH ABDUL WAHAB (Pustaka Hadis).
+- **Pemilik / pembangun:** MUHAMAD KHAIRULLAH ABDUL WAHAB (PustakaHadith).
 - **Sumber data:** API awam `https://service.hadis.my/api/v1` (hadis.my) +
   terjemahan Inggeris dari CDN Sunnah.com.
 - **Sasaran edaran:** Microsoft Store (Fasa 5–7) + Setup EXE (Inno Setup).
@@ -147,7 +147,7 @@ Struktur kategori baharu (lihat `dokumen/STRUKTUR_DOSUMENTASI.md`):
 - Cipta `dokumen/surat/hadis.my/` khusus emel & surat kepada hadis.my; pindah
   `SURAT_HADISMY.md` + `EMEL_HADISMY.md` ke sana (kemas rujukan di STRUKTUR,
   MANUAL, LOG).
-- Janakan **logo PustakaHadith** (`logo_pustakahadith.png`, 965×261, transparent)
+- Janakan **logo PustakaHadith** (`logo_PustakaHadith.png`, 965×261, transparent)
   guna `buat_logo.py`: "Pustaka" Segoe UI Bold #5CBF85, "Hadith" Light
   #7FD39A, "v1.0.0" #9C9589 — sepadan header apl.
 - Tukar dokumen ke **PDF**. Cuba pertama (`buat_pdf.py`, xhtml2pdf) hasil

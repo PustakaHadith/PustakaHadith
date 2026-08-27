@@ -147,7 +147,7 @@ if "--bersihkan" in sys.argv:
     sys.exit(0)
 
 print("=" * 62)
-print("  UJIAN PRA-HANTAR — Pustaka Hadis")
+print("  UJIAN PRA-HANTAR — PustakaHadith")
 print("=" * 62)
 _bersihkan_orphan()
 

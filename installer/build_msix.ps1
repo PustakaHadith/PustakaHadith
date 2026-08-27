@@ -32,7 +32,7 @@ $manifest = @"
          xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities">
   <Identity Name="$name" Publisher="$pub" Version="1.0.0.0" ProcessorArchitecture="x64" />
   <Properties>
-    <DisplayName>Pustaka Hadis</DisplayName>
+    <DisplayName>PustakaHadith</DisplayName>
     <PublisherDisplayName>$disp</PublisherDisplayName>
     <Description>Aplikasi rujukan hadis (PyInstaller onedir).</Description>
     <Logo>Assets\StoreLogo.png</Logo>
@@ -40,7 +40,7 @@ $manifest = @"
   <Resources><Resource Language="ms-MY" /></Resources>
   <Applications>
     <Application Id="PustakaHadith" Executable="PustakaHadith.exe" EntryPoint="Windows.FullTrustApplication">
-      <uap:VisualElements DisplayName="Pustaka Hadis" Description="Pustaka Hadis"
+      <uap:VisualElements DisplayName="PustakaHadith" Description="PustakaHadith"
         BackgroundColor="#0B2545"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">

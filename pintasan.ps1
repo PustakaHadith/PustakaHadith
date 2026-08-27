@@ -83,7 +83,7 @@ foreach ($t in $sasaran) {
         if (-not (Test-Path $t.Path)) { New-Item -ItemType Directory -Path $t.Path -Force | Out-Null }
 
         # buang pintasan lama daripada versi terdahulu
-        foreach ($n in @('Pustaka Hadis.lnk', 'PustakaHadis.lnk')) {
+        foreach ($n in @('PustakaHadith.lnk', 'PustakaHadith.lnk')) {
             $lama = Join-Path $t.Path $n
             if (Test-Path $lama) { Remove-Item $lama -Force -ErrorAction SilentlyContinue }
         }

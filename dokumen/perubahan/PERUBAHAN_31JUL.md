@@ -395,7 +395,7 @@ yang dianggap **SIAP untuk diedar**:
   ciri paling baharu: `core.phase4_exegesis.ATRIBUSI_HE`,
   `core.phase4_exegesis._detect_topic`, `utils.bahasa.betulkan_melayu`,
   `utils.bahasa.simbol_boleh_dipapar`.
-- **PustakaHadis.zip** dibina semula (ZIP lama tertinggal dari sebelum
+- **PustakaHadith.zip** dibina semula (ZIP lama tertinggal dari sebelum
   Sesi 10 — tiada `sync_hadeethenc.py`, `core/hadeethenc_api.py`,
   `PERUBAHAN_31JUL.md`).
 - ZIP **tidak termasuk** fail yang tidak patut diedar: `hadis.db`
@@ -411,7 +411,7 @@ pembangunan yang ada hadis.db).
 ## 15. Kelarikan workspace — dokumentasi (selepas bina ZIP)
 
 Pengguna menjelaskan selepas §14: folder root `hadis/` ialah **workspace
-Developer**, BUKAN untuk pengguna akhir lagi. `PustakaHadis.zip` **belum
+Developer**, BUKAN untuk pengguna akhir lagi. `PustakaHadith.zip` **belum
 diedar**; penambahbaikan tertangguh akan dilakukan apabila developer
 menjalankan app untuk semakan. Maka:
 

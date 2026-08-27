@@ -73,7 +73,7 @@ Kunci penuh biasanya dipapar **sekali sahaja**. Salin terus.
 
 ### 6. Masukkan ke dalam apl
 
-Buka Pustaka Hadis → ikon gear → **Tetapan API** → tampal → Simpan & Uji.
+Buka PustakaHadith → ikon gear → **Tetapan API** → tampal → Simpan & Uji.
 
 Sepatutnya keluar `✓ Berjaya — 9 koleksi`.
 

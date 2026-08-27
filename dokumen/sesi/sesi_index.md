@@ -16,7 +16,7 @@
 
 ## Ringkasan Projek
 
-**Nama:** Pustaka Hadis — Koleksi Kitab Hadis Lengkap
+**Nama:** PustakaHadith — Koleksi Kitab Hadis Lengkap
 **Lokasi:** `D:\Pustaka Quran Hadis`
 **Tech Stack:** Python 3.14 + PyQt5 (Qt 5.15.2)
 **API:** `https://service.hadis.my/api/v1` (Key: simpan dalam `user_settings.json` / env `HADIS_API_KEY` — JANGAN hardcode)
@@ -216,7 +216,7 @@ D:\Pustaka Quran Hadis\
 
 **UI:**
 - [x] Dark theme QSS (PAGE_BG #1E262C, CARD_BG #2D3840, teks putih)
-- [x] Header: Logo PustakaHadis + nav Utama/Pencarian + font scale A−/A+ + Setts
+- [x] Header: Logo PustakaHadith + nav Utama/Pencarian + font scale A−/A+ + Setts
 - [x] Home page: hero search + 3×3 kitab grid cards (hover teal border)
 - [x] Kitab page: breadcrumb, header, hadis list cards (+ kitab tag)
 - [x] Hadis detail page: breadcrumb clickable, Arabic RTL QTextBrowser, Melayu/Indonesia cards, share/action buttons, prev/next nav
@@ -277,7 +277,7 @@ D:\Pustaka Quran Hadis\
 - [x] Loading states — spinner/skeleton UI
 - [x] Empty states — no results, no internet
 - [x] Settings validation — `valid_key_format()` (settings_panel.py:780, app_qt.py:1686)
-- [x] App icon/window title — `app.ico` (main.py:78-84), "Pustaka Hadis" (app_qt.py:102)
+- [x] App icon/window title — `app.ico` (main.py:78-84), "PustakaHadith" (app_qt.py:102)
 
 ---
 
@@ -400,7 +400,7 @@ Semak keseluruhan projek dengan imbasan AST untuk corak `def f(x=WARNA)`.
 
 ## Sesi 6d
 - Betulkan teks terjemahan tidak nampak dalam mod terang (Lesson #17)
-- Pintasan Desktop & Start Menu dinamakan semula `Pustaka Hadis.lnk` → `Hadis.lnk`;
+- Pintasan Desktop & Start Menu dinamakan semula `PustakaHadith.lnk` → `Hadis.lnk`;
   `Buat_Shortcut.vbs` buang pintasan lama dahulu supaya tiada dua ikon
 
 ### Pembersihan folder (Sesi 6d)
@@ -457,7 +457,7 @@ Disahkan: `Parser::ParseFile` 0 ralat; kod keluar 1 bila gagal.
 | `NYAHPEPIJAT.bat` | jalan `python main.py` (bukan `pythonw`) → traceback nampak |
 | `pintasan.ps1` | dipanggil PASANG.bat |
 
-Dibuang: `Pasang.bat`, `Jalankan.bat`, `PustakaHadis.vbs`, `Buat_Shortcut.vbs`
+Dibuang: `Pasang.bat`, `Jalankan.bat`, `PustakaHadith.vbs`, `Buat_Shortcut.vbs`
 
 **Prinsip:** `pythonw.exe` sembunyikan ralat. Fail nyahpepijat mesti guna
 `python.exe` + `pause`, jika tidak tetingkap tutup sebelum sempat dibaca.
@@ -506,8 +506,8 @@ Apl tiada installer, jadi "uninstall" = buang pintasan + data + pakej.
 **Reka bentuk selamat:**
 - ENTER = **kekalkan** untuk kedua-dua soalan. Hanya `Y` memadam.
 - Pengesahan akhir: mesti taip perkataan penuh `BUANG`
-- Padam ikut **senarai nama tepat** (`Hadis.lnk`, `Pustaka Hadis.lnk`,
-  `PustakaHadis.lnk`) — bukan wildcard `*.lnk`. Diuji: `LainLain.lnk`
+- Padam ikut **senarai nama tepat** (`Hadis.lnk`, `PustakaHadith.lnk`,
+  `PustakaHadith.lnk`) — bukan wildcard `*.lnk`. Diuji: `LainLain.lnk`
   kekal tidak disentuh.
 - `requests` TIDAK ditanggalkan walau `-BuangPakej` — terlalu banyak
   program Python lain bergantung padanya.
@@ -978,7 +978,7 @@ DIBUANG
 KEKAL
   hadis/               409 KB  projek
   uploads/             204 KB  2 tangkapan skrin terkini sahaja
-  PustakaHadis.zip     120 KB
+  PustakaHadith.zip     120 KB
 ```
 Semakan selepas buang: `python semak.py` -> SEMUA LULUS.
 
@@ -2640,7 +2640,7 @@ Projek boleh dianggap **SIAP untuk diedar** pada liputan semasa.
 ## Keputusan pengguna (selepas §14 bina ZIP)
 
 - Folder root `hadis/` ialah **workspace Developer**, BUKAN untuk pengguna
-  akhir lagi. `PustakaHadis.zip` **belum diedar**.
+  akhir lagi. `PustakaHadith.zip` **belum diedar**.
 - Masih banyak penambahbaikan yang perlu dibuat; akan dilakukan apabila
   developer menjalankan app untuk semakan.
 - Semua perubahan selesai + tertangguh mesti direkodkan untuk rujukan.
@@ -2676,7 +2676,7 @@ Pengguna menjalankan ujian sendiri dahulu; sambung esok.
 3. Penambahbaikan tertangguh (`MANUAL_REFERENSI_DEV.md` §8) — bermula
    dengan semakan end-to-end app oleh developer (install → API → baca →
    tersimpan)
-4. Selepas semakan selesai: bina semula `PustakaHadis.zip` + semak_versi
+4. Selepas semakan selesai: bina semula `PustakaHadith.zip` + semak_versi
 
 ---
 
@@ -3409,7 +3409,7 @@ pakej edaran — projek masih development) selepas Sesi 18.5
 - `MANUAL_REFERENSI_DEV.md` + `MANUAL_PENGGUNA.md`: versi baharu.
 - `PERUBAHAN_31JUL.md` sengaja TIDAK diubah — dokumen sejarah.
 
-**BINA ZIP**: `PustakaHadis.zip` di `D:\Pustaka Quran Hadis\` (bukan dalam
+**BINA ZIP**: `PustakaHadith.zip` di `D:\Pustaka Quran Hadis\` (bukan dalam
 folder hadis). 56 fail, rata (TIADA folder `hadis/` bersarang). Pengecualian
 dipatuhi: `hadis.db`(+`-wal`/`-shm`), `.cache_eng`, `.cache_he`,
 `.cache_syarah`, `__pycache__`, `user_settings.json`, `bookmarks.json`,
@@ -3467,7 +3467,7 @@ Pengguna menutup sesi. Semua kerja tertunda selesai; versi v2026.08.01-12.
 2. Cadangan tertunda (belum dipilih): perluasan HadeethEnc (pilihan 3) —
    hasil terhad (147 sumber BM), API lambat; nilai rendah, boleh langkau.
 3. Ujian pengguna sendiri dahulu; sambung berdasarkan maklum balas.
-4. Bina semula `PustakaHadis.zip` (arkib development) selepas sebarang
+4. Bina semula `PustakaHadith.zip` (arkib development) selepas sebarang
    perubahan kod/data.
 
 # Sesi 18.8 — Sumber huraian BM baharu: SemakHadis.com (2,045 padanan)
@@ -3570,7 +3570,7 @@ halaman pipeline boleh menyesatkan pengguna.
 # Sesi 18.10 — Folder projek dikemas + ZIP dibina semula (v1.0)
 
 **PERINTAH PENGGUNA**: "kemaskini folder projek". Skop dipilih pengguna:
-kemas SEMUA dokumen + bina semula `PustakaHadis.zip`.
+kemas SEMUA dokumen + bina semula `PustakaHadith.zip`.
 
 **DOKUMEN DIKEMAS (semua ke v1.0, rujukan Fasa 4 dibuang):**
 - `MANUAL_REFERENSI_DEV.md` — versi; struktur fail: `core/phase4_exegesis.py`
@@ -3598,7 +3598,7 @@ kemas SEMUA dokumen + bina semula `PustakaHadis.zip`.
 - `semak_sema` (d): `_init()` tanpa argumen → `_init(_tmp_db)` (DB temp,
   tiada hadis.db tercicir di cwd).
 
-**ZIP DIBINA SEMULA**: `D:\Pustaka Quran Hadis\PustakaHadis.zip`
+**ZIP DIBINA SEMULA**: `D:\Pustaka Quran Hadis\PustakaHadith.zip`
 - 57 fail rata (56 − `core/phase4_exegesis.py` + `core/sema_source.py` +
   `sync_sema.py`), entry guna `/` (bukan `\`).
 - Pengecualian dipatuhi: `hadis.db`(+`-wal`/`-shm`), `bookmarks.json`,
@@ -3627,12 +3627,12 @@ versi". Versi naik taraf daripada tarikh-skema (`2026.08.03-14`) kepada
   `MULA_SINI.md` §5, `RANCANGAN_4FASA.md` kepala, `MANUAL_PENGGUNA.md`,
   `sesi_index.md` (Sesi Terakhir + entri 18.10).
 - **UI `ui/app_qt.py`**: import `VERSI`; label `self._versi` di halaman
-  Tetapan (footer, selepas `_info`) → `"Pustaka Hadis · v{VERSI}"`.
-- `PustakaHadis.zip` dibina semula (57 fail, v1.0).
+  Tetapan (footer, selepas `_info`) → `"PustakaHadith · v{VERSI}"`.
+- `PustakaHadith.zip` dibina semula (57 fail, v1.0).
 
 **UJIAN**:
 - `test_versi.py` (offscreen): `go("settings")` → `_versi.text()` =
-  `"Pustaka Hadis · v1.0"`. LULUS.
+  `"PustakaHadith · v1.0"`. LULUS.
 - `semak.py`: tema dark + light LULUS; di folder ZIP bersih → **SEMUA
   LULUS** (7 GAGAL workspace dev = fail data tempatan, normal).
 - `semak_versi.py`: v1.0, 19 ciri hadir.
@@ -3642,15 +3642,14 @@ Tetapan) dan ZIP terkini.
 
 # Sesi 18.12 — Versi dipindah ke header (atas kiri)
 
-**PERINTAH PENGGUNA**: "letak versi di atas kiri selepas perkataan pustaka
-hadis hadith". Versi dipindahkan dari halaman Tetapan ke header utama sebelah
-logo "Pustaka Hadis".
+**PERINTAH PENGGUNA**: "letak versi di atas kiri selepas perkataan PustakaHadith hadith". Versi dipindahkan dari halaman Tetapan ke header utama sebelah
+logo "PustakaHadith".
 
 **PERUBAHAN**:
 - `ui/app_qt.py` `_header()`: tambah `QLabel` `v1.0` (kecil, `TEXT_MUTED`)
-  berdampingan logo "Pustaka Hadis".
+  berdampingan logo "PustakaHadith".
 - Label versi di halaman Tetapan dibuang (tiada duplikasi).
-- `PustakaHadis.zip` dibina semula (57 fail, v1.0).
+- `PustakaHadith.zip` dibina semula (57 fail, v1.0).
 
 **UJIAN**:
 - `test_versi2.py` (offscreen): header memapar `v1.0`; Tetapan tiada
@@ -3711,7 +3710,7 @@ berurutan.
 4. **Klik hadis tersimpan** → buka detail (navigasi berfungsi)
 5. **Collapsible "Huraian (SemakHadis · status)"** terbuka → tajuk, status, terjemahan, takhrij, komentar, atribusi
 6. **Darjat (Penilaian ulama)** dipaparkan
-7. **Versi v1.0** dipaparkan di header (sebelah "Pustaka Hadis")
+7. **Versi v1.0** dipaparkan di header (sebelah "PustakaHadith")
 8. Tema terang/gelap berfungsi
 
 **KEPUTUSAN: Pipeline end-to-end BERFUNGSI SEPENUHNYA** ✅
@@ -5722,7 +5721,7 @@ Lanjutan (Sesi 54) — ujian visual skrin + kunci laluan:
   `ui/deklarasi.py` (teks pendek + penuh, `DeklarasiDialog`); skrin
   permulaan SEKALI pada larian pertama (bendera `deklarasi_dibaca`
   dalam user_settings.json, modal + butang "Faham"); butang
-  "Tentang Pustaka Hadis" dalam panel Tetapan (deklarasi penuh:
+  "Tentang PustakaHadith" dalam panel Tetapan (deklarasi penuh:
   tujuan, kandungan, sumber & atribusi, batasan, sokongan); pautan
   SemakHadis.com pada keadaan "Tiada hasil" halaman Carian. Semakan
   statik 8aa mengunci teks + cantuman. Ujian: 6 visual 138/138, flag
@@ -6561,7 +6560,7 @@ addStretch) · lalai teks Arab Kecil · pembetulan draf jawapan AI
 (#11) · dokumentasi lengkap (PERUBAHAN_13OGOS, CHANGELOG v1.0, MULA_SINI,
 pautan silang 6 pintu masuk).
 
-**Ujian ZIP edaran (petang 13 Ogos):** `PustakaHadis.zip` dibina semula
+**Ujian ZIP edaran (petang 13 Ogos):** `PustakaHadith.zip` dibina semula
 (120 fail, guna `git ls-files` tolak folder dev + data) dan diuji dari
 folder bernama dengan ruang `D:\Pustaka Quran Hadis\Ujian Ruang`.
 Pepijat tersembunyi dijumpai: **semak.py 9b** (peraturan fail sisa
@@ -7121,7 +7120,7 @@ ditambah untuk menutup baki jurang:
 - **F3 — butang ↑ Tersimpan**
 - **G5 — 8 label panel Tetapan** (Saiz antara muka, Saiz teks Arab,
   Saiz terjemahan, Fon Arab, Bahasa dimuat, Selawat, Tetapan API,
-  Tentang Pustaka Hadis)
+  Tentang PustakaHadith)
 - **H4 — deklarasi larian pertama dengan butang "Faham"**
   (`DeklarasiDialog` penuh=False)
 - **A6 — English hanya 7 kitab** (ahmad 0, darimi 0 dalam DB)
@@ -7734,7 +7733,7 @@ kunci mutasi #30/#34 diselaraskan.
 ## Susulan 15 Ogos — Gabung ZIP Pembetulan (①–④, commit ke-11)
 
 Pengguna membawa arkib `Pustaka_Hadis_Pembetulan_Lengkap/` (ZIP pembetulan
-13–15 Ogos dari Drive, folder "Pustaka Hadis" — bahan luaran, kini
+13–15 Ogos dari Drive, folder "PustakaHadith" — bahan luaran, kini
 gitignored). Perbandingan dengan projek utama mendapati percabangan: 1/6
 pembetulan kod sudah wujud, 4 belum, skema 8 belum. Penggabungan dibuat
 **berperingkat dengan gate** (keputusan pengguna: "buat 1 ~ 4"):
@@ -7875,7 +7874,7 @@ ujian tersadai.
   **② Hero Statistik** dan tala iteratif: buang ikon masjid, mod terang
   kertas lembut (silau), chip pilihan hadis kekal, kotak carian radius
   asal 4px, button jangan bulat, hover timbul (kad + chip), ikon ⚙
-  22px, v1.0 rapat PustakaHadis.
+  22px, v1.0 rapat PustakaHadith.
 
 - **Implement (`4dd9aa9`)**: jalur aksen 4px warna kitab, badge kiraan,
   "Buka →", chip 4px, tajuk berpusat, hover timbul. Gate hijau + jalur
@@ -8103,7 +8102,7 @@ pengguna "sistem" · tiada proses ujian tersadai.
 pengguna — folder utama `hadis` TIDAK disentuh). Fasa 1 "Pisahkan
 Laluan Data" selesai: `config.py` menjadi pusat laluan (`ASSET_DIR`
 aset baca sahaja vs `DATA_DIR` data pengguna; mod pembangunan kekal
-folder projek, mod frozen = `%LOCALAPPDATA%\PustakaHadis`); 8 fail
+folder projek, mod frozen = `%LOCALAPPDATA%\PustakaHadith`); 8 fail
 dipusatkan ke pemalar config (db.py, api/hadis_api.py, ui/helpers.py,
 ui/splash.py, ui/disclaimer.py, core/sema_source.py,
 core/hadeethenc_api.py, core/semantic_search.py); syarah_source tiada
@@ -8114,27 +8113,27 @@ dalam subproses. Gate Fasa 1 LULUS.
 | # | Kerja | Nota |
 |---|-------|------|
 | 1 | **Folder binaan + salin sumber** — `binaan_installer` (450 MB): kod + dokumen + hadis.db + aset; tanpa .git/venv/cache/data peribadi; README binaan = 385 semakan (bukan repo git) | bukan git |
-| 2 | **config.py pusat laluan** — ASSET_DIR/DATA_DIR + 16 pemalar (DB_PATH, SETTINGS_PATH, BOOKMARKS_PATH, ENV_PATH, CACHE_SEMA/HE/ENG/SYARAH, PROFIL_PATH, ICON_PATH, FAISS_INDEX/MAP, MODEL_CACHE, SUNNAH_MAP); mod frozen = %LOCALAPPDATA%\PustakaHadis | §3.1 |
+| 2 | **config.py pusat laluan** — ASSET_DIR/DATA_DIR + 16 pemalar (DB_PATH, SETTINGS_PATH, BOOKMARKS_PATH, ENV_PATH, CACHE_SEMA/HE/ENG/SYARAH, PROFIL_PATH, ICON_PATH, FAISS_INDEX/MAP, MODEL_CACHE, SUNNAH_MAP); mod frozen = %LOCALAPPDATA%\PustakaHadith | §3.1 |
 | 3 | **8 fail runtime dipusatkan** — db.py, api/hadis_api.py, ui/helpers.py, ui/splash.py, ui/disclaimer.py, core/sema_source.py, core/hadeethenc_api.py, core/semantic_search.py | §3.2 |
 | 4 | **Penyesuaian PROFIL_PATH** — profil_model.json di DATA_DIR (bukan ASSET_DIR): kod MENULIS fail log muat model; ASSET_DIR baca sahaja dalam MSIX | rekod |
 | 5 | **uji_fasa1_data.py (22/0)** — simulasi sys.frozen=True subproses; semua pemalar boleh tulis di DATA_DIR, aset di ASSET_DIR, tiada fail baharu di ASSET_DIR | baharu |
 | 6 | **Gate Fasa 1 LULUS** — semak.py 384 SEMUA LULUS (15 bahagian) · semak_versi.py OK · uji_lompat 67/0 · uji_carian_arab SEMUA LULUS · main.py melancar tanpa ralat | gate |
 | 7 | **Fasa 2: freeze_support + venv binaan** — main.py tambah `multiprocessing.freeze_support()` (§6); venv `--system-site-packages` (keputusan pengguna, jimat 2GB) Python 3.14.6 + PyInstaller 6.22.0 + hooks; rekod `installer_requirements-build-lock.txt`; disahkan hanya PyQt5 (tiada PySide/PyQt6) | §5–§6 |
-| 8 | **Fasa 2: bina onedir --console** — aset profil lengkap (keputusan Fasa 0): .cache_models (941 MB, disalin dari folder utama), hadis_faiss.index (91 MB), hadis_id_map.pkl, profil_model.json, sunnah_map, app.ico; ~19 minit; hasil `dist\PustakaHadis-Debug` = 2,022.8 MB / 7,065 fail; TIADA UPX; jangan bundel disahkan (hadis.db*, .env, settings, bookmarks, cache) | §7.1 |
-| 9 | **Fasa 2: semak warn + uji exe** — warn-*.txt: 313 missing module semua pilihan (torch extras/accelerate/bitsandbytes), tiada untuk modul sebenar; exe hidup: disclaimer → user_settings.json `disclaimer_dibaca:true` di DATA_DIR → model e5 dimuat (RAM 78→596 MB) → tetingkap utama 'Pustaka Hadis' terbuka; FAISS binaan dimuat 62,169×384; folder EXE tiada hadis.db | §7.2 |
+| 8 | **Fasa 2: bina onedir --console** — aset profil lengkap (keputusan Fasa 0): .cache_models (941 MB, disalin dari folder utama), hadis_faiss.index (91 MB), hadis_id_map.pkl, profil_model.json, sunnah_map, app.ico; ~19 minit; hasil `dist\PustakaHadith-Debug` = 2,022.8 MB / 7,065 fail; TIADA UPX; jangan bundel disahkan (hadis.db*, .env, settings, bookmarks, cache) | §7.1 |
+| 9 | **Fasa 2: semak warn + uji exe** — warn-*.txt: 313 missing module semua pilihan (torch extras/accelerate/bitsandbytes), tiada untuk modul sebenar; exe hidup: disclaimer → user_settings.json `disclaimer_dibaca:true` di DATA_DIR → model e5 dimuat (RAM 78→596 MB) → tetingkap utama 'PustakaHadith' terbuka; FAISS binaan dimuat 62,169×384; folder EXE tiada hadis.db | §7.2 |
 | 10 | **Gate Fasa 2 LULUS** — semak.py 385 SEMUA LULUS (15 bahagian); ujian automatik lulus; item interaktif (tema/sync/carian/rawak) untuk ujian manual pengguna; fallback Nuitka TIDAK dicetuskan | gate |
 | 11 | **Fasa 3: buang duplikat HF + cv2/PIL** — uji empirik: model muat tanpa blobs (470 MB dibuang); `--exclude-module cv2 --exclude-module PIL` (151 MB); hasil 1,399.9 MB / 7,027 fail (jimat 622.9 MB, 31%) | §4 |
-| 12 | **Fasa 3: uji binaan optimum** — model e5 dimuat penuh (stderr Loading weights 100%, RAM 929–937 MB, profil_model.json muat_s 35.0 dari_cache true di DATA_DIR); tetingkap utama 'Pustaka Hadis' terbuka; tiada ralat; boot pertama lambat (~120s) = Windows Defender scan, bukan ralat | §7.2 |
+| 12 | **Fasa 3: uji binaan optimum** — model e5 dimuat penuh (stderr Loading weights 100%, RAM 929–937 MB, profil_model.json muat_s 35.0 dari_cache true di DATA_DIR); tetingkap utama 'PustakaHadith' terbuka; tiada ralat; boot pertama lambat (~120s) = Windows Defender scan, bukan ralat | §7.2 |
 | 13 | **Gate Fasa 3 LULUS** — saiz <1.5 GB ✓; fungsi setara Fasa 2 ✓; aset lengkap ✓; semak.py 385 SEMUA LULUS; langkah seterusnya Fasa 4 (mesin bersih) atau ujian manual pengguna | gate |
-| 14 | **Fasa 4: Uji Mesin Bersih (Sandbox) LULUS** — Windows Sandbox (11 Pro) tersedia (`Containers-DisposableClientVM` Enabled); `PustakaHadis-Fasa4.wsb` memetakan `dist\PustakaHadis-Debug` baca sahaja ke Desktop + auto-lancar; pengguna uji: ✅ apl lancar, ✅ carian OK selepas API key, ✅ bookmark OK, ✅ lain-lain OK; ❌ terjemahan Inggeris TIADA — **disiasat: reka bentuk lesen, bukan bug** (hadis.db + .cache_eng 120 MB tidak dibundel §4; sync_english.py skrip pembangunan, UI tidak panggil; keputusan lesen Ahmad PERMOHONAN_LESEN_AHMAD §5 + Sesi 7 "pengguna sync sendiri"; UI kelabukan tab English `pages.py set_available`); **keputusan pengguna: biar seperti reka bentuk** — tiada perubahan kod | §8 |
+| 14 | **Fasa 4: Uji Mesin Bersih (Sandbox) LULUS** — Windows Sandbox (11 Pro) tersedia (`Containers-DisposableClientVM` Enabled); `PustakaHadith-Fasa4.wsb` memetakan `dist\PustakaHadith-Debug` baca sahaja ke Desktop + auto-lancar; pengguna uji: ✅ apl lancar, ✅ carian OK selepas API key, ✅ bookmark OK, ✅ lain-lain OK; ❌ terjemahan Inggeris TIADA — **disiasat: reka bentuk lesen, bukan bug** (hadis.db + .cache_eng 120 MB tidak dibundel §4; sync_english.py skrip pembangunan, UI tidak panggil; keputusan lesen Ahmad PERMOHONAN_LESEN_AHMAD §5 + Sesi 7 "pengguna sync sendiri"; UI kelabukan tab English `pages.py set_available`); **keputusan pengguna: biar seperti reka bentuk** — tiada perubahan kod | §8 |
 | 15 | **Gate Fasa 4 (Uji Mesin Bersih) LULUS** — matriks §8 pada Windows 11 Sandbox: launch ✓, simpan settings/API key ✓, sync/resume ✓, carian Melayu/Arab ✓, carian makna ✓, bookmark ✓; belum diuji: offline selepas sync, tutup/relaunch khusus, Windows 10 | gate |
-| 16 | **Checklist pemantauan + Fasa 5A windowed** — `dokumen/CHECKLIST_PEMANTAUAN.md` (Fasa 0–7, gate, tugas pengguna, halangan) dicipta → semak.py 385→386 (semak #8m per fail .md, README dikemas); spec `PustakaHadis.spec` (windowed, upx=False, exclude cv2/PIL); bina ~21 minit → `dist\PustakaHadis` = 1,399.9 MB / 7,027 fail; warn set diff vs Debug = kosong; uji exe: disclaimer (tajuk EM DASH U+2014 — skrip uji mula gagal kerana aksara dash + skop $script:found dalam fungsi PS) → Enter → tetingkap utama 'Pustaka Hadis' tepat → model dimuat dari cache (muat_s 39.5, dari_cache true, RAM naik selepas muat) → DATA_DIR betul (user_settings.json disclaimer_dibaca:true, profil_model.json dikemas) — 5A LULUS | §7.3 |
-| 17 | **Fasa 5B: Inno Setup EXE** — Inno 6.7.3 dipasang di `D:\Inno Setup 6` (URL GitHub tag `is-6_7_3`, garis bawah; muat turun 10.1 MB, ~20 MB storan); `installer\PustakaHadis.iss` per-user ({localappdata}\Programs\PustakaHadis, PrivilegesRequired=lowest, AppId tetap {{7DF2553E-...}, task desktopicon, lzma2/ultra64); bina ~34 minit → `installer\output\PustakaHadis-Setup-1.0.0-x64.exe` = **0.50 GB**; uji: silent install 0 (7,029 fail + pintasan Start Menu) · launch app terpasang → tetingkap 'Pustaka Hadis' · uninstall senyap 0 (folder app dipadam, **DATA_DIR kekal**, pintasan dipadam) — 5B LULUS | §9 |
-| 18 | **Fasa 5C: penyediaan MSIX** — MSIX Packaging Tool (winget v1.2024.405.0) + WinApp CLI 0.6.1 dipasang (tandatangan ujian tempatan §13); aset PNG MSIX dijana dari app.ico → `installer\Assets\` (StoreLogo 50, Square44x44 44, Square150x150 150, Wide310x150 310×150, PIL 12.2.0); audit `dist\PustakaHadis` = **0 fail terlarang** (tiada DB/settings/cache/log), peringkat atas = `_internal` + `PustakaHadis.exe`; MSIX Packaging Tool Driver belum aktif (Optional Features — wizard boleh cuba sendiri); ⛔ menunggu identiti Partner Center (tugas pengguna): daftar Store + tempah nama + Publisher → 3 nilai `Package/Identity/Name|Publisher|PublisherDisplayName` — seterusnya capture VM bersih + uji Add-AppxPackage | §10–§13 |
-| 19 | **Dokumentasi pengguna: manual/manual/MANUAL_INSTALASI.md + manual/manual/MANUAL_PENGGUNAAN.md** — Gate 6/INSTALLER §18 ("dokumentasi pengguna/privasi/sokongan sedia"): Manual Instalasi (3 cara: Store/MSIX ⏳ · Setup EXE ✓ per-user, naik taraf/nyahpasang tak padam data · Zip penguji; kali pertama buka + Tetapan API hadis.my; lokasi data `%LOCALAPPDATA%\PustakaHadis` — hadis.db/user_settings.json/bookmarks.json; masalah lazim; atribusi); Manual Penggunaan (9 kitab 62,169 hadis; skrin utama; carian kata kunci + makna AI; lompat terus hadis 433/bukhari 433/B433/Ctrl+G; baca hadis dua lajur Arab|Transliterasi + Melayu|Indonesia|English; darjat/huraian SemakHadis/syarah; Lapor ralat/Kongsi/Salin/WhatsApp/🔊 TTS; penanda halaman; tetapan tema/fon/bahasa/API bertopeng; mod luar talian) — manual sedia Gate 6, skrin/privasi/sokongan Store menyusul | §18 |
-| 20 | **Kerja persediaan lanjutan (selepas sesi 20 Ogos):** ZIP mudah alih `installer\output\PustakaHadis-portable-1.0.0-x64.zip` (0.54 GB, 7,027 fail) ✅; `penerbitan/penerbitan/VM_MSIX_CAPTURE.md` — persediaan VM bersih, snapshot, payload, aset, wizard manual capture ✅; `penerbitan/penerbitan/MSIX_CAPTURE_PROSES.md` — checklist 6 fasa + rollback + output Gate 6 ✅; `surat/sokongan/surat/sokongan/DASAR_PRIVASI.md` (tiada data dikumpul, data tempatan, API tertutup, AI luar talian) ✅; `surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md` (templat GitHub Issues) ✅; `penerbitan/penerbitan/TANGKAPAN_SKRIN.md` (4 wajib + 4 disyorkan, spesifikasi 1366×768/1920×1080) ✅; CHECKLIST diperluas (5C: ZIP, VM docs, proses; Dokumentasi: ☑; Uji Win10: ⏳); PLAN 4C/4D dikemas kini; semak.py 388 LULUS | — |
-| 21 | **Lazy Loading + Smart Splash (21 Ogos) — SELESAI:** Mengatasi keluhan pengguna menunggu splash model setiap kali buka apl. Arsitek baharu: model AI dimuat MALAS (hanya pada carian makna pertama), bukan pada startup. Fail diubah: `main.py` (tanggal splash model), `ui/app_qt.py` (tanggal _mula_pramuat/_on_pramuat_siap + signals), `ui/workers.py` (SemanticWorker: signal model_loading_started), `ui/pages_carian.py` (inline "🤖 Memuatkan model AI…"), `semak.py` (semakan #8k Lazy Load), `README.md` (392 semakan). Verifikasi: semak.py 392/392 LULUS, uji_lompat 67/0, PustakaApp preload removed, SemanticWorker signal OK. Build baharu: `dist\PustakaHadis` 1.36 GB, ZIP 0.4 GB, Inno Setup 0.48 GB — semua Lazy Load. | — |
-| 22 | **Rebranding Lengkap: Pustaka Hadis → PustakaHadith (21 Ogos):** Tukar nama brand kesemua aplikasi, installer, dokumen, kod. Fail diubah: 40+ fail Python (main, app_qt, disclaimer, deklarasi, settings, theme, config, launcher, sync_*, test_*, config), installer (.iss, .spec), README.md (section Pemasangan pengguna akhir), dokumen surat (header dikemas kini). Rename file: `PustakaHadis.iss` → `PustakaHadith.iss`, `PustakaHadis.spec` → `PustakaHadith.spec`. Build baharu: `dist\PustakaHadith\PustakaHadith.exe` (89 MB), `dist\PustakaHadith\` (1.36 GB), `PustakaHadith-Setup-1.0.0-x64.exe` (0.27 GB), `PustakaHadith-portable-1.0.0-x64.zip` (0.47 GB). Uji EXE launch 8s OK. semak.py 394/394 LULUS. | — |
+| 16 | **Checklist pemantauan + Fasa 5A windowed** — `dokumen/CHECKLIST_PEMANTAUAN.md` (Fasa 0–7, gate, tugas pengguna, halangan) dicipta → semak.py 385→386 (semak #8m per fail .md, README dikemas); spec `PustakaHadith.spec` (windowed, upx=False, exclude cv2/PIL); bina ~21 minit → `dist\PustakaHadith` = 1,399.9 MB / 7,027 fail; warn set diff vs Debug = kosong; uji exe: disclaimer (tajuk EM DASH U+2014 — skrip uji mula gagal kerana aksara dash + skop $script:found dalam fungsi PS) → Enter → tetingkap utama 'PustakaHadith' tepat → model dimuat dari cache (muat_s 39.5, dari_cache true, RAM naik selepas muat) → DATA_DIR betul (user_settings.json disclaimer_dibaca:true, profil_model.json dikemas) — 5A LULUS | §7.3 |
+| 17 | **Fasa 5B: Inno Setup EXE** — Inno 6.7.3 dipasang di `D:\Inno Setup 6` (URL GitHub tag `is-6_7_3`, garis bawah; muat turun 10.1 MB, ~20 MB storan); `installer\PustakaHadith.iss` per-user ({localappdata}\Programs\PustakaHadith, PrivilegesRequired=lowest, AppId tetap {{7DF2553E-...}, task desktopicon, lzma2/ultra64); bina ~34 minit → `installer\output\PustakaHadith-Setup-1.0.0-x64.exe` = **0.50 GB**; uji: silent install 0 (7,029 fail + pintasan Start Menu) · launch app terpasang → tetingkap 'PustakaHadith' · uninstall senyap 0 (folder app dipadam, **DATA_DIR kekal**, pintasan dipadam) — 5B LULUS | §9 |
+| 18 | **Fasa 5C: penyediaan MSIX** — MSIX Packaging Tool (winget v1.2024.405.0) + WinApp CLI 0.6.1 dipasang (tandatangan ujian tempatan §13); aset PNG MSIX dijana dari app.ico → `installer\Assets\` (StoreLogo 50, Square44x44 44, Square150x150 150, Wide310x150 310×150, PIL 12.2.0); audit `dist\PustakaHadith` = **0 fail terlarang** (tiada DB/settings/cache/log), peringkat atas = `_internal` + `PustakaHadith.exe`; MSIX Packaging Tool Driver belum aktif (Optional Features — wizard boleh cuba sendiri); ⛔ menunggu identiti Partner Center (tugas pengguna): daftar Store + tempah nama + Publisher → 3 nilai `Package/Identity/Name|Publisher|PublisherDisplayName` — seterusnya capture VM bersih + uji Add-AppxPackage | §10–§13 |
+| 19 | **Dokumentasi pengguna: manual/manual/MANUAL_INSTALASI.md + manual/manual/MANUAL_PENGGUNAAN.md** — Gate 6/INSTALLER §18 ("dokumentasi pengguna/privasi/sokongan sedia"): Manual Instalasi (3 cara: Store/MSIX ⏳ · Setup EXE ✓ per-user, naik taraf/nyahpasang tak padam data · Zip penguji; kali pertama buka + Tetapan API hadis.my; lokasi data `%LOCALAPPDATA%\PustakaHadith` — hadis.db/user_settings.json/bookmarks.json; masalah lazim; atribusi); Manual Penggunaan (9 kitab 62,169 hadis; skrin utama; carian kata kunci + makna AI; lompat terus hadis 433/bukhari 433/B433/Ctrl+G; baca hadis dua lajur Arab|Transliterasi + Melayu|Indonesia|English; darjat/huraian SemakHadis/syarah; Lapor ralat/Kongsi/Salin/WhatsApp/🔊 TTS; penanda halaman; tetapan tema/fon/bahasa/API bertopeng; mod luar talian) — manual sedia Gate 6, skrin/privasi/sokongan Store menyusul | §18 |
+| 20 | **Kerja persediaan lanjutan (selepas sesi 20 Ogos):** ZIP mudah alih `installer\output\PustakaHadith-portable-1.0.0-x64.zip` (0.54 GB, 7,027 fail) ✅; `penerbitan/penerbitan/VM_MSIX_CAPTURE.md` — persediaan VM bersih, snapshot, payload, aset, wizard manual capture ✅; `penerbitan/penerbitan/MSIX_CAPTURE_PROSES.md` — checklist 6 fasa + rollback + output Gate 6 ✅; `surat/sokongan/surat/sokongan/DASAR_PRIVASI.md` (tiada data dikumpul, data tempatan, API tertutup, AI luar talian) ✅; `surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md` (templat GitHub Issues) ✅; `penerbitan/penerbitan/TANGKAPAN_SKRIN.md` (4 wajib + 4 disyorkan, spesifikasi 1366×768/1920×1080) ✅; CHECKLIST diperluas (5C: ZIP, VM docs, proses; Dokumentasi: ☑; Uji Win10: ⏳); PLAN 4C/4D dikemas kini; semak.py 388 LULUS | — |
+| 21 | **Lazy Loading + Smart Splash (21 Ogos) — SELESAI:** Mengatasi keluhan pengguna menunggu splash model setiap kali buka apl. Arsitek baharu: model AI dimuat MALAS (hanya pada carian makna pertama), bukan pada startup. Fail diubah: `main.py` (tanggal splash model), `ui/app_qt.py` (tanggal _mula_pramuat/_on_pramuat_siap + signals), `ui/workers.py` (SemanticWorker: signal model_loading_started), `ui/pages_carian.py` (inline "🤖 Memuatkan model AI…"), `semak.py` (semakan #8k Lazy Load), `README.md` (392 semakan). Verifikasi: semak.py 392/392 LULUS, uji_lompat 67/0, PustakaApp preload removed, SemanticWorker signal OK. Build baharu: `dist\PustakaHadith` 1.36 GB, ZIP 0.4 GB, Inno Setup 0.48 GB — semua Lazy Load. | — |
+| 22 | **Rebranding Lengkap: PustakaHadith → PustakaHadith (21 Ogos):** Tukar nama brand kesemua aplikasi, installer, dokumen, kod. Fail diubah: 40+ fail Python (main, app_qt, disclaimer, deklarasi, settings, theme, config, launcher, sync_*, test_*, config), installer (.iss, .spec), README.md (section Pemasangan pengguna akhir), dokumen surat (header dikemas kini). Rename file: `PustakaHadith.iss` → `PustakaHadith.iss`, `PustakaHadith.spec` → `PustakaHadith.spec`. Build baharu: `dist\PustakaHadith\PustakaHadith.exe` (89 MB), `dist\PustakaHadith\` (1.36 GB), `PustakaHadith-Setup-1.0.0-x64.exe` (0.27 GB), `PustakaHadith-portable-1.0.0-x64.zip` (0.47 GB). Uji EXE launch 8s OK. semak.py 394/394 LULUS. | — |
 
 **Kiraan telus:** folder binaan BUKAN repo git — tiada komit di sini;
 kerja direkod dalam dokumen folder binaan sahaja. Folder utama `hadis`
@@ -8179,7 +8178,7 @@ Packaging Tool dalam VM bersih, identiti Partner Center, runFullTrust).
 saiz antara muka dibuang, disclaimer papar setiap kali (sebelum splash),
 tajuk splash/disclaimer/header disepadankan (Pustaka bold teal +
 Hadis light teal + v1.0), carian nombor hadis terus ke detail, Tentang
-Pustaka Hadis table tersusun. Punca utama debug: splash.close() →
+PustakaHadith table tersusun. Punca utama debug: splash.close() →
 setQuitOnLastWindowClosed(True) → Qt quit event loop → timer tidak fire.
 Komit 5: baiki gate semak.py (atribusi jadual + kiraan semakan).
 
@@ -8188,7 +8187,7 @@ Komit 5: baiki gate semak.py (atribusi jadual + kiraan semakan).
 | 1 | **Perubahan asas apl (komit 1)** — tema 2 Neutral (gelap + terang, Kertas/Terang/Ikut sistem dibuang); buang 'Saiz antara muka' dari panel Tetapan; dialog disclaimer baru (ui/disclaimer.py) papar sekali; carian nombor hadis pada halaman kitab buka detail terus; semak_dokumen_ui 110→109; suite 14/14 (414.4s) | `b292515` |
 | 2 | **Disclaimer selepas model + sepadankan tajuk (komit 2)** — disclaimer dipindah selepas splash (bukan sebelum); flag anti-dwicalla _buka_dijalankan; tajuk splash/disclaimer/header sepadan: Pustaka(bold teal) Hadis(light teal) v1.0; header v1.0 inline satu label; warna disclaimer guna palet tema | `e6d867b` |
 | 3 | **Fix disclaimer pythonw.exe (komit 3)** — punca: splash.close() → setQuitOnLastWindowClosed(True) (lalai) → Qt quit event loop → QTimer.singleShot(0) tidak fire; pembetulan: setQuitOnLastWindowClosed(False) + disclaimer dulu (sebelum splash) + 200ms delay; dialog 540×600; papar setiap kali larian; buang semua debug trace | `6c9f855` |
-| 4 | **Tentang Pustaka Hadis table (komit 4)** — QTableWidget 2 lajur untuk Kandungan + Sumber dan atribusi; grid line, padding, warna tema; hyperlink pautan HTML dalam sel | `5dd6990` |
+| 4 | **Tentang PustakaHadith table (komit 4)** — QTableWidget 2 lajur untuk Kandungan + Sumber dan atribusi; grid line, padding, warna tema; hyperlink pautan HTML dalam sel | `5dd6990` |
 | 5 | **Baiki gate semak.py (komit 5)** — semakan atribusi 8aa diselaraskan ke format JADUAL halaman Tentang (label sel kiri + nama sumber pada ui/deklarasi.py vs ayat penuh DEKLARASI.md; sebelum ini jangka ayat teks lama → GAGAL palsu "app kehilangan"); kiraan semakan diselaraskan ke **394** (README + ringkasan MULA_SINI + mutasi #35); mutasi #27/#30/#34/#36 disasarkan semula ke rentetan 19 Ogos (5 commit); PERUBAHAN_19OGOS.md dicipta (log harian belum wujud); CHANGELOG entri 19 Ogos ditambah | *(komit ini)* |
 
 **Kiraan telus:** 14 Ogos = 36 · 15 Ogos = 14 · 16 Ogos = 16 ·
@@ -8209,7 +8208,7 @@ installer Fasa 0; `INSTALLER.md` / `PERBANDINGAN_INSTALLER.md` /
 FAISS untuk profil ujian (ya) · `hadis.db` tidak dibundel · x64 ·
 Store = saluran utama · Inno EXE = sekunder/penguji · repo persendirian
 hingga lesen data selesai · akaun Partner Center WAJIB di Fasa 5
-(daftar sekarang, percuma, tempah nama Pustaka Hadis) · portable ZIP
+(daftar sekarang, percuma, tempah nama PustakaHadith) · portable ZIP
 untuk penguji dalaman sahaja · wizard permulaan dibina sebelum beta.
 Direkod dalam `PLAN_BINA_EDARAN.md` Fasa 0 + `PERBANDINGAN_INSTALLER.md`
 §5. Langkah seterusnya: Fasa 1 (pisahkan laluan data, §3 INSTALLER.md).
@@ -8255,7 +8254,7 @@ semak_dokumen_ui 110/0 · pokok kerja bersih · tema pengguna "sistem".
 
 ## SESI 22 OGOS 2026
 
-**Ringkasan:** folder `binaan_installer` → `PustakaHadith` (rebrand selesai), PyInstaller windowed build, Inno Setup + ZIP portable, buang dialog deklarasi berganda, header PustakaHadis → PustakaHadith, push ke GitHub (`opencodemk/PustakaHadith`).
+**Ringkasan:** folder `binaan_installer` → `PustakaHadith` (rebrand selesai), PyInstaller windowed build, Inno Setup + ZIP portable, buang dialog deklarasi berganda, header PustakaHadith → PustakaHadith, push ke GitHub (`opencodemk/PustakaHadith`).
 
 | # | Kerja | Komit |
 |---|-------|-------|
@@ -8267,7 +8266,7 @@ semak_dokumen_ui 110/0 · pokok kerja bersih · tema pengguna "sistem".
 | 6 | **semak.py 399/399 LULUS** | — |
 | 7 | **Git push ke GitHub** — `opencodemk/PustakaHadith` | — |
 | 8 | **Git filter-branch** — `→` → `->` dalam semua commit | — |
-| 9 | **Git filter-branch #2** — buang "Rebrand: Pustaka Hadis -> " dari commit pertama | — |
+| 9 | **Git filter-branch #2** — buang "Rebrand: PustakaHadith -> " dari commit pertama | — |
 | 10 | **Buang dialog deklarasi berganda** — buang `_tunjuk_deklarasi_pertama` dari `showEvent` | `65543f8` |
 | 11 | **Header PustakaHadith** — tukar "Hadis" → "Hadith" dalam header + splash, kekal font/warna | `59dd9a0` |
 | 12 | **Rebuild EXE** — build windowed baru, EXE berfungsi | — |
@@ -8293,9 +8292,9 @@ AKTIF sengaja; jurang Tafsir 843 dipantau; installer Fasa 0 TERTUNDA.
 - **Scrim latar dikurangkan (glassy)** + **latar peta dunia hanya Makluman/Tetapan** (imej bg_03/bg_04 dipisah, `_GLOB_CACHE` ikut laluan).
 - **Spesifikasi + redesign Halaman Senarai Hadis** (Split Command Center: banner kaca + sidebar PILIH BAB + panel dwibahasa terjemahan kiri | Arab kanan, di atas `BackgroundCanvas` AQUA; `hadith_card_dwibahasa`; chips Semua/Tersimpan/Belum dibaca; Lompat No. di sidebar; `ListWorker` sokong param).
 - **Redesign Halaman Pencarian** (Aqua Glass: hero telus + kad dwibahasa + togol 3-mod Kata/Makna/Kedua-dua; draf AI kekal sebelum hasil; spesifikasi di `docs/superpowers/specs`).
-- **Ciri 'Lapor Ralat'** (evolusi panjang): dialog `LaporRalatDialog` (`ui/lapor_ralat.py`) dengan medan Daripada(e-mel)/Tajuk(LAPOR RALAT)/mesej; pautan "Lapor ralat" pada bar tindakan butiran hadis sebaris "Kongsi | Salin". Cuba hantar terus via SMTP (Tetapan -> Pelayan E-mel, Outlook `pustaka.hadith@outlook.com`) **dibuang** kerana susah difail (app password/2FA); kekal buka **Gmail compose pra-isi** (`https://mail.google.com/mail/?view=cm&to=pustakahadith@gmail.com`) -> pengguna klik Hantar sekali dalam browser. Modul `ui/smtp_mail.py` dihapus, seksyen Tetapan dibuang. Ruangan teks dialog bertukar **hitam atas putih**.
+- **Ciri 'Lapor Ralat'** (evolusi panjang): dialog `LaporRalatDialog` (`ui/lapor_ralat.py`) dengan medan Daripada(e-mel)/Tajuk(LAPOR RALAT)/mesej; pautan "Lapor ralat" pada bar tindakan butiran hadis sebaris "Kongsi | Salin". Cuba hantar terus via SMTP (Tetapan -> Pelayan E-mel, Outlook `pustaka.hadith@outlook.com`) **dibuang** kerana susah difail (app password/2FA); kekal buka **Gmail compose pra-isi** (`https://mail.google.com/mail/?view=cm&to=PustakaHadith@gmail.com`) -> pengguna klik Hantar sekali dalam browser. Modul `ui/smtp_mail.py` dihapus, seksyen Tetapan dibuang. Ruangan teks dialog bertukar **hitam atas putih**.
 - **Bug fix:** `QLineEdit(int)` bila baca setting `smtp_port` (elak crash restart); nombor carian kitab buka terus butiran (bukan Pencarian); kembali dari Utama ke halaman asal; kiraan Tersimpan Utama selari; maklum balas Rawak.
-- **Destinasi laporan:** `pustakahadith@gmail.com` (tanpa 's').
+- **Destinasi laporan:** `PustakaHadith@gmail.com` (tanpa 's').
 
 **Status:** Lapor Ralat berfungsi (Gmail compose). Gate #12 MULA_SINI diselesaikan (`80537f3`).
 
@@ -8324,7 +8323,7 @@ AKTIF sengaja; jurang Tafsir 843 dipantau; installer Fasa 0 TERTUNDA.
 - **Manual & hadis.my:** `MANUAL_PENGGUNAAN.md` dikemas + 6 tangkapan
   (`d030151`); `SURAT_HADISMY.md`+`EMEL_HADISMY.md` + tangkapan
   (`tangkap_layar.py`) + `DASAR_PRIVASI`/`PAUTAN_SOKONGAN` (`d7ee299`, `9dee026`);
-  folder `surat/hadis.my/`: logo `logo_pustakahadith.png` (Segoe UI
+  folder `surat/hadis.my/`: logo `logo_PustakaHadith.png` (Segoe UI
   #5CBF85/#7FD39A/#9C9589) + PDF (xhtml2pdf berterabur → reportlab
   `buat_pdf2.py`): `SURAT_HADISMY_kemas.pdf`, `EMEL_HADISMY.pdf`,
   `DASAR_PRIVASI.pdf`, `PAUTAN_SOKONGAN.pdf` (`999a27e`, `1fa9a44`).

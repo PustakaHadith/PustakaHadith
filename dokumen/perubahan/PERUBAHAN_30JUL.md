@@ -360,12 +360,12 @@ wujud. Ia melapor ralat lalu berhenti — meninggalkan kod lama utuh.
 
 ### Masalah
 
-Pengguna mengekstrak ZIP ke folder **baharu** `PustakaHadis\` dan
+Pengguna mengekstrak ZIP ke folder **baharu** `PustakaHadith\` dan
 bukan `pustaka\`. `semak_versi.py` melaporkan v-7 dengan betul, tetapi:
 
 ```
 D:\Pustaka Quran Hadis\pustaka\        <- hadis.db (62,169 hadis, 31,833 eng)
-D:\Pustaka Quran Hadis\PustakaHadis\   <- kod v-7, TIADA data
+D:\Pustaka Quran Hadis\PustakaHadith\   <- kod v-7, TIADA data
 ```
 
 `config.py` mengira laluan relatif kepada folder skrip:

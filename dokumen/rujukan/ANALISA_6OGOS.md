@@ -1,4 +1,4 @@
-# Analisis Keseluruhan — Pustaka Hadis v1.0
+# Analisis Keseluruhan — PustakaHadith v1.0
 
 **Tarikh:** 6 Ogos 2026
 **Kaedah:** 31 fail sumber dimuat turun dari Google Drive dan diperiksa terus
@@ -145,13 +145,13 @@ Seluruh projek Bahasa Melayu. `README.md` — fail pertama yang dibuka
 sesiapa — dalam English, dan menerangkan **hanya** ciri carian semantik:
 
 ```
-# Pustaka Hadis - Semantic Search Implementation
-This project implements semantic search for Pustaka Hadis using FAISS...
+# PustakaHadith - Semantic Search Implementation
+This project implements semantic search for PustakaHadith using FAISS...
 ```
 
 Ia tidak menyebut 62,169 hadis, 9 kitab, SemakHadis, darjat ulama,
 transliterasi, atau terjemahan Inggeris. Pembaca akan menyangka ini projek
-carian vektor, bukan pustaka hadis.
+carian vektor, bukan PustakaHadith.
 
 `core/draft_answer.py` juga menggunakan docstring English
 (`"""Draft answer composer for semantic search results."""`) sedangkan

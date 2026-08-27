@@ -29,7 +29,7 @@
      hadis_id_map.pkl, .cache_models, sunnah_map).
    - `DATA_DIR` — data pengguna boleh tulis; mod pembangunan =
      folder projek (tingkah laku TIDAK berubah), mod frozen =
-     `%LOCALAPPDATA%\PustakaHadis`.
+     `%LOCALAPPDATA%\PustakaHadith`.
    - Pemalar baharu: `BOOKMARKS_PATH`, `CACHE_SEMA`, `CACHE_HE`,
      `CACHE_ENG`, `CACHE_SYARAH`, `PROFIL_PATH`, `ICON_PATH`,
      `FAISS_INDEX`, `FAISS_MAP`, `MODEL_CACHE`, `SUNNAH_MAP`.
@@ -57,7 +57,7 @@
 
 5. **Ujian baharu `uji_fasa1_data.py` (22/0)** — mensimulasikan
    `sys.frozen=True` dalam subproses: DATA_DIR ==
-   `%LOCALAPPDATA%\PustakaHadis`; semua pemalar boleh tulis di DATA_DIR;
+   `%LOCALAPPDATA%\PustakaHadith`; semua pemalar boleh tulis di DATA_DIR;
    semua aset di ASSET_DIR; TIADA fail baharu ditulis ke ASSET_DIR
    semasa larian frozen.
 
@@ -101,7 +101,7 @@
 
    ```powershell
    python -m PyInstaller --noconfirm --clean --onedir --console `
-     --name PustakaHadis-Debug --icon app.ico `
+     --name PustakaHadith-Debug --icon app.ico `
      --add-data "app.ico;." --add-data "sunnah_map;sunnah_map" `
      --add-data ".cache_models;.cache_models" `
      --add-data "hadis_faiss.index;." --add-data "hadis_id_map.pkl;." `
@@ -112,7 +112,7 @@
      --copy-metadata torch main.py
    ```
 
-   Masa binaan ~19 minit. Hasil: `dist\PustakaHadis-Debug\` =
+   Masa binaan ~19 minit. Hasil: `dist\PustakaHadith-Debug\` =
    **2,022.8 MB, 7,065 fail** (terbesar: model.safetensors 460 MB,
    torch_cpu.dll 298 MB, hadis_faiss.index 93 MB, cv2 87 MB — cv2
    ditarik oleh transformers, bukan keperluan; boleh kecilkan Fasa 3).
@@ -140,7 +140,7 @@
    transformers ialah lazy import (dalam fungsi, bukan aras modul) —
    selamat. Tambah `--exclude-module cv2 --exclude-module PIL`.
 
-3. **Hasil binaan optimum:** `dist\PustakaHadis-Debug` =
+3. **Hasil binaan optimum:** `dist\PustakaHadith-Debug` =
    **1,399.9 MB (1.4 GB) / 7,027 fail** — jimat **622.9 MB (31%)**
    daripada 2,022.8 MB. Semua aset lengkap; TIADA hadis.db*/settings/
    bookmarks/cache dalam pakej.
@@ -149,10 +149,10 @@
    - Model e5 dimuat SEPENUHNYA (stderr: `Loading weights: 100%
      199/199`; RAM naik 78 → 929–937 MB; `profil_model.json` dikemas
      dengan `muat_s: 35.0, dari_cache: true`).
-   - Tetingkap utama **'Pustaka Hadis'** terbuka (MainWindowTitle
+   - Tetingkap utama **'PustakaHadith'** terbuka (MainWindowTitle
      tepat).
    - Tiada traceback/ralat (stderr kosong selain progress loading).
-   - DATA_DIR `%LOCALAPPDATA%\PustakaHadis` digunakan.
+   - DATA_DIR `%LOCALAPPDATA%\PustakaHadith` digunakan.
    - `warn-*.txt`: 313 missing module (semua pilihan) + excluded
      cv2/PIL — tiada amaran untuk modul sebenar.
    - Catatan: boot pertama lambat (~110–120 s) kerana Windows Defender
@@ -177,7 +177,7 @@ dari `dist\_internal`):
 | Carian makna 'kelebihan puasa ramadhan' | Hadis puasa: malik #587, darimi #1698, ahmad #23097 (skor 0.86) |
 | Tema dark/light/neutral/lightneutral | Semua dipanggil tanpa ralat, palet berbeza |
 | user_settings.json (DATA_DIR) | Dibaca: disclaimer_dibaca, deklarasi_dibaca, theme |
-| Exe tetingkap utama | 'Pustaka Hadis' terbuka, model dimuat penuh |
+| Exe tetingkap utama | 'PustakaHadith' terbuka, model dimuat penuh |
 
 Kesimpulan: fungsi AI (carian makna), carian teks (FTS5), tema, dan
 pemisahan data (DATA_DIR) SEMUA berfungsi pada rantai binaan Fasa 3.
@@ -188,8 +188,8 @@ pemisahan data (DATA_DIR) SEMUA berfungsi pada rantai binaan Fasa 3.
    ClientVM` Enabled, `WindowsSandbox.exe` wujud) — mesin bersih sebenar
    tanpa Python/PyQt/torch.
 
-2. **Fail `PustakaHadis-Fasa4.wsb` dicipta** — memetakan
-   `dist\PustakaHadis-Debug` (baca sahaja) ke Desktop Sandbox +
+2. **Fail `PustakaHadith-Fasa4.wsb` dicipta** — memetakan
+   `dist\PustakaHadith-Debug` (baca sahaja) ke Desktop Sandbox +
    LogonCommand auto-lancar exe. Sandbox boot OK (vmmemWindowsSandbox
    2.5 GB, tetingkap 'Windows Sandbox' kelihatan).
 
@@ -230,24 +230,24 @@ pemisahan data (DATA_DIR) SEMUA berfungsi pada rantai binaan Fasa 3.
    Kiraan semak.py naik 385 → **386** (semak #8m lulus per fail .md);
    README binaan dikemas kini.
 
-2. **Spec keluaran `PustakaHadis.spec`** — salinan spec Debug dengan:
-   `name='PustakaHadis'`, `console=False` (windowed), `upx=False`
+2. **Spec keluaran `PustakaHadith.spec`** — salinan spec Debug dengan:
+   `name='PustakaHadith'`, `console=False` (windowed), `upx=False`
    (keputusan tiada UPX); kekal exclude cv2/PIL + collect-all + aset.
 
-3. **Bina (~21 minit)** — `dist\PustakaHadis` = **1,399.9 MB / 7,027
+3. **Bina (~21 minit)** — `dist\PustakaHadith` = **1,399.9 MB / 7,027
    fail** (sama dengan Debug — hanya konsol ditanggalkan).
 
-4. **warn-PustakaHadis.txt** — set diff vs warn Debug: **kosong**
+4. **warn-PustakaHadith.txt** — set diff vs warn Debug: **kosong**
    (tiada missing module baharu/hilang; semua pilihan).
 
 5. **Ujian exe windowed (semua LULUS):**
-   - Proses hidup selepas 3 s; disclaimer 'Pustaka Hadis — Makluman'
+   - Proses hidup selepas 3 s; disclaimer 'PustakaHadith — Makluman'
      muncul (~6–12 s; tajuk guna EM DASH U+2014, bukan sempang);
-   - Enter lulus disclaimer → tetingkap utama **'Pustaka Hadis'**
+   - Enter lulus disclaimer → tetingkap utama **'PustakaHadith'**
      (padanan tepat) terbuka; model dimuat dari cache dibundel
      (`profil_model.json` kemasukan baharu: `muat_s 39.5`,
      `import_s 35.0`, `dari_cache true` — model TIDAK dimuat turun);
-   - DATA_DIR `%LOCALAPPDATA%\PustakaHadis` — user_settings.json
+   - DATA_DIR `%LOCALAPPDATA%\PustakaHadith` — user_settings.json
      (`disclaimer_dibaca:true`) + profil_model.json dikemas kini;
    - Tiada konsol muncul (windowed berfungsi).
    - Nota ujian: skrip uji GUI mula gagal kerana (a) `$script:found`
@@ -265,24 +265,24 @@ pemisahan data (DATA_DIR) SEMUA berfungsi pada rantai binaan Fasa 3.
    dipasang senyap ke **`D:\Inno Setup 6`** (bukan C:) — ISCC.exe
    wujud, ~20 MB sahaja.
 
-2. **`installer\PustakaHadis.iss`** — ikut INSTALLER §9:
+2. **`installer\PustakaHadith.iss`** — ikut INSTALLER §9:
    `PrivilegesRequired=lowest`, `DefaultDirName={localappdata}\Programs\
-   PustakaHadis`, AppId tetap `{{7DF2553E-9E62-4ED4-929A-61C71AD1047F}`
+   PustakaHadith`, AppId tetap `{{7DF2553E-9E62-4ED4-929A-61C71AD1047F}`
    (direkod, jangan tukar), task desktopicon, `ArchitecturesAllowed/
    InstallIn64BitMode=x64compatible`, `lzma2/ultra64` + solid.
 
 3. **Bina (~34 minit)** — `installer\output\
-   PustakaHadis-Setup-1.0.0-x64.exe` = **0.50 GB** (mampat baik;
+   PustakaHadith-Setup-1.0.0-x64.exe` = **0.50 GB** (mampat baik;
    anggaran awal 1.2–1.5 GB tidak tepat — lzma2/ultra64 + solid).
 
 4. **Uji silent install + uninstall (semua LULUS):**
    - `/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-` → kod keluar 0;
-     7,029 fail dipasang ke `%LOCALAPPDATA%\Programs\PustakaHadis`;
-     pintasan Start Menu 'Pustaka Hadis' wujud;
-   - Launch app terpasang → tetingkap 'Pustaka Hadis' terbuka; DATA_DIR
+     7,029 fail dipasang ke `%LOCALAPPDATA%\Programs\PustakaHadith`;
+     pintasan Start Menu 'PustakaHadith' wujud;
+   - Launch app terpasang → tetingkap 'PustakaHadith' terbuka; DATA_DIR
      betul (user_settings.json);
    - Uninstall senyap (`unins000.exe /VERYSILENT`) → kod keluar 0;
-     folder app dipadam; **DATA_DIR `%LOCALAPPDATA%\PustakaHadis`
+     folder app dipadam; **DATA_DIR `%LOCALAPPDATA%\PustakaHadith`
      KEKAL** (tidak dipadam — betul); pintasan Start Menu dipadam.
    - Naik taraf kekalkan DATA_DIR: mekanisme terbukti (DATA_DIR
      berasingan dari folder app); ujian penuh 1.0.0→1.0.1 di Fasa 6.
@@ -307,22 +307,22 @@ Penyediaan yang boleh dilakukan tanpa identiti Partner Center:
    `Square150x150Logo.png` 150×150, `Wide310x150Logo.png` 310×150
    (ikon dipusatkan 85% dalam ruang wide). PIL 12.2.0 dari venv binaan.
 
-3. **Audit inventori `dist\PustakaHadis`:** 0 fail terlarang (tiada
+3. **Audit inventori `dist\PustakaHadith`:** 0 fail terlarang (tiada
    hadis.db*/.env/user_settings.json/bookmarks.json/.cache_sema|he|eng|
    syarah/*.bak/__pycache__/log audit). Folder peringkat atas =
-   `_internal` + `PustakaHadis.exe` sahaja — bersih untuk capture.
+   `_internal` + `PustakaHadith.exe` sahaja — bersih untuk capture.
 
 4. **Menunggu pengguna (⛔):** daftar akaun Microsoft Store
-   (https://storedeveloper.microsoft.com/) + tempah nama "Pustaka Hadis" + pilih nama Publisher. Selepas itu berikan 3 nilai:
+   (https://storedeveloper.microsoft.com/) + tempah nama "PustakaHadith" + pilih nama Publisher. Selepas itu berikan 3 nilai:
    `Package/Identity/Name`, `Package/Identity/Publisher`,
    `Package/Properties/PublisherDisplayName` (INSTALLER §10).
 
 5. **Langkah 5C seterusnya (selepas identiti):** capture dalam VM bersih
    (Manual installation, install location `C:\Program Files\
-   PustakaHadis`, salin payload, jangan sync/API key, satu entry point
-   `PustakaHadis.exe`); semak Package editor (runFullTrust,
+   PustakaHadith`, salin payload, jangan sync/API key, satu entry point
+   `PustakaHadith.exe`); semak Package editor (runFullTrust,
    Windows.Desktop, MinVersion 10.0.19041.0, tiada DB/rahsia); simpan
-   `PustakaHadis_1.0.0.0_x64.msix`; tandatangan ujian tempatan (WinApp
+   `PustakaHadith_1.0.0.0_x64.msix`; tandatangan ujian tempatan (WinApp
    CLI/SignTool, Subject = Publisher manifest); uji Add-AppxPackage
    install/launch/uninstall.
 
@@ -333,11 +333,11 @@ Dokumentasi pengguna untuk binaan edaran dicipta (Gate 6, INSTALLER
 
 1. **`dokumen/manual/manual/manual/MANUAL_INSTALASI.md`** — keperluan (Windows 10/11 x64,
    tiada Python); 3 cara pasang: Microsoft Store (MSIX — status:
-   sedang disediakan), pemasang EXE (`PustakaHadis-Setup-1.0.0-x64.exe`,
+   sedang disediakan), pemasang EXE (`PustakaHadith-Setup-1.0.0-x64.exe`,
    per-user, naik taraf tidak padam data, nyahpasang tidak padam data),
    Zip mudah alih (penguji dalaman, ekstrak penuh dahulu, jalan
-   `PustakaHadis.exe`); kali pertama buka (splash + notis + Tetapan
-   API hadis.my); lokasi data `%LOCALAPPDATA%\PustakaHadis` (hadis.db,
+   `PustakaHadith.exe`); kali pertama buka (splash + notis + Tetapan
+   API hadis.my); lokasi data `%LOCALAPPDATA%\PustakaHadith` (hadis.db,
    user_settings.json, bookmarks.json — jangan padam); masalah lazim
    (lambat kali pertama, tab English kelabu, mod luar talian); sumber &
    atribusi.
@@ -356,7 +356,7 @@ Dokumentasi pengguna untuk binaan edaran dicipta (Gate 6, INSTALLER
 
 3. **`dokumen/surat/sokongan/surat/sokongan/surat/sokongan/DASAR_PRIVASI.md`** — tiada data peribadi dikumpul,
    tiada telemetri/analitik, data hanya tempatan (`%LOCALAPPDATA%\
-   PustakaHadis`), kunci API tertutup, carian makna AI sepenuhnya luar
+   PustakaHadith`), kunci API tertutup, carian makna AI sepenuhnya luar
    talian, sambungan hanya untuk sync hadis.my, hak padam/akses/portabiliti.
 
 4. **`dokumen/surat/sokongan/surat/sokongan/surat/sokongan/PAUTAN_SOKONGAN.md`** — cadangan GitHub Issues, maklumat
@@ -372,8 +372,8 @@ Dokumentasi pengguna untuk binaan edaran dicipta (Gate 6, INSTALLER
 
 ## Kerja Persediaan MSIX Lanjutan (20 Ogos — Selepas Sesi)
 
-1. **ZIP mudah alih** — `installer\output\PustakaHadis-portable-1.0.0-x64.zip`
-   (0.54 GB, 7,027 fail) dicipta dari `dist\PustakaHadis` untuk
+1. **ZIP mudah alih** — `installer\output\PustakaHadith-portable-1.0.0-x64.zip`
+   (0.54 GB, 7,027 fail) dicipta dari `dist\PustakaHadith` untuk
    penguji dalaman (keputusan Fasa 0).
 
 2. **penerbitan/penerbitan/VM_MSIX_CAPTURE.md** — dokumentasi penuh persediaan VM bersih:
@@ -431,9 +431,9 @@ akan bosan menunggu melihat ia memuat model setiap kali hendak guna?"
 - pages_carian.py: inline loading handler ✅
 
 **Build Baharu (Lazy Loading):**
-- `dist\PustakaHadis` 1.36 GB (windowed, tiada splash model)
-- `installer\output\PustakaHadis-portable-1.0.0-x64.zip` 0.4 GB
-- `installer\output\PustakaHadis-Setup-1.0.0-x64.exe` 0.48 GB
+- `dist\PustakaHadith` 1.36 GB (windowed, tiada splash model)
+- `installer\output\PustakaHadith-portable-1.0.0-x64.zip` 0.4 GB
+- `installer\output\PustakaHadith-Setup-1.0.0-x64.exe` 0.48 GB
 
 ---
 
@@ -442,7 +442,7 @@ akan bosan menunggu melihat ia memuat model setiap kali hendak guna?"
 | Item | Status |
 |---|---|
 | Fasa 4 (Sandbox) | ✅ LULUS |
-| Fasa 5A (Windowed) | ✅ LULUS — `dist\PustakaHadis` 1.36 GB (Lazy Load) |
+| Fasa 5A (Windowed) | ✅ LULUS — `dist\PustakaHadith` 1.36 GB (Lazy Load) |
 | Fasa 5B (Inno EXE) | ✅ LULUS — 0.48 GB setup (Lazy Load) |
 | Fasa 5C (MSIX) | ⏳ Penyediaan siap, menunggu identiti Store |
 | ZIP Portable | ✅ 0.4 GB (Lazy Load) |
@@ -462,10 +462,10 @@ akan bosan menunggu melihat ia memuat model setiap kali hendak guna?"
 |---|---|
 | Binaan PyInstaller onedir --console | Selesai tanpa ralat (~19 minit) |
 | `warn-*.txt` | Tiada amaran kritikal (313 pilihan sahaja) |
-| Exe dilancarkan | HIDUP — tetingkap 'Pustaka Hadis - Makluman' muncul |
+| Exe dilancarkan | HIDUP — tetingkap 'PustakaHadith - Makluman' muncul |
 | Disclaimer diluluskan (Enter) | user_settings.json `disclaimer_dibaca:true` ditulis |
-| Model e5 dimuat | RAM naik 78 → 596 MB; tetingkap utama 'Pustaka Hadis' terbuka |
-| DATA_DIR frozen | `%LOCALAPPDATA%\PustakaHadis` — user_settings.json + profil_model.json ditulis DI SINI |
+| Model e5 dimuat | RAM naik 78 → 596 MB; tetingkap utama 'PustakaHadith' terbuka |
+| DATA_DIR frozen | `%LOCALAPPDATA%\PustakaHadith` — user_settings.json + profil_model.json ditulis DI SINI |
 | Folder EXE bersih | Tiada hadis.db dalam dist — data dipisah (Fasa 1 berfungsi dalam binaan sebenar) |
 | Aset dalam `_internal\` | app.ico, sunnah_map, .cache_models, hadis_faiss.index, hadis_id_map.pkl, profil_model.json SEMUA ADA |
 | Indeks FAISS binaan | Dimuat: 62,169 vektor × 384 dimensi (id_map 62,169) |
@@ -481,9 +481,9 @@ dijalankan pada mesin pembangun bila selesa.
 - **Fasa 5B — Inno Setup EXE** (INSTALLER §9): per-user install
   (`PrivilegesRequired=lowest`), AppId tetap, Start Menu + Desktop
   pilihan, silent install, naik taraf kekalkan DATA_DIR. Hasil:
-  `PustakaHadis-Setup-1.0-x64.exe`.
+  `PustakaHadith-Setup-1.0-x64.exe`.
 - **Fasa 5C — MSIX utama** (INSTALLER §11–§12): MSIX Packaging Tool
   dalam VM bersih, identiti Partner Center, x64, runFullTrust; MSIX
   install/launch/uninstall lulus; aset pakej = inventori.
 - **Fasa 0 tugas pengguna:** daftar akaun Microsoft Store
-  (https://storedeveloper.microsoft.com/) + tempah nama "Pustaka Hadis" + pilih nama Publisher — WAJIB sebelum 5C/6 (identiti MSIX).
+  (https://storedeveloper.microsoft.com/) + tempah nama "PustakaHadith" + pilih nama Publisher — WAJIB sebelum 5C/6 (identiti MSIX).

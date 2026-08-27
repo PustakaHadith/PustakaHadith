@@ -1,12 +1,12 @@
 @echo off
 chcp 65001 >nul
-title Pustaka Hadis - Pemasangan
+title PustakaHadith - Pemasangan
 cd /d "%~dp0"
 setlocal EnableDelayedExpansion
 
 echo.
 echo   ==========================================
-echo      PUSTAKA HADIS - Pemasangan
+echo      PustakaHadith - Pemasangan
 echo   ==========================================
 echo.
 echo   Folder: %~dp0

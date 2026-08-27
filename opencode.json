@@ -9,7 +9,7 @@
   },
   "agent": {
     "hadis-dev": {
-      "description": "Pustaka Hadis primary development agent. Knows project structure, conventions, scripts, test patterns.",
+      "description": "PustakaHadith primary development agent. Knows project structure, conventions, scripts, test patterns.",
       "mode": "primary",
       "model": "anthropic/claude-sonnet-4-6",
       "permission": {

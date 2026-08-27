@@ -1,11 +1,11 @@
 @echo off
 chcp 65001 >nul
-title Pustaka Hadis - Nyahpepijat
+title PustakaHadith - Nyahpepijat
 cd /d "%~dp0"
 
 echo.
 echo   ==========================================
-echo      NYAHPEPIJAT - Pustaka Hadis
+echo      NYAHPEPIJAT - PustakaHadith
 echo   ==========================================
 echo.
 echo   Tetingkap ini TIDAK akan tutup sendiri.

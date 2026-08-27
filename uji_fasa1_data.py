@@ -5,7 +5,7 @@ tidak terjejas, dan mengesahkan TIADA fail baharu ditulis ke folder
 aplikasi (ASSET_DIR):
 
   1. Mod pembangunan (lalai): DATA_DIR == ASSET_DIR (folder projek).
-  2. Mod frozen (simulasi):   DATA_DIR == %LOCALAPPDATA%\\PustakaHadis.
+  2. Mod frozen (simulasi):   DATA_DIR == %LOCALAPPDATA%\\PustakaHadith.
   3. Pemalar boleh tulis (DB/SETTINGS/BOOKMARKS/ENV/CACHE/PROFIL) di DATA_DIR.
   4. Pemalar aset (ICON/FAISS/MODEL/SUNNAH) di ASSET_DIR.
   5. Tiada fail baharu di ASSET_DIR selepas larian frozen.
@@ -104,7 +104,7 @@ else:
     def pada_aset(p: str) -> bool:
         return Path(p).parent == ROOT
 
-    semak("mod frozen: DATA_DIR == %LOCALAPPDATA%\\PustakaHadis",
+    semak("mod frozen: DATA_DIR == %LOCALAPPDATA%\\PustakaHadith",
           baris[0] == str(harap_data))
     semak("mod frozen: DB_PATH di DATA_DIR", pada_data(baris[1]))
     semak("mod frozen: SETTINGS_PATH di DATA_DIR", pada_data(baris[2]))

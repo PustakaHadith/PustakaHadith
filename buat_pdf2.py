@@ -11,7 +11,7 @@ from reportlab.lib.utils import ImageReader
 TMP = r"C:\ph_aset"
 os.makedirs(TMP, exist_ok=True)
 BASE = os.path.abspath("dokumen/surat/hadis.my")
-LOGO = os.path.abspath("dokumen/surat/hadis.my/logo_pustakahadith.png")
+LOGO = os.path.abspath("dokumen/surat/hadis.my/logo_PustakaHadith.png")
 
 TEAL = colors.HexColor("#1A6B3C")
 GREY = colors.HexColor("#555555")

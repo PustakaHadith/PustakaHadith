@@ -30,7 +30,7 @@ GATE = [
 ]
 
 print("=" * 62)
-print("  GATE PANTAS — Pustaka Hadis (semak.py + uji_negatif_8z)")
+print("  GATE PANTAS — PustakaHadith (semak.py + uji_negatif_8z)")
 print("=" * 62)
 
 gagal = False

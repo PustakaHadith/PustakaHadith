@@ -16,14 +16,14 @@ Kod Python
     ↓
 PyInstaller 6.22 onedir
     ↓
-PustakaHadis.exe + folder _internal
+PustakaHadith.exe + folder _internal
     ↓
 MSIX
     ↓
 Microsoft Store
 ```
 
-`PustakaHadis.exe` di sini ialah fail aplikasi utama dalam folder `onedir`,
+`PustakaHadith.exe` di sini ialah fail aplikasi utama dalam folder `onedir`,
 **bukan installer EXE tambahan**.
 
 Inno Setup tidak diperlukan untuk laluan Store. MSIX Packaging Tool boleh
@@ -85,7 +85,7 @@ Rujukan:
 https://nuitka.net/posts/nuitka-release-41.html
 ```
 
-Pustaka Hadis menggunakan:
+PustakaHadith menggunakan:
 
 ```text
 Python 3.14
@@ -111,7 +111,7 @@ Rujukan:
 https://nuitka.net/pages/pyqt5.html
 ```
 
-Pustaka Hadis banyak bergantung pada:
+PustakaHadith banyak bergantung pada:
 
 ```text
 QThread
@@ -174,8 +174,8 @@ Binaan diagnostik boleh dibuat dengan:
 PyInstaller menghasilkan:
 
 ```text
-warn-PustakaHadis-Debug.txt
-xref-PustakaHadis-Debug.html
+warn-PustakaHadith-Debug.txt
+xref-PustakaHadith-Debug.html
 folder dist yang boleh diperiksa
 ```
 
@@ -205,8 +205,8 @@ Pakej besar akan diekstrak ke folder sementara setiap pelancaran, menyebabkan:
 Gunakan:
 
 ```text
-dist\PustakaHadis\
-├── PustakaHadis.exe
+dist\PustakaHadith\
+├── PustakaHadith.exe
 └── _internal\
 ```
 
@@ -223,7 +223,7 @@ Nuitka mungkin memberikan:
 - kod Python dikompil;
 - pengendalian sesetengah pakej native yang lebih baik.
 
-Namun saiz Pustaka Hadis banyak didominasi oleh:
+Namun saiz PustakaHadith banyak didominasi oleh:
 
 ```text
 torch
@@ -357,7 +357,7 @@ pakej baca sahaja. Update menggantikan pakej secara terurus.
 
 Namun projek tetap perlu:
 
-- memindahkan DB/settings/cache ke `%LOCALAPPDATA%\PustakaHadis`;
+- memindahkan DB/settings/cache ke `%LOCALAPPDATA%\PustakaHadith`;
 - menguji update `1.0.0.0 → 1.0.1.0`;
 - menguji uninstall/reinstall;
 - menyediakan eksport bookmark/settings;

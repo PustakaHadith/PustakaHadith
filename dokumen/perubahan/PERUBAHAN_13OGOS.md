@@ -157,7 +157,7 @@ dilangkau") apabila tiada `.git`; dalam repo pembangunan ia kekal aktif
 (disahkan: fail sisa masih dikesan). Selepas pembetulan, dari folder
 berruang: `semak_versi.py` (23 ciri v1.0 hadir) + `semak.py` **SEMUA
 LULUS 0 GAGAL** + app_qt diimport (VERSI 1.0). Folder ujian dibuang;
-ZIP akhir `PustakaHadis.zip` (120 fail, 1,103,530 bytes).
+ZIP akhir `PustakaHadith.zip` (120 fail, 1,103,530 bytes).
 
 **SENARAI RASMI FAIL ZIP + 2 PEMBETULAN PEMBINAAN (13 Ogos, petang):**
 `manual/manual/MANUAL_INSTALASI.md` seksyen 9 baharu "Kandungan ZIP edaran (senarai

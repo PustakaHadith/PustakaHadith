@@ -24,7 +24,7 @@ atau menjalankan binaan.
 Kedua-dua hala tuju **bersetuju** pada:
 
 - `hadis.db` tidak dibundel (pengguna sync sendiri) — keputusan pengguna sedia ada.
-- Laluan data boleh tulis ke `%LOCALAPPDATA%\PustakaHadis`.
+- Laluan data boleh tulis ke `%LOCALAPPDATA%\PustakaHadith`.
 - x64 sahaja untuk keluaran pertama.
 - Repo persendirian sehingga lesen data selesai.
 - Bundel model e5 + indeks FAISS untuk profil ujian (awam menunggu lesen).
@@ -119,7 +119,7 @@ Keputusan pengguna akan direkod di bawah ini apabila perbincangan selesai:
       2. Store = saluran utama — **Ya**.
       3. Inno EXE = sekunder/penguji — **Ya**.
       4. Akaun Partner Center — **WAJIB di Fasa 5; daftar sekarang (percuma) +
-         tempah nama Pustaka Hadis; nama Publisher pilihan pengguna**.
+         tempah nama PustakaHadith; nama Publisher pilihan pengguna**.
       5. Portable ZIP — **Ya untuk penguji dalaman sahaja**.
       6. Wizard permulaan — **Bina sebelum beta**.
 - [x] Tarikh keputusan pengguna: **19 Ogos 2026**.
@@ -165,7 +165,7 @@ atau hala tuju A dengan GitHub sebagai penguji dalaman dahulu.
 ### Hala tuju A — Microsoft Store
 
 1. Buka **Microsoft Store** (sudah terbina dalam Windows 10/11).
-2. Cari **"Pustaka Hadis"** → halaman listing (ikon, screenshot, penerangan, dasar privasi).
+2. Cari **"PustakaHadith"** → halaman listing (ikon, screenshot, penerangan, dasar privasi).
 3. Klik **Dapatkan** → pemasangan automatik, **tiada amaran SmartScreen**.
 4. Buka app → wizard permulaan (keputusan Fasa 0 #6): deklarasi → kunci API
    → sync koleksi (~12 minit, bar kemajuan, boleh dijeda) → siap.
@@ -181,7 +181,7 @@ kelihatan. Paling hampir dengan "klik satu fail, terpasang".
 ### Hala tuju B — GitHub EXE
 
 1. Buka pautan **GitHub Releases** (dari hadis.my / dokumentasi).
-2. Muat turun **PustakaHadis-Setup-x64.exe** (anggaran lama ~520 MB;
+2. Muat turun **PustakaHadith-Setup-x64.exe** (anggaran lama ~520 MB;
    belum diukur daripada binaan Nuitka sebenar).
 3. **SmartScreen** muncul: *"Windows protected your PC"* — pengguna perlu
    klik **More info → Run anyway** (kecuali EXE ditandatangani + reputasi

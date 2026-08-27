@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Penjana mockup logo 'Pustaka Hadis' — Konsep A (Buku Terbuka + Cahaya).
+"""Penjana mockup logo 'PustakaHadith' — Konsep A (Buku Terbuka + Cahaya).
 
 Lukis pada kanvas besar (2048) untuk anti-aliasing, kemudian
 downsample ke saiz ikon. Hasilkan:

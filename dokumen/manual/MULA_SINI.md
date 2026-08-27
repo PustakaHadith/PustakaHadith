@@ -62,11 +62,11 @@ butang **Kembali** detail pulang ke halaman asal — `BACK_PETA["saved"]`
 → `go("saved")` (`03674bc`).
 Kerja 25 Ogos kekal (halaman utama AQUA + rak kitab).
 
-**Kerja 22 Ogos:** Rebranding lengkap **Pustaka Hadis → PustakaHadith** —
+**Kerja 22 Ogos:** Rebranding lengkap **PustakaHadith → PustakaHadith** —
 update 40+ fail Python (main, ui/*, config, sync_*, test_*), installer
 (.iss, .spec), README.md (section Pemasangan pengguna akhir), dokumen
-surat (emel rasmi Outlook/Gmail/Proton). Rename file: `PustakaHadis.iss`
-→ `PustakaHadith.iss`, `PustakaHadis.spec` → `PustakaHadith.spec`.
+surat (emel rasmi Outlook/Gmail/Proton). Rename file: `PustakaHadith.iss`
+→ `PustakaHadith.iss`, `PustakaHadith.spec` → `PustakaHadith.spec`.
 Build baharu: `PustakaHadith.exe` (89 MB), `dist\PustakaHadith\` (1.36 GB),
 `PustakaHadith-Setup-1.0.0-x64.exe` (0.27 GB),
 `PustakaHadith-portable-1.0.0-x64.zip` (0.47 GB). Uji EXE launch 8s OK.
@@ -78,7 +78,7 @@ dari panel Tetapan (`b292515`) · dialog disclaimer baharu
 terus · disclaimer selepas model + tajuk splash/disclaimer/header
 sepadan (`e6d867b`) · fix disclaimer pythonw.exe —
 `setQuitOnLastWindowClosed(False)` + papar sebelum splash (`6c9f855`) ·
-Tentang Pustaka Hadis QTableWidget 2 lajur (Kandungan + Sumber dan
+Tentang PustakaHadith QTableWidget 2 lajur (Kandungan + Sumber dan
 atribusi) (`5dd6990`) · **baiki gate: semak.py semakan atribusi
 diselaraskan ke format jadual Tentang + kiraan semakan 394
 (README, MULA_SINI, mutasi #27/#30/#34/#35/#36) + PERUBAHAN_19OGOS.md
@@ -373,13 +373,13 @@ Hadis):
      "Daripada (e-mel)" (USER EMAIL), medan "Tajuk" terisi "LAPOR RALAT",
      dan kotak mesej berlatar putih + teks hitam. "Hantar" **membuka Gmail
      compose dalam browser yang pra-isi** (`https://mail.google.com/mail/
-     ?view=cm&to=pustakahadith@gmail.com&su=LAPOR%20RALAT&body=…`) — tiada
+     ?view=cm&to=PustakaHadith@gmail.com&su=LAPOR%20RALAT&body=…`) — tiada
      klien e-mel / kredential diperlukan; pengguna klik Hantar sekali dalam
      browser. E-mel pelapor disertakan dalam badan ("Daripada: <email>").
      "Batal" tutup dialog. (Asalnya dicadang di Tetapan, dipindah ke butiran
      hadis; ciri SMTP terus dibuang kerana susah difail — kekal Gmail
      compose.) Tetapan "Pelayan E-mel" di buang. Disahkan offscreen: tanpa
-     SMTP → buka URL Gmail compose ke pustakahadith@gmail.com, subjek
+     SMTP → buka URL Gmail compose ke PustakaHadith@gmail.com, subjek
      "LAPOR RALAT", badan ada "Daripada".
 
 22. **Binaan installer (onedir) + selenggara git** (`564c92d`) —
@@ -1382,7 +1382,7 @@ suite rasmi 13/13 SEMUA LULUS, pokok bersih, baki #7 kunci API
 > - Disahkan: suite pra-hantar penuh **SEMUA LULUS 11/11** pada dua
 >   larian berturut-turut (395.6s + 392.6s); semak.py 0 GAGAL. Butiran:
 >   `dokumen/perubahan/PERUBAHAN_13OGOS.md`.
-> - **Ujian ZIP edaran (petang 13 Ogos)** — `PustakaHadis.zip` (120
+> - **Ujian ZIP edaran (petang 13 Ogos)** — `PustakaHadith.zip` (120
 >   fail) diuji dari folder bernama dengan ruang (`D:\Pustaka Quran
 >   Hadis\Ujian Ruang`): `semak_versi.py` 23 ciri + `semak.py` SEMUA
 >   LULUS + app melancar. Pepijat tersembunyi dijumpai & dibaiki:
@@ -1580,7 +1580,7 @@ Perbandingan ini hanya bertujuan membantu pengguna memahami perbezaan
 fungsi utama setiap platform dalam konteks carian dan semakan hadis.
 Setiap platform ada kelebihan masing-masing.
 
-| Fungsi | Pustaka Hadis (apps ini) | MyHadith (JAKIM) | Sunnah.com | SemakHadis.com |
+| Fungsi | PustakaHadith (apps ini) | MyHadith (JAKIM) | Sunnah.com | SemakHadis.com |
 |---|---|---|---|---|
 | **1. Carian keyword & semantik** | ✅ Keyword (FTS5) **+ Semantik AI** (e5-small, skor 0.84–0.88) | ✅ Carian kata kunci hadith sahih | ✅ Carian Lucene (quotes, wildcard, fuzzy, boolean) | ✅ Carian/semak hadis |
 | **2. Jumlah data** | ✅ 62,169 hadis, 9 kitab (kutub al-tis'ah) | Koleksi hadith sahih rasmi JAKIM | ✅ Paling banyak: 20+ koleksi, 30,000+ riwayat | Koleksi hadis disahkan pengkaji |
@@ -1590,7 +1590,7 @@ Setiap platform ada kelebihan masing-masing.
 | **6. Semakan oleh pakar hadis** | ⚠️ Data darjat dari SemakHadis + sumber hadis.my (bukan panel sendiri) | ✅ JAKIM (berautoriti) | ⚠️ Grading al-Albani / Darussalam (sebahagian) | ✅ Ulama / pengkaji hadis |
 | **7. Semakan tanpa had** | ✅ Pangkalan tempatan 62,169 + offline | ⚠️ Bergantung portal | ✅ Carian bebas | ✅ Semak sebelum sebar |
 
-**Kedudukan ringkas:** Pustaka Hadis unik pada **Carian Semantik AI + jawapan
+**Kedudukan ringkas:** PustakaHadith unik pada **Carian Semantik AI + jawapan
 tersusun** dan **data lengkap offline dalam Bahasa Melayu**; MyHadith dan
 SemakHadis.com unggul pada **autoriti semakan pakar**; Sunnah.com unggul pada
 **keluasan data dan carian teknikal**.
