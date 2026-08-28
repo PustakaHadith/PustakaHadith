@@ -106,17 +106,20 @@ class JilidRak(QFrame):
         if not self._angkat_timer.isActive():
             self._angkat_timer.start()
 
+    def _kemas_angkat(self):
+        """Sasaran angkat = 1 bila dipilih ATAU di-hover, else 0.
+
+        Jilid dipilih KEKAL terangkat walau tetikus sudah keluar
+        (permintaan pengguna); baru jatuh bila dinyahpilih & tidak
+        di-hover.
+        """
+        self._terbangkan(1.0 if (self._dipilih or self._hover) else 0.0)
+
     def set_dipilih(self, ya: bool):
         if self._dipilih != ya:
             self._dipilih = ya
             self.update()
-        # Jilid dipilih KEKAL terangkat (permintaan pengguna) — bukan
-        # sekadar naik bila hover. Bila dinyahpilih & tidak di-hover,
-        # jatuhkan semula ke rak.
-        if ya:
-            self._terbangkan(1.0)
-        elif not self._hover:
-            self._terbangkan(0.0)
+        self._kemas_angkat()
 
     def set_kiraan(self, n):
         self._kiraan = f"{n:,}" if isinstance(n, int) else ""
@@ -124,12 +127,12 @@ class JilidRak(QFrame):
 
     def enterEvent(self, e):
         self._hover = True
-        self._terbangkan(1.0)
+        self._kemas_angkat()
         super().enterEvent(e)
 
     def leaveEvent(self, e):
         self._hover = False
-        self._terbangkan(0.0)
+        self._kemas_angkat()
         super().leaveEvent(e)
 
     def mouseReleaseEvent(self, e):
