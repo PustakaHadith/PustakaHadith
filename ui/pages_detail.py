@@ -557,26 +557,33 @@ class PagesDetail:
 
         # Bar tindakan bawah TERJEMAHAN sebagai IKON (bukan teks) --
         # kemas & konsisten dengan butang gear (IconActionButton).
-        # Keputusan pengguna: tukar pautan teks sunnah.com
-        # 'Lapor ralat | Kongsi | Salin' kepada 3 butang ikon monokrom
-        # (bendera / kongsi / salin). Fungsi KEKAL: lapor -> dialog
-        # e-mel, kongsi -> wa.me, salin -> menu popup 3 pilihan.
+        # Keputusan pengguna: 4 butang ikon monokrom —
+        #   whatsapp (Kongsi via WhatsApp) · salin (menu popup 3 pilihan)
+        #   dengar (TTS) · simpan (penanda buku, keadaan aktif terisi).
         # Tooltip kekal supaya fungsi jelas walaupun ikon.
         bar_ar = QWidget()
         bar_lo = QHBoxLayout(bar_ar)
         bar_lo.setContentsMargins(0, 0, 0, 0)
-        bar_lo.setSpacing(6)
+        bar_lo.setSpacing(8)
         # Lajur terjemahan di KIRI -> ikon dijajarkan ke KIRI (baris
         # latin dibaca kiri-ke-kanan). addStretch di kanan.
-        b_lapor = IconActionButton("lapor", "Lapor ralat")
-        b_lapor.clicked.connect(self._lapor_ralat)
-        b_kongsi = IconActionButton("kongsi", "Kongsi")
-        b_kongsi.clicked.connect(self._share_bahasa_semasa)
+        b_wa = IconActionButton("whatsapp", "Kongsi via WhatsApp")
+        b_wa.clicked.connect(self._share_bahasa_semasa)
         b_salin = IconActionButton("salin", "Salin")
         b_salin.clicked.connect(self._menu_salin)
-        bar_lo.addWidget(b_lapor)
-        bar_lo.addWidget(b_kongsi)
+        b_dengar = IconActionButton("dengar", "Dengar (TTS)")
+        b_dengar.clicked.connect(lambda: self._tts(self._detail_h))
+        b_simpan = IconActionButton(
+            "simpan", "Simpan",
+            active_inner=('<path d="M6 4h12a1 1 0 0 1 1 1v15l-7-4-7 4V5a1 1 '
+                          '0 0 1 1-1z"/>'))
+        b_simpan.clicked.connect(lambda: self._toggle_save(self._detail_h))
+        self._save_btn_icon = b_simpan
+        b_simpan.set_active(self._is_saved(h.get("collection"), h.get("id")))
+        bar_lo.addWidget(b_wa)
         bar_lo.addWidget(b_salin)
+        bar_lo.addWidget(b_dengar)
+        bar_lo.addWidget(b_simpan)
         bar_lo.addStretch(1)
         pva.addWidget(bar_ar)
 
@@ -1349,6 +1356,9 @@ class PagesDetail:
         btn = getattr(self, "_save_btn", None)
         if btn is not None:
             btn.setText(_label_simpan(self._is_saved(slug, hid)))
+        icon = getattr(self, "_save_btn_icon", None)
+        if icon is not None:
+            icon.set_active(self._is_saved(slug, hid))
 
     def _kemas_butang_atas_detail(self):
         """Tunjuk/sembunyi butang ↑ mengikut kedudukan skrol (Sesi 34).

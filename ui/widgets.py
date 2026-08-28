@@ -756,17 +756,19 @@ class GearButton(QPushButton):
         super().leaveEvent(e)
 
 
-def _line_icon(inner: str, size: int = 20, color: str = None) -> QIcon:
+def _line_icon(inner: str, size: int = 20, color: str = None,
+               fill: str = "none") -> QIcon:
     """Ikon vektor garis (stroke) — konsisten dengan gear_icon().
 
     `inner` ialah laluan SVG di dalam <svg viewBox="0 0 24 24">. Emoji
     bergantung fon sistem (tofu/pudar); SVG ini tajam & konsisten.
+    `fill` membenarkan ikon "aktif" (cth. penanda simpan penuh).
     """
     from ui.theme import TEXT_MUTED
     col = color or TEXT_MUTED
     svg = (
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" '
-        f'fill="none" stroke="{col}" stroke-width="1.9" '
+        f'fill="{fill}" stroke="{col}" stroke-width="1.9" '
         f'stroke-linecap="round" stroke-linejoin="round">{inner}</svg>'
     )
     pm = QPixmap()
@@ -776,12 +778,14 @@ def _line_icon(inner: str, size: int = 20, color: str = None) -> QIcon:
 
 
 class IconActionButton(QPushButton):
-    """Butang ikon garis rata untuk bar tindakan (lapor/kongsi/salin).
+    """Butang ikon garis rata untuk bar tindakan (whatsapp/salin/dengar/
+    simpan/lapor/kongsi).
 
-    Ganti pautan teks "Lapor ralat | Kongsi | Salin" dengan ikon
-    monokrom kemas. Warna TEXT_MUTED (normal) -> TEAL (hover); QIcon
-    tidak ikut QSS jadi tukar ikon secara manual (sama seperti
-    GearButton).
+    Ganti pautan teks dengan ikon monokrom kemas. Warna TEXT_MUTED
+    (normal) -> TEAL (hover); QIcon tidak ikut QSS jadi tukar ikon
+    secara manual (sama seperti GearButton). `active_inner` (pilihan)
+    memaparkan ikon "aktif" terisi TEAL bila `set_active(True)` dipanggil
+    — sesuai untuk keadaan "sudah disimpan".
     """
 
     ICON = {
@@ -796,26 +800,49 @@ class IconActionButton(QPushButton):
         # dua segi empat bertindih — salin
         "salin": ('<rect x="9" y="9" width="11" height="11" rx="2"/>'
                   '<path d="M5 15V5a2 2 0 0 1 2-2h10"/>'),
+        # pemegang telefon — WhatsApp
+        "whatsapp": ('<path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 '
+                     '1 1-.25 11 11 0 0 0 3.5.6 1 1 0 0 1 1 1V20a1 1 0 0 '
+                     '1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 '
+                     '11 11 0 0 0 .6 3.5 1 1 0 0 1-.25 1z"/>'),
+        # pembesar suara + gelombang — dengar (TTS)
+        "dengar": ('<path d="M4 9v6h4l5 4V5L8 9H4z"/>'
+                   '<path d="M16.5 8.5a5 5 0 0 1 0 7"/>'
+                   '<path d="M19.5 5.5a9 9 0 0 1 0 13"/>'),
+        # penanda buku — simpan
+        "simpan": '<path d="M6 4h12a1 1 0 0 1 1 1v15l-7-4-7 4V5a1 1 0 0 1 1-1z"/>',
     }
 
-    def __init__(self, kind: str, tooltip: str, parent=None, size: int = 20):
+    def __init__(self, kind: str, tooltip: str, parent=None, size: int = 20,
+                 active_inner: str = None):
         super().__init__(parent)
         from ui.theme import TEAL, TEXT_MUTED
         inner = self.ICON[kind]
         self._n = _line_icon(inner, size, TEXT_MUTED)
         self._h = _line_icon(inner, size, TEAL)
+        self._aktif = (_line_icon(active_inner, size, TEAL, fill=TEAL)
+                       if active_inner else None)
+        self._active = False
         self.setIcon(self._n)
         self.setIconSize(QSize(size, size))
         self.setFixedSize(size + 18, size + 12)
         self.setCursor(Qt.PointingHandCursor)
         self.setToolTip(tooltip)
 
+    def set_active(self, on: bool):
+        """Tukar ke ikon "aktif" (terisi) bila disimpan, dsb."""
+        self._active = on
+        if self._aktif is not None:
+            self.setIcon(self._aktif if on else self._n)
+
     def enterEvent(self, e):
-        self.setIcon(self._h)
+        if not self._active:
+            self.setIcon(self._h)
         super().enterEvent(e)
 
     def leaveEvent(self, e):
-        self.setIcon(self._n)
+        if not self._active:
+            self.setIcon(self._n)
         super().leaveEvent(e)
 
 
