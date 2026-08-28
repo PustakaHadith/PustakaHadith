@@ -800,11 +800,14 @@ class IconActionButton(QPushButton):
         # dua segi empat bertindih — salin
         "salin": ('<rect x="9" y="9" width="11" height="11" rx="2"/>'
                   '<path d="M5 15V5a2 2 0 0 1 2-2h10"/>'),
-        # pemegang telefon — WhatsApp
-        "whatsapp": ('<path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 '
-                     '1 1-.25 11 11 0 0 0 3.5.6 1 1 0 0 1 1 1V20a1 1 0 0 '
-                     '1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 '
-                     '11 11 0 0 0 .6 3.5 1 1 0 0 1-.25 1z"/>'),
+        # gelembung sembang + pemegang telefon — logo WhatsApp
+        "whatsapp": (
+            '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8'
+            'A2.5 2.5 0 0 1 17.5 16H9l-4 3v-3A2.5 2.5 0 0 1 3 13.5z"/>'
+            '<path d="M9 8.5a11 11 0 0 0 5 5l1.5-1.5a1 1 0 0 1 1-.25 8 8 0 '
+            '0 0 2.5.4 1 1 0 0 1 1 1V17a1 1 0 0 1-1 1A14 14 0 0 1 4 4a1 1 0 '
+            '0 1 1-1h2.8a1 1 0 0 1 1 1 8 8 0 0 0 .4 2.5 1 1 0 0 1-.25 1z"/>'
+        ),
         # pembesar suara + gelombang — dengar (TTS)
         "dengar": ('<path d="M4 9v6h4l5 4V5L8 9H4z"/>'
                    '<path d="M16.5 8.5a5 5 0 0 1 0 7"/>'
