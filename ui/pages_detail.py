@@ -384,25 +384,11 @@ class PagesDetail:
         self._tajuk_btn_r2.setSpacing(8)
         tbl.addLayout(self._tajuk_btn_r1)
         tbl.addLayout(self._tajuk_btn_r2)
+        # Bar tindakan dipindahkan ke bar bawah (ikon: WhatsApp / Salin /
+        # Dengar / Simpan). Baris atas tajuk tidak lagi memaparkan butang
+        # tindakan — elak berulang dengan bar bawah (keputusan pengguna).
         self._tajuk_btns = []
-        for label, fn in [("💬 WhatsApp", self._share_bahasa_semasa),
-                          ("📋 Salin", lambda: self._copy(h)),
-                          ("🔊 Dengar", lambda: self._tts(h))]:
-            b = QPushButton(label)
-            b.setCursor(Qt.PointingHandCursor)
-            b.clicked.connect(fn)
-            self._tajuk_btn_r1.addWidget(b)
-            self._tajuk_btns.append(b)
-
-        saved = self._is_saved(slug, hid)
-        self._save_btn = QPushButton(_label_simpan(saved))
-        self._save_btn.setCursor(Qt.PointingHandCursor)
-        self._save_btn.clicked.connect(lambda: self._toggle_save(h))
-        self._tajuk_btn_r1.addWidget(self._save_btn)
-        self._tajuk_btns.append(self._save_btn)
-        self._tajuk_btn_r1.addStretch(1)
-        self._tajuk_btn_r2.addStretch(1)
-        self._tajuk_btn_n1 = len(self._tajuk_btns)
+        self._tajuk_btn_n1 = 0
         self._tajuk_r1.addWidget(self._tajuk_butang)
 
         # Baris kedua (sempit): stretch + butang, dijajarkan kanan.
