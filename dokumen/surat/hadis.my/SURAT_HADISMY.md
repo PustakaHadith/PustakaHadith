@@ -151,6 +151,11 @@ nasai      : 468
   sementara **menunggu kebenaran bertulis** dari hadis.my (surat ini).
 - Sebaik kebenaran diterima, snapshot data akan dibundel supaya pengguna boleh
   terus membaca tanpa kunci API (terperinci dalam "Permohonan Utama" di atas).
+- **Penomoran No. Hadis:** nombor yang dipaparkan mengikuti *edisi terjemahan*
+  sumber (Kutub al-Tis'ah) dan **tidak semestinya sepadan** dengan penomoran
+  sunnah.com / hadith.my. Ia dilabelkan jelas sebagai "No. rujukan PustakaHadith"
+  pada setiap butiran hadis (dan petua alat pada senarai) supaya pengguna tidak
+  keliru; kandungan hadis tetap sahih.
 
 ## Tangkapan Skrin Aplikasi (v1.0.0 — Tema Aqua)
 

@@ -76,3 +76,20 @@
   **dibuang** — `SURAT_HADISMY.pdf` kini versi bersih tunggal.
 - Kesemua 4 PDF hadis.my (`SURAT_HADISMY.pdf`, `EMEL_HADISMY.pdf`,
   `DASAR_PRIVASI.pdf`, `PAUTAN_SOKONGAN.pdf`) seragam `PustakaHadith`.
+
+## Pelaksanaan Pilihan B — Penomboran Hadis (sambungan)
+- Keputusan pengguna: **B** — kekal nombor edisi terjemahan, **label jelas**
+  "No. rujukan PustakaHadith" (tidak sepadan sunnah.com / hadith.my).
+- App: `ui/pages_detail.py` — kapsyen `QLabel#muted` di bawah tajuk butiran
+  hadis: "No. rujukan PustakaHadith · mengikut edisi terjemahan sumber
+  (mungkin berbeza dari penomoran sunnah.com / hadith.my)".
+- `ui/widgets.py` — `setToolTip` pada label `No. {id}` kad senarai.
+- `ui/deklarasi.py` (halaman Tentang) — perenggan "Penomoran Hadis".
+- Dokumen: `EMEL_HADISMY.md` + `SURAT_HADISMY.md` — seksyen "Penomoran No.
+  Hadis" (transparansi kebenaran hadis.my); `MANUAL_PENGGUNAAN.md` — nota
+  "No. rujukan PustakaHadith" (Mengenai).
+- PDF dijana semula: `EMEL_HADISMY.pdf`, `SURAT_HADISMY.pdf` (terkunci →
+  `SURAT_HADISMY_kemas.pdf` dikemas kini). `DASAR_PRIVASI.pdf` / `PAUTAN_SOKONGAN.pdf`
+  tidak berubah.
+- Status e-mel hadis.my: **belum dihantar** (kandungan disemak/siap untuk
+  hantar).

@@ -26,6 +26,14 @@ Saya menulis untuk:
 setiap butiran hadis. Tiada pengubahsuaian teks; data hanya disimpan
 setempat dalam peranti pengguna (tiada pelayan kami).
 
+**Penomoran No. Hadis:** nombor yang dipaparkan dalam aplikasi mengikuti
+*edisi terjemahan* sumber (Kutub al-Tis'ah) dan **tidak semestinya sepadan**
+dengan penomoran sunnah.com / hadith.my. Ia dilabelkan jelas sebagai
+"No. rujukan PustakaHadith" pada setiap butiran hadis (serta petua alat
+pada senarai) supaya pengguna tidak keliru apabila membanding dengan
+laman lain. Kandungan hadis tetap sahih — hanya nombor rujukan yang
+berbeza edisi.
+
 **Sekiranya dibenarkan, saya bersedia:**
 - meletak atribusi jelas di mana-mana sahaja pihak tuan kehendaki;
 - mengehadkan kekerapan kemas kini *snapshot* mengikut kebenaran tuan;

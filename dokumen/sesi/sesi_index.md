@@ -8361,6 +8361,27 @@ kemas. Tertangguh: nombor hadis A/B/C, kebenaran hadis.my, build dist.
 
 **Log harian:** `dokumen/perubahan/PERUBAHAN_27OGOS.md`
 
+## Sesi 59 - 27 Ogos 2026 (sambungan)
+
+**Tema: Pelaksanaan Pilihan B — penomboran hadis + semakan e-mel hadis.my**
+
+- **Keputusan:** pengguna pilih **B** — kekal nombor edisi terjemahan, label
+  jelas "No. rujukan PustakaHadith" (tidak sepadan sunnah.com / hadith.my).
+- **App:** `ui/pages_detail.py` (kapsyen muted di bawah tajuk butiran),
+  `ui/widgets.py` (tooltip No. kad senarai), `ui/deklarasi.py` (perenggan
+  "Penomoran Hadis" di Tentang). Compile OK (`py_compile`).
+- **Dokumen:** `EMEL_HADISMY.md` + `SURAT_HADISMY.md` (seksyen "Penomoran No.
+  Hadis"), `MANUAL_PENGGUNAAN.md` (nota rujukan). PDF: `EMEL_HADISMY.pdf`
+  + `SURAT_HADISMY_kemas.pdf` dikemas kini (`SURAT_HADISMY.pdf` terkunci
+  dalam pelihat).
+- **E-mel hadis.my:** kandungan disemak & siap; **belum dihantar** (tunggu
+  pengguna hantar).
+
+**Status:** penomboran dilabel jelas di app + dokumen. Tertangguh: hantar
+e-mel hadis.my, balasan kebenaran, build dist penuh.
+
+**Log harian:** `dokumen/perubahan/PERUBAHAN_27OGOS.md`
+
 ---
 
  *sesi_index.md — dikemas kini 27 Ogos 2026*

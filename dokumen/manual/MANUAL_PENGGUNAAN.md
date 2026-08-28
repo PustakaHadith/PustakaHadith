@@ -25,9 +25,11 @@ ulama, huraian ringkas, dan carian makna (AI).
 | Muwatta' Malik | 1,594 |
 
 *(jumlah: 62,169 hadis. Nombor hadis mengikut **penomboran set data sumber**
-(hadis.my). Bagi sesetengah kitab, nombor ini mungkin berbeza daripada
-penomboran buku cetak atau sunnah.com; rujukan dalam aplikasi adalah
-konsisten dengan data yang dipaparkan.)*
+(hadis.my / edisi terjemahan). Bagi sesetengah kitab, nombor ini mungkin
+berbeza daripada penomboran buku cetak atau sunnah.com. Ia dipaparkan sebagai
+**"No. rujukan PustakaHadith"** pada setiap butiran hadis (dan petua alat pada
+senarai) supaya tidak keliru; rujukan dalam aplikasi kekal konsisten dengan
+data yang dipaparkan.)*
 
 ---
 

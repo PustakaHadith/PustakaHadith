@@ -226,6 +226,14 @@ class DeklarasiDialog(QDialog):
         tbl.setMinimumHeight(len(data) * 34 + 4)
         v.addWidget(tbl)
 
+        _kepala(v, "Penomoran Hadis")
+        _perenggan(v, "Nombor pada setiap hadis mengikuti edisi terjemahan "
+                       "sumber (Kutub al-Tis'ah) dan mungkin berbeza dari "
+                       "penomoran sunnah.com / hadith.my. Ia dipaparkan sebagai "
+                       "\"No. rujukan PustakaHadith\" pada butiran hadis. "
+                       "Kandungan hadis kekal sahih — hanya nombor rujukan "
+                       "yang berbeza edisi.", warna=TEXT_MUTED)
+
         _kepala(v, "Sumber dan atribusi")
         sumber = [
             ("Teks hadis, terjemahan\nMelayu & Indonesia",
