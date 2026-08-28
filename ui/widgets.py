@@ -756,6 +756,69 @@ class GearButton(QPushButton):
         super().leaveEvent(e)
 
 
+def _line_icon(inner: str, size: int = 20, color: str = None) -> QIcon:
+    """Ikon vektor garis (stroke) — konsisten dengan gear_icon().
+
+    `inner` ialah laluan SVG di dalam <svg viewBox="0 0 24 24">. Emoji
+    bergantung fon sistem (tofu/pudar); SVG ini tajam & konsisten.
+    """
+    from ui.theme import TEXT_MUTED
+    col = color or TEXT_MUTED
+    svg = (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" '
+        f'fill="none" stroke="{col}" stroke-width="1.9" '
+        f'stroke-linecap="round" stroke-linejoin="round">{inner}</svg>'
+    )
+    pm = QPixmap()
+    pm.loadFromData(svg.encode("utf-8"), "SVG")
+    return QIcon(pm.scaled(size, size, Qt.KeepAspectRatio,
+                           Qt.SmoothTransformation))
+
+
+class IconActionButton(QPushButton):
+    """Butang ikon garis rata untuk bar tindakan (lapor/kongsi/salin).
+
+    Ganti pautan teks "Lapor ralat | Kongsi | Salin" dengan ikon
+    monokrom kemas. Warna TEXT_MUTED (normal) -> TEAL (hover); QIcon
+    tidak ikut QSS jadi tukar ikon secara manual (sama seperti
+    GearButton).
+    """
+
+    ICON = {
+        # bendera pada tiang — lapor ralat
+        "lapor": '<path d="M5 21V4"/><path d="M5 4h13l-2.2 3.2L18 10.4H5"/>',
+        # tiga nod bersambung — kongsi
+        "kongsi": ('<circle cx="18" cy="5" r="2.6"/>'
+                   '<circle cx="6" cy="12" r="2.6"/>'
+                   '<circle cx="18" cy="19" r="2.6"/>'
+                   '<line x1="8.4" y1="13.4" x2="15.6" y2="17.6"/>'
+                   '<line x1="15.6" y1="6.4" x2="8.4" y2="10.6"/>'),
+        # dua segi empat bertindih — salin
+        "salin": ('<rect x="9" y="9" width="11" height="11" rx="2"/>'
+                  '<path d="M5 15V5a2 2 0 0 1 2-2h10"/>'),
+    }
+
+    def __init__(self, kind: str, tooltip: str, parent=None, size: int = 20):
+        super().__init__(parent)
+        from ui.theme import TEAL, TEXT_MUTED
+        inner = self.ICON[kind]
+        self._n = _line_icon(inner, size, TEXT_MUTED)
+        self._h = _line_icon(inner, size, TEAL)
+        self.setIcon(self._n)
+        self.setIconSize(QSize(size, size))
+        self.setFixedSize(size + 18, size + 12)
+        self.setCursor(Qt.PointingHandCursor)
+        self.setToolTip(tooltip)
+
+    def enterEvent(self, e):
+        self.setIcon(self._h)
+        super().enterEvent(e)
+
+    def leaveEvent(self, e):
+        self.setIcon(self._n)
+        super().leaveEvent(e)
+
+
 class _CopyMenuFilter(QObject):
     """Pintas QEvent.ContextMenu sebelum Qt sempat papar menu lalainya.
 

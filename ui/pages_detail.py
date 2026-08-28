@@ -51,9 +51,9 @@ from ui.theme import (
     GUTTER, RED_BG, RED_BORDER, RED_TEXT, TEAL, TEXT_SECONDARY,
 )
 from ui.widgets import (
-    BAB_TAFSIR, BackgroundCanvas, Collapsible, _ialah_bab_tafsir,
-    arabic_browser, attach_copy_menu, centered_column, elide, make_scroll,
-    text_browser,
+    BAB_TAFSIR, BackgroundCanvas, Collapsible, IconActionButton,
+    _ialah_bab_tafsir, arabic_browser, attach_copy_menu, centered_column,
+    elide, make_scroll, text_browser,
 )
 from ui.workers import HadithWorker, RandomWorker
 from ui.lapor_ralat import LaporRalatDialog
@@ -555,40 +555,28 @@ class PagesDetail:
         self._trans_lo.setSpacing(6)
         kol_terjemahan.addWidget(self._trans_box, 1)
 
-        # Bar tindakan bawah TERJEMAHAN sebagai TEKS (bukan butang) --
-        # tiru sunnah.com 'Report Error | Share | Copy'. Keputusan
-        # pengguna (13 Ogos): "mahu text sahaja bukan button" -- pautan
-        # teks kecil dijajarkan ke KANAN (addStretch di kiri). 'Salin'
-        # membuka menu popup 3 pilihan (Arab/terjemahan/semuanya).
+        # Bar tindakan bawah TERJEMAHAN sebagai IKON (bukan teks) --
+        # kemas & konsisten dengan butang gear (IconActionButton).
+        # Keputusan pengguna: tukar pautan teks sunnah.com
+        # 'Lapor ralat | Kongsi | Salin' kepada 3 butang ikon monokrom
+        # (bendera / kongsi / salin). Fungsi KEKAL: lapor -> dialog
+        # e-mel, kongsi -> wa.me, salin -> menu popup 3 pilihan.
+        # Tooltip kekal supaya fungsi jelas walaupun ikon.
         bar_ar = QWidget()
         bar_lo = QHBoxLayout(bar_ar)
         bar_lo.setContentsMargins(0, 0, 0, 0)
-        bar_lo.setSpacing(4)
-        # Cermin RTL: lajur terjemahan kini di KIRI, jadi pautan
-        # dijajarkan ke KIRI (baris latin dibaca kiri-ke-kanan).
-        _tindakan = {
-            "lapor": self._lapor_ralat,
-            "kongsi": self._share_bahasa_semasa,
-            "salin": self._menu_salin,
-        }
-        _pisah = (f'<span style="color:{TEXT_SECONDARY};">'
-                  '&nbsp;|&nbsp;</span>')
-        _pa = _pisah.join(
-            f'<a href="{k}" style="color:{TEAL}; '
-            f'text-decoration:none;">{label}</a>'
-            for k, label in [("lapor", "Lapor ralat"),
-                             ("kongsi", "Kongsi"),
-                             ("salin", "Salin")])
-        t = QLabel(_pa)
-        t.setObjectName("barTindakan")
-        # Bar MESTI SEBARIS (arahan 18 Ogos): wordWrap dibuang supaya
-        # label kekal pada lebar semula jadinya; bar berada di aras
-        # panel (lebar penuh) jadi ia muat walau lajur sempit.
-        t.setCursor(Qt.PointingHandCursor)
-        t.setTextInteractionFlags(Qt.TextBrowserInteraction)
-        t.linkActivated.connect(
-            lambda href: _tindakan.get(href, lambda: None)())
-        bar_lo.addWidget(t)
+        bar_lo.setSpacing(6)
+        # Lajur terjemahan di KIRI -> ikon dijajarkan ke KIRI (baris
+        # latin dibaca kiri-ke-kanan). addStretch di kanan.
+        b_lapor = IconActionButton("lapor", "Lapor ralat")
+        b_lapor.clicked.connect(self._lapor_ralat)
+        b_kongsi = IconActionButton("kongsi", "Kongsi")
+        b_kongsi.clicked.connect(self._share_bahasa_semasa)
+        b_salin = IconActionButton("salin", "Salin")
+        b_salin.clicked.connect(self._menu_salin)
+        bar_lo.addWidget(b_lapor)
+        bar_lo.addWidget(b_kongsi)
+        bar_lo.addWidget(b_salin)
         bar_lo.addStretch(1)
         pva.addWidget(bar_ar)
 
