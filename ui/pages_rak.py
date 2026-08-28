@@ -98,6 +98,13 @@ class JilidRak(QFrame):
         if self._dipilih != ya:
             self._dipilih = ya
             self.update()
+        # Jilid dipilih KEKAL terangkat (permintaan pengguna) — bukan
+        # sekadar naik bila hover. Bila dinyahpilih & tidak di-hover,
+        # jatuhkan semula ke rak.
+        if ya:
+            self._terbangkan(1.0)
+        elif not self._hover:
+            self._terbangkan(0.0)
 
     def set_kiraan(self, n):
         self._kiraan = f"{n:,}" if isinstance(n, int) else ""
@@ -146,8 +153,8 @@ class JilidRak(QFrame):
         asas = QColor(self._meta.get("warna", "#2E7D6B"))
         if self._dipilih:
             fill = QColor(asas)
-            border = QColor("#EAF6F6")
-            lebar_border = 2
+            border = QColor("#FF9F1C")        # oren menonjol (pilihan)
+            lebar_border = 3
         elif self._hover or a > 0.01:
             fill = QColor(asas).lighter(115)
             border = QColor(asas).lighter(150)
@@ -168,6 +175,14 @@ class JilidRak(QFrame):
                 QRectF((w - lebar_bayang) / 2, bawah - 2 + 4 * a,
                        lebar_bayang, 5),
                 3, 3)
+
+        # Lingkaran bercahaya oren bila dipilih — tanda pilihan menonjol
+        # (menggantikan garis putih lama). Di belakang batang jilid.
+        if self._dipilih:
+            p.setPen(Qt.NoPen)
+            p.setBrush(QColor(255, 159, 28, 55))
+            p.drawRoundedRect(
+                QRectF(0, atas_spina - 2, w, tinggi_spina + 4), 10, 10)
 
         # Batang jilid — naik mengikut `a`.
         p.setPen(Qt.NoPen)
