@@ -8351,13 +8351,13 @@ Item tertangguh: nombor hadis A/B/C; kebenaran hadis.my; build dist ditangguh.
 - **Sumber:** `config.py` (`DATA_DIR=%LOCALAPPDATA%\PustakaHadith`),
   `ui/app_qt.py` (tajuk), `installer/msix_identity.txt` + `.iss`,
   `*.bat`/`*.ps1`/`*.py` dikemas kini.
-- **PDF:** `EMEL_HADISMY.pdf`, `DASAR_PRIVASI.pdf`, `PAUTAN_SOKONGAN.pdf`
-  dijana semula (`buat_pdf2.py`); `SURAT_HADISMY*.pdf` masih terkunci → tertangguh.
-- Commit `e9ff349`.
+- **PDF:** keempat-empat `SURAT_HADISMY.pdf`, `EMEL_HADISMY.pdf`,
+  `DASAR_PRIVASI.pdf`, `PAUTAN_SOKONGAN.pdf` dijana semula (`buat_pdf2.py`,
+  seragam `PustakaHadith`). `SURAT_HADISMY_kemas.pdf` (stale) dibuang.
+- Commit `e9ff349` (+ `fa66be1` log sesi).
 
-**Status:** jenama seragam `PustakaHadith` di repo; binaan akan guna nama
-sama bila dibina. Tertangguh: SURAT PDF (tutup pelihat), nombor hadis A/B/C,
-kebenaran hadis.my, build dist.
+**Status:** jenama seragam `PustakaHadith` di repo; keempat-empat PDF hadis.my
+kemas. Tertangguh: nombor hadis A/B/C, kebenaran hadis.my, build dist.
 
 **Log harian:** `dokumen/perubahan/PERUBAHAN_27OGOS.md`
 

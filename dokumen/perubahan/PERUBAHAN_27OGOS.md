@@ -69,3 +69,10 @@
   terkunci dalam pelihat → belum dijana semula; perlu tutup pelihat.
 - Binaan seterusnya (exe/MSIX) akan keluar sebagai `PustakaHadith` (tiada
   rebuild dibuat buat masa ini).
+
+### Sambungan terus (lepas tidur)
+- `SURAT_HADISMY.pdf` **berjaya dijana semula** (7.15 MB, pelihat ditutup)
+  dengan nama `PustakaHadith` betul. `SURAT_HADISMY_kemas.pdf` (stale)
+  **dibuang** — `SURAT_HADISMY.pdf` kini versi bersih tunggal.
+- Kesemua 4 PDF hadis.my (`SURAT_HADISMY.pdf`, `EMEL_HADISMY.pdf`,
+  `DASAR_PRIVASI.pdf`, `PAUTAN_SOKONGAN.pdf`) seragam `PustakaHadith`.
