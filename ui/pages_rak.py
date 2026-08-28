@@ -20,7 +20,7 @@ dalam `_THEMED_MODULES` untuk konsisten.
 from __future__ import annotations
 
 from PyQt5.QtCore import (
-    QEasingCurve, QRectF, Qt, QPropertyAnimation, pyqtProperty, pyqtSignal,
+    QRectF, Qt, QTimer, pyqtSignal,
 )
 from PyQt5.QtGui import QColor, QFont, QPainter
 from PyQt5.QtWidgets import (
@@ -48,11 +48,13 @@ class JilidRak(QFrame):
 
     ANIMASI TIMBUL (26 Ogos, permintaan pengguna): hover mengangkat
     jilid ~10px dengan bayang lembut di bawah — jilid "dicabut sedikit"
-    dari rak. Dilaksanakan sebagai QPropertyAnimation pada sifat custom
-    `angkat` (0.0–1.0) yang dicairkan dalam paintEvent. SENGAJA tidak
-    guna QGraphicsDropShadowEffect: efek grafik aktif semasa navigasi
-    halaman pernah mencetuskan ranap native (access violation, diukur
-    16 Ogos — lihat ui/pages_home.py sejarah BungkusTimbul).
+    dari rak. Dilaksanakan sebagai tween manual (QTimer) pada nilai
+    `_angkat_v` (0.0–1.0) yang dicairkan dalam paintEvent — menggantikan
+    QPropertyAnimation yang gagal memandu setter pada sebahagian build
+    PyQt. SENGAJA tidak guna QGraphicsDropShadowEffect: efek grafik
+    aktif semasa navigasi halaman pernah mencetuskan ranap native
+    (access violation, diukur 16 Ogos — lihat ui/pages_home.py sejarah
+    BungkusTimbul).
     """
 
     clicked = pyqtSignal(str)
@@ -65,11 +67,14 @@ class JilidRak(QFrame):
         self._hover = False
         self._kiraan = ""
         self._angkat_v = 0.0          # 0 = di rak; 1 = terangkat penuh
+        self._angkat_sasaran = 0.0
         self.setFixedSize(_LEBAR_JILID, _TINGGI_JILID)
         self.setCursor(Qt.PointingHandCursor)
-        self._anim = QPropertyAnimation(self, b"angkat", self)
-        self._anim.setDuration(150)
-        self._anim.setEasingCurve(QEasingCurve.OutCubic)
+        # Tween manual (QTimer) menggantikan QPropertyAnimation — lebih
+        # boleh diharap memandu naik/turun jilid merentas build PyQt.
+        self._angkat_timer = QTimer(self)
+        self._angkat_timer.setInterval(16)
+        self._angkat_timer.timeout.connect(self._angkat_tick)
         singkatan = {
             "bukhari": "BU", "muslim": "MU", "abu-daud": "AD",
             "tirmidzi": "TI", "nasai": "AN", "ibnu-majah": "IM",
@@ -77,22 +82,29 @@ class JilidRak(QFrame):
         }
         self._singkatan = singkatan.get(slug, slug[:2].upper())
 
-    # Sifat animasi — QPropertyAnimation menulis melalui setter ini;
-    # setter mencetuskan repaint setiap frame.
-    @pyqtProperty(float)
-    def angkat(self) -> float:
-        return self._angkat_v
-
-    @angkat.setter
-    def angkat(self, v: float):
-        self._angkat_v = max(0.0, min(1.0, float(v)))
+    # Tween manual — _angkat_tick naik/turun _angkat_v ke sasaran &
+    # repaint setiap frame.
+    def _angkat_tick(self):
+        """Tween _angkat_v ke sasaran setiap frame (eased) + repaint."""
+        cur = self._angkat_v
+        tgt = self._angkat_sasaran
+        if cur == tgt:
+            self._angkat_timer.stop()
+            return
+        d = tgt - cur
+        # Langkah berkadaran jarak (min 0.08/frame) -> kesan "OutCubic"
+        # kasar tanpa animasi Qt.
+        step = (0.08 if abs(d) > 0.08 else abs(d)) * (1 if d > 0 else -1)
+        cur += step
+        if (d > 0 and cur >= tgt) or (d < 0 and cur <= tgt):
+            cur = tgt
+        self._angkat_v = cur
         self.update()
 
     def _terbangkan(self, sasaran: float):
-        self._anim.stop()
-        self._anim.setStartValue(self._angkat_v)
-        self._anim.setEndValue(sasaran)
-        self._anim.start()
+        self._angkat_sasaran = max(0.0, min(1.0, float(sasaran)))
+        if not self._angkat_timer.isActive():
+            self._angkat_timer.start()
 
     def set_dipilih(self, ya: bool):
         if self._dipilih != ya:
