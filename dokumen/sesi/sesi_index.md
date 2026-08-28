@@ -8374,11 +8374,12 @@ kemas. Tertangguh: nombor hadis A/B/C, kebenaran hadis.my, build dist.
   Hadis"), `MANUAL_PENGGUNAAN.md` (nota rujukan). PDF: `EMEL_HADISMY.pdf`
   + `SURAT_HADISMY_kemas.pdf` dikemas kini (`SURAT_HADISMY.pdf` terkunci
   dalam pelihat).
-- **E-mel hadis.my:** kandungan disemak & siap; **belum dihantar** (tunggu
-  pengguna hantar).
+- **E-mel hadis.my:** **dihantar** (27 Ogos 2026) — tunggu balasan kebenaran
+  bertulis daripada hadis.my.
 
-**Status:** penomboran dilabel jelas di app + dokumen. Tertangguh: hantar
-e-mel hadis.my, balasan kebenaran, build dist penuh.
+**Status:** penomboran dilabel jelas di app + dokumen; e-mel kebenaran
+**dihantar**. Tertangguh: balasan kebenaran hadis.my, build dist penuh
+(bundel `hadis.db`).
 
 **Log harian:** `dokumen/perubahan/PERUBAHAN_27OGOS.md`
 

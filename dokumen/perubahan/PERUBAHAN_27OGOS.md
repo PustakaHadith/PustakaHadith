@@ -91,5 +91,5 @@
 - PDF dijana semula: `EMEL_HADISMY.pdf`, `SURAT_HADISMY.pdf` (terkunci →
   `SURAT_HADISMY_kemas.pdf` dikemas kini). `DASAR_PRIVASI.pdf` / `PAUTAN_SOKONGAN.pdf`
   tidak berubah.
-- Status e-mel hadis.my: **belum dihantar** (kandungan disemak/siap untuk
-  hantar).
+- Status e-mel hadis.my: **dihantar** (27 Ogos 2026) ke `hadisapi@gmail.com`
+  (CC `khai@webmaster.my`) — tunggu balasan kebenaran bertulis.
