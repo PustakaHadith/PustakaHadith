@@ -8317,6 +8317,12 @@ AKTIF sengaja; jurang Tafsir 843 dipantau; installer Fasa 0 TERTUNDA.
 - **Perbincangan Bab & Nombor:** `PERBINCANGAN_BAB_NOMBOR_HADIS.md`
   (`82cb845`, `e1104df`) — asal senarai Bab + isu Bukhari #858=kanonik #909;
   pilihan **A/B/C TERTANGGUH**.
+- **Perbincangan Langkah Seterusnya:** `PERBINCANGAN_LANGKAH_SETERUSNYA.md`
+  (28 Ogos 2026) — rancangan terperinci 3 langkah penambahbaikan:
+  (1) Unit tests pytest (~40 ujian, 5 hari), (2) Baiki `set_theme()`
+  performance (3 peringkat, 7 hari), (3) Laksanakan Aqua Glass UI
+  (4 fasa, 4 minggu). Termasuk struktur fail, contoh kod, jadual
+  pelaksanaan, risiko & mitigasi. Dokumen perancangan — tiada kod diubah.
 - **Susun dokumentasi:** kategori `sejarah_pembangunan/`, `surat/kebenaran/`,
   `surat/sokongan/`, `perbincangan/`, `penerbitan/`; pindah + kemas rujukan
   (`be0af4f`); `.gitignore` PII (`6eb5fff`).
@@ -8385,5 +8391,42 @@ kemas. Tertangguh: nombor hadis A/B/C, kebenaran hadis.my, build dist.
 
 ---
 
- *sesi_index.md — dikemas kini 27 Ogos 2026*
+---
+
+## Sesi 60 - 29 Ogos 2026
+
+**Tema: Betulkan apl — redesign Simpan & Sejarah + seragam ikon Simpan + terjemah bab ke BM**
+
+- **Redesign halaman Simpan & Sejarah (`ui/pages_tersimpan.py`):** susun semula
+  kepada banner + sidebar (kiraan hadis tersimpan mengikut kitab, klik tapis)
+  + panel senarai memenuhi lebar; tab Tersimpan & Telah dibaca seragam dengan
+  halaman Senarai Hadis. Betul bug: (1) senarai terhenti di tengah menegak
+  (`sa.setAlignment(Qt.AlignTop)`), (2)/(3) senarai kosong bila pilih bab/tekan
+  ikon simpan (`_render_saved` kini panggil `_render_senarai_simpan`).
+- **Seragam ikon Simpan:** `ui/widgets.py` `hadith_card_dwibahasa` tukar butang
+  emoji 🔖 → `IconActionButton("simpan", active_inner=…)` SVG (sama seperti
+  halaman detail); `pages_kitab.py`/`pages_carian.py` toggle guna `set_active()`;
+  buang `_ganti_butang_simpan` + pemalar `_SIMPANAKTIF`. Ikon Simpan kini seragam
+  di detail, Senarai Hadis, Carian, dan Simpan & Sejarah.
+- **Dokumen senarai bab:** `dokumen/SENARAI_BAB.md` dijana (jadual per kitab:
+  # / Nama Bab / Kiraan Hadis; Ahmad & Darimi tiada data bab).
+- **Terjemah bab ke BM (Kaedah B):** `data/bab_terjemahan.json` (baru) — peta BM
+  393 bab (bukhari 97, muslim 56, tirmidzi 49, nasai 51, abu-daud 43,
+  ibnu-majah 37, malik 60); `api/hadis_api.py` `_muat_bab_terjemahan()` +
+  `get_bab_list()` kembalikan `nama_bab_ms`; sidebar PILIH BAB papar BM dengan
+  fallback EN. Tak usik `hadis.db`. `dokumen/SENARAI_BAB.md` dikemas dengan
+  lajur Nama Bab (Melayu) untuk semakan.
+- **Build:** `PustakaHadith-Debug.spec` `datas` tambah `('data','data')` (bundel
+  fail terjemahan ke EXE). Spec utama di-.gitignore — edit setempat sahaja.
+
+**Status:** di-commit `87bd4c8` (8 fail: api/hadis_api.py, ui/pages_*,
+PustakaHadith-Debug.spec, data/bab_terjemahan.json, dokumen/SENARAI_BAB.md).
+Tak di-commit: log, DB/settings (rahsia), `core/update_checker.py` (#9 belum
+diminta). EXE masih binaan lama — uji sumber via `JALANKAN.bat`.
+
+**Log harian:** —
+
+---
+
+ *sesi_index.md — dikemas kini 29 Ogos 2026*
 
