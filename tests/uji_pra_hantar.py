@@ -37,7 +37,7 @@ import subprocess
 import sys
 import time
 
-BASE = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.environ["PYTHONIOENCODING"] = "utf-8"
 
 UJIAN = [

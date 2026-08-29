@@ -29,7 +29,7 @@ import os
 import sys
 import time
 
-BASE = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE)
 
 from PyQt5.QtWidgets import QApplication, QLabel

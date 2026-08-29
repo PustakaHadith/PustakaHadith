@@ -19,7 +19,7 @@ import time
 import sqlite3
 
 os.environ.setdefault("PYTHONIOENCODING", "utf-8")
-BASE = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE)
 os.environ["QT_QPA_PLATFORM"] = "offscreen"
 

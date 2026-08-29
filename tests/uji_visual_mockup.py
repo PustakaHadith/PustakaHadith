@@ -25,7 +25,7 @@ import sqlite3
 import sys
 import time
 
-BASE = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE)
 # Konsol Windows cp1252 rosakkan teks Arab — paksa UTF-8
 try:

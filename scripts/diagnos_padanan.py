@@ -17,7 +17,7 @@ import sys
 import unicodedata
 from collections import Counter
 
-BASE = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE)
 
 for _a in (sys.stdout, sys.stderr):
