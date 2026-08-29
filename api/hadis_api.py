@@ -64,6 +64,15 @@ def _muat_bab_terjemahan() -> dict:
         _BAB_TERJEMAHAN = {}
     return _BAB_TERJEMAHAN
 
+
+def nama_bab_bm(collection, book, default=""):
+    """Nama bab terjemahan BM (Kaedah B, 29 Ogos).
+
+    Pulangkan BM dari data/bab_terjemahan.json; fallback `default`
+    (biasanya nama_bab Inggeris dari CDN) jika tiada terjemahan.
+    """
+    return _muat_bab_terjemahan().get(collection, {}).get(str(book), "") or default
+
 MAX_PER_PAGE = 100  # minta lebih tetap dapat 100, tanpa amaran
 
 VALID_SLUGS = {

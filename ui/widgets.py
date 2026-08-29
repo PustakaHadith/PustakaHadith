@@ -19,6 +19,8 @@ from .theme import (
     TEXT_MUTED, TEXT_PRIMARY, TEXT_SECONDARY, ada_latar_imej,
 )
 
+from api.hadis_api import nama_bab_bm  # noqa: E402
+
 # Latar imej (tema AQUA sahaja) — aset baca sahaja di ASSET_DIR. Jika
 # fail hilang, BackgroundCanvas fallback kepada warna PAGE_BG pepejal
 # (apl tetap berfungsi; tiada ranap).
@@ -430,9 +432,8 @@ def hadith_card(hadis: dict, kitab_name: str = "", scale: float = 1.0,
                   "sumber; mungkin berbeza dari penomoran sunnah.com / hadith.my")
     tl.addWidget(no)
 
-    # Nama bab (Fasa 3) -- Inggeris apa adanya dari CDN, dipotong untuk
-    # kekal dalam satu baris. Tiada terjemahan: kami papar mentah.
-    bab = (hadis.get("nama_bab") or "").strip()
+    # Nama bab -- terjemahan BM (Kaedah B) dengan fallback EN dari CDN.
+    bab = nama_bab_bm(hadis.get("collection"), hadis.get("book"), hadis.get("nama_bab") or "").strip()
     if bab:
         bl = QLabel(elide(bab, 44))
         bl.setObjectName("babName")
@@ -563,7 +564,7 @@ def hadith_card_dwibahasa(hadis: dict, kitab_name: str = "",
     kl.addWidget(tlbl)
     kl.addStretch(1)
 
-    bab = (hadis.get("nama_bab") or "").strip()
+    bab = nama_bab_bm(hadis.get("collection"), hadis.get("book"), hadis.get("nama_bab") or "").strip()
     meta_txt = f"{kitab_name} {hadis.get('id', '')}"
     if bab:
         meta_txt += f"  ·  {elide(bab, 36)}"

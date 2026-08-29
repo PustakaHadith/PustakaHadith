@@ -39,6 +39,8 @@ from PyQt5.QtWidgets import (
     QStackedWidget, QVBoxLayout, QWidget,
 )
 
+from api.hadis_api import nama_bab_bm  # noqa: E402
+
 from ui.helpers import (
     BOOKMARKS, _ATRIBUSI_HE, _ATRIBUSI_INGGERIS,
     _ATRIBUSI_SEMA, _HAD_PETIK_RINGKAS, _HAD_WA, _clear, _write_json,
@@ -330,7 +332,7 @@ class PagesDetail:
         # (open_detail, _on_detail_full, pemulihan tema semua lalu di sini).
         # Label = nama bab jika ada, else potongan terjemahan. Gagal senyap.
         try:
-            _label = ((h.get("nama_bab") or "").strip()
+            _label = (nama_bab_bm(slug, h.get("book"), "")
                       or elide((h.get("melayu") or "").strip(), 48))
             record_reading(slug, hid, _label)
         except Exception:
@@ -414,9 +416,9 @@ class PagesDetail:
         cl.addWidget(tajuk_bar)
         cl.addSpacing(8)
 
-        # Nama bab (Fasa 3) -- papar mentah seperti dalam CDN, tiada
-        # terjemahan. Baris berasingan supaya tidak bersesak dengan tajuk.
-        bab = (h.get("nama_bab") or "").strip()
+        # Nama bab -- terjemahan BM (Kaedah B) dengan fallback EN dari CDN.
+        # Baris berasingan supaya tidak bersesak dengan tajuk.
+        bab = nama_bab_bm(slug, h.get("book"), h.get("nama_bab") or "").strip()
         if bab:
             bab_bar = QWidget()
             bbl = QHBoxLayout(bab_bar)
