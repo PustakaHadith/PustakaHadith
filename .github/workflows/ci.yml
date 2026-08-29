@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Pasang kebergantungan
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Semak sintaks (py_compile semua modul)
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m py_compile main.py db.py config.py api core ui utils
+
+      # Catatan: semak.py melancarkan PustakaApp (perlu paparan / klik
+      # dialog deklarasi) - tidak sesuai di CI tanpa sesi interaktif,
+      # dan boleh "hang". Akan disambung bila semak.py boleh lari headless
+      # atau bila ujian pytest (Fasa 2) wujud.
