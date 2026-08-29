@@ -104,6 +104,8 @@ from PyQt5.QtWidgets import QApplication      # noqa: E402
 from PyQt5.QtCore import QTimer              # noqa: E402
 
 from ui.app_qt import PustakaApp              # noqa: E402
+from core import crash_reporter                # noqa: E402
+crash_reporter.pasang_excepthook()
 
 
 def main():
@@ -144,7 +146,6 @@ def main():
 
 
 if __name__ == "__main__":
-    try:
-        sys.exit(main())
-    except Exception:
-        sys.exit(1)
+    # excepthook (dipasang di atas) akan tangkap exception tak terkawal,
+    # simpan laporan dan papar dialog sebelum keluar.
+    sys.exit(main())
