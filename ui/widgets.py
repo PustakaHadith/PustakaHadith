@@ -607,11 +607,13 @@ def hadith_card_dwibahasa(hadis: dict, kitab_name: str = "",
     baca.setObjectName("bacaLink")
     bl.addWidget(baca)
     bl.addStretch()
-    simpan = QPushButton("🔖")
-    simpan.setObjectName("simpanChip_aktif" if tersimpan else "simpanChip")
-    simpan.setCursor(Qt.PointingHandCursor)
-    simpan.setFixedSize(30, 30)
-    simpan.setToolTip("Simpan / buang dari tersimpan")
+    # Ikon Simpan SERAGAM dengan halaman detail (IconActionButton
+    # "simpan", SVG) — bukan emoji 🔖. Keadan aktif (terisi) dipaparkan
+    # bila hadis tersimpan; handler page memanggil set_active() pada toggle.
+    simpan = IconActionButton(
+        "simpan", "Simpan / buang dari tersimpan",
+        active_inner=IconActionButton.ICON["simpan"])
+    simpan.set_active(tersimpan)
     bl.addWidget(simpan, 0, Qt.AlignBottom)
     kn.addWidget(bawah)
     lo.addWidget(kanan, 9)

@@ -252,13 +252,9 @@ class PagesCarian:
         lay.addWidget(c)
 
     def _carian_toggle_simpan(self, h, card, slug, hid):
-        """Butang 🔖 pada kad carian — toggle tanda buku, segar butang."""
+        """Butang Simpan pada kad carian — toggle tanda buku, segar ikon."""
         self._toggle_save(h)
-        simpan = card.simpan_btn
-        simpan.setObjectName(
-            "simpanChip_aktif" if self._is_saved(slug, hid) else "simpanChip")
-        simpan.style().unpolish(simpan)
-        simpan.style().polish(simpan)
+        card.simpan_btn.set_active(self._is_saved(slug, hid))
 
     def _hantar_carian(self):
         """Hantar carian dari bar carian (butang/Enter).

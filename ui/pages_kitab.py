@@ -312,7 +312,8 @@ class PagesKitab:
                                  sum(b["kiraan"] for b in self._kitab_bab_data))
             for b in self._kitab_bab_data:
                 self._tambah_bab_row(bl, b.get("book"),
-                                     b.get("nama_bab") or f"Buku {b.get('book')}",
+                                     b.get("nama_bab_ms") or b.get("nama_bab")
+                                     or f"Buku {b.get('book')}",
                                      b.get("kiraan", 0))
             bl.addStretch(1)
             skrol.setWidget(bekas)
@@ -587,10 +588,7 @@ class PagesKitab:
                     self._kitab_list.removeWidget(c)
                     c.deleteLater()
                 else:
-                    c.simpan_btn.setObjectName(
-                        "simpanChip_aktif" if saved else "simpanChip")
-                    c.simpan_btn.style().unpolish(c.simpan_btn)
-                    c.simpan_btn.style().polish(c.simpan_btn)
+                    c.simpan_btn.set_active(saved)
                 break
 
     def _skrol_ke_kad(self, sasaran: int):

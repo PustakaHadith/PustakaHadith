@@ -20,23 +20,49 @@ Sync penuh 62,169 hadis = 622 request -> perlu 4 hari, atau naik taraf pelan.
 
 from __future__ import annotations
 
+import json
 import os
 import random
 import re
 import sqlite3
 import time
+from pathlib import Path
 
 import requests
 
 try:
-    from config import API_BASE_URL, DB_PATH, DEFAULT_PER_PAGE  # noqa: E402
+    from config import (  # noqa: E402
+        API_BASE_URL, ASSET_DIR, DB_PATH, DEFAULT_PER_PAGE)
 except ImportError:
     API_BASE_URL = "https://service.hadis.my/api/v1"
     DEFAULT_PER_PAGE = 20
+    ASSET_DIR = Path(__file__).resolve().parent
     import os as _os
     DB_PATH = _os.path.join(
         _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))),
         "hadis.db")
+
+
+_BAB_TERJEMAHAN = None
+
+
+def _muat_bab_terjemahan() -> dict:
+    """Peta terjemahan nama bab (BM) — data/bab_terjemahan.json.
+
+    Kaedah B (29 Ogos): fail peta berasingan, TIDAK usik hadis.db user.
+    Struktur: {collection: {book_str: nama_bm}}. Fail tiada/rosak → {}
+    (UI guna nama_bab Inggeris sebagai fallback).
+    """
+    global _BAB_TERJEMAHAN
+    if _BAB_TERJEMAHAN is not None:
+        return _BAB_TERJEMAHAN
+    p = Path(ASSET_DIR) / "data" / "bab_terjemahan.json"
+    try:
+        with open(p, encoding="utf-8") as f:
+            _BAB_TERJEMAHAN = json.load(f)
+    except Exception:
+        _BAB_TERJEMAHAN = {}
+    return _BAB_TERJEMAHAN
 
 MAX_PER_PAGE = 100  # minta lebih tetap dapat 100, tanpa amaran
 
@@ -403,7 +429,9 @@ class HadisAPI:
                 "GROUP BY b.book ORDER BY b.book", (slug,)).fetchall()
         except Exception:
             return []
+        terj = _muat_bab_terjemahan().get(slug, {})
         return [{"book": r["book"], "nama_bab": r["nama_bab"],
+                 "nama_bab_ms": terj.get(str(r["book"]), ""),
                  "kiraan": r["kiraan"]} for r in rows]
 
     def get_hadis_list(self, slug: str, page: int = 1,

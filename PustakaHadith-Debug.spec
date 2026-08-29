@@ -2,7 +2,7 @@
 from PyInstaller.utils.hooks import collect_all
 from PyInstaller.utils.hooks import copy_metadata
 
-datas = [('app.ico', '.'), ('sunnah_map', 'sunnah_map'), ('.cache_models', '.cache_models'), ('hadis_faiss.index', '.'), ('hadis_id_map.pkl', '.'), ('profil_model.json', '.')]
+datas = [('app.ico', '.'), ('sunnah_map', 'sunnah_map'), ('.cache_models', '.cache_models'), ('hadis_faiss.index', '.'), ('hadis_id_map.pkl', '.'), ('profil_model.json', '.'), ('data', 'data')]
 binaries = []
 hiddenimports = []
 datas += copy_metadata('sentence-transformers')

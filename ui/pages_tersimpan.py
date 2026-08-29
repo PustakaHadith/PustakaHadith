@@ -1,49 +1,62 @@
-"""Halaman Tersimpan (penanda buku) + Sejarah Bacaan — mixin PustakaApp.
+"""Halaman Simpan & Sejarah — mixin PustakaApp.
 
-Halaman "Simpan & Sejarah" memaparkan dua bahagian dipilih melalui togol
-tabs:
-  • Tersimpan    — senarai penanda buku (`self.bookmarks`) sebagai kad
-                   dwibahasa; 🔖 buang/masuk terus dari halaman.
-  • Telah dibaca — sejarah bacaan (`read_history()`); setiap entri diambil
-                   semula melalui `api.get_hadis_by_id` dan dipapar sebagai
-                   kad dwibahasa yang sama.
-Digabungkan ke `PustakaApp` melalui MRO. `_render_saved` memanggil
-`open_by_ref` (PagesDetail) — mesti digabungkan bersama PagesDetail.
+Susun atur SERAGAM dengan Senarai Hadis (pages_kitab.py): banner kaca +
+sidebar "SIMPAN MENGIKUT KITAB" (kiraan per kitab, boleh klik untuk
+tapIS) + panel senarai dwibahasa memenuhi lebar tetingkap (tiada lajur
+tengah sempit). Dua tab: Tersimpan | Telah dibaca.
 
-Peraturan tema: modul ini TIDAK import warna dari `ui.theme` (hanya
-widget + `COLLECTION_META`), namun didaftar dalam `_THEMED_MODULES`
-(ui/theme.py) untuk konsisten dengan modul UI yang lain.
+Tulis semula (Sesi ini) untuk membaiki dua masalah pengguna:
+  • Ruang kosong kiri/kanan — lajur memenuhi ruang (seperti _kitab_panel).
+  • Ikon Simpan tidak seragam — guna IconActionButton "simpan" (SVG sama
+    seperti halaman detail), bukan emoji 🔖.
+
+Latar: BackgroundCanvas (glob AQUA). Kaedah awam kekal: _page_saved
+(dipanggil sekali bila halaman dibina) dan _render_saved (dipanggil oleh
+go("saved") setiap navigasi) — tiada perubahan pada pemanggil luar.
 """
 
 from __future__ import annotations
 
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import (
-    QCheckBox, QHBoxLayout, QLabel, QPushButton, QSizePolicy, QVBoxLayout,
-    QWidget,
+    QCheckBox, QFrame, QHBoxLayout, QLabel, QPushButton, QScrollArea,
+    QSizePolicy, QVBoxLayout, QWidget,
 )
 
 from ui.helpers import _clear, read_history, remove_reading
-from ui.pages import Hero, empty_state
-from ui.theme import ada_latar_imej, COLLECTION_META
-from ui.widgets import BackgroundCanvas, hadith_card_dwibahasa, make_scroll
-
+from ui.pages import empty_state
+from ui.theme import COLLECTION_META
+from ui.widgets import (
+    BackgroundCanvas, ClickCard, IconActionButton,
+    hadith_card_dwibahasa, make_scroll,
+)
 
 class PagesTersimpan:
+    # ── HALAMAN: Simpan & Sejarah ──────────────────────────────────────
     def _page_saved(self):
-        # Latar: BackgroundCanvas (glob garisan masa AQUA / warna pepejal
-        # tema lain) — pola sama Utama/Carian/Senarai. Skrol telus di
-        # dalam supaya glob kekal TETAP semasa skrol.
+        # Pola sama _page_kitab: BackgroundCanvas akar, skrol telus di
+        # atasnya — glob AQUA kelihatan di belakang panel kaca.
         kanvas = BackgroundCanvas()
         self.stack.addWidget(kanvas)
         sa = make_scroll(kanvas)
         sa.setObjectName("savedScroll")
         sa.setStyleSheet("background: transparent;")
+        # Pastikan kandungan bermula di ATAS (bukan memusat menegak bila
+        # senarai pendek — yang kelihatan "cacat" pada tab kosong).
+        sa.setAlignment(Qt.AlignTop)
         self._tersimpan_sa = sa
+        body = QWidget()
+        body.setObjectName("homeBody")
+        sa.setWidget(body)
+        vl = QVBoxLayout(kanvas)
+        vl.setContentsMargins(0, 0, 0, 0)
+        vl.addWidget(sa)
 
-        # Butang terapung "↑ ke atas" (Sesi 34) — corak sama halaman
-        # kitab/carian: kelihatan bila senarai panjang dan pengguna skrol
-        # ke bawah; klik untuk kembali ke atas dengan animasi lancar.
+        self._saved_root = QVBoxLayout(body)
+        self._saved_root.setContentsMargins(24, 20, 24, 20)
+        self._saved_root.setSpacing(14)
+
+        # Butang terapung "↑ ke atas" (sama _kitab / corak Sesi 34).
         if getattr(self, "_top_timer_tersimpan", None) is not None:
             self._top_timer_tersimpan.stop()
         self._tersimpan_top_btn = QPushButton("↑")
@@ -65,136 +78,243 @@ class PagesTersimpan:
 
         sa.resizeEvent = _on_resize
 
-        body = QWidget()
-        body.setObjectName("homeBody")
-        sa.setWidget(body)
-        bl = QVBoxLayout(body)
-        bl.setContentsMargins(0, 0, 0, 16)
-        bl.setSpacing(0)
-
-        hero = Hero("Simpan & Sejarah", compact=True)
-        # Aqua Glass: hero telus supaya glob tembus (hanya teks atas glob).
-        if ada_latar_imej():
-            hero.setStyleSheet(
-                "QFrame#hero { background: transparent; border: none; }")
-        self._saved_sub = QLabel("")
-        self._saved_sub.setObjectName("muted")
-        self._saved_sub.setAlignment(Qt.AlignCenter)
-        hero.body.addWidget(self._saved_sub)
-        bl.addWidget(hero)
-
-        # Togol tabs: Tersimpan | Telah dibaca
+        # State tab / penapis (kekal merentas navigasi).
         self._saved_tab = "simpan"
-        bl.addWidget(self._bina_tab_simpan())
+        self._saved_filter_slug = None
+        self._sejarah_checks = []
+        self._sejarah_all_chk = None
+        self._sejarah_buang_btn = None
 
-        # Lajur kandungan berpusat (TELUS — biar glob AQUA kelihatan).
-        col = QWidget()
-        col.setObjectName("homeBody")
-        col.setMaximumWidth(960)
-        col.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
-        cl = QVBoxLayout(col)
-        cl.setContentsMargins(0, 18, 0, 0)
-        cl.setSpacing(0)
-        self._saved_col = cl
-        wrap = QWidget()
-        wl = QHBoxLayout(wrap)
-        wl.setContentsMargins(0, 0, 0, 0)
-        wl.addStretch(1)
-        wl.addWidget(col, 0, Qt.AlignTop)
-        wl.addStretch(1)
-        bl.addWidget(wrap)
+        # Kandungan awal (juga di-render semula oleh go("saved")).
+        self._render_saved()
 
-        vl = QVBoxLayout(kanvas)
-        vl.setContentsMargins(0, 0, 0, 0)
-        vl.addWidget(sa)
+    def _render_saved(self):
+        _clear(self._saved_root)
+        self._sejarah_checks = []
+        self._saved_root.addWidget(self._saved_banner())
+        baris = QWidget()
+        hl = QHBoxLayout(baris)
+        hl.setContentsMargins(0, 0, 0, 0)
+        hl.setSpacing(16)
+        hl.addWidget(self._saved_sidebar(), 0)
+        hl.addWidget(self._saved_panel(), 1)
+        # TIADA addStretch pada _saved_root — senarai melebihi viewport;
+        # stretch menuntut ruang tetap dan menjadikan kawasan bawah kosong.
+        self._saved_root.addWidget(baris)
+        # ISI senarai — _render_saved hanya bina shell (banner + sidebar +
+        # panel). Tanpa panggilan ini senarai kekal KOSONG sehingga pengguna
+        # klik sidebar ("Semua kitab") melalui _saved_pilih_kitab. Ini punca
+        # "tab Tersimpan kosong" dan "senarai jadi kosong bila buang bookmark".
+        self._render_senarai_simpan()
 
-    def _bina_tab_simpan(self):
-        bar = QWidget()
-        lo = QHBoxLayout(bar)
-        lo.setContentsMargins(0, 4, 0, 4)
-        lo.setSpacing(8)
-        self._tab_simpan = QPushButton("")
-        self._tab_baca = QPushButton("")
-        for b in (self._tab_simpan, self._tab_baca):
-            b.setCursor(Qt.PointingHandCursor)
-            b.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        self._tab_simpan.clicked.connect(
-            lambda: self._pilih_tab_simpan("simpan"))
-        self._tab_baca.clicked.connect(
-            lambda: self._pilih_tab_simpan("baca"))
-        lo.addWidget(self._tab_simpan)
-        lo.addWidget(self._tab_baca)
-        lo.addStretch(1)
-        self._kemas_tab_simpan()
-        return bar
+    # ── banner atas ────────────────────────────────────────────────────
+    def _saved_banner(self) -> QFrame:
+        b = QFrame()
+        b.setObjectName("glassPanel")
+        h = QHBoxLayout(b)
+        h.setContentsMargins(24, 16, 24, 16)
+        h.setSpacing(16)
 
-    def _kemas_tab_simpan(self):
-        self._tab_simpan.setText(f"Tersimpan ({len(self.bookmarks)})")
-        self._tab_baca.setText(f"Telah dibaca ({len(read_history())})")
-        self._tab_simpan.setObjectName(
-            "filterChip_active" if self._saved_tab == "simpan"
-            else "filterChip")
-        self._tab_baca.setObjectName(
-            "filterChip_active" if self._saved_tab == "baca"
-            else "filterChip")
-        for b in (self._tab_simpan, self._tab_baca):
-            b.style().unpolish(b)
-            b.style().polish(b)
+        kiri = QWidget()
+        kl = QVBoxLayout(kiri)
+        kl.setContentsMargins(0, 0, 0, 0)
+        kl.setSpacing(2)
+        eyebrow = QLabel("KOLEKSI PERIBADI  ·  SIMPAN & SEJARAH")
+        eyebrow.setObjectName("eyebrow")
+        kl.addWidget(eyebrow)
+        t = QLabel("Simpan & Sejarah")
+        t.setObjectName("homeH1")
+        kl.addWidget(t)
+        n_bm = len(self.bookmarks)
+        n_rd = len(read_history())
+        m = QLabel(f"{n_bm:,} tersimpan  ·  {n_rd:,} dibaca")
+        m.setObjectName("muted")
+        kl.addWidget(m)
+        h.addWidget(kiri, 1)
+        return b
+
+    # ── sidebar kiri ───────────────────────────────────────────────────
+    def _kira_per_kitab(self) -> dict:
+        """Kiraan entri mengikut kitab untuk tab aktif."""
+        src = read_history() if self._saved_tab == "baca" else self.bookmarks
+        out: dict = {}
+        for e in src:
+            s = e.get("slug")
+            if s:
+                out[s] = out.get(s, 0) + 1
+        return out
+
+    def _saved_sidebar(self) -> QFrame:
+        s = QFrame()
+        s.setObjectName("glassPanel")
+        s.setFixedWidth(300)
+        sl = QVBoxLayout(s)
+        sl.setContentsMargins(16, 14, 16, 14)
+        sl.setSpacing(10)
+
+        ek = QLabel("SIMPAN MENGIKUT KITAB"
+                    if self._saved_tab == "simpan"
+                    else "DIBACA MENGIKUT KITAB")
+        ek.setObjectName("panelSection")
+        sl.addWidget(ek, 0, Qt.AlignLeft)
+
+        per = self._kira_per_kitab()
+        self._saved_rows = []
+        self._tambah_side_row(sl, None, "Semua kitab",
+                              sum(per.values()),
+                              self._saved_filter_slug is None)
+        for slug in COLLECTION_META:
+            n = per.get(slug, 0)
+            # Sembunyi kitab kosong, KECUALI yang sedang ditapis (supaya
+            # pengguna boleh buang tapis kembali ke "Semua").
+            if n == 0 and self._saved_filter_slug != slug:
+                continue
+            nama = COLLECTION_META[slug].get("name", slug)
+            self._tambah_side_row(sl, slug, nama, n,
+                                  self._saved_filter_slug == slug)
+        sl.addStretch(1)
+        return s
+
+    def _tambah_side_row(self, sl, slug, nama, kiraan, aktif):
+        row = ClickCard()
+        row.setObjectName("babRow_active" if aktif else "babRow")
+        rl = QHBoxLayout(row)
+        rl.setContentsMargins(10, 7, 10, 7)
+        rl.setSpacing(6)
+        nl = QLabel(nama)
+        nl.setToolTip(nama)
+        rl.addWidget(nl, 1)
+        if isinstance(kiraan, int):
+            cl = QLabel(f"{kiraan:,}")
+            cl.setObjectName("faint" if not aktif else "teal")
+            rl.addWidget(cl)
+        row.clicked.connect(lambda s=slug: self._saved_pilih_kitab(s))
+        self._saved_rows.append((slug, row))
+        sl.addWidget(row)
+
+    def _saved_pilih_kitab(self, slug):
+        if self._saved_filter_slug == slug:
+            return
+        self._saved_filter_slug = slug
+        self._kemas_side_rows()
+        self._render_senarai_simpan()
+
+    def _kemas_side_rows(self):
+        for slug, row in getattr(self, "_saved_rows", []):
+            aktif = slug == self._saved_filter_slug
+            row.setObjectName("babRow_active" if aktif else "babRow")
+            row.style().unpolish(row)
+            row.style().polish(row)
+
+    # ── panel kanan ────────────────────────────────────────────────────
+    def _saved_panel(self) -> QFrame:
+        p = QFrame()
+        p.setObjectName("glassPanel")
+        pl = QVBoxLayout(p)
+        pl.setContentsMargins(18, 16, 18, 14)
+        pl.setSpacing(10)
+
+        # Kepala: tajuk + chips tab.
+        kepala = QWidget()
+        kl = QHBoxLayout(kepala)
+        kl.setContentsMargins(0, 0, 0, 0)
+        kl.setSpacing(8)
+        kiri = QWidget()
+        kv = QVBoxLayout(kiri)
+        kv.setContentsMargins(0, 0, 0, 0)
+        kv.setSpacing(2)
+        ek_sen = QLabel("SENARAI" if self._saved_tab == "simpan"
+                        else "SEJARAH BACAAN")
+        ek_sen.setObjectName("panelSection")
+        kv.addWidget(ek_sen)
+        sub = QLabel("Terjemahan di kiri  ·  Petikan teks Arab di kanan")
+        sub.setObjectName("muted")
+        kv.addWidget(sub)
+        kl.addWidget(kiri, 1)
+
+        self._saved_chip_btns = {}
+        for kunci, label in (("simpan", "Tersimpan"),
+                             ("baca", "Telah dibaca")):
+            cb = QPushButton(label)
+            cb.setCursor(Qt.PointingHandCursor)
+            cb.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+            cb.setObjectName("filterChip_active" if kunci == self._saved_tab
+                             else "filterChip")
+            cb.clicked.connect(lambda _, k=kunci: self._pilih_tab_simpan(k))
+            kl.addWidget(cb)
+            self._saved_chip_btns[kunci] = cb
+        pl.addWidget(kepala)
+
+        # Kontena senarai (mengisi lebar panel).
+        self._saved_container = QWidget()
+        self._saved_list = QVBoxLayout(self._saved_container)
+        self._saved_list.setContentsMargins(0, 0, 0, 0)
+        self._saved_list.setSpacing(12)
+        pl.addWidget(self._saved_container)
+        return p
 
     def _pilih_tab_simpan(self, tab):
         if self._saved_tab == tab:
             return
         self._saved_tab = tab
-        self._kemas_tab_simpan()
+        self._saved_filter_slug = None
+        for k, b in self._saved_chip_btns.items():
+            b.setObjectName("filterChip_active" if k == tab else "filterChip")
+            b.style().unpolish(b)
+            b.style().polish(b)
         self._render_saved()
 
-    def _render_saved(self):
-        self._kemas_tab_simpan()
-        _clear(self._saved_col)
+    # ── isi senarai ────────────────────────────────────────────────────
+    def _render_senarai_simpan(self):
+        _clear(self._saved_list)
         if self._saved_tab == "baca":
-            self._render_sejarah_simpan()
+            self._isi_sejarah()
         else:
-            self._render_bookmarks_simpan()
+            self._isi_bookmarks()
+        self._laras_tinggi(self._tersimpan_sa)
 
-    def _render_bookmarks_simpan(self):
-        n = len(self.bookmarks)
-        self._saved_sub.setText(
-            f"{n} hadis disimpan" if n else "Tiada hadis disimpan")
-        if not self.bookmarks:
-            # stretch=1 supaya empty_state mengisi & berpusat menegak
-            self._saved_col.addWidget(empty_state(
+    def _isi_bookmarks(self):
+        item = [b for b in self.bookmarks
+                if self._saved_filter_slug in (None, b.get("slug"))]
+        item = sorted(item, key=lambda x: x.get("saved_at") or "",
+                      reverse=True)
+        if not item:
+            self._saved_list.addWidget(empty_state(
                 "⭐", "Belum ada hadis tersimpan",
                 "Buka mana-mana hadis dan tekan Simpan."), 1)
             return
-
-        for b in sorted(self.bookmarks,
-                        key=lambda x: x.get("saved_at") or "", reverse=True):
+        for b in item:
             slug = b.get("slug")
             hid = b.get("id")
             h = {"collection": slug, "id": hid,
-                  "arab": b.get("arab", ""), "melayu": b.get("melayu", ""),
-                  "indonesia": b.get("indonesia", ""),
-                  "book": b.get("book"), "nama_bab": b.get("nama_bab", "")}
+                 "arab": b.get("arab", ""), "melayu": b.get("melayu", ""),
+                 "indonesia": b.get("indonesia", ""),
+                 "book": b.get("book"), "nama_bab": b.get("nama_bab", "")}
             c = hadith_card_dwibahasa(
                 h, b.get("kitab_name", ""), self.ar_scale,
                 arabic_font=self.ar_font, tersimpan=True,
                 papar_melayu=self._papar_melayu,
                 tarikh_simpan=b.get("saved_at"))
+            c.simpan_btn.clicked.connect(
+                lambda _, cc=c, hh=h: self._toggle_simpan_kad(cc, hh))
             c._hid = hid
             c.clicked.connect(
                 lambda s=slug, i=hid: self.open_by_ref(s, i, "saved"))
-            c.simpan_clicked.connect(
-                lambda _, s=slug, i=hid: self._bookmark_toggle(s, i))
-            self._saved_col.addWidget(c)
-        self._saved_col.addStretch(1)
+            self._saved_list.addWidget(c)
+        self._saved_list.addStretch(1)
 
-    def _render_sejarah_simpan(self):
-        hist = read_history()
-        n = len(hist)
-        self._saved_sub.setText(
-            f"{n} hadis dibaca" if n else "Tiada sejarah bacaan")
-        # Bar kawalan: pilih semua + buang pukal (Sesi 26 Ogos).
-        self._sejarah_checks = []
+    def _isi_sejarah(self):
+        hist = [e for e in read_history()
+                if self._saved_filter_slug in (None, e.get("slug"))]
+        hist = sorted(hist, key=lambda x: x.get("read_at") or "",
+                      reverse=True)
+        if not hist:
+            self._saved_list.addWidget(empty_state(
+                "📖", "Belum ada sejarah bacaan",
+                "Buka mana-mana hadis — ia direkodkan di sini."), 1)
+            return
+
+        # Bar kawalan buang pukal.
         bar = QWidget()
         bl = QHBoxLayout(bar)
         bl.setContentsMargins(0, 0, 0, 0)
@@ -210,13 +330,7 @@ class PagesTersimpan:
         self._sejarah_buang_btn.setEnabled(False)
         self._sejarah_buang_btn.clicked.connect(self._sejarah_buang_pilih)
         bl.addWidget(self._sejarah_buang_btn)
-        self._saved_col.addWidget(bar)
-
-        if not hist:
-            self._saved_col.addWidget(empty_state(
-                "📖", "Belum ada sejarah bacaan",
-                "Buka mana-mana hadis — ia direkodkan di sini."), 1)
-            return
+        self._saved_list.addWidget(bar)
 
         for e in hist:
             slug = e.get("slug")
@@ -235,9 +349,7 @@ class PagesTersimpan:
             c._hid = nid
             c.clicked.connect(
                 lambda s=slug, i=nid: self.open_by_ref(s, i, "saved"))
-            # Tiada butang Simpan pada sejarah — buang pukal guna kotak
-            # semak; klik kad masih buka detail.
-            c.simpan_btn.hide()
+            c.simpan_btn.hide()   # sejarah tiada butang Simpan
             chk = QCheckBox()
             chk.setCursor(Qt.PointingHandCursor)
             chk.stateChanged.connect(self._sejarah_kemas_buang)
@@ -248,10 +360,22 @@ class PagesTersimpan:
             rl.setSpacing(10)
             rl.addWidget(chk, 0, Qt.AlignTop)
             rl.addWidget(c, 1)
-            self._saved_col.addWidget(row)
-        self._saved_col.addStretch(1)
+            self._saved_list.addWidget(row)
+        self._saved_list.addStretch(1)
         self._sejarah_kemas_buang()
 
+    def _toggle_simpan_kad(self, card, h):
+        """Toggle tanda buku terus dari kad (seperti _kitab_toggle_simpan).
+
+        Bila dibuang, re-render untuk kemas kiraan sidebar + banner.
+        """
+        self._toggle_save(h)
+        saved = self._is_saved(h.get("collection"), h.get("id"))
+        card.simpan_btn.set_active(saved)
+        if not saved:
+            self._render_saved()
+
+    # ── buang pukal sejarah ────────────────────────────────────────────
     def _sejarah_pilih_semua(self, state):
         for chk, _, _ in getattr(self, "_sejarah_checks", []):
             chk.setChecked(state == Qt.Checked)
@@ -276,27 +400,8 @@ class PagesTersimpan:
                 remove_reading(slug, nid)
         self._render_saved()
 
-    def _bookmark_toggle(self, slug, hid, h=None):
-        """Buang/masuk semula tanda buku terus dari halaman Tersimpan."""
-        if h is None:
-            h = {"collection": slug, "id": hid}
-        else:
-            h = {"collection": slug, "id": hid,
-                 "arab": h.get("arab", ""), "melayu": h.get("melayu", ""),
-                 "indonesia": h.get("indonesia", ""),
-                 "book": h.get("book"), "nama_bab": h.get("nama_bab", ""),
-                 "kitab_name": h.get("kitab_name", "")}
-        self._toggle_save(h)
-        self._render_saved()
-
+    # ── butang terapung ↑ (sama _kitab, Sesi 34) ──────────────────────
     def _kemas_butang_atas_tersimpan(self):
-        """Tunjuk/sembunyi butang ↑ mengikut kedudukan skrol (Sesi 34).
-
-        Corak sama halaman kitab/carian: butang hanya berguna bila
-        senarai melebihi viewport dan pengguna sudah skrol ke bawah
-        (melebihi 250px). Di kedudukan atas ia disembunyikan supaya
-        tidak menghalang kandungan.
-        """
         b = getattr(self, "_tersimpan_top_btn", None)
         sa = getattr(self, "_tersimpan_sa", None)
         if b is None or sa is None:
@@ -312,12 +417,6 @@ class PagesTersimpan:
         b.raise_()
 
     def _skrol_atas_lancar_tersimpan(self):
-        """Skrol lancar ke atas senarai tanda buku — animasi QTimer.
-
-        Langkah mengecil (jarak dibahagi 15) supaya pergerakan kelihatan
-        perlahan berhampiran sasaran. Timer disimpan pada `self` supaya
-        panggilan kedua menghentikan animasi pertama.
-        """
         bar = self._tersimpan_sa.verticalScrollBar()
         mula = bar.value()
         if mula <= 0:
