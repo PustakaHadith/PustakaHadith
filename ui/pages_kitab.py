@@ -197,8 +197,17 @@ class PagesKitab:
         kl.addWidget(m)
         h.addWidget(kiri, 1)
 
-        # Carian dalam kitab — buka Pencarian dengan slug dikunci
-        # (keputusan pengguna 26 Ogos; ciri sedia ada diguna semula).
+        # Kanan: carian + lompat no. hadis (dua baris menegak)
+        kanan = QWidget()
+        kanan_l = QVBoxLayout(kanan)
+        kanan_l.setContentsMargins(0, 0, 0, 0)
+        kanan_l.setSpacing(6)
+
+        # Baris 1: search bar + butang Cari
+        carian_baris = QWidget()
+        cb_l = QHBoxLayout(carian_baris)
+        cb_l.setContentsMargins(0, 0, 0, 0)
+        cb_l.setSpacing(8)
         self._kitab_carian = QLineEdit()
         self._kitab_carian.setPlaceholderText(
             f"Cari dalam {meta.get('short', nama)}…")
@@ -207,14 +216,27 @@ class PagesKitab:
         self._kitab_carian.setClearButtonEnabled(True)
         attach_copy_menu(self._kitab_carian)
         self._kitab_carian.returnPressed.connect(self._kitab_hantar_carian)
-        h.addWidget(self._kitab_carian)
-
+        cb_l.addWidget(self._kitab_carian)
         btn = QPushButton("Cari")
         btn.setObjectName("primary")
         btn.setCursor(Qt.PointingHandCursor)
         btn.setMinimumHeight(40)
         btn.clicked.connect(self._kitab_hantar_carian)
-        h.addWidget(btn)
+        cb_l.addWidget(btn)
+        kanan_l.addWidget(carian_baris)
+
+        # Baris 2: LOMPAT NO. HADIS (teks sahaja — Ctrl+G kekal)
+        ek_lompat = QLabel("LOMPAT NO. HADIS")
+        ek_lompat.setObjectName("panelSection")
+        kanan_l.addWidget(ek_lompat, 0, Qt.AlignRight)
+        # Go box tersembunyi — kekal untuk Ctrl+G shortcut
+        self._kitab_go_box = QLineEdit()
+        self._kitab_go_box.setPlaceholderText(_julat_lompat(total))
+        self._kitab_go_box.setValidator(QIntValidator(1, 999999, self))
+        self._kitab_go_box.returnPressed.connect(self._hantar_go_box)
+        self._kitab_go_box.hide()
+
+        h.addWidget(kanan)
         return b
 
     def _kitab_hantar_carian(self):
@@ -234,6 +256,7 @@ class PagesKitab:
                 and self.search_bar.chips is not None:
             self.search_bar.chips.set_active(self._kitab_slug, emit=False)
         self.search_bar.input.setText(q)
+        self._kitab_carian.clear()
         self.go("search")
         self._do_search(1)
 
@@ -318,20 +341,6 @@ class PagesKitab:
             bl.addStretch(1)
             skrol.setWidget(bekas)
             sl.addWidget(skrol)
-
-        # ── LOMPAT NO. HADIS (dipindah ke sidebar; Ctrl+G kekal) ─────
-        ek_lompat = QLabel("LOMPAT NO. HADIS")
-        ek_lompat.setObjectName("panelSection")
-        sl.addWidget(ek_lompat, 0, Qt.AlignLeft)
-        self._kitab_go_box = QLineEdit()
-        self._kitab_go_box.setPlaceholderText(_julat_lompat(total))
-        self._kitab_go_box.setToolTip(
-            "Taip nombor hadis lalu tekan Enter — contoh: 7008\n"
-            "(pintasan: Ctrl+G)")
-        self._kitab_go_box.setAlignment(Qt.AlignCenter)
-        self._kitab_go_box.setValidator(QIntValidator(1, 999999, self))
-        self._kitab_go_box.returnPressed.connect(self._hantar_go_box)
-        sl.addWidget(self._kitab_go_box)
 
         sl.addStretch(1)
         if self._kitab_bab_data:

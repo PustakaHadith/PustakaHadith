@@ -56,6 +56,25 @@ PENANDA = (
 
 MAX_CHARS = 1000
 
+# 55 hadis terjejas (terjemahan Melayu diperbaiki oleh hadis.my, Ogos 2026)
+AFFECTED_IDS = [
+    ("malik", 36), ("malik", 108), ("malik", 109), ("malik", 152), ("malik", 153),
+    ("malik", 181), ("malik", 190), ("malik", 341), ("malik", 522), ("malik", 552),
+    ("malik", 556), ("malik", 572), ("malik", 619), ("malik", 647), ("malik", 685),
+    ("malik", 701), ("malik", 775), ("malik", 779), ("malik", 799), ("malik", 806),
+    ("malik", 809), ("malik", 828), ("malik", 881), ("malik", 1082), ("malik", 1418),
+    ("malik", 1513),
+    ("bukhari", 3459), ("bukhari", 3477), ("bukhari", 4413), ("bukhari", 4604),
+    ("bukhari", 4935), ("bukhari", 6236), ("bukhari", 6990),
+    ("tirmidzi", 231), ("tirmidzi", 1341), ("tirmidzi", 1419), ("tirmidzi", 1922),
+    ("tirmidzi", 2175), ("tirmidzi", 2711), ("tirmidzi", 2863), ("tirmidzi", 2877),
+    ("tirmidzi", 3029), ("tirmidzi", 3031), ("tirmidzi", 3073), ("tirmidzi", 3116),
+    ("tirmidzi", 3120), ("tirmidzi", 3270),
+    ("ahmad", 4303), ("ahmad", 9358), ("ahmad", 10614), ("ahmad", 24278),
+    ("darimi", 91), ("darimi", 478), ("darimi", 2133), ("darimi", 2608),
+    ("nasai", 468),
+]
+
 
 def matn_melayu(teks):
     """Buang sanad daripada teks Melayu; pulangkan matn (isi hadis)."""
@@ -142,6 +161,94 @@ def build_index(model_name, batch_size, device):
     print(f"Jumlah vektor: {index.ntotal}")
 
 
+def update_selective(model_name, batch_size, device, update_ids=None):
+    """Kemas kini vektor untuk hadis tertentu sahaja (~5 minit)."""
+    import faiss
+
+    if update_ids is None:
+        update_ids = AFFECTED_IDS
+
+    print(f"Memuatkan model: {model_name}")
+    from sentence_transformers import SentenceTransformer
+    model = SentenceTransformer(model_name, device=device,
+                                cache_folder=str(MODEL_CACHE))
+
+    # Muat indeks sedia ada
+    print(f"Memuatkan indeks sedia ada: {INDEX_PATH}")
+    index = faiss.read_index(str(INDEX_PATH))
+
+    print(f"Memuatkan peta ID: {MAP_PATH}")
+    with open(MAP_PATH, "rb") as f:
+        id_map = pickle.load(f)
+
+    # Indeks carian: (hadis_id, collection) -> posisi dalam indeks
+    map_idx = {}
+    for i, (hid, coll) in enumerate(id_map):
+        map_idx[(hid, coll)] = i
+
+    # Ambil semua teks Melayu dari DB
+    conn = sqlite3.connect(DB_PATH)
+    all_rows = conn.execute(
+        "SELECT hadis_id, collection, melayu FROM hadis").fetchall()
+    conn.close()
+
+    hadis_dict = {(r[0], r[1]): r[2] for r in all_rows}
+
+    # Cari index & teks untuk hadis yang perlu dikemas kini
+    texts = []
+    valid_indices = []
+    missing = []
+
+    for coll, hid in update_ids:
+        key = (hid, coll)
+        if key in map_idx and key in hadis_dict:
+            matn = matn_melayu(hadis_dict[key])
+            texts.append(f"passage: {matn}")
+            valid_indices.append(map_idx[key])
+        else:
+            missing.append(f"{coll}:{hid}")
+
+    if missing:
+        print(f"Amaran: {len(missing)} hadis tiada dalam peta: "
+              f"{', '.join(missing[:10])}")
+
+    print(f"hadis dikemas kini: {len(valid_indices)} / {len(update_ids)}")
+    print(f"Teks diencode: {len(texts)}")
+
+    if not texts:
+        print("Tiada teks untuk dikemas kini.")
+        return
+
+    # Encode teks baharu
+    print("Mengekod teks...")
+    new_emb = model.encode(
+        texts, batch_size=batch_size, show_progress_bar=True,
+        convert_to_numpy=True, normalize_embeddings=True)
+
+    # Dapatkan semua vektor sedia ada
+    print("Mengambil vektor sedia ada...")
+    all_vectors = index.reconstruct_n(0, index.ntotal).copy()
+
+    # Ganti vektor untuk hadis yang dikemas kini
+    print(f"Mengganti {len(valid_indices)} vektor...")
+    for i, idx in enumerate(valid_indices):
+        all_vectors[idx] = new_emb[i].astype(np.float32)
+
+    # Bina indeks baru
+    print("Membina indeks baru...")
+    dim = all_vectors.shape[1]
+    new_index = faiss.IndexFlatIP(dim)
+    new_index.add(all_vectors)
+
+    # Simpan
+    print(f"Menyimpan indeks: {INDEX_PATH}")
+    faiss.write_index(new_index, str(INDEX_PATH))
+
+    print("\nSelesai!")
+    print(f"  Jumlah vektor: {new_index.ntotal}")
+    print(f"  Vektor dikemas kini: {len(valid_indices)}")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Bina indeks FAISS untuk carian makna hadis")
@@ -151,9 +258,14 @@ def main():
                         help="Saiz kelompok untuk pengekodan")
     parser.add_argument("--device", default="cpu", choices=["cpu", "cuda"],
                         help="Peranti untuk digunakan")
+    parser.add_argument("--selective", action="store_true",
+                        help="Kemas kini 55 hadis terjejas sahaja (~5 minit)")
     args = parser.parse_args()
 
-    build_index(args.model, args.batch_size, args.device)
+    if args.selective:
+        update_selective(args.model, args.batch_size, args.device)
+    else:
+        build_index(args.model, args.batch_size, args.device)
 
 
 if __name__ == "__main__":

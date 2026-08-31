@@ -24,8 +24,8 @@ from PyQt5.QtCore import (
 )
 from PyQt5.QtGui import QColor, QFont, QPainter
 from PyQt5.QtWidgets import (
-    QFrame, QHBoxLayout, QLabel, QLineEdit, QPushButton, QVBoxLayout,
-    QWidget,
+    QApplication, QFrame, QHBoxLayout, QLabel, QLineEdit, QPushButton,
+    QVBoxLayout, QWidget,
 )
 
 from ui.helpers import PAGES, _parse_lompat, read_history
@@ -313,6 +313,7 @@ class PagesRak:
                                             "(cth. bukhari 433)")
         self._rak_carian.setFixedWidth(300)
         self._rak_carian.setMaximumHeight(40)
+        self._rak_carian.setClearButtonEnabled(True)
         attach_copy_menu(self._rak_carian)
         self._rak_carian.returnPressed.connect(self._rak_hantar_carian)
         h.addWidget(self._rak_carian)
@@ -333,9 +334,10 @@ class PagesRak:
         j = _parse_lompat(q, default_slug=self._kitab_slug)
         if j:
             slug, n = j
-            self._buka_hadis_terus(slug, n, dari="home")
+            self._buka_hadis_terus(slug, n, dari="rak")
             return
         self.search_bar.input.setText(q)
+        self._rak_carian.clear()
         self.go("search")
         self._do_search(1)
 
@@ -522,8 +524,14 @@ class PagesRak:
 
     def keyPressEvent(self, e):
         # Navigasi papan kekunci pada halaman rak (← → pilih, Enter buka).
+        # Jika QLineEdit carian ada fokus, JANGAN intercept — biarkan
+        # QLineEdit returnPressed handle lompat nombor hadis.
         if self.stack.currentIndex() == PAGES["rak"] \
                 and getattr(self, "_rak_slug", None) is not None:
+            fw = QApplication.focusWidget()
+            if isinstance(fw, QLineEdit):
+                super().keyPressEvent(e)
+                return
             senarai = list(COLLECTION_META)
             idx = senarai.index(self._rak_slug)
             if e.key() == Qt.Key_Left:

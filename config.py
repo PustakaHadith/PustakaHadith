@@ -45,6 +45,28 @@ def _data_dir() -> Path:
 
 DATA_DIR = _data_dir()
 
+
+def _salin_db_bundel():
+    """Salin hadis.db dari bundle ke DATA_DIR jika belum wujud.
+
+    Dalam mod frozen (EXE), hadis.db dibundel dalam folder _internal
+    (ASSET_DIR). Pengguna menyimpan data di %LOCALAPPDATA%\\PustakaHadith.
+    Fungsi ini memastikan pengguna baru terus mempunyai data hadis tanpa
+    perlu sync manual.
+    """
+    if not getattr(sys, "frozen", False):
+        return
+    dest = DATA_DIR / "hadis.db"
+    if dest.exists():
+        return
+    src = ASSET_DIR / "hadis.db"
+    if src.exists():
+        import shutil
+        shutil.copy2(str(src), str(dest))
+
+
+_salin_db_bundel()
+
 # ---------- Tetapan awam (selamat di-commit) ----------
 API_BASE_URL = "https://service.hadis.my/api/v1"
 DEFAULT_COLLECTION = "bukhari"

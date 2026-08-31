@@ -71,6 +71,7 @@ BACK_PETA = {
     "search": ("Hasil carian", "search"),
     "saved": ("Tersimpan", "saved"),
     "kitab": ("Senarai kitab", "kitab"),
+    "rak": ("Jelajah Kitab", "rak"),
 }
 
 

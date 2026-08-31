@@ -83,10 +83,26 @@ class SearchWorker(_Base):
 
     def run(self):
         try:
-            r = self.api.search_hadis(self.query, slug=self.slug, page=self.page,
-                                      limit=self.limit, lang=self.lang)
+            hadis, page = [], self.page
+            seen_meta = {}
+            # Ambil SEMUA halaman supaya facet (bab) & tapis klien lengkap.
+            # Cap 2000 hasil elak muatan melampau bagi carian sangat umum.
+            CAP = 2000
+            while True:
+                r = self.api.search_hadis(self.query, slug=self.slug, page=page,
+                                          limit=self.limit, lang=self.lang)
+                if self._cancelled:
+                    return
+                items = r.get("hadis", [])
+                hadis.extend(items)
+                seen_meta = r.get("meta", {})
+                if page >= seen_meta.get("last_page", 1) or not items:
+                    break
+                if len(hadis) >= CAP:
+                    break
+                page += 1
             if not self._cancelled:
-                self.done.emit(r.get("hadis", []), r.get("meta", {}), self.token)
+                self.done.emit(hadis, seen_meta, self.token)
         except Exception as e:
             if not self._cancelled:
                 self.failed.emit(terjemah_ralat(e))

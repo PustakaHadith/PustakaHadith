@@ -377,8 +377,11 @@ class PagesTersimpan:
 
     # ── buang pukal sejarah ────────────────────────────────────────────
     def _sejarah_pilih_semua(self, state):
-        for chk, _, _ in getattr(self, "_sejarah_checks", []):
-            chk.setChecked(state == Qt.Checked)
+        for chk, _, _ in list(getattr(self, "_sejarah_checks", [])):
+            try:
+                chk.setChecked(state == Qt.Checked)
+            except RuntimeError:
+                continue
         self._sejarah_kemas_buang()
 
     def _sejarah_kemas_buang(self):
@@ -386,18 +389,30 @@ class PagesTersimpan:
         if btn is None:
             return
         checks = getattr(self, "_sejarah_checks", [])
-        k = sum(1 for chk, _, _ in checks if chk.isChecked())
+        k = 0
+        for chk, _, _ in checks:
+            try:
+                if chk.isChecked():
+                    k += 1
+            except RuntimeError:
+                continue
         btn.setText(f"🗑  Buang dipilih ({k})")
         btn.setEnabled(k > 0)
         all_chk = getattr(self, "_sejarah_all_chk", None)
         if all_chk is not None:
             total = len(checks)
-            all_chk.setChecked(k == total and total > 0)
+            try:
+                all_chk.setChecked(k == total and total > 0)
+            except RuntimeError:
+                pass
 
     def _sejarah_buang_pilih(self):
         for chk, slug, nid in list(getattr(self, "_sejarah_checks", [])):
-            if chk.isChecked():
-                remove_reading(slug, nid)
+            try:
+                if chk.isChecked():
+                    remove_reading(slug, nid)
+            except RuntimeError:
+                continue
         self._render_saved()
 
     # ── butang terapung ↑ (sama _kitab, Sesi 34) ──────────────────────

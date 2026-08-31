@@ -575,13 +575,14 @@ def hadith_card_dwibahasa(hadis: dict, kitab_name: str = "",
     meta = QLabel(meta_txt)
     meta.setObjectName("faint")
     kl.addWidget(meta)
-    lo.addWidget(kiri, 11)
+    lo.addWidget(kiri, 11, Qt.AlignTop)
 
     # ── pembahagi menegak ────────────────────────────────────────────
     garis = QFrame()
     garis.setObjectName("lineV")
     garis.setFixedWidth(1)
-    lo.addWidget(garis)
+    garis.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+    lo.addWidget(garis, 0, Qt.AlignTop)
 
     # ── kolum kanan: Arab + tindakan ─────────────────────────────────
     kanan = QWidget()
@@ -617,7 +618,7 @@ def hadith_card_dwibahasa(hadis: dict, kitab_name: str = "",
     simpan.set_active(tersimpan)
     bl.addWidget(simpan, 0, Qt.AlignBottom)
     kn.addWidget(bawah)
-    lo.addWidget(kanan, 9)
+    lo.addWidget(kanan, 9, Qt.AlignTop)
 
     card.simpan_btn = simpan
     card.simpan_clicked = simpan.clicked
