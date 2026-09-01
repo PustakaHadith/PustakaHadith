@@ -131,7 +131,7 @@ Isi penting:
 - **Huraian ringkas:** SemakHadis.com — atribusi dipaparkan pada setiap
   huraian
 - **Carian makna (AI):** model `intfloat/multilingual-e5-small`
-- **Sumber kod:** https://github.com/opencodemk/PustakaHadith
+- **Sumber kod:** https://github.com/PustakaHadith/PustakaHadith
 
 Notis: teks hadis adalah terjemahan yang mungkin tidak menyeluruh dalam
 sumber asal. Semak dengan sumber rujukan utama untuk kegunaan rasmi.

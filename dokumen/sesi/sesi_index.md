@@ -8254,7 +8254,7 @@ semak_dokumen_ui 110/0 · pokok kerja bersih · tema pengguna "sistem".
 
 ## SESI 22 OGOS 2026
 
-**Ringkasan:** folder `binaan_installer` → `PustakaHadith` (rebrand selesai), PyInstaller windowed build, Inno Setup + ZIP portable, buang dialog deklarasi berganda, header PustakaHadith → PustakaHadith, push ke GitHub (`opencodemk/PustakaHadith`).
+**Ringkasan:** folder `binaan_installer` → `PustakaHadith` (rebrand selesai), PyInstaller windowed build, Inno Setup + ZIP portable, buang dialog deklarasi berganda, header PustakaHadith → PustakaHadith, push ke GitHub (`PustakaHadith/PustakaHadith`).
 
 | # | Kerja | Komit |
 |---|-------|-------|
@@ -8264,7 +8264,7 @@ semak_dokumen_ui 110/0 · pokok kerja bersih · tema pengguna "sistem".
 | 4 | **Inno Setup** — `PustakaHadith-Setup-1.0.0-x64.exe` (294.9 MB) | — |
 | 5 | **ZIP portable** — `PustakaHadith-portable-1.0.0-x64.zip` (201.5 MB) | — |
 | 6 | **semak.py 399/399 LULUS** | — |
-| 7 | **Git push ke GitHub** — `opencodemk/PustakaHadith` | — |
+| 7 | **Git push ke GitHub** — `PustakaHadith/PustakaHadith` | — |
 | 8 | **Git filter-branch** — `→` → `->` dalam semua commit | — |
 | 9 | **Git filter-branch #2** — buang "Rebrand: PustakaHadith -> " dari commit pertama | — |
 | 10 | **Buang dialog deklarasi berganda** — buang `_tunjuk_deklarasi_pertama` dari `showEvent` | `65543f8` |

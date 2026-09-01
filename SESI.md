@@ -1,7 +1,7 @@
 # SESI PEMBANGUNAN — PustakaHadith
 
 ## Tarikh
-30–31 Ogos 2026
+30 Ogos – 1 September 2026
 
 ## Matlamat
 Bina & edar **PustakaHadith** v1.0 (PyQt5 + SQLite/FTS5 + FAISS, Windows).
@@ -153,3 +153,57 @@ Komunikasi dengan pengguna: **Bahasa Melayu**.
 - Pengguna mudah frustrasi jika edit salah page atau tak ikut arahan literal.
 - Komunikasi: **Bahasa Melayu**.
 - **Windows Defender** sering lock fail `.pyd`/`.dll` selepas PyInstaller build — guna `--distpath` ke folder berbeza jika `dist\` lock.
+- **FAISS index** telah di-selective-rebuild (56 vektor diganti). `scripts/build_faiss_index.py` `--selective`.
+- Fakta carian: `search_hadis(q)` → keys `['arab','book','collection','id','indonesia','melayu','nama_bab']`; dedupe `hid = h.get("hadis_id") or h.get("id")`.
+- **GitHub push berjaya** — 103 commits di-push ke `https://github.com/PustakaHadith/PustakaHadith` (token lama tiada `workflow` scope, token baru diberi oleh pengguna).
+- **Inno Setup** belum dipasang pada PC ini.
+
+---
+
+## Sesi 5 (1 September): MSIX Package untuk Microsoft Store
+
+### Matlamat
+Bina MSIX package untuk upload ke Microsoft Store.
+
+### Perubahan
+1. **MSIX pack berjaya** — `makeappx pack` dengan timeout 30 minit:
+   - `D:\PustakaQH_dist\PustakaHadith-v1.0.0.msix` = **1.1 GB**
+   - Mengandungi: `hadis.db` (371 MB), `.cache_models` (941 MB), `torch` (361 MB), `hadis_faiss.index` (95 MB), PyQt5, dan semua dependencies.
+
+2. **AppxManifest.xml** — dikonfigur untuk Microsoft Store:
+   - Identity: `PustakaHadith`, Publisher: `CN=opencodemk`
+   - TargetDeviceFamily: Windows.Desktop 10.0.17763.0+
+   - Capabilities: `runFullTrust`
+   - Resources: ms, ar, en-US
+
+3. **Sijil code signing** — dibuat dengan `New-SelfSignedCertificate -Type CodeSigningCert`:
+   - Thumbprint: `46A04D1A9AED7E5D4A8525523F102CFA077005EA`
+   - **Isu**: `signtool.exe` SDK 10.0.18362.0 tidak support sign MSIX ("file format not recognized")
+   - `Set-AuthenticodeSignature` juga tidak support MSIX
+   - **Penyelesaian**: MSIX tidak perlu sign local — Microsoft sign semasa submission di Partner Center
+
+4. **GitHub push berjaya** — semua commits di-push ke `https://github.com/PustakaHadith/PustakaHadith`
+
+### Status
+- ✅ MSIX pack berjaya (1.1 GB)
+- ✅ AppxManifest.xml dikonfigur
+- ✅ GitHub push selesai
+- ❌ MSIX sign — SDK lama tidak support (tidak perlu untuk Store upload)
+- ⏳ Upload ke Microsoft Store — perlu akaun Partner Center ($19 USD)
+- ⏳ Inno Setup — belum dipasang
+
+### Fail baru/diubah
+- `D:\PustakaQH_dist\PustakaHadith\AppxManifest.xml` — MSIX manifest
+- `D:\PustakaQH_dist\PustakaHadith-v1.0.0.msix` — MSIX package (1.1 GB)
+- `D:\PustakaQH_dist\PustakaHadith.pfx` — sijil lama (tidak digunakan)
+
+### Nota Penting Tambahan
+- **MSIX terlalu besar** kerana `.cache_models` (941MB) + `torch` (361MB). Pertimbang buang untuk kecilkan saiz.
+- **SDK 10.0.18362.0** terlalu lama untuk MSIX sign. Perlu Windows 11 SDK jika mahu sign local.
+- **Partner Center** diperlukan untuk upload — `https://partner.microsoft.com/dashboard`
+
+### Seterusnya (Esok)
+1. Dapatkan / sahkan akaun Partner Center
+2. Upload MSIX ke Microsoft Store
+3. Isi butiran listing (deskripsi, screenshot, kategori)
+4. Submit untuk review

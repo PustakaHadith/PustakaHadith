@@ -61,7 +61,7 @@ Yang benar,
 
 [NAMA ANDA]  
 Pembangun Utama, PustakaHadith  
-[pustaka.hadith@outlook.com] · GitHub: https://github.com/opencodemk/PustakaHadith
+[pustaka.hadith@outlook.com] · GitHub: https://github.com/PustakaHadith/PustakaHadith
 
 ---
 

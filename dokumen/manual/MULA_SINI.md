@@ -70,7 +70,7 @@ surat (emel rasmi Outlook/Gmail/Proton). Rename file: `PustakaHadith.iss`
 Build baharu: `PustakaHadith.exe` (89 MB), `dist\PustakaHadith\` (1.36 GB),
 `PustakaHadith-Setup-1.0.0-x64.exe` (0.27 GB),
 `PustakaHadith-portable-1.0.0-x64.zip` (0.47 GB). Uji EXE launch 8s OK.
-GitHub push: `https://github.com/opencodemk/PustakaHadith`. semak.py
+GitHub push: `https://github.com/PustakaHadith/PustakaHadith`. semak.py
 **395/395 LULUS**.
 terang; Kertas/Terang/Ikut sistem dibuang) + buang 'Saiz antara muka'
 dari panel Tetapan (`b292515`) · dialog disclaimer baharu

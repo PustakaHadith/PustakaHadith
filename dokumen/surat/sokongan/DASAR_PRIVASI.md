@@ -110,7 +110,7 @@ Soalan mengenai privasi:
 | **Microsoft Store / MSIX** | `pustaka.hadith@outlook.com` |
 | **Backup / Selamat** | `pustaka.hadith@proton.me` |
 
-GitHub Issues: https://github.com/opencodemk/PustakaHadith/issues
+GitHub Issues: https://github.com/PustakaHadith/PustakaHadith/issues
 
 ---
 
