@@ -10,6 +10,7 @@ A desktop Windows application containing **62,169 hadiths** from 9 major books (
 
 ## Table of Contents
 
+- [Screenshots](#screenshots)
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
