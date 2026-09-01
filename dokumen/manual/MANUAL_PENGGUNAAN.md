@@ -43,18 +43,18 @@ data yang dipaparkan.)*
 - **Ikon bintang** — buka senarai penanda halaman anda.
 - **Ikon dadu (⚄)** — hadis rawak.
 
-![Skrin Utama — Perpustakaan](../penerbitan/tangkapan/01_utama.png)
+![Skrin Utama — Perpustakaan](../../screenshots/01_home.png)
 
 **Rak Digital (Jelajah Kitab):** senarai 9 kitab utama dengan kiraan hadis
 setiap koleksi.
 
-![Rak Digital](../penerbitan/tangkapan/02_rak_digital.png)
+![Rak Digital](../../screenshots/02_rak.png)
 
 ---
 
 ## Mencari Hadis
 
-![Carian](../penerbitan/tangkapan/05_carian.png)
+![Carian](../../screenshots/05_search.png)
 
 ### Carian kata kunci
 
@@ -98,13 +98,13 @@ mengikut topik (cth. "Wuduk", "Solat") dan bukan nombor hadis semata-mata.
 > Nota: senarai Bab tersedia untuk kebanyakan kitab; Musnad Ahmad dan
 > Sunan al-Darimi tiada data bab dalam set data semasa.
 
-![Halaman Kitab dengan senarai Bab (PILIH BAB)](../penerbitan/tangkapan/03_kitab_bukhari.png)
+![Halaman Kitab dengan senarai Bab (PILIH BAB)](../../screenshots/03_kitab.png)
 
 ---
 
 ## Membaca Hadis
 
-![Butiran Hadis — Bukhari #1](../penerbitan/tangkapan/04_detail_bukhari_1.png)
+![Butiran Hadis — Bukhari #1](../../screenshots/04_detail.png)
 
 Setiap hadis dipapar dalam **dua lajur**:
 
@@ -138,7 +138,7 @@ hadis jiran dalam kitab. **Kembali** untuk kembali ke senarai.
 
 ## Penanda Halaman (Bookmark)
 
-![Simpan & Sejarah](../penerbitan/tangkapan/06_simpan_sejarah.png)
+![Simpan & Sejarah](../../screenshots/06_saved.png)
 
 1. Buka mana-mana hadis.
 2. Klik ikon **bintang/Simpan** — hadis disimpan.
@@ -246,4 +246,4 @@ tanpa internet. Carian makna (AI) juga berjalan setempat kerana model
 ---
 
 *Dokumen: `dokumen/manual/MANUAL_PENGGUNAAN.md` · Untuk aplikasi PustakaHadith ·
-Versi: 1.0 · 27 Ogos 2026*
+Versi: 1.0 · 1 September 2026*
