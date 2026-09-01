@@ -4,9 +4,13 @@ A desktop Windows application containing **62,169 hadiths** from 9 major books (
 
 ## Screenshots
 
-| Home Page | Search Results | Hadith Detail |
+| Home Page | Browse Books | Hadith List |
 |:---:|:---:|:---:|
-| ![Home](screenshots/home.png) | ![Search](screenshots/search.png) | ![Detail](screenshots/detail.png) |
+| ![Home](screenshots/home.png) | ![Browse](screenshots/senarai_hadis.png) | ![List](screenshots/senarai_hadis.png) |
+
+| Search Results | Hadith Detail | Bookmarks |
+|:---:|:---:|:---:|
+| ![Search](screenshots/search.png) | ![Detail](screenshots/detail.png) | ![Bookmark](screenshots/bookmark.png) |
 
 ## Table of Contents
 
