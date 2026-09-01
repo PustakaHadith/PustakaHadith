@@ -4,13 +4,13 @@ A desktop Windows application containing **62,169 hadiths** from 9 major books (
 
 ## Screenshots
 
-| Home Page | Browse Books | Hadith List |
+| Home | Jelajah Kitab | Senarai Hadis |
 |:---:|:---:|:---:|
-| ![Home](screenshots/home.png) | ![Browse](screenshots/senarai_hadis.png) | ![List](screenshots/senarai_hadis.png) |
+| ![Home](screenshots/01_home.png) | ![Jelajah Kitab](screenshots/02_rak.png) | ![Senarai Hadis](screenshots/03_kitab.png) |
 
-| Search Results | Hadith Detail | Bookmarks |
+| Butiran Hadis | Hasil Carian | Tersimpan |
 |:---:|:---:|:---:|
-| ![Search](screenshots/search.png) | ![Detail](screenshots/detail.png) | ![Bookmark](screenshots/bookmark.png) |
+| ![Butiran Hadis](screenshots/04_detail.png) | ![Hasil Carian](screenshots/05_search.png) | ![Tersimpan](screenshots/06_saved.png) |
 
 ## Table of Contents
 
