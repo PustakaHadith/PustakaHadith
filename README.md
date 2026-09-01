@@ -1,6 +1,12 @@
-# PustakaHadith
+# Pustaka Hadith
 
-A digital library of **62,169 hadiths** from the 9 primary books (Kutub al-Tis'ah), featuring keyword search, semantic search (AI), SemakHadis.com commentaries, scholar grading (darjat), syarah, transliteration, and translations in Malay, Indonesian, and English.
+A desktop Windows application containing **62,169 hadiths** from 9 major books (Kutub al-Tis'ah) with bilingual Arabic-Malay translations, AI-powered semantic search, and full offline capability.
+
+## Screenshots
+
+| Home Page | Search Results | Hadith Detail |
+|:---:|:---:|:---:|
+| ![Home](screenshots/home.png) | ![Search](screenshots/search.png) | ![Detail](screenshots/detail.png) |
 
 ## Table of Contents
 
@@ -44,12 +50,9 @@ A digital library of **62,169 hadiths** from the 9 primary books (Kutub al-Tis'a
 
 This application is distributed as a **standalone Windows application** — **no Python required**.
 
-### 1. Microsoft Store (MSIX) — *Coming Soon*
+### 1. Microsoft Store (MSIX) — *Available*
 
-Open **Microsoft Store** → search **"PustakaHadith"** → click **Install**.
-
-> *Requires Partner Center registration — in progress. Panduan daftar:
-> `dokumen/rujukan/DAFTAR_MSIX_STORE.md`.*
+Open **Microsoft Store** → search **"Pustaka Hadith"** → click **Install**.
 
 ### 2. Inno Setup EXE — **Ready**
 
