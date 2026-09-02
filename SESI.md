@@ -316,3 +316,26 @@ Bina MSIX package untuk upload ke Microsoft Store.
 - ✅ Semua edaran (EXE + 7z) mengandungi fix proses kekal
 - ⚠️ MSIX Store kekal versi 1 Sep (tanpa fix) — pembetulan perlu submit pakej MSIX baru jika mahu
 - ⏳ Peperiksaan visual landing page (perlu pengguna — anti-bot JS)
+
+---
+
+## Sesi 10 (2 September): Susun Semula Folder Induk "Pustaka"
+
+### Perubahan
+Semua folder projek disatukan ke **`D:\Pustaka Quran Hadis\Pustaka\`**:
+
+| Folder | Lokasi baharu |
+|---|---|
+| Repo utama (git) | `D:\Pustaka Quran Hadis\Pustaka\PustakaHadith\` |
+| Landing page | `D:\Pustaka Quran Hadis\Pustaka\landing-page\` |
+| Imej sumber | `D:\Pustaka Quran Hadis\Pustaka\img\` |
+| UIUX | `D:\Pustaka Quran Hadis\Pustaka\PustakaHadith_UIUX\` |
+| Binaan & MSIX | `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\` |
+
+### Fail binaan dikemas kini (laluan lama → baharu)
+- `installer/PustakaHadith.iss` — Source → `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PustakaHadith\*`
+- `installer/build_msix.ps1` — `$root` → `D:\Pustaka Quran Hadis\Pustaka\PustakaHadith`
+
+### Catatan
+- Repo utama dipindah (isi + `.git`) — git sah, log dipelihara; folder lama `D:\Pustaka Quran Hadis\PustakaHadith` dipadam.
+- Dokumen sejarah (PADANAN_ARKIB, MANUAL_REFERENSI_DEV, MULA_SINI, SESI lama) kekal rujukan lama — rekod masa lalu.

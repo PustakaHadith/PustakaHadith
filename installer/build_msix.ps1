@@ -1,5 +1,5 @@
 $ErrorActionPreference = "Stop"
-$root   = "D:\Pustaka Quran Hadis\PustakaHadith"
+$root   = "D:\Pustaka Quran Hadis\Pustaka\PustakaHadith"
 $dist   = Join-Path $root "dist\PustakaHadith"
 $assets = Join-Path $root "installer\Assets"
 $stage  = Join-Path $root "installer\msix_stage"
