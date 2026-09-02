@@ -196,6 +196,12 @@ class PustakaApp(PagesKitab, PagesRak, PagesCarian, PagesDetail,
                 w.cancel()
             w.wait(300)
         super().closeEvent(e)
+        # main.py menetapkan setQuitOnLastWindowClosed(False) (tinggalan
+        # zaman splash; lihat PERUBAHAN_19OGOS.md komit 3), supaya tutup
+        # tetingkap utama TIDAK auto-henti app.exec_(). Tanpa ini proses
+        # kekal berjalan di latar selepas window ditutup. Keluar secara
+        # eksplisit di sini supaya aplikasi berakhir bersih.
+        QApplication.quit()
 
     def resizeEvent(self, e):
         super().resizeEvent(e)

@@ -189,8 +189,8 @@ Bina MSIX package untuk upload ke Microsoft Store.
 - ✅ AppxManifest.xml dikonfigur
 - ✅ GitHub push selesai
 - ❌ MSIX sign — SDK lama tidak support (tidak perlu untuk Store upload)
-- ⏳ Upload ke Microsoft Store — perlu akaun Partner Center ($19 USD)
-- ⏳ Inno Setup — belum dipasang
+- ✅ Upload ke Microsoft Store — selesai (menunggu review Microsoft)
+- ⏳ Inno Setup — belum rebuild (lihat Sesi 6)
 
 ### Fail baru/diubah
 - `D:\PustakaQH_dist\PustakaHadith\AppxManifest.xml` — MSIX manifest
@@ -202,8 +202,117 @@ Bina MSIX package untuk upload ke Microsoft Store.
 - **SDK 10.0.18362.0** terlalu lama untuk MSIX sign. Perlu Windows 11 SDK jika mahu sign local.
 - **Partner Center** diperlukan untuk upload — `https://partner.microsoft.com/dashboard`
 
-### Seterusnya (Esok)
-1. Dapatkan / sahkan akaun Partner Center
-2. Upload MSIX ke Microsoft Store
-3. Isi butiran listing (deskripsi, screenshot, kategori)
-4. Submit untuk review
+---
+
+## Sesi 6 (1 September): MSIX Upload & Landing Page
+
+### Perubahan
+1. **MSIX upload ke Microsoft Store — SELESAI** ✅ (pengguna sahkan). Menunggu review Microsoft.
+2. **Landing page promosi dibina** (di luar projek):
+   - Lokasi: `D:\Pustaka Quran Hadis\landing-page\` (`index.html` + `img/`)
+   - Tema **Aqua Glass** ikut `ui/theme.py` (AQUA), mockup & latar globe dari `PustakaHadith_UIUX`
+   - Kandungan diselaraskan dengan `dokumen/rujukan/DEKLARASI.md` (positioning, statistik, batasan, atribusi)
+   - Jenama "Pustaka/Hadith" ikut `ui/app_qt.py:286-287` (TEAL 800 / TEAL_LIGHT 300)
+   - Atribusi sumber: hadis.my, domain awam (sunnah.com); hubungan komersial: `pustakahadith@outlook.com`
+   - Ikut GitHub: `https://github.com/opencodemk/PustakaHadith`
+   - Tajuk tarikan: "Aplikasi Desktop Carian Hadis — Percuma & Luar Talian" + 3 ayat tarikan di bahagian sesuai
+   - Telah di-upload ke **pustakahadith.site.je** (hosting ada perlindungan anti-bot JS)
+3. **Inno Setup dipastikan SUDAH dipasang** — `D:\Inno Setup 6\ISCC.exe` wujud. Nota SESI lama "belum dipasang" adalah silap.
+4. **FAISS rebuild** — anggaran masa disemak: full ~3 jam (4 CPU, ikut script) hingga ~10 jam (rekod SESI 2); selective ~30 saat.
+
+### Fail baru/diubah
+- `D:\Pustaka Quran Hadis\landing-page\index.html` + `img/` — landing page (di luar repo)
+- `SESI.md` — fail ini
+
+### Seterusnya (Esok) — TODO
+1. **Bina Inno Setup installer terkini** (~33 minit) — `iscc "D:\Inno Setup 6\ISCC.exe" installer\PustakaHadith.iss` supaya EXE mengandungi hadis.db (55 fix) + FAISS files. EXE sedia ada (26 Ogos) masih versi lama.
+2. **Pautkan landing page ke pautan muat turun sebenar** — arahkan butang "Muat Turun" ke GitHub Releases / EXE terkini.
+3. **Verify landing page pada pustakahadith.site.je** — buka dalam pelayar sebenar (anti-bot JS); pastikan semua imej & pautan berfungsi.
+4. **Sahkan "paparan hadis on top jgn center"** dengan pengguna (kad sudah top-align, Sesi 1).
+5. **Butiran listing Microsoft Store** — mengisi deskripsi/screenshot/kategori jika belum lengkap; pantau status review.
+6. **Full FAISS rebuild** — TIDAK mendesak (56/62,169 vektor sahaja berubah). Lakukan hanya jika struktur indeks/model berubah.
+7. **Pertimbang kecilkan MSIX** — buang `.cache_models` (941 MB) supaya pakej Store lebih ringan.
+
+---
+
+## Sesi 7 (2 September): Inno Setup Rebuild
+
+### Perubahan
+1. **Inno Setup installer dibina semula** — `iscc` dari `D:\Inno Setup 6\ISCC.exe`:
+   - Disemak dahulu: `dist\PustakaHadith` versi 31 Ogos **TIADA** hadis.db/FAISS; binaan lengkap berada di **`D:\PustakaQH_dist\PustakaHadith`** (hadis.db 354 MB + hadis_faiss.index 91 MB + hadis_id_map.pkl 0.8 MB).
+   - **`installer/PustakaHadith.iss`** — `Source` ditukar dari `..\dist\PustakaHadith\*` → `D:\PustakaQH_dist\PustakaHadith\*`.
+   - Compile berjaya dalam **2204 saat (~37 minit)**.
+   - **`Output\PustakaHadith-Setup-1.0.0-x64.exe`** = **0.79 GB** (naik dari 0.73 GB 26 Ogos kerana kini termasuk hadis.db + FAISS).
+   - SHA256: `77DFE153CDB0C2A47FE286F3478BBE62D0EA8A926596A25F00BD093AAB784BE3`
+
+### Fail diubah
+- `installer/PustakaHadith.iss` — Source ke `D:\PustakaQH_dist\PustakaHadith\*`
+- `Output/PustakaHadith-Setup-1.0.0-x64.exe` — binaan baharu
+
+### Status
+- ✅ Inno Setup EXE terkini (hadis.db 55 fix + FAISS) dibina
+- ✅ Pautan muat turun di landing page diarah ke GitHub Releases (TODO #2, Sesi 8)
+- ⏳ Verify landing page di live site (TODO #3)
+
+---
+
+## Sesi 8 (2 September): Muat Turun Sebenar + Fix Proses Kekal Selepas Tutup
+
+### Perubahan
+1. **Setup EXE & Portable 7z di-upload ke GitHub Release v1.0.0** (akaun PustakaHadith, token PAT user):
+   - `PustakaHadith-Setup-1.0.0-x64.exe` **806.6 MB**
+   - `PustakaHadith-portable-1.0.0-x64.7z` **802.1 MB** (dari dist lengkap 2.18 GB, 7z `-mx=5 -mmt=4`)
+   - Penerangan release dikemas kini (Setup EXE bukan lagi "coming soon")
+
+2. **Landing page dikemas kini** — kad Setup EXE & Portable ZIP→7z jadi **SIAP** (bukan SEGERA), butang aktif; nota "0.8–1.1 GB". Deploy FTP berjaya (saiz server 37,732 bytes = sepadan).
+
+3. **Fix: proses kekal berjalan selepas tutup apl** — pengguna dapati `PustakaHadith.exe` (PID 6820) kekal di latar walaupun window ditutup.
+   - Punca: `main.py:126` menetapkan `app.setQuitOnLastWindowClosed(False)` — tinggalan zaman splash (PERUBAHAN_19OGOS.md komit 3), tetapi zaman sekarang (Lazy Loading) tiada lagi `splash.close() → singleShot(0)`, jadi flag itu hanya menyebabkan `app.exec_()` tidak berhenti bila window utama ditutup.
+   - Fix: tambah `QApplication.quit()` di hujung `closeEvent` (`ui/app_qt.py:198`) — keluar eksplisit selepas worker dibatalkan.
+   - Disahkan: ujian offscreen `setQuitOnLastWindowClosed(False)` + `w.close()` → `exec_` keluar segera (kod 0), padahal sebelum ini akan tergantung.
+   - ⚠️ EXE/7z/release yang sedia ada BELUM mengandungi fix ini — perlu rebuild PyInstaller + 7z + upload semula jika mahu.
+
+### Fail diubah
+- `ui/app_qt.py` — `closeEvent()` tambah `QApplication.quit()`
+- `landing-page/index.html` — kad muat turun aktif, nota saiz
+- `installer/PustakaHadith.iss` — Source ke `D:\PustakaQH_dist\PustakaHadith\*` (Sesi 7)
+- `landing-page/SESI.md` — rekod Sesi 4
+
+### Status
+- ✅ Release v1.0.0 lengkap (EXE + 7z + MSIX)
+- ✅ Landing page live dengan pautan sebenar
+- ✅ Fix proses kekal (dalam kod sumber)
+- ✅ **Rebuild EXE/7z** — fix proses kekal kini dalam edaran (Sesi 9)
+- ⏳ Peperiksaan visual landing page (anti-bot JS — perlu pelayar)
+
+---
+
+## Sesi 9 (2 September): Rebuild Edaran — Fix Proses Kekal
+
+### Perubahan
+1. **PyInstaller rebuild** — `python -m PyInstaller PustakaHadith.spec --noconfirm --distpath D:\PustakaQH_dist\PustakaHadith_v2`:
+   - EXE 85.3 MB + hadis.db (353.9 MB) + hadis_faiss.index (91.1 MB) + hadis_id_map.pkl (0.8 MB)
+   - Disahkan lengkap (7080 fail build vs 7082 termasuk 2 fail MSIX: AppxManifest.xml + PustakaHadith.png yang bukan sebahagian build)
+   - Folder semasa disandarkan ke `PustakaHadith_sep2026`; v2 digelar rasmi `D:\PustakaQH_dist\PustakaHadith`; 2 fail MSIX disalin semula
+
+2. **Portable 7z dibina semula** — `Output\PustakaHadith-portable-1.0.0-x64.7z` **802.1 MB**
+   - SHA256: `86DFC8D5A5148EA30D6D9651BAAF5F5559B45CE5E7D13D6937D3F32292F543DD`
+
+3. **Inno Setup dibina semula** — `Output\PustakaHadith-Setup-1.0.0-x64.exe` **806.6 MB** (2263 saat ~38 minit)
+   - SHA256: `804A15DA69C771A128F32C86CA06F472D0CFE6C5D205FA89D06C696B49D76624`
+
+4. **Upload ke GitHub Release v1.0.0 (clobber)** — keduanya diganti dengan versi fix closeEvent (updated 2026-09-02):
+   - `PustakaHadith-portable-1.0.0-x64.7z` 802.1 MB
+   - `PustakaHadith-Setup-1.0.0-x64.exe` 806.6 MB
+   - `PustakaHadith-v1.0.0.msix` 1093.7 MB (tidak disentuh — MSIX Store lama)
+
+### Fail diubah
+- `ui/app_qt.py` — `closeEvent()` + `QApplication.quit()` (fix, dari Sesi 8)
+- `D:\PustakaQH_dist\PustakaHadith\` — binaan baharu (rasmi)
+- `Output/PustakaHadith-Setup-1.0.0-x64.exe` + `Output/PustakaHadith-portable-1.0.0-x64.7z` — baharu
+- `D:\PustakaQH_dist\PustakaHadith_sep2026\` — sandaran binaan 31 Ogos
+
+### Status
+- ✅ Semua edaran (EXE + 7z) mengandungi fix proses kekal
+- ⚠️ MSIX Store kekal versi 1 Sep (tanpa fix) — pembetulan perlu submit pakej MSIX baru jika mahu
+- ⏳ Peperiksaan visual landing page (perlu pengguna — anti-bot JS)
