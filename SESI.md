@@ -391,3 +391,8 @@ Semua folder projek disatukan ke **`D:\Pustaka Quran Hadis\Pustaka\`**:
 - `landing-page/index.html` + `img/` — sumber deploy Netlify (tiada perubahan kandungan).
 - `C:\Users\MKAW\AppData\Local\Temp\opencode\ph-redirect.php` — `index.php` 301 redirect (di-upload ke server).
 - `C:\Users\MKAW\AppData\Local\Temp\opencode\ph-redir-index.html` — `index.html` meta-refresh + JS redirect (di-upload ke server, ganti landing page lama).
+
+### Kemas kini lanjutan (sama sesi, selepas push)
+- ✅ **Site Netlify `pustakahadith` ditukar ke Public** (dilakukan user di dashboard Netlify) — disahkan akses pelawat luar: HTTP 200, landing page penuh 61,968 B (bukan halaman log masuk).
+- Commits dipush: `91ec05f` (Sesi 12 migrasi+redirect). Push semula guna URL dgn token tertanam (cara `-c http.extraheader` ditolak "invalid credentials").
+- Token PAT: `ghp_...idDpG` masih sah utk push; remote bersih tanpa token.
