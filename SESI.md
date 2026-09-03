@@ -354,3 +354,40 @@ Semua folder projek disatukan ke **`D:\Pustaka Quran Hadis\Pustaka\`**:
 - Butiran penuh: `..\landing-page\SESI.md` (Sesi 11) & `docs\superpowers\specs\2026-09-02-landing-dwibahasa-design.md`.
 - Tiada perubahan kod apl; semata-mata landing page.
 - **Belum di-commit**: `SESI.md` (ubah suai) + `docs/superpowers/specs/2026-09-02-landing-dwibahasa-design.md` (fail baru, untracked) — sedia untuk komit Sesi 11.
+
+---
+
+## Sesi 12 (3 September): Migrasi Hosting ke Netlify + Redirect site.je
+
+### Perubahan
+1. **Berpindah dari hosting FTP profreehost (`pustakahadith.site.je`) ke Netlify**:
+   - Landing page dwibahasa penuh (dengan imej) kini live di **`https://pustakahadith.netlify.app`** (HTTP 200 semua aset).
+   - Site Netlify: `pustakahadith`, account slug `pustakahadith`, site ID `4af95b07-c40d-4005-855b-2fd0ce95745e`.
+   - Specifics: deploy ZIP via API menggunakan `tar.exe -a -c -f` (bukan `Compress-Archive`) supaya path guna **forward slash** `img/` (backslash → imej 404); header `Content-Type: application/zip`; `POST .../sites/{id}/deploys`; deploy `6a9949c23ab1c51f2f6c9a81` state `ready`.
+
+2. **Custom domain `pustakahadith.site.je`** — dikunci "owned by another account" (profreehost), tidak boleh diimport ke Netlify via API (endpoint `/v1` 404 untuk bring-your-own domain; mesti UI dashboard). Pengguna memilih **'Kekal profreehost, redirect (Recommended)'**.
+
+3. **Redirect `pustakahadith.site.je` → Netlify** (dua lapis, disahkan bertukar oleh pengguna):
+   - `index.php` — **301 header redirect** ke `https://pustakahadith.netlify.app/`.
+   - `index.html` — **meta-refresh (0s) + JS `window.location.replace()`** ke Netlify.
+   - Nota: `.htaccess` (mod_rewrite) **tidak dibaca** oleh profreehost (AllowOverride tak dilaksanakan) — sebab itu guna PHP + HTML redirect.
+
+4. **Kemas kini Netlify**:
+   - Site lama `lovely-kitten-9baf06` (`d3d1a031`) dipadam (HTTP 204).
+   - Auto-deploy Git **dihentikan** (`build_settings.stop_builds = True`) supaya deploy manual tidak ditimpa.
+
+### Catatan / cabaran
+- **Anti-bot profreehost**: semua permintaan HTTP ke `site.je` dipapar challenge JS (`aes.js`, cookie `__test`, redirect `?i=1`); semakan automatik dari luar tidak berfungsi — mesti semakan pelayar manusia.
+- **Server mengekod semula imej `.webp`/`.png`** (dimensi sama, fail sah, saiz berbeza) — `index.html` hash sepadan tetapi imej tidak.
+- **Netlify Credit-based**: site baharu **private by default** (tukar Public di dashboard); site terhenti bila kredit habis, reset bulan depan.
+
+### Status
+- ✅ Landing page penuh live di Netlify (`pustakahadith.netlify.app`)
+- ✅ Redirect `site.je` → Netlify berfungsi (disahkan pengguna dalam pelayar)
+- ✅ Auto-deploy Git dihentikan; site lama dipadam
+- ⏳ MSIX Store kekal versi tertunggak (tanpa fix `closeEvent`) — perlu akaun Partner Center/user
+
+### Fail diubah/dicipta
+- `landing-page/index.html` + `img/` — sumber deploy Netlify (tiada perubahan kandungan).
+- `C:\Users\MKAW\AppData\Local\Temp\opencode\ph-redirect.php` — `index.php` 301 redirect (di-upload ke server).
+- `C:\Users\MKAW\AppData\Local\Temp\opencode\ph-redir-index.html` — `index.html` meta-refresh + JS redirect (di-upload ke server, ganti landing page lama).
