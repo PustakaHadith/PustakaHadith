@@ -1,7 +1,7 @@
 # SESI PEMBANGUNAN — PustakaHadith
 
 ## Tarikh
-30 Ogos – 1 September 2026
+30 Ogos – 2 September 2026
 
 ## Matlamat
 Bina & edar **PustakaHadith** v1.0 (PyQt5 + SQLite/FTS5 + FAISS, Windows).
@@ -339,3 +339,18 @@ Semua folder projek disatukan ke **`D:\Pustaka Quran Hadis\Pustaka\`**:
 ### Catatan
 - Repo utama dipindah (isi + `.git`) — git sah, log dipelihara; folder lama `D:\Pustaka Quran Hadis\PustakaHadith` dipadam.
 - Dokumen sejarah (PADANAN_ARKIB, MANUAL_REFERENSI_DEV, MULA_SINI, SESI lama) kekal rujukan lama — rekod masa lalu.
+
+## Sesi 11 (2 September): Landing Page Dwibahasa Melayu/Inggeris
+
+### Perubahan
+- `landing-page/index.html` ditulis semula dengan sistem dwibahasa satu halaman (toggle MS | EN).
+- Bahasa lalai auto-detect pelayar (`navigator.language`), pilihan manual diingati (`localStorage.ph-lang`).
+- Meta dinamik (`title`, `og:*`, `twitter:*`) bertukar mengikut bahasa; nama Latin kitab kekal.
+- **Semakan mudah alih** (render Chromium sebenar, emulasi 320–1366px): tiada limpahan mendatar; menu burger hidup `<980px`.
+- **2 pembetulan**: `.hubungi-grid` ≤600px → `minmax(0,1fr)`; `}` penutup `@media(max-width:600px)` yang tercicir dikembalikan (176/176 seimbang).
+- Deployed ke `pustakahadith.site.je` — hash SHA-256 sepadan (61,248 B); semakan visual pengguna OK.
+
+### Catatan
+- Butiran penuh: `..\landing-page\SESI.md` (Sesi 11) & `docs\superpowers\specs\2026-09-02-landing-dwibahasa-design.md`.
+- Tiada perubahan kod apl; semata-mata landing page.
+- **Belum di-commit**: `SESI.md` (ubah suai) + `docs/superpowers/specs/2026-09-02-landing-dwibahasa-design.md` (fail baru, untracked) — sedia untuk komit Sesi 11.
