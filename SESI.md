@@ -396,3 +396,8 @@ Semua folder projek disatukan ke **`D:\Pustaka Quran Hadis\Pustaka\`**:
 - ✅ **Site Netlify `pustakahadith` ditukar ke Public** (dilakukan user di dashboard Netlify) — disahkan akses pelawat luar: HTTP 200, landing page penuh 61,968 B (bukan halaman log masuk).
 - Commits dipush: `91ec05f` (Sesi 12 migrasi+redirect). Push semula guna URL dgn token tertanam (cara `-c http.extraheader` ditolak "invalid credentials").
 - Token PAT: `ghp_...idDpG` masih sah utk push; remote bersih tanpa token.
+
+### Keputusan muktamad domain (4 September)
+- **`pustakahadith.site.je` tidak lagi digunakan sebagai titik akses utama.** Punca: (1) TLD `.je` (Jersey) **tidak disokong Netlify** sebagai custom domain (endpoint `/v1/sites/{id}/domains` POST → 404; sama juga Sesi 12, bukan masalah "owned by another account" semata), dan (2) anti-bot profreehost kini menyekat akses walaupun dalam pelayar (HTTP 200 dgn challenge JS `aes.js`/`__test`/`?i=1`, bukan redirect).
+- **Keputusan user: terus guna `https://pustakahadith.netlify.app`** sebagai URL rasmi landing page (sudah live, Public, lengkap). Jika mahu URL sendiri pada masa depan, perlu beli domain (`.com`/`.my`/`.net` dll) yang disokong Netlify.
+- Fail redirect `index.php`/`index.html` di profreehost **dibiarkan** (tidak bernilai kerana anti-bot; tidak mendatangkan mudarat). Auto-deploy Git Netlify kekal dihentikan (deploy manual sahaja).
