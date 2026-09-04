@@ -401,3 +401,19 @@ Semua folder projek disatukan ke **`D:\Pustaka Quran Hadis\Pustaka\`**:
 - **`pustakahadith.site.je` tidak lagi digunakan sebagai titik akses utama.** Punca: (1) TLD `.je` (Jersey) **tidak disokong Netlify** sebagai custom domain (endpoint `/v1/sites/{id}/domains` POST → 404; sama juga Sesi 12, bukan masalah "owned by another account" semata), dan (2) anti-bot profreehost kini menyekat akses walaupun dalam pelayar (HTTP 200 dgn challenge JS `aes.js`/`__test`/`?i=1`, bukan redirect).
 - **Keputusan user: terus guna `https://pustakahadith.netlify.app`** sebagai URL rasmi landing page (sudah live, Public, lengkap). Jika mahu URL sendiri pada masa depan, perlu beli domain (`.com`/`.my`/`.net` dll) yang disokong Netlify.
 - Fail redirect `index.php`/`index.html` di profreehost **dibiarkan** (tidak bernilai kerana anti-bot; tidak mendatangkan mudarat). Auto-deploy Git Netlify kekal dihentikan (deploy manual sahaja).
+
+### Pembaikan 404 (4 September)
+**Gejala:** `https://pustakahadith.netlify.app/` mula pulangkan 404 walaupun sebelum ini HTTP 200. `index.html` & imej semua 404.
+
+**Punca:** Auto-deploy Git Netlify **aktif semula** (`stop_builds=false` — set kemungkinan dibatalkan bila site ditukar ke Public di dashboard). Ia me-deploy commit repo terbaru `2d7b0c0` (kod apl Python + SESI.md, **tiada `index.html` di root**) → `/` jadi 404.
+
+**Diagnosis utama:**
+- Deploy `6a9aae06` (git `2d7b0c0`, commit "Sesi 12: Keputusan muktamad domain") = 404 (tiada index.html).
+- `6a9949c2` (deploy ZIP landing page Sesi 12) = **HTTP 200, 61,248 B** — masih bagus.
+- **Deploy ZIP baharu hari ini `6a9ab1fa` = 404 (3,449 B)** — gubahan ZIP tidak sama dgn Sesi 12 (`tar.exe -a`), walaupun `index.html` + `img/` ada dlm arkib. Pelajaran: sentiasa sahkan deploy ZIP via preview URL (`https://{deploy_id}--{site}.netlify.app`) sebelum dijadikan current.
+
+**Pembaikan:**
+1. **Restore deploy `6a9949c2`** sebagai current — `POST /sites/{id}/deploys/{did}/restore` → published (11:59:24). `/`, `index.html`, `img/app-home.webp` semua HTTP 200 (61,968 B / 91,856 B).
+2. **Hentikan auto-deploy Git secara kekal** — `PATCH /sites/{id}` `{"build_settings":{"stop_builds":true}}` → disahkan `stop_builds=True` (5 minit kemudian masih True). Notifikasi Netlify diterima: "Builds are now stopped... Netlify will never build your project."
+
+**Status:** ✅ Landing page live semula (HTTP 200). ✅ Auto-deploy dihentikan (tidak menimpa lagi). Deploy masa depan = manual sahaja (CLI/API).
