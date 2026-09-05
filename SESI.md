@@ -478,3 +478,13 @@ Kecilkan pakej Microsoft Store (MSIX 1,093.7 MB). User memilih pendekatan **"Ded
 - `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PustakaHadith-v1.0.0-slim.msix` — MSIX baharu
 - `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PustakaHadith-v1.0.0.msix` — MSIX lama (1,093.7 MB)
 - `..\landing-page\SESI.md` — rekod Sesi 13 (pengecilan MSIX)
+
+## Sesi 14 (5 September): Betulkan CI (py_compile → compileall)
+- Emel notifikasi GitHub: run CI #21 gagal pada commit `82b06e7` (kemas kini manual pengguna).
+- **Punca**: `python -m py_compile main.py db.py config.py api core ui utils` — `py_compile` **tidak menerima direktori** → `[Errno 13] Permission denied: 'api'`. CI sebenarnya **gagal sejak run #1** (run #1–#21 semua failure; ini bukan regresi push terbaru).
+- **Fiks**: tukar ke `python -m compileall -q` — menerima direktori dan menyemak semua `.py` secara rekursif (sintaks sahaja, tiada import).
+- Sasaran diperluas: `main.py db.py config.py launcher.py VERSI.py api core ui utils scripts tests` (tambah launcher/VERSI/scripts/tests).
+- **Ujian tempatan**: 90 fail `.py` + `tests/` semua lulus (Python 3.14.6) sebelum commit.
+- **Hasil**: CI run #22 **success** pada commit `37b98c4`.
+- Catatan: arahan `py_compile` asal dalam workflow sebenarnya tidak boleh berfungsi dari mula (CI sentiasa merah); sekarang hijau.
+- Commit: `37b98c4` — "Betulkan CI: guna compileall (py_compile tidak terima direktori)".
