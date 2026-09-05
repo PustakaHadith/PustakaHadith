@@ -432,6 +432,13 @@ Kecilkan pakej Microsoft Store (MSIX 1,093.7 MB). User memilih pendekatan **"Ded
 ### Pengujian
 - Muat model tanpa `blobs` **BERJAYA**: cache_test 7.2s, staging 7.6s, encode → (1, 384) dims, `HF_HUB_OFFLINE=1`.
 
+### Ujian pemasangan (MSIX slim) — BERJAYA
+- Mesin: Windows 11 Pro 24H2 (build 26100), **Developer Mode AKTIF** (`AllowDevelopmentWithoutDevLicense=0x1`); SDK Windows terkini 10.0.18362.0 (signtool TIDAK support sign MSIX).
+- `makeappx unpack` MSIX slim → OK (exit 0, 7078 entri).
+- `Add-AppxPackage -Register AppxManifest.xml` → **Status Ok** `PUSTAKAHADITH.PustakaHadith_1.0.0.0_neutral__a8vs82dc5casm`.
+- Lancar via **AUMID** (`shell:AppsFolder`) → proses terhasil (PID 9976, 82.2 MB) — aktivasi pakej penuh berfungsi. (Nota: `explorer shell:appsFolder\AUMID` sahaja tidak aktif; guna `Get-StartApps` AppID sebaliknya.)
+- Nota: MSIX tidak ditandatangani (SDK lama); pendaftaran melalui Developer Mode bypass tanda tangan untuk ujian. Untuk pengguna biasa di PC lain → mesti melalui Microsoft Store (Microsoft sign semasa submission).
+
 ### Tindakan
 1. Staging: `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\msix_staging` — disalin dari dist 2 Sept (2,229 MB) → **1,759 MB** selepas buang `blobs` (`.cache_models` 941 → 470 MB).
 2. `Assets/` (4 logo) + `AppxManifest.xml` disalin ke staging.
