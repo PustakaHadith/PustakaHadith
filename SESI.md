@@ -443,6 +443,9 @@ Kecilkan pakej Microsoft Store (MSIX 1,093.7 MB). User memilih pendekatan **"Ded
   - `PustakaHadith-v1.0.0-slim.msix` (814.8 MB) di-upload — menggantikan `PustakaHadith-v1.0.0.msix` lama (1,093.7 MB, tanpa fix) yang dipadam. Upload API ~32 minit (mustahil DISTINGUISH `-InFile`); saiz disahkan sepadan (854,378,662 B); pautan download OK (HTTP 200).
   - Release body dikemas kini (aset semasa: Setup EXE 806.6 MB, 7z 802.1 MB, MSIX slim 814.8 MB; nota fix closeEvent + dedup blobs).
   - **7z & Setup EXE tidak berubah** — dist tidak berubah sejak Sesi 9.
+- **Profil GitHub akaun PustakaHadith dikemas kini (5 Sep)** — via API `PATCH /user` dengan classic PAT scope `user` (fine-grained PAT tidak disokong untuk profil; 403):
+  - Bio → `Desktop hadith search app - bilingual (Arabic-Malay) with AI semantic search. Free & offline. 62,169 hadiths from 9 major books.`
+  - Laman web → `https://pustakahadith.netlify.app` (ganti `pustakahadith.site.je` yang ditinggal).
 
 ### Tindakan
 1. Staging: `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\msix_staging` — disalin dari dist 2 Sept (2,229 MB) → **1,759 MB** selepas buang `blobs` (`.cache_models` 941 → 470 MB).
