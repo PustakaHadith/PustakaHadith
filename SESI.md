@@ -439,6 +439,10 @@ Kecilkan pakej Microsoft Store (MSIX 1,093.7 MB). User memilih pendekatan **"Ded
 - Lancar via **AUMID** (`shell:AppsFolder`) → proses terhasil (PID 9976, 82.2 MB) — aktivasi pakej penuh berfungsi. (Nota: `explorer shell:appsFolder\AUMID` sahaja tidak aktif; guna `Get-StartApps` AppID sebaliknya.)
 - Nota: MSIX tidak ditandatangani (SDK lama); pendaftaran melalui Developer Mode bypass tanda tangan untuk ujian. Untuk pengguna biasa di PC lain → mesti melalui Microsoft Store (Microsoft sign semasa submission).
 - **Pembersihan selepas ujian**: `Remove-AppxPackage` (pakej dikeluarkan), folder `C:\Users\MKAW\AppData\Local\Temp\opencode\msix_test` dipadam, tiada sisa di `%LOCALAPPDATA%\Packages`. Sistem kembali bersih.
+- **GitHub Release v1.0.0 dikemas kini (5 Sep)**:
+  - `PustakaHadith-v1.0.0-slim.msix` (814.8 MB) di-upload — menggantikan `PustakaHadith-v1.0.0.msix` lama (1,093.7 MB, tanpa fix) yang dipadam. Upload API ~32 minit (mustahil DISTINGUISH `-InFile`); saiz disahkan sepadan (854,378,662 B); pautan download OK (HTTP 200).
+  - Release body dikemas kini (aset semasa: Setup EXE 806.6 MB, 7z 802.1 MB, MSIX slim 814.8 MB; nota fix closeEvent + dedup blobs).
+  - **7z & Setup EXE tidak berubah** — dist tidak berubah sejak Sesi 9.
 
 ### Tindakan
 1. Staging: `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\msix_staging` — disalin dari dist 2 Sept (2,229 MB) → **1,759 MB** selepas buang `blobs` (`.cache_models` 941 → 470 MB).
