@@ -417,3 +417,44 @@ Semua folder projek disatukan ke **`D:\Pustaka Quran Hadis\Pustaka\`**:
 2. **Hentikan auto-deploy Git secara kekal** — `PATCH /sites/{id}` `{"build_settings":{"stop_builds":true}}` → disahkan `stop_builds=True` (5 minit kemudian masih True). Notifikasi Netlify diterima: "Builds are now stopped... Netlify will never build your project."
 
 **Status:** ✅ Landing page live semula (HTTP 200). ✅ Auto-deploy dihentikan (tidak menimpa lagi). Deploy masa depan = manual sahaja (CLI/API).
+
+---
+
+## Sesi 13 (5 September): Pengecilan MSIX — Dedup Blobs (Slim MSIX)
+
+### Matlamat
+Kecilkan pakej Microsoft Store (MSIX 1,093.7 MB). User memilih pendekatan **"Dedup blobs"** (buang pendua dalam `.cache_models`).
+
+### Punca saiz
+- `.cache_models/` (941 MB) mengandungi **duplikasi**: `blobs/` (470 MB) + `snapshots/` (470 MB) — fail model yang SAMA wujud dua kali (format cache HuggingFace).
+- App memuat model AI melalui `snapshots` (`local_files_only=True`, `semantic_search.py` → `MODEL_CACHE`), jadi `blobs` tidak diperlukan.
+
+### Pengujian
+- Muat model tanpa `blobs` **BERJAYA**: cache_test 7.2s, staging 7.6s, encode → (1, 384) dims, `HF_HUB_OFFLINE=1`.
+
+### Tindakan
+1. Staging: `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\msix_staging` — disalin dari dist 2 Sept (2,229 MB) → **1,759 MB** selepas buang `blobs` (`.cache_models` 941 → 470 MB).
+2. `Assets/` (4 logo) + `AppxManifest.xml` disalin ke staging.
+3. `makeappx pack` → **`PustakaHadith-v1.0.0-slim.msix` = 814.8 MB** (1,093.7 → 814.8 MB, **jimat ~279 MB / ~25.5%**).
+
+### Kandungan disahkan
+- `model.safetensors` **448.8 MB** dalam `snapshots/.../` — **tiada `blobs/`**.
+- `hadis.db` 353.9 MB, `hadis_faiss.index` 91.1 MB, `PustakaHadith.exe` 85.3 MB — utuh.
+- AppxManifest: Identity `PUSTAKAHADITH.PustakaHadith`, Publisher `CN=1084A5A8-F66F-4B6D-A3EF-455CCC63CDD2`, Version `1.0.0.0`, `runFullTrust`, Windows.Desktop `10.0.17763.0+`.
+
+### Implikasi / Kebaikan
+- **~279 MB lebih kecil (~25.5%)** — muat turun Store lebih ringan, kurang ruang cakera.
+- **AI carian makna luar talian kekal berfungsi** — model dibaca via snapshots (bukan blobs).
+- **Bonus**: berasaskan dist 2 Sept → MSIX baharu ini *termasuk* fix `closeEvent` (MSIX Store lama 1 Sep TIDAK ada fix).
+- **Nota sebelum upload Store**: padankan Identity/Version dengan listing Partner Center (Microsoft mungkin set semula identity semasa submission).
+
+### FAISS — Jawapan (item 2)
+- **Full rebuild**: ~3 jam (script, 4 CPU) hingga ~10 jam (rekod Sesi 2) — perlu hanya jika struktur indeks/model/teks berubah meluas.
+- **Selective rebuild**: ~30 saat–5 minit (Sesi 3) — sudah dilaksanakan untuk 55 hadis terjejas.
+- **Status: TIDAK perlu full rebuild sekarang** — hanya 55/62,169 vektor (0.09%) berubah; selective sudah tampung.
+
+### Fail berkaitan
+- `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\msix_staging\` — staging bersih (sumber pack)
+- `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PustakaHadith-v1.0.0-slim.msix` — MSIX baharu
+- `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PustakaHadith-v1.0.0.msix` — MSIX lama (1,093.7 MB)
+- `..\landing-page\SESI.md` — rekod Sesi 13 (pengecilan MSIX)
