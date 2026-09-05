@@ -96,7 +96,7 @@ Isi penting:
 | Fail | Fungsi |
 |---|---|
 | `hadis.db` | Data hadis (62,169 hadis) — jangan padam |
-| `user_settings.json` | Tetapan anda (tema, saiz fon, kunci API) — jangan padam |
+| `user_settings.json` | Tetapan anda (tema, saiz fon) — jangan padam |
 | `bookmarks.json` | Penanda halaman anda — jangan padam |
 | `profil_model.json` | Log masa muat model — boleh abaikan |
 
@@ -120,7 +120,7 @@ Isi penting:
 
 ## Sumber dan Atribusi
 
-- **Teks hadis, terjemahan Melayu & Indonesia:** hadis.my — API Hadis
+- **Teks hadis, terjemahan Melayu & Indonesia:** hadis.my — Hadis
   Malaysia (https://hadis.my)
 - **Darjat ulama:** koleksi `fawazahmed0/hadith-api` (domain awam),
   berasal daripada sunnah.com

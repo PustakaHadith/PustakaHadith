@@ -2,6 +2,7 @@
 
 > Panduan menggunakan aplikasi PustakaHadith.
 > Bahasa: Melayu · Untuk pengguna aplikasi.
+> Panduan pemasangan: lihat `dokumen/manual/MANUAL_INSTALASI.md`.
 
 ---
 
@@ -177,33 +178,26 @@ Klik ikon **gear (⚙)** di penjuru atas kanan.
 
 | Tetapan | Fungsi |
 |---|---|
-| **Tetapan API** | Masukkan/uji kunci API hadis.my (https://hadis.my) |
 | **Mod** | Paparan mod dalam talian / luar talian semasa |
-
-> Kunci API dilindungi: kelihatan bertopeng, perlu "Buka Kunci" untuk
-> mengubah, dengan pengesahan.
 
 ---
 
 ## Keperluan Data & Mod Luar Talian
 
-Pada **binaan semasa**, pangkalan data hadis **tidak dibundel** bersama
-aplikasi. Untuk membaca hadis, pengguna perlu memperoleh data terlebih
-dahulu:
+Binaan edaran rasmi (Setup EXE, Portable 7z, dan MSIX Store) **membundel
+pangkalan data hadis lengkap** (`hadis.db`, ~62,169 hadis terjemahan Melayu)
+terus dalam aplikasi. Sebab itu:
 
-1. Dapatkan kunci API percuma di <https://developer.hadis.my>.
-2. **Tetapan → Sambungan → Tetapan API**: masukkan kunci, klik **Uji**,
-   kemudian **Sync**.
-3. Selepas *sync* selesai, aplikasi berfungsi **sepenuhnya luar talian**.
+- Anda **terus boleh membaca dan mencari hadis tanpa internet** dan
+  **tanpa sebarang kunci atau data tambahan** sebaik sahaja pemasangan
+  selesai.
+- Model carian makna AI (`intfloat/multilingual-e5-small`) juga **dibundel**
+  — carian makna berjalan **setempat**, tiada data dihantar ke pelayan.
+- Data yang disertakan ialah *snapshot* terjemahan `hadis.my` pada tarikh
+  pakej dibina. Untuk mendapat terjemahan terbaru, muat turun versi
+  aplikasi yang lebih baharu apabila tersedia.
 
-Carian kata kunci, membaca hadis, penanda halaman dan tema semua berfungsi
-tanpa internet. Carian makna (AI) juga berjalan setempat kerana model
-(`intfloat/multilingual-e5-small`) sudah dimuat semasa pemasangan.
-
-> **Status pembundelan:** Pembangun telah memohon **kebenaran bertulis
-> daripada hadis.my** untuk membundel *snapshot* data ke dalam pemasang.
-> Sebaik kebenaran diterima, pengguna boleh terus membaca tanpa kunci API.
-> Rujuk `dokumen/surat/hadis.my/SURAT_HADISMY.md`.
+![Rak Digital & Senarai Kitab](../../screenshots/02_rak.png)
 
 ---
 
@@ -232,18 +226,19 @@ tanpa internet. Carian makna (AI) juga berjalan setempat kerana model
 
 ## Sumber dan Atribusi
 
-- **Teks hadis, terjemahan Melayu & Indonesia:** hadis.my — API Hadis
+- **Teks hadis, terjemahan Melayu & Indonesia:** hadis.my — Hadis
   Malaysia (https://hadis.my)
 - **Darjat ulama:** koleksi `fawazahmed0/hadith-api` (domain awam),
   berasal daripada sunnah.com
 - **Huraian ringkas:** SemakHadis.com — atribusi dipaparkan pada setiap
   huraian
-- **Carian makna (AI):** model `intfloat/multilingual-e5-small`
-- **Pembundelan data:** snapshot data hadis.my sedang dimohon kebenaran
-  penulis; binaan semasa memperoleh data melalui kunci API pengguna
-  (rujuk seksyen "Keperluan Data & Mod Luar Talian").
+- **Carian makna (AI):** model `intfloat/multilingual-e5-small` (berjalan
+  setempat, luar talian)
+- **Pembundelan data:** binaan edaran rasmi membundel *snapshot* terjemahan
+  hadis.my (`hadis.db`) — rujuk seksyen "Keperluan Data & Mod Luar Talian";
+  sumber asal: Hadis Malaysia (https://hadis.my)
 
 ---
 
 *Dokumen: `dokumen/manual/MANUAL_PENGGUNAAN.md` · Untuk aplikasi PustakaHadith ·
-Versi: 1.0 · 1 September 2026*
+Versi: 1.1 · 5 September 2026*

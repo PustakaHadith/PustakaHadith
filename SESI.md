@@ -446,6 +446,11 @@ Kecilkan pakej Microsoft Store (MSIX 1,093.7 MB). User memilih pendekatan **"Ded
 - **Profil GitHub akaun PustakaHadith dikemas kini (5 Sep)** — via API `PATCH /user` dengan classic PAT scope `user` (fine-grained PAT tidak disokong untuk profil; 403):
   - Bio → `Desktop hadith search app - bilingual (Arabic-Malay) with AI semantic search. Free & offline. 62,169 hadiths from 9 major books.`
   - Laman web → `https://pustakahadith.netlify.app` (ganti `pustakahadith.site.je` yang ditinggal).
+- **Manual pengguna dikemas kini (5 Sep)** — v1.1:
+  - `MANUAL_PENGGUNAAN.md`: seksyen "Keperluan Data & Mod Luar Talian" ditulis semula — data kini **dibundel** (tiada kunci API diperlukan); **semua arahan penggunaan API dibuang** dari manual pengguna (Sambungan → Mod sahaja; atribusi hadis.my tanpa menyebut API); versi 1.1 · 5 Sep 2026.
+  - `MULA_CEPAT.md`: bahagian "Kunci API (sekali sahaja)" & "Minta kunci API" diganti dengan nota pembundelan; fiks ralat laluan `manual/manual/manual/` → laluan betul.
+  - `MANUAL_INSTALASI.md`: deskripsi `user_settings.json` tanpa "kunci API"; atribusi hadis.my tanpa menyebut API.
+  - Rujukan gambar: `screenshots/01_home`–`06_saved` disahkan wujud dan dirujuk via `../../screenshots/`.
 
 ### Tindakan
 1. Staging: `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\msix_staging` — disalin dari dist 2 Sept (2,229 MB) → **1,759 MB** selepas buang `blobs` (`.cache_models` 941 → 470 MB).

@@ -2,8 +2,8 @@
 
 > Ringkasan pantas: **apa yang sudah disahkan**, **cara menjalankan
 > app**, dan **cara memulakan carian**. Manual penuh:
-> `dokumen/manual/manual/manual/MANUAL_PENGGUNAAN.md` · pemasangan:
-> `dokumen/manual/manual/manual/MANUAL_INSTALASI.md` · panduan langkah pertama
+> `MANUAL_PENGGUNAAN.md` · pemasangan:
+> `MANUAL_INSTALASI.md` · panduan langkah pertama
 > pemasangan: `BACA_SAYA.txt`.
 
 **PustakaHadith** = koleksi **9 kitab hadis, 62,169 hadis** (Bukhari,
@@ -20,12 +20,12 @@ Pengesahan terkini (17 Ogos 2026) — semua lulus pada mesin sebenar:
 
 | Perkara | Status |
 |---|---|
-| Data penuh 62,169 hadis sejajar dengan sumber API | ✅ 62,169 unik, 0 duplikat, teks lengkap |
+| Data penuh 62,169 hadis sejajar dengan sumber hadis.my | ✅ 62,169 unik, 0 duplikat, teks lengkap |
 | Terjemahan Inggeris 31,833 hadis (7 kitab) | ✅ ketepatan audit 100% |
 | Huraian SemakHadis 4,237 hadis (BM) + darjat 63,930 | ✅ dipapar dengan atribusi |
 | Penanda buku (Tersimpan) — simpan, kekal selepas tutup, buka semula | ✅ diuji dengan data sebenar |
 | Carian kata kunci + carian makna (AI) | ✅ |
-| **5 tema, semua ≥ kontras WCAG AA** — 🌙 Neutral (lalai) · 📜 Kertas · ☀ Neutral terang · ☀ Terang · 🌓 Ikut sistem | ✅ galeri visual 5 tema dalam `manual/manual/MANUAL_PENGGUNAAN.md` §3 TEMA |
+| **5 tema, semua ≥ kontras WCAG AA** — 🌙 Neutral (lalai) · 📜 Kertas · ☀ Neutral terang · ☀ Terang · 🌓 Ikut sistem | ✅ galeri visual 5 tema dalam `MANUAL_PENGGUNAAN.md` §3 TEMA |
 | **Paparan responsif** — kandungan betul pada sebarang saiz tetingkap dan penskalaan Windows (100%–150%) | ✅ pepijat paparan terpotong dibaiki (17 Ogos 2026) |
 | Suite ujian pra-hantar 14 ujian | ✅ SEMUA LULUS |
 | App berjalan pada Windows (Python 3.14) | ✅ |
@@ -57,15 +57,11 @@ tiada, dengan jujur.
 - **`NYAHPEPIJAT.bat`** — buka tetingkap diagnos yang kekal terbuka;
   salin teksnya dan hantar kepada pembangun.
 
-### Kunci API (sekali sahaja)
+### Data sudah lengkap (tiada kunci diperlukan)
 
-- Kali pertama buka app, ia mungkin meminta **kunci API** (untuk
-  muat turun data hadis). Klik ⚙ **gear** → **Sambungan** → **Tetapan
-  API** dan tampalkan kunci. Kunci percuma didaftar di
-  <https://hadis.my> → bahagian **Developer / API** (bentuk:
-  `HADIS_XXXXXXXX-…`).
-- Selepas data dimuat turun, app berfungsi **luar talian** — kunci
-  tidak diperlukan lagi untuk membaca hadis.
+- Binaan edaran membundel pangkalan data hadis lengkap (62,169 hadis).
+  Buka app terus — **tiada kunci API atau muat turun data diperlukan**;
+  semuanya berjalan **luar talian** selepas pemasangan.
 
 ---
 
@@ -120,7 +116,7 @@ tiada, dengan jujur.
      Neutral, terang → ☀ Neutral terang (bertukar hampir serta-merta)
 3. Semua tema lulus kontras WCAG AA (≥ 4.5:1). Perbandingan visual
    kelima-lima tema (halaman Utama + Detail) ada dalam
-   `manual/manual/MANUAL_PENGGUNAAN.md` §3 TEMA.
+   `MANUAL_PENGGUNAAN.md` §3 TEMA.
 
 **Paparan responsif:** app kini memaparkan kandungan dengan betul
 pada sebarang saiz tetingkap — termasuk tetingkap kecil (1024×600)
@@ -139,11 +135,11 @@ telah dibaiki dan diuji penuh (17 Ogos 2026).
 - **`NYAHPEPIJAT.bat`** — buka tetingkap diagnos yang kekal terbuka;
   salin teks dan hantar kepada pembangun.
 
-**Minta kunci API pada kali pertama:**
+**Data hadis tidak kelihatan:**
 
-- ⚙ gear → **Sambungan** → **Tetapan API** → tampal kunci dari
-  <https://hadis.my> → **Developer / API**. Sekali sahaja — selepas
-  data dimuat turun, app berfungsi **luar talian**.
+- Pastikan anda memasang binaan edaran rasmi (Setup EXE / Portable /
+  MSIX) — ia membundel data lengkap. Jika data tiada, pasang semula
+  atau hantar output `NYAHPEPIJAT.bat` kepada pembangun.
 
 **App lambat buka:**
 
@@ -171,7 +167,7 @@ telah dibaiki dan diuji penuh (17 Ogos 2026).
   makna (AI) sesuai untuk soalan.
 
 **Masih bermasalah?** — hantar kandungan `NYAHPEPIJAT.bat` kepada
-pembangun; butiran penuh dalam `manual/manual/MANUAL_INSTALASI.md`
+pembangun; butiran penuh dalam `MANUAL_INSTALASI.md`
 §Penyelesaian masalah.
 
 ---
@@ -180,8 +176,8 @@ pembangun; butiran penuh dalam `manual/manual/MANUAL_INSTALASI.md`
 
 | Perlu | Buka |
 |---|---|
-| Manual penuh | `dokumen/manual/manual/manual/MANUAL_PENGGUNAAN.md` |
-| Pemasangan terperinci | `dokumen/manual/manual/manual/MANUAL_INSTALASI.md` |
+| Manual penuh | `MANUAL_PENGGUNAAN.md` |
+| Pemasangan terperinci | `MANUAL_INSTALASI.md` |
 | Langkah pertama pasang | `BACA_SAYA.txt` |
-| Penyelesaian masalah penuh | `manual/manual/MANUAL_INSTALASI.md` §Penyelesaian masalah |
-| Peta dokumen pembangunan | `dokumen/manual/MANUAL_REFERENSI_DEV.md` |
+| Penyelesaian masalah penuh | `MANUAL_INSTALASI.md` §Penyelesaian masalah |
+| Peta dokumen pembangunan | `MANUAL_REFERENSI_DEV.md` |
