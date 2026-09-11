@@ -488,3 +488,56 @@ Kecilkan pakej Microsoft Store (MSIX 1,093.7 MB). User memilih pendekatan **"Ded
 - **Hasil**: CI run #22 **success** pada commit `37b98c4`.
 - Catatan: arahan `py_compile` asal dalam workflow sebenarnya tidak boleh berfungsi dari mula (CI sentiasa merah); sekarang hijau.
 - Commit: `37b98c4` — "Betulkan CI: guna compileall (py_compile tidak terima direktori)".
+
+---
+
+## Sesi 15 (11–12 September): Push GitHub, Kemas kini Landing Page, Release v1.0.1
+
+**Nota permulaan:** `git` TIADA dalam PATH mesin dan `C:\Users\MKAW\AppData\Local\Programs\Python\Python314` (rujukan `.venv-build` lama) sudah tidak wujud. Semua kerja minggu ini dijalankan menerusi alat mudah-alih baru (dipasang ke `D:\tools\`) dan Python 3.14.6 baharu di `D:\Python314`.
+
+### 1. Push repo ke GitHub (11 Sep)
+- `git` tidak dijumpai → pasang **MinGit 2.55.0** portable (ataka temp, kemudian `D:\tools\mingit`); `winget` sedia tetapi `gh`/kredensial Git tiada.
+- Repo setempat 12 komit di hadapan (Sesi 12–14); remote `origin` (`opencodemk/PustakaHadith.git`) **tidak wujud lagi** (repo dipindah ke org PustakaHadith).
+- Push ke remote **`pustakahadith`** (`PustakaHadith/PustakaHadith`) — disahkan `ls-remote` == tempatan (`31e7a7f`). PAT GitHub digunakan (disimpan ke `%USERPROFILE%\.git-credentials`).
+
+### 2. Kemas kini landing page + deploy Netlify (11 Sep)
+- `index.html` kad dl1: pautan MSIX kini ke **Microsoft Store** (`https://apps.microsoft.com/store/detail/9MWLXVH2ZC7Q?cid=DevShareMWAPCS`), butang "Buka Microsoft Store"; teks kad di-update ke **v1.0.1 (814.8 MB)** ms & en; nota dl-note → `Versi 1.0.1`.
+- Auto-deploy Git Netlify **kekal dihentikan** (dari Sesi 12) → deploy manual guna **Netlify CLI 27.5.2** (dipasang via npm; token PAT Netlify).
+- Deploy: draft `6aa41542` disahkan (link Store + v1.0.1 + label OK), kemudian `--prod` → **live `https://pustakahadith.my`** (disahkan semula selepas prod: 3 item OK).
+
+### 3. Release GitHub v1.0.1 (11 Sep)
+- Cipta release baharu **`v1.0.1`** (id 387125677): `https://github.com/PustakaHadith/PustakaHadith/releases/tag/v1.0.1`
+- Body mengikut format v1.0.0 (slim MSIX + link Store + keperluan sistem).
+- Upload **`PustakaHadith-v1.0.1.msix`** (814.7 MB) — selesai (~uploader PustakaHadith).
+- Release v1.0.0 kekal (aset: Setup EXE 806.6 MB, 7z 802.1 MB, slim.msix lama).
+- **Keputusan: binaan EXE/7z v1.0.1 DIPENDING** (kandungan tidak berubah; hanya pengecilan MSIX).
+
+### 4. Pasang alat ke D: (11 Sep)
+- Pindah semua alat dari temp ke **`D:\tools\`**: `mingit` (90 MB), `netlify-cli` (250.6 MB), `sdkbt` (makeappx+signtool, 53.5 MB), `mingit.zip`.
+- PATH pengguna tambah: `D:\tools\mingit\cmd`, `D:\tools\netlify-cli\node_modules\.bin`, `D:\tools\sdkbt\bin\10.0.28000.0\x64`.
+- Disahkan berfungsi penuh dari lokasi baharu (git status/ls-remote, netlify api, makeappx unpack, signtool).
+
+### 5. Pasang Python 3.14.6 + PyInstaller + Inno Setup (11–12 Sep)
+- **Penemuan**: `.venv-build\pyvenv.cfg` = Python **3.14.6** (home di C: yang hilang) — binaan asal GUNA 3.14, bukan 3.13. `requirements.txt` sahkan versi-wheel 3.14 (torch 2.13, faiss-cpu 1.15, numpy 2.5.2, sentence-transformers 6.0, PyQt5 5.15.11, sip 12.19.0).
+- 13 pertama salah versi (3.13) — **digantikan**: pasang `python-3.14.6-amd64.exe` ke **`D:\Python314`** (per-user, tanpa admin), `D:\Python313` dibuang.
+- PyInstaller **6.22.2** dipasang (`D:\Python314\Scripts`).
+- Inno Setup **6.7.3** → extract installer (7-Zip pecah jadi PE sections) → guna `/VERYSILENT /DIR=D:\tools\InnoSetup` → **`ISCC.exe`** berfungsi.
+- PATH: `D:\Python314`, `D:\Python314\Scripts`, `D:\tools\InnoSetup`.
+
+### 6. Pembersihan temp (~5.5 GB dibebaskan)
+- Padam folder/extract: `full100`, `full100_msix`, `slim_msix` (2.6 GB), `verify101` (1.8 GB), `full100.zip` (1.1 GB).
+- Padam pemasang: `innosetup-6.7.3.exe`, `python-3.13.7-amd64.exe`, `python-3.14.6-amd64.exe`, `sdkbt.nupkg`, `sdkbt.zip`, `sdkbt_versions.json`.
+- **`test101.pfx`** (cert ujian) dipindah ke `D:\tools\sdkbt\test101.pfx`.
+
+### Status
+- ✅ Repo diselaraskan ke GitHub (`main` = `31e7a7f`).
+- ✅ Landing page live di `https://pustakahadith.my` (kad Store + v1.0.1, ms & en).
+- ✅ Release **v1.0.1** published dengan `PustakaHadith-v1.0.1.msix`.
+- ✅ Toolchain binaan lengkap di D: (Python 3.14.6 + PyInstaller 6.22.2 + Inno Setup 6.7.3 + makeappx/signtool).
+- ⏸ Pending: upload MSIX v1.0.1 → Partner Center; binaan EXE/7z v1.0.1; **buat semula `.venv-build`** (rubah rujukan Python dari C: → `D:\Python314`) sebelum apa-apa binaan PyInstaller.
+
+### Fail berkaitan
+- `D:\tools\` — alat mudah-alih (mingit, netlify-cli, sdkbt/InnoSetup)
+- `D:\Python314\` — Python 3.14.6 + PyInstaller
+- `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PANDUAN_KEMAS_KINI_STORE_v1.0.1.md` — panduan upload Store
+- `D:\Pustaka Quran Hadis\Pustaka\landing-page\index.html` — kemas kini 11 Sep (kad Store v1.0.1)
