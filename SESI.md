@@ -571,3 +571,103 @@ Kecilkan pakej Microsoft Store (MSIX 1,093.7 MB). User memilih pendekatan **"Ded
 - `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PustakaHadith\` - onedir kanonik LENGKAP (sumber .iss)
 - `D:\Pustaka Quran Hadis\Pustaka\PustakaHadith\dist\PustakaHadith\` - binaan baru (TIDAK DIPAKAI, tak lengkap)
 - `D:\Pustaka Quran Hadis\Pustaka\PustakaHadith\.venv-build\` - venv binaan dibaiki ke `D:\Python314`
+
+---
+
+## Sesi 17 (12 September): Rebuild PyInstaller LENGKAP + Kemas Kini Kanonik
+
+### Masalah (bersambung dari Sesi 16)
+- Binaan PyInstaller Sesi 16 **tidak lengkap** — `hadis.db`, `hadis_faiss.index`, cache model TIADA dalam `_internal` ("masalah fail tidak diganti").
+- Punca: binaan terdahulu tidak disertakan data walaupun spec `datas` betul; kitaran binaan sebelum ini tidak membersih `build/` dengan betul.
+
+### Perubahan
+1. **Rebuild PyInstaller lengkap** — `python -m PyInstaller PustakaHadith.spec --noconfirm --clean` menggunakan `.venv-build` (Python 3.14.6 + PyInstaller 6.22.2):
+   - Masa ~1,472s (~25 minit), selesai tanpa ralat.
+   - `dist\PustakaHadith` = **6,132 fail / 2.11 GB**.
+   - Kandungan disahkan: `hadis.db` 353.9 MB, `hadis_faiss.index` 91.1 MB, `hadis_id_map.pkl` 0.8 MB, `.cache_models` 940.9 MB, `PustakaHadith.exe` 77.9 MB.
+   - Komponen kritikal disahkan ada: torch_cpu.dll, faiss_cpu.libs, PyQt5 qwindows.dll, model.safetensors, transformers/sentence_transformers/tokenizers, scipy. (`PIL` tiada = jangkaan, dikecualikan dalam spec.)
+
+2. **Ujian lancar EXE — LULUS**:
+   - Proses hidup (window `PustakaHadith` wujud, ±107 MB).
+   - DB disalin ke `%LOCALAPPDATA%\PustakaHadith\hadis.db` (353.9 MB) + `profil_model.json`, `reading_history.json`, `user_settings.json`.
+   - **Fix proses kekal disahkan**: close window → proses keluar OK (tiada proses tertinggal di latar).
+
+3. **Kemas kini onedir kanonik `PustakaQH_dist\PustakaHadith`**:
+   - Kanonik lama (2.18 GB) disandarkan → **`PustakaHadith_sep12_backup`** (rename, bukan salin).
+   - Binaan baharu disalin → kanonik rasmi (6,132 fail / 2.11 GB).
+   - 2 fail MSIX (`AppxManifest.xml`, `PustakaHadith.png`) dipulihkan ke root kanonik.
+   - Uji lancar dari kanonik: window OK, proses keluar OK.
+
+### Catatan / perbezaan vs binaan lama
+- Kanonik lama ada 1,102 fail tambahan (kebanyakannya sistem DLL `api-ms-win-*`, `aiohttp` .pyd) — binaan baharu tidak perlukan (PyInstaller resolusi berbeza versi pakej baharu).
+- Versi pakej berbeza: numpy 2.5.2, scipy 1.18.1, huggingface_hub 1.28.0, dll (hasil `pip install -r requirements.txt` terkini).
+- Binaan baharu = "kandungan v1.0.1" (data + fix closeEvent) kerana dist tidak berubah sejak Sesi 9 selain pengecilan MSIX.
+
+### Status
+- ✅ Rebuild PyInstaller lengkap (masalah Sesi 16 selesai)
+- ✅ Ujian lancar + fix proses kekal disahkan
+- ✅ Kanonik `PustakaQH_dist\PustakaHadith` dikemas kini (sumber .iss & 7z terkini)
+- ⏳ Store certification v1.0.1 — masih dalam Pre-processing (tiada kemaskini)
+- ⏳ EXE/7z v1.0.1 — tertunda (lihat Sesi 16)
+- ⚠️ Semantik carian AI belum diuji penuh dalam EXE baru (model ada, perlu ujian manual jika perlu)
+
+### Fail berkaitan
+- `dist\PustakaHadith\` — binaan baharu lengkap (repo)
+- `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PustakaHadith\` — kanonik rasmi dikemas kini
+- `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PustakaHadith_sep12_backup\` — sandaran kanonik lama
+
+---
+
+## Sesi 18 (12 September): EXE/7z v1.0.1 + Release GitHub + Landing Page
+
+### 1. Ujian carian AI semantik — LULUS
+- Skrip ujian meniru `semantic_search` pada data **dibundel dalam `dist\_internal`** (`.cache_models` 940.9 MB, `hadis_faiss.index`, `hadis_id_map.pkl`) — bukan venv sahaja.
+- Model `intfloat/multilingual-e5-small` dimuat dari cache (3.1s, `local_files_only`), FAISS (62,169 vektor, dim 384), peta ID OK.
+- 4 pertanyaan Melayu pulang hasil relevan (cth. "cara mandi wajib" → tirmidzi/bukhari/darimi; "kelebihan puasa ramadhan" → ahmad/malik).
+- **Semantik carian AI berfungsi penuh dalam EXE baharu** (todos 3 selesai).
+
+### 2. Bina EXE/7z v1.0.1 + GitHub Release (todos 2 selesai)
+- `.iss` dikemas kini: `AppVersion=1.0.1`, `OutputBaseFilename=PustakaHadith-Setup-1.0.1-x64`. Sumber kekal kanonik `PustakaQH_dist\PustakaHadith`.
+- **7z portable** — `Output\PustakaHadith-portable-1.0.1-x64.7z` = **777.4 MB** (7z `-mx=5 -mmt=4`; lebih kecil dari 802 MB kerana binaan baru lebih padat @6,132 fail).
+- **Inno Setup** — `Output\PustakaHadith-Setup-1.0.1-x64.exe` = **782.2 MB** (compile 1162.6s ~19 minit).
+- **Upload ke GitHub Release v1.0.1** (id 387125677, akaun PustakaHadith, PAT dari `.git-credentials`):
+  - `PustakaHadith-Setup-1.0.1-x64.exe` (782.2 MB) — id aset 558952337
+  - `PustakaHadith-portable-1.0.1-x64.7z` (777.4 MB) — id aset 558955347
+  - Release body dikemas kini (nota rebuild + fix closeEvent; jadual SHA-256). Aset semasa: 7z + Setup EXE + MSIX 814.7 MB.
+- SHA-256:
+  - Setup EXE: `3E8C7555AA25AEE3B6DF6223F744EF8BE6F0C7077B37F96EE7DE84885AF97934`
+  - Portable 7z: `E012EBBFCE417AD3BD6F014AC2608284A8D533B4083563F7CCBBB578B37AE64E`
+
+### 3. Landing page + deploy Netlify (todos 4 selesai)
+- **Emel ditukar** `pustakahadith@outlook.com` → **`info2@pustakahadith.my`** (5 tempat: maklumat hubungi, butang E-mel, borang `mailto:`, footer copyright ×ms/en).
+- **Pautan dl2/dl3 dikemas** dari GitHub Release v1.0.0 → **v1.0.1**: `PustakaHadith-Setup-1.0.1-x64.exe` & `PustakaHadith-portable-1.0.1-x64.7z`.
+- **Deploy Netlify** (token PAT `nfp_...` user) → `--prod` site `4af95b07-c40d-4005-855b-2fd0ce95745e`: deploy `6aa534cfc5c59aa20fdc1dbd`, live di **`https://pustakahadith.my`** (HTTP 200).
+- Disahkan: `info2@pustakahadith.my` ada, `outlook` tiada lagi, dl2/dl3 → v1.0.1, Store link kekal.
+
+### 4. Pembersihan aset v1.0.0 + sahkan Latest release
+- **Aset lama Release v1.0.0 dipadam** (HTTP 204): `PustakaHadith-portable-1.0.0-x64.7z` (802.1 MB, id 540507425) & `PustakaHadith-Setup-1.0.0-x64.exe` (806.6 MB, id 540507428).
+- Release v1.0.0 kini tinggal `PustakaHadith-v1.0.0-slim.msix` (814.8 MB) sahaja.
+- **Disahkan: `v1.0.1` = release "Latest"** (endpoint `/releases/latest` → v1.0.1, published 2026-09-11).
+
+### Status — Selasa 12 September
+Sudah siap hari ini:
+- ✅ Rebuild PyInstaller lengkap (hadis.db/FAISS/model cache dalam `_internal`) — Sesi 17
+- ✅ Ujian lancar EXE + fix proses kekal disahkan — Sesi 17
+- ✅ Kanonik `PustakaQH_dist\PustakaHadith` dikemas kini (lama → `PustakaHadith_sep12_backup`) — Sesi 17
+- ✅ Carian AI semantik disahkan (model + FAISS dari data bundel) — Sesi 18
+- ✅ EXE/7z v1.0.1 dibina (Setup 782.2 MB, 7z 777.4 MB) — Sesi 18
+- ✅ GitHub Release v1.0.1 lengkap (3 aset) + body + SHA-256; **= Latest** — Sesi 18
+- ✅ Landing page `pustakahadith.my` (pautan v1.0.1 + emel `info2@pustakahadith.my`) live — Sesi 18
+- ✅ Aset Setup/7z v1.0.0 dipadam dari Release v1.0.0 — Sesi 18 (item 4)
+
+Tertunda / pending:
+- ⏳ **Store certification v1.0.1** — masih Pre-processing; tunggu keputusan Microsoft.
+- ⏳ **MSIX slim v1.0.0** — masih di Release v1.0.0 (belum diputuskan sama ada dipadam; ia versi lama tanpa fix closeEvent).
+- ⏳ **Sandaran `PustakaHadith_sep12_backup`** (2.18 GB) — boleh dipadam bila perlu.
+- ⏳ **SESI.md / landing page belum di-commit** — repo dahulu 12 komit di hadapan (Sesi 12–14) sebelum push 11 Sep; perubahan Sesi 15–18 belum di-commit (ikut peraturan, tidak commit tanpa diminta).
+
+### Fail berkaitan
+- `Output\PustakaHadith-Setup-1.0.1-x64.exe` + `Output\PustakaHadith-portable-1.0.1-x64.7z` — binaan baharu
+- `installer/PustakaHadith.iss` — AppVersion & OutputBaseFilename → v1.0.1
+- `..\landing-page\index.html` — dl2/dl3 v1.0.1 + emel `info2@pustakahadith.my`
+- Release GitHub: `https://github.com/PustakaHadith/PustakaHadith/releases/tag/v1.0.1` (Latest)
