@@ -541,3 +541,33 @@ Kecilkan pakej Microsoft Store (MSIX 1,093.7 MB). User memilih pendekatan **"Ded
 - `D:\Python314\` — Python 3.14.6 + PyInstaller
 - `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PANDUAN_KEMAS_KINI_STORE_v1.0.1.md` — panduan upload Store
 - `D:\Pustaka Quran Hadis\Pustaka\landing-page\index.html` — kemas kini 11 Sep (kad Store v1.0.1)
+
+## Sesi 16 (12 September): Status Certification Store + Keputusan EXE/7z
+
+### 1. Partner Center - submission v1.0.1
+- Ralat awal: `privacy_policy.html is an unknown package type`. Disemak pakej v1.0.1 - **TIADA** privacy_policy.html di root; onedir kanonik tidak mengandunginya. Ralat berpunca dari fail/senarai pihak Store, bukan pakej.
+- Senarai packages dibersihkan (hanya `PustakaHadith-v1.0.1.msix`), pakej **dvalidated** oleh Store.
+- Restricted capability `runFullTrust` **tiada perlu diisi semula** (diwarisi/lulus dari v1.0.0) - tiada borang kosong dipaparkan.
+- Submission **dihantar**: status kini **Pre-processing** (fasa pertama certification; tempoh biasanya beberapa jam hingga 3 hari bekerja).
+- WACK tempatan dibatalkan (perlu admin); Store laksana validasinya sendiri.
+
+### 2. Binaan PyInstaller - KAEDAH BARU (dibuka semula)
+- **`.venv-build` dibina semula** - pyvenv.cfg lama merujuk `C:\Users\MKAW\AppData\Local\Programs\Python314\python.exe` yang TIADA (Python dah pindah ke `D:\Python314`). Bina semula ke `D:\Python314` --> Python 3.14.6, PIP 26.2.1.
+- `pip install -r requirements.txt` berjaya: torch 2.13.0, sentence-transformers 6.0.0, faiss-cpu 1.15.0, PyQt5 5.15.11, pyinstaller 6.22.2.
+- PyInstaller onedir (PustakaHadith.spec) **selesai** - `dist\PustakaHadith` (6,132 fail, 2.1 GB, EXE 85.3 MB). **TAPI** binaan ini **TIDAK lengkap**: tiada `hadis.db` (354 MB), `hadis_faiss.index` (91 MB) atau cache model dalam `_internal` (masalah "fail tidak diganti" berulang).
+- **Muat semula sengaja disian dibuang** - binaan tak lengkap ini diabaikan; **kanonik `PustakaQH_dist\PustakaHadith` kekal utuh & LENGKAP** (hadis.db, faiss.index, model cache 448.8 MB, DLL torch/faiss - semua ada).
+
+### 3. Keputusan EXE/7z v1.0.1 - DITANGGUHKAN (tiada bina semula)
+- Kandungan v1.0.1 = v1.0.0 (hanya MSIX dikecilkan) - onedir kanonik sedia ada sudah mewakili kandungan v1.0.1.
+- 7z/EXE **tidak** dibina semula (jimat ~30-45 min, tiada manfaat; onedir kanonik sudah betul).
+- Pembersihan: tiada fail dibuang/ditimpa; binaan PyInstaller tak lengkap diabaikan.
+
+### Status
+- Store: certification v1.0.1 dalam **Pre-processing** - tunggu keputusan.
+- EXE/7z v1.0.1: **tertunda** sehingga certification tamat (label 1.0.0 vs 1.0.1 boleh dikemas selepas, kosmetik).
+- Antara tandas: kemas kini label Inno `OutputBaseFilename` & nama 7z ke v1.0.1 + kemas kini landing page & Netlify (jika perlu).
+
+### Fail berkaitan
+- `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PustakaHadith\` - onedir kanonik LENGKAP (sumber .iss)
+- `D:\Pustaka Quran Hadis\Pustaka\PustakaHadith\dist\PustakaHadith\` - binaan baru (TIDAK DIPAKAI, tak lengkap)
+- `D:\Pustaka Quran Hadis\Pustaka\PustakaHadith\.venv-build\` - venv binaan dibaiki ke `D:\Python314`
