@@ -662,12 +662,22 @@ Sudah siap hari ini:
 
 Tertunda / pending:
 - ⏳ **Store certification v1.0.1** — masih Pre-processing; tunggu keputusan Microsoft.
-- ⏳ **MSIX slim v1.0.0** — masih di Release v1.0.0 (belum diputuskan sama ada dipadam; ia versi lama tanpa fix closeEvent).
-- ⏳ **Sandaran `PustakaHadith_sep12_backup`** (2.18 GB) — boleh dipadam bila perlu.
-- ⏳ **SESI.md / landing page belum di-commit** — repo dahulu 12 komit di hadapan (Sesi 12–14) sebelum push 11 Sep; perubahan Sesi 15–18 belum di-commit (ikut peraturan, tidak commit tanpa diminta).
+- ⏳ **MSIX slim v1.0.0** — **dipadam** dari Release v1.0.0 (id 545179599) — Sesi 18 item 4 (asalnya Backup `PustakaHadith_sep12_backup` juga dipadam, 2.18 GB).
+- ⏳ **Store certification v1.0.1** — masih Pre-processing (Sesi 18).
 
-### Fail berkaitan
-- `Output\PustakaHadith-Setup-1.0.1-x64.exe` + `Output\PustakaHadith-portable-1.0.1-x64.7z` — binaan baharu
-- `installer/PustakaHadith.iss` — AppVersion & OutputBaseFilename → v1.0.1
-- `..\landing-page\index.html` — dl2/dl3 v1.0.1 + emel `info2@pustakahadith.my`
-- Release GitHub: `https://github.com/PustakaHadith/PustakaHadith/releases/tag/v1.0.1` (Latest)
+### Status — Ahad 13 September (Sesi 19)
+Isu: **`pustakahadith.my` 404 semula** (18 Sep 12:04Z). Punca AGAIN auto-build Git Netlify **aktif semula** (`stop_builds=false` — di-reset buat kali ke-3) lalu **menimpa** deploy manual dengan binaan repo (tiada `index.html` di root).
+
+Pembaikan (Sesi 19):
+1. **Restore deploy manual `6aa534cfc5c59aa20fdc1dbd`** sebagai published (POST `/deploys/{id}/restore`, state ready, published 07:04Z) — landing page betul live semula.
+2. **`stop_builds=true` disimpan semula** (PATCH body PENUH `build_settings` tanpa `env` → **HTTP 200**, disahkan `stop_builds:true`). Body minimal `{"build_settings":{"stop_builds":true}}` ditolak 400; perlu body penuh.
+3. **Disahkan live HTTP 200** di `https://pustakahadith.my`; mengandungi `info2@pustakahadith.my` + pautan v1.0.1.
+4. Catatan: API Netlify **tidak** menyokong nyah-paut Git sepenuhnya; `stop_builds=true` ialah kawalan rasmi. Domain/SSL/deploy manual (CLI) tidak terjejas.
+
+Tertunda:
+- ⏳ Store certification v1.0.1 — masih Pre-processing.
+- ⏳ SESI.md (Sesi 19) belum di-commit — tunggu arahan (peraturan: tidak commit tanpa diminta).
+
+### Fail berkaitan (Sesi 19)
+- Site Netlify `pustakahadith.my` — deploy manual `6aa534cf` = published; `stop_builds=true`.
+- `SESI.md` — rekod ini.
