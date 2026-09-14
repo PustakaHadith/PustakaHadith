@@ -706,3 +706,32 @@ Tiada item tertunda lagi.
 - Microsoft Store: `https://apps.microsoft.com/detail/9MWLXVH2ZC7Q` — v1.0.1 live.
 - Sesuai dikemas kini: landing page "dl1/Store" kad (jika mahu papar "v1.0.1 disahkan").
 - `SESI.md` — rekod ini (Sesi 20).
+
+---
+
+## Sesi 21 (14 September): Kemas Kini Kad Store + Deploy Diblok oleh Kredit Netlify
+
+### Objektif
+- Kemas kini kad dl1/Store di landing page supaya papar "v1.0.1 disahkan &amp; live" (ms+en) baharu selepas pensijilan Store Sesi 20.
+- Deploy semula pustakahadith.my dengan kandungan baharu.
+
+### Perubahan (fail tempatan — **BELUM live**)
+- landing-page\index.html — kad Store dl1-p dikemas: teks "✅ v1.0.1 disahkan &amp; live di Microsoft Store" (ms: 484 / en: 483) + kamus i18n dl1-p (ms & en) dikemas.
+- Emel info2@pustakahadith.my & pautan dl2/dl3 v1.0.1 — sudah ada dari Sesi 18 (tidak berubah).
+
+### Semakan & Deploy
+- Token API Netlify disahkan sah sepanjang sesi: GET /sites/{id} = **HTTP 200**, PATCH stop_builds = **HTTP 200**, restore deploy = **HTTP 200**.
+- CLI 
+etlify.cmd deploy --prod melapor **Forbidden/Unauthorized**.
+- Punca sebenar dikenal pasti via API POST:
+  {"error":"Account credit usage exceeded - new deploys are blocked until credits are added"} — **HTTP 403**.
+- **Kesimpulan: akaun Netlify pustakahadith (pelan Free) kehabisan kredit deploy; deploy baharu disekat sehingga kredit ditambah.**
+
+### Status
+- Landing page https://pustakahadith.my — **live HTTP 200** (deploy lama v1.0.1 masih berfungsi: emel info2@, pautan v1.0.1 ada; kad Store masih teks lama).
+- Kemas kini kad Store **gagal live** kerana blok kredit Netlify.
+- Item tertunda: deploy kad Store baharu "v1.0.1 disahkan &amp; live" (perlu setelah kredit Netlify dipulihkan).
+
+### Fail berkaitan
+- landing-page\index.html — kad dl1-p (ms:484 / en:483) & kamus i18n dl1-p dikemas (tempatan, belum live).
+- SESI.md — rekod ini (Sesi 21).
