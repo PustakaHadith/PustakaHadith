@@ -681,3 +681,28 @@ Tertunda:
 ### Fail berkaitan (Sesi 19)
 - Site Netlify `pustakahadith.my` — deploy manual `6aa534cf` = published; `stop_builds=true`.
 - `SESI.md` — rekod ini.
+
+---
+
+## Sesi 20 (Ahad 13 Sep 2026): Store v1.0.1 LULUS & LIVE
+
+### 1. Pengesahan
+- **Store certification v1.0.1 disahkan LULUS** & aplikasi kini **live di Microsoft Store** (status Pre-processing → **Siap/Published**).
+- Pautan Store kekal: `https://apps.microsoft.com/detail/9MWLXVH2ZC7Q` (product id `9MWLXVH2ZC7Q`).
+- Ini menutup **semua item tertunda** Sesi 1–19.
+
+### 2. Status akhir — Ahad 13 September
+- ✅ Carian AI semantik berfungsi penuh (Sesi 18)
+- ✅ EXE/7z v1.0.1 dibina (Setup 782.2 MB, 7z 777.4 MB) — Sesi 18
+- ✅ GitHub Release v1.0.1 lengkap + Latest — Sesi 18
+- ✅ Landing page `pustakahadith.my` (info2@pustakahadith.my + dl v1.0.1) live — Sesi 18
+- ✅ Aset v1.0.0 dipadam / Release v1.0.0 dibersihkan — Sesi 18
+- ✅ **Store v1.0.1 LULUS & LIVE** — Sesi 20
+- ✅ Sandaran `PustakaHadith_sep12_backup` dipadam — Sesi 19
+
+Tiada item tertunda lagi.
+
+### 3. Fail berkaitan
+- Microsoft Store: `https://apps.microsoft.com/detail/9MWLXVH2ZC7Q` — v1.0.1 live.
+- Sesuai dikemas kini: landing page "dl1/Store" kad (jika mahu papar "v1.0.1 disahkan").
+- `SESI.md` — rekod ini (Sesi 20).
