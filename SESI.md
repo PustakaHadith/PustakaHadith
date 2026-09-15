@@ -735,3 +735,51 @@ etlify.cmd deploy --prod melapor **Forbidden/Unauthorized**.
 ### Fail berkaitan
 - landing-page\index.html — kad dl1-p (ms:484 / en:483) & kamus i18n dl1-p dikemas (tempatan, belum live).
 - SESI.md — rekod ini (Sesi 21).
+---
+
+## Sesi 22 (14 September): PENGEṢAHAN AKHIR — Kad Store v1.0.1 SUDAH LIVE di Landing Page
+
+### Penemuan penting (pengesahan bersilang LIVE vs tempatan)
+Semakan langsung terhadap https://pustakahadith.my (HTTP **200**) disahkan mengandungi:
+
+| Item | LIVE | Tempatan |
+|---|---|---|
+| Kad Store dl1-p "✅ v1.0.1 disahkan &amp; live di Microsoft Store" | ✅ TRUE | ✅ TRUE |
+| Emel info2@pustakahadith.my (dl2/dl3 & hubungi) | ✅ TRUE | ✅ TRUE |
+| Pautan muat turun EXE v1.0.1 & 7z v1.0.1 | ✅ TRUE | ✅ TRUE |
+| Kad "../dl1/Store" tidak lagi teks lama "Pasang dari Microsoft Store" | ✅ (tiada teks lama) | ✅ (tiada teks lama) |
+
+**Kesimpulan:** deploy **SEBENARNYA BERJAYA** — deploy 6aa75d78 (created 2026-09-14T02:35:36, state **ready/published**, url pustakahadith.my) sudah pun memuat kad Store baharu. Rekod Sesi 21 yang menyebut "kad Store belum live / deploy diblok kredit" adalah **tidak tepat** (ia merujuk percubaan CLI/API tempoh blok kredit, namun deploy akhir yang effective telah dibuat). Ralat rekod ini kini dibetulkan.
+
+### Fail berkaitan
+- landing-page\index.html — kad dl1-p (tl 484 / en 483) + kamus i18n dl1-p — **kedua-dua LIVE & tempatan SAMA** (tiada pengecampuran).
+- SESI.md — rekod ini (Sesi 22) & pembetulan Sesi 21.
+- Item tertunda: **TIADA** — semua itens Sesi 1–21 tertutup.
+
+---
+
+## Sesi 22 (14 September): PEMBETULAN REKOD — Kad Store v1.0.1 SUDAH LIVE 🌐✅
+
+### Penemuan muktamad (bukti langsung dari LIVE)
+Semakan curl https://pustakahadith.my (HTTP **200**) menunjukkan:
+
+| Pemeriksaan | LIVE | Tempatan | Status |
+|---|---|---|---|
+| Kad Store dl1-p "✅ v1.0.1 disahkan &amp; live" | **TRUE** | TRUE | ✅ SAMA |
+| Emel info2@pustakahadith.my (kad & halaman) | TRUE | TRUE | ✅ SAMA |
+| Pautan muat turun EXE 1.0.1 & 7z 1.0.1 | TRUE | TRUE | ✅ SAMA |
+| Kad Store dl2/dl3 (EXE+7z) v1.0.1 | TRUE | TRUE | ✅ SAMA |
+
+### Pembetulan rekod Sesi 21
+- ❌ Sesi 21 merekod: "kad Store **belum live**; deploy diblok kredit Netlify (HTTP 403)."
+- ✅ **Kebenaran sebenar:** deploy 6aa75d78 (created 2026-09-14, state eady/current) **telah pun diterbitkan** dan mengandungi teks kad Store baharu — landing page live **SUDAH dikemas**. HTTP 200.
+- Punca kekeliruan: ujian POST /deploys tambahan (zip upload) pula diblok oleh kekangan kredit akaun Free (403 credit usage exceeded) — ia **bukan** penghalang kepada kad Store yang sudah live, cuma ujian yang berasingan. Mana-mana deploy baharu yang mahu dibuat selepas ini perlu menunggu kredit, tetapi **tujuan landings Sesi 21 (kad Store v1.0.1 disahkan &amp; live) sudah tercapai sepenuhnya.**
+
+### Kesimpulan
+- ✅ Landing page https://pustakahadith.my — **live, kad Store "v1.0.1 disahkan &amp; live"**, emel info2@, pautan v1.0.1 (EXE + 7z).
+- ✅ **Tiada item tertunda** untuk landing page.
+- ⚠️ Satu nota: akaun Netlify Free kekurangan kredit (403) untuk **deploy tambahan/had deploys** — elok dimaklumkan bila kredit dipulihkan, tetapi tidak menghalang kad Store yang telah live.
+
+### Fail berkaitan
+- landing-page\index.html — kad dl1-p (ms:484 / en:483) + kamus i18n — sudah live.
+- SESI.md — rekod ini (Sesi 22) pada kedua-dua landasan (utama & landing-page).
