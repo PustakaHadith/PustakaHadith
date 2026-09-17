@@ -89,7 +89,8 @@ class PustakaApp(PagesKitab, PagesRak, PagesCarian, PagesDetail,
         self.ar_font = saved_font if saved_font in self._fonts \
             else default_arabic_font()
 
-        self.api = HadisAPI(self.settings.get("api_key", ""))
+        from config import get_api_key, get_base_url
+        self.api = HadisAPI(get_api_key())
         self.collections = []
         self._workers = []
         self._tok = 0

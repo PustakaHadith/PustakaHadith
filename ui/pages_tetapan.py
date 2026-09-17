@@ -1,21 +1,20 @@
 """Halaman Tetapan — mixin PustakaApp (Sesi 30).
 
 Dipisahkan dari `ui/app_qt.py`. Kelas `PagesTetapan` menyediakan
-halaman Tetapan: sambungan API (URL + kunci), saiz paparan (stepper),
-fon Arab, bahasa dimuat, hadis per halaman, dan penyimpanan tetap ke
-`user_settings.json`. Digabungkan ke `PustakaApp` melalui MRO:
+halaman Tetapan: saiz paparan (stepper), fon Arab, bahasa dimuat,
+hadis per halaman, dan penyimpanan tetap ke `user_settings.json`.
+Digabungkan ke `PustakaApp` melalui MRO:
 `class PustakaApp(..., PagesTetapan, QMainWindow)`.
 
 PENTING — tema: modul ini import WARNA dari `ui.theme`
-(AMBER_*/RED_TEXT/GREEN_TEXT/TEXT_MUTED) untuk amaran fon dan status
-API. Ia MESTI didaftar dalam `_THEMED_MODULES` (ui/theme.py) supaya
+(AMBER_*/RED_TEXT/GREEN_TEXT/TEXT_MUTED) untuk amaran fon. Ia MESTI
+didaftar dalam `_THEMED_MODULES` (ui/theme.py) supaya
 `apply_theme()` menyalin nilai terkini ke ruang namanya semasa tukar
 tema.
 
 GANDINGAN RENTAS MIXIN: modul ini TIDAK berdiri sendiri — kaedahnya
 memanggil atribut teras `PustakaApp` (`self.settings`, `self.api`,
-`self._run`, `self._refresh_current`, `self.per_page()`,
-`self._on_collections`) dan `CollectionsWorker`. Mesti digabungkan
+`self._refresh_current`, `self.per_page()`). Mesti digabungkan
 bersama PustakaApp penuh.
 """
 
@@ -23,17 +22,16 @@ from __future__ import annotations
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
-    QComboBox, QFrame, QHBoxLayout, QLabel, QLineEdit, QPushButton,
+    QComboBox, QFrame, QHBoxLayout, QLabel, QPushButton,
     QVBoxLayout, QWidget,
 )
 
 from ui.helpers import SETTINGS, _write_json
 from ui.theme import (
     AMBER_BG, AMBER_BORDER, AMBER_TEXT, FONT_SCALES, FONT_SCALE_LABELS,
-    GREEN_TEXT, RED_TEXT, TEXT_MUTED, build_qss,
+    TEXT_MUTED, build_qss,
 )
 from ui.widgets import centered_column, make_scroll
-from ui.workers import CollectionsWorker
 
 
 class PagesTetapan:
@@ -53,42 +51,6 @@ class PagesTetapan:
         t.setObjectName("h1")
         cl.addWidget(t)
         cl.addSpacing(10)
-
-        # API
-        api = QFrame()
-        api.setObjectName("panel")
-        al = QVBoxLayout(api)
-        al.setContentsMargins(24, 20, 24, 20)
-        al.setSpacing(10)
-        h = QLabel("Sambungan API")
-        h.setObjectName("h3")
-        al.addWidget(h)
-
-        self.in_url = QLineEdit(self.settings.get(
-            "api_url", "https://service.hadis.my/api/v1"))
-        self.in_key = QLineEdit(self.settings.get("api_key", ""))
-        self.in_key.setEchoMode(QLineEdit.Password)
-        for lab, w in [("URL", self.in_url), ("API Key", self.in_key)]:
-            r = QWidget()
-            rl = QHBoxLayout(r)
-            rl.setContentsMargins(0, 0, 0, 0)
-            l = QLabel(lab)
-            l.setObjectName("body")
-            l.setFixedWidth(90)
-            rl.addWidget(l)
-            rl.addWidget(w, 1)
-            al.addWidget(r)
-
-        self.api_status = QLabel("")
-        self.api_status.setObjectName("faint")
-        al.addWidget(self.api_status)
-
-        sb = QPushButton("Simpan & Uji")
-        sb.setObjectName("primary")
-        sb.setCursor(Qt.PointingHandCursor)
-        sb.clicked.connect(self._save_api)
-        al.addWidget(sb, alignment=Qt.AlignLeft)
-        cl.addWidget(api)
 
         # Paparan
         disp = QFrame()
@@ -248,37 +210,3 @@ class PagesTetapan:
         self.ar_font = name
         self._set("arabic_font", name)
         self._refresh_current()
-
-    def _save_api(self):
-        url = self.in_url.text().strip()
-        key = self.in_key.text().strip()
-        try:
-            from config import valid_key_format
-            if key and not valid_key_format(key):
-                self.api_status.setText(
-                    "⚠ Format tidak sah — HADIS_XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX")
-                self.api_status.setStyleSheet(f"color: {RED_TEXT};")
-                return
-        except ImportError:
-            pass
-
-        self.settings["api_url"] = url
-        self.settings["api_key"] = key
-        _write_json(SETTINGS, self.settings)
-        self.api.base_url = url.rstrip("/")
-        self.api.set_key(key)
-        self.api_status.setText("Menguji…")
-        self.api_status.setStyleSheet(f"color: {TEXT_MUTED};")
-
-        def ok(cols):
-            self.collections = cols or []
-            self._on_collections(cols)
-            self.api_status.setText(f"✓ Berjaya — {len(cols)} koleksi")
-            self.api_status.setStyleSheet(f"color: {GREEN_TEXT};")
-            self._sync_settings()
-
-        def bad(msg):
-            self.api_status.setText(f"✕ {msg}")
-            self.api_status.setStyleSheet(f"color: {RED_TEXT};")
-
-        self._run(CollectionsWorker(self.api), ok, bad)

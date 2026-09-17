@@ -547,7 +547,7 @@ class PagesDetail:
         # Bar tindakan bawah TERJEMAHAN sebagai IKON (bukan teks) --
         # kemas & konsisten dengan butang gear (IconActionButton).
         # Keputusan pengguna: 4 butang ikon monokrom —
-        #   whatsapp (Kongsi via WhatsApp) · salin (menu popup 3 pilihan)
+        #   kongsi (menu pilihan platform) · salin (menu popup 3 pilihan)
         #   dengar (TTS) · simpan (penanda buku, keadaan aktif terisi).
         # Tooltip kekal supaya fungsi jelas walaupun ikon.
         bar_ar = QWidget()
@@ -556,8 +556,8 @@ class PagesDetail:
         bar_lo.setSpacing(8)
         # Lajur terjemahan di KIRI -> ikon dijajarkan ke KIRI (baris
         # latin dibaca kiri-ke-kanan). addStretch di kanan.
-        b_wa = IconActionButton("whatsapp", "Kongsi via WhatsApp")
-        b_wa.clicked.connect(self._share_bahasa_semasa)
+        b_kongsi = IconActionButton("kongsi", "Kongsi hadis")
+        b_kongsi.clicked.connect(self._kongsi_menu)
         b_salin = IconActionButton("salin", "Salin")
         b_salin.clicked.connect(self._menu_salin)
         b_dengar = IconActionButton("dengar", "Dengar (TTS)")
@@ -569,7 +569,7 @@ class PagesDetail:
         b_simpan.clicked.connect(lambda: self._toggle_save(self._detail_h))
         self._save_btn_icon = b_simpan
         b_simpan.set_active(self._is_saved(h.get("collection"), h.get("id")))
-        bar_lo.addWidget(b_wa)
+        bar_lo.addWidget(b_kongsi)
         bar_lo.addWidget(b_salin)
         bar_lo.addWidget(b_dengar)
         bar_lo.addWidget(b_simpan)
@@ -1222,6 +1222,58 @@ class PagesDetail:
         panjang); tiada bahagian boleh-kembang berasingan.
         """
         self._buka_wa(self._teks_kongsi_ringkas())
+
+    def _kongsi_menu(self):
+        """Tunjuk menu pilihan platform kongsi (WhatsApp/Telegram/Facebook/Instagram)."""
+        teks = self._teks_kongsi_ringkas()
+        menu = QMenu(self)
+        menu.setStyleSheet("""
+            QMenu {
+                background-color: #1E1E2E;
+                color: #CDD6F4;
+                border: 1px solid #45475A;
+                border-radius: 8px;
+                padding: 4px 0;
+            }
+            QMenu::item {
+                padding: 8px 20px;
+                font-size: 13px;
+            }
+            QMenu::item:selected {
+                background-color: #313244;
+                color: #89B4FA;
+            }
+        """)
+        menu.addAction("WhatsApp", lambda: self._kongsi_whatsapp(teks))
+        menu.addAction("Telegram", lambda: self._kongsi_telegram(teks))
+        menu.addAction("Facebook", lambda: self._kongsi_facebook(teks))
+        menu.addAction("Instagram (Salin Teks)", lambda: self._kongsi_instagram(teks))
+        menu.exec_(QCursor.pos())
+
+    def _kongsi_whatsapp(self, teks: str):
+        """Kongsi via WhatsApp."""
+        webbrowser.open(
+            "https://wa.me/?text=" + QUrl.toPercentEncoding(teks).data().decode())
+
+    def _kongsi_telegram(self, teks: str):
+        """Kongsi via Telegram."""
+        webbrowser.open(
+            "https://t.me/share/url?url=&text=" + QUrl.toPercentEncoding(teks).data().decode())
+
+    def _kongsi_facebook(self, teks: str):
+        """Kongsi via Facebook."""
+        h = self._detail_h or {}
+        url = sunnah_url(h.get("collection", ""), h.get("id"))
+        share_url = url if url else "https://pustakahadith.my"
+        webbrowser.open(
+            "https://www.facebook.com/sharer/sharer.php?u=" +
+            QUrl.toPercentEncoding(share_url).data().decode() +
+            "&quote=" + QUrl.toPercentEncoding(teks).data().decode())
+
+    def _kongsi_instagram(self, teks: str):
+        """Salin teks untuk Instagram (salin ke papan klip)."""
+        QApplication.clipboard().setText(teks)
+        self.toast.show_msg("Teks disalin! Buka Instagram dan tampal.")
 
     # ── Tindakan ─────────────────────────────────────────────────────
     def _copy(self, h):

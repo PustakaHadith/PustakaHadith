@@ -1124,15 +1124,12 @@ def semak_bandingan() -> None:
         lulus("kongsi WhatsApp terus guna Ringkas (tiada menu pilihan)")
     else:
         salah("kongsi WhatsApp tidak ikut spesifikasi (terus Ringkas, format lain dibuang)")
-    # Kongsi Ringkas sertakan pautan "Baca penuh" sunnah.com bila padanan
-    # wujud (Sesi 36). `sunnah_url` (ui/helpers.py) dibina daripada peta
-    # sunnah_map/ yang dijana bina_peta_sunnah.py -- nombor hadis hadis.my
-    # berbeza daripada nombor global sunnah.com, jadi peta diperlukan.
-    if "sunnah_url" in src_qt and "Baca penuh:" in src_qt \
-            and "_SUNNAH_SLUG" in src_qt:
-        lulus("kongsi Ringkas sertakan pautan 'Baca penuh' (sunnah.com)")
+    # Kongsi Ringkas sertakan pautan "Baca penuh" pustakahadith.my (Sesi 36).
+    # `sunnah_url` (ui/helpers.py) kini memaparkan pautan pustakahadith.my.
+    if "sunnah_url" in src_qt and "Baca penuh:" in src_qt:
+        lulus("kongsi Ringkas sertakan pautan 'Baca penuh' (pustakahadith.my)")
     else:
-        salah("pautan 'Baca penuh' sunnah.com TIADA dalam kongsi Ringkas")
+        salah("pautan 'Baca penuh' pustakahadith.my TIADA dalam kongsi Ringkas")
 
 
 def semak_pemula() -> None:

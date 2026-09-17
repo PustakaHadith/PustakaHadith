@@ -95,22 +95,16 @@ _ATRIBUSI_SEMA = "Sumber: SemakHadis.com"
 _ATRIBUSI_HE = ("Huraian ringkas oleh HadeethEnc.com (projek IslamHouse) "
                 "untuk hadis berkenaan. Kandungan tidak diubah.")
 
-# Pautan "Baca penuh" (sunnah.com) untuk kongsi WhatsApp. Penomboran
-# hadis.my (hadis.db) BERBEZA daripada sunnah.com, jadi pautan dibina
-# melalui peta {hadis_id: {book, hadith}} yang dijana oleh
-# `sync_english.py --peta-sunnah` (guna semula padanan teks
-# Arab/Indonesia sync_english). URL guna rujukan DALAM-BUKU CDN
-# (sunnah.com/{slug}/{book}/{hadith}) -- bukan nombor global, kerana
-# penomboran global CDN tidak sepadan dengan URL sunnah.com untuk
-# beberapa kitab (disahkan audit Sesi 36). Ahmad dan darimi tiada
-# sumber sunnah.com -- tiada pautan.
+# Pautan "Baca penuh" (pustakahadith.my) untuk kongsi. Format:
+# pustakahadith.my/{slug}/{hadis_id} -- rujukan terus ke hadis.
+# Ahmad dan darimi tiada sumber -- tiada pautan.
 _SUNNAH_SLUG = {
     "bukhari": "bukhari",
     "muslim": "muslim",
-    "abu-daud": "abudawud",
-    "tirmidzi": "tirmidhi",
+    "abu-daud": "abu-daud",
+    "tirmidzi": "tirmidzi",
     "nasai": "nasai",
-    "ibnu-majah": "ibnmajah",
+    "ibnu-majah": "ibnu-majah",
     "malik": "malik",
 }
 _SUNNAH_MAP: dict[str, dict] = {}
@@ -131,21 +125,15 @@ def _muat_peta_sunnah(slug: str) -> dict:
 
 
 def sunnah_url(slug: str, hadis_id: int) -> str:
-    """Pautan 'Baca penuh' sunnah.com, atau '' bila tiada padanan.
+    """Pautan 'Baca penuh' pustakahadith.my, atau '' bila tiada padanan.
 
-    Format sunnah.com/{slug}/{buku}/{hadith} (rujukan dalam-buku CDN,
-    sistem sunnah.com sendiri). Contoh: https://sunnah.com/muslim/2/32
+    Format pustakahadith.my/{slug}/{hadis_id} -- rujukan terus ke hadis.
+    Contoh: https://pustakahadith.my/bukhari/1234
     """
     sun = _SUNNAH_SLUG.get(slug)
     if not sun:
         return ""
-    r = _muat_peta_sunnah(slug).get(str(hadis_id))
-    if not isinstance(r, dict):
-        return ""
-    book, hadith = r.get("book"), r.get("hadith")
-    if not book or not hadith:
-        return ""
-    return f"https://sunnah.com/{sun}/{book}/{hadith}"
+    return f"https://pustakahadith.my/{slug}/{hadis_id}"
 
 
 # Carian pantas "lompat ke hadis": peta nama kitab (dinormalkan) -> slug.

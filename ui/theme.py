@@ -306,6 +306,32 @@ ARABIC_FONT_CANDIDATES = [
 ]
 
 _ARABIC_CACHE: list | None = None
+_FONTS_DIR = os.path.join(os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__))), "fonts")
+_FONTS_LOADED = False
+
+
+def _muat_fon_bundel():
+    """Muat fon Arab dari folder `fonts/` menggunakan QFontDatabase.
+
+    Hanya dipanggil SEKALI (selepas QApplication wujud). Fon yang berjaya
+    dimuat akan tersedia dalam senarai QFontDatabase().families().
+    """
+    global _FONTS_LOADED
+    if _FONTS_LOADED:
+        return
+    _FONTS_LOADED = True
+    if not os.path.isdir(_FONTS_DIR):
+        return
+    try:
+        from PyQt5.QtGui import QFontDatabase
+        db = QFontDatabase()
+        for nama in os.listdir(_FONTS_DIR):
+            if nama.lower().endswith((".ttf", ".otf")):
+                laluan = os.path.join(_FONTS_DIR, nama)
+                db.addApplicationFont(laluan)
+    except Exception:
+        pass
 
 
 def available_arabic_fonts() -> list:
@@ -313,10 +339,12 @@ def available_arabic_fonts() -> list:
 
     Memerlukan QApplication wujud. Jika tiada satu pun calon dijumpai,
     pulangkan fon lalai sistem supaya UI tetap berfungsi.
+    Fon bundel dari folder `fonts/` turut dimuat dan ditawarkan.
     """
     global _ARABIC_CACHE
     if _ARABIC_CACHE is not None:
         return _ARABIC_CACHE
+    _muat_fon_bundel()
     try:
         from PyQt5.QtGui import QFontDatabase
         fams = set(QFontDatabase().families())

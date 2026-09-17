@@ -264,11 +264,10 @@ semak("TIADA label 'BAHASA ...' di bawah tab (keputusan mockup)",
 semak("TIADA butang '💬 Kongsi' di bawah tab (kongsi di bar tajuk)",
       not _butang("💬 Kongsi"))
 
-# 7d. Bar tindakan bawah TERJEMAHAN sebagai TEKS (bukan butang) --
-#    tiru sunnah.com 'Report Error | Share | Copy'. Keputusan pengguna
-#    (13 Ogos, diulang): "saya mahu text sahaja bukan button" + menu
-#    Salin 3 pilihan MESTI berfungsi. Bar = QLabel pautan teks, BUKAN
-#    QPushButton.
+# 7d. Bar tindakan bawah TERJEMAHAN sebagai IKON --
+#    kongsi (menu pilihan platform) · salin (menu popup)
+#    dengar (TTS) · simpan (penanda buku).
+#    Bar = QWidget dengan IconActionButton, BUKAN QLabel pautan teks.
 _butang_semua = [b.text() for b in w.findChildren(QPushButton)]
 semak("bar tindakan TEKS 'Lapor ralat | Kongsi | Salin' di bawah terjemahan",
       any("Lapor ralat" in lb.text() and "Kongsi" in lb.text()
@@ -373,9 +372,8 @@ if r_eng:
           "[TERJEMAHAN]" in teks_eng and "[ENGLISH]" not in teks_eng
           and r_eng["english"][:20] in teks_eng, teks_eng[:40])
 
-# 7c. Kongsi WhatsApp TERUS guna format "Ringkas" (Sesi 36 -- keputusan
-# pengguna: TIADA menu pilihan). Kedua-dua Arab + terjemahan kelihatan,
-# dengan pautan "Baca penuh" sunnah.com.
+# 7c. Kongsi Ringkas (Sesi 36 -- keputusan pengguna).
+# Kedua-dua Arab + terjemahan kelihatan, dengan pautan "Baca penuh" pustakahadith.my.
 w._lang_tabs.set_active("melayu")
 sedia = tunggu_sedia(lambda: w._lang_tabs.active() == "melayu")
 semak("tab Melayu aktif sebelum kongsi Ringkas", sedia)
@@ -383,8 +381,8 @@ teks_ringkas = w._teks_kongsi_ringkas()
 semak("kongsi Ringkas: petikan Arab + [TERJEMAHAN], tiada 'Read more' literal",
       "[TERJEMAHAN]" in teks_ringkas and r["arab"][:20] in teks_ringkas
       and "Read more" not in teks_ringkas, teks_ringkas[:40])
-semak("kongsi Ringkas ada pautan 'Baca penuh' sunnah.com",
-      "Baca penuh: https://sunnah.com/" in teks_ringkas, teks_ringkas[-90:])
+semak("kongsi Ringkas ada pautan 'Baca penuh' pustakahadith.my",
+      "Baca penuh: https://pustakahadith.my/" in teks_ringkas, teks_ringkas[-90:])
 
 # 8. Carian KHUSUS (kitab + nombor) -> TERUS ke butiran, bukan senarai
 #    (Sesi 38). "bukhari 500" bukan carian umum -- pengguna mahukan
