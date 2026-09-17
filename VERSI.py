@@ -15,7 +15,7 @@ mencetak `VERSI` pada baris pertama outputnya.
 
 from __future__ import annotations
 
-VERSI = "1.0"
+VERSI = "1.0.2"
 
 # Ciri yang mesti wujud pada versi ini. `semak_versi.py` mengesahkannya
 # supaya "fail tidak diganti" gagal dengan KUAT, bukan senyap.

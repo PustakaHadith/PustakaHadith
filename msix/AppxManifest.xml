@@ -9,7 +9,7 @@
   <Identity
     Name="PustakaHadith"
     Publisher="CN=PustakaHadith"
-    Version="1.0.1.0" />
+    Version="1.0.2.0" />
 
   <Properties>
     <DisplayName>PustakaHadith</DisplayName>
