@@ -30,6 +30,8 @@ from ui.theme import (
 )
 
 PANEL_W = 380
+PANEL_W_MIN = 380
+PANEL_W_MAX = 760
 ANIM_MS = 220
 
 
@@ -76,7 +78,7 @@ class SettingsPanel(QFrame):
                 border-left: 1px solid {BORDER};
             }}
         """)
-        self.setFixedWidth(PANEL_W)
+        self.setFixedWidth(PANEL_W_MIN)
         # Cache latar glob (25 Ogos) â€” lukis semula HANYA pada resize.
         self._cache_latar: tuple[int, int, QPixmap] | None = None
 
@@ -491,6 +493,19 @@ class SettingsPanel(QFrame):
                 self._stepper_labels[k].setText(FONT_SCALE_LABELS[idx])
 
     # â”€â”€ animasi â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    def _lebar_panel(self) -> int:
+        """Lebar panel adaptif — ikut lebar tetingkap (Sesi 24, fix
+        'kandungan terkeluar ke kiri' dalam fullscreen).
+
+        Panel 380px kaku TIDAK muat baris 'label + combo(240) + stepper'
+        bila tetingkap lebar. Kira 38% lebar induk, had minima PANEL_W_MIN
+        dan maksima PANEL_W_MAX supaya baris sentiasa muat penuh.
+        """
+        p = self.parentWidget()
+        w = p.width() if p is not None else PANEL_W_MIN
+        return max(PANEL_W_MIN, min(PANEL_W_MAX, int(w * 0.36)))
+
+    # ── animasi ──────────────────────────────────────────────────
     def open_panel(self):
         if self._open:
             return
@@ -499,35 +514,39 @@ class SettingsPanel(QFrame):
         p = self.parentWidget()
         top = self.app._chrome_top()
         h = p.height() - top
+        w = self._lebar_panel()
 
+        self.setFixedWidth(w)
         self.overlay.setGeometry(0, top, p.width(), h)
         self.overlay.show()
         self.overlay.raise_()
 
-        self.setGeometry(p.width(), top, PANEL_W, h)
+        self.setGeometry(p.width(), top, w, h)
         self.show()
         self.raise_()
-        self._animate(p.width() - PANEL_W)
+        self._animate(p.width() - w)
 
     def close_panel(self):
         if not self._open:
             return
         self._open = False
         p = self.parentWidget()
-        self._animate(p.width(), on_done=self._after_close)
+        p_w = self._lebar_panel()
+        self._animate(p.width(), p_w=p_w, on_done=self._after_close)
 
     def _after_close(self):
         self.hide()
         self.overlay.hide()
         self.closed.emit()
 
-    def _animate(self, x_end, on_done=None):
+    def _animate(self, x_end, p_w=None, on_done=None):
         g = self.geometry()
+        p_w = p_w if p_w is not None else g.width()
         self._anim = QPropertyAnimation(self, b"geometry", self)
         self._anim.setDuration(ANIM_MS)
         self._anim.setEasingCurve(QEasingCurve.OutCubic)
         self._anim.setStartValue(g)
-        self._anim.setEndValue(QRect(x_end, g.y(), PANEL_W, g.height()))
+        self._anim.setEndValue(QRect(x_end, g.y(), p_w, g.height()))
         if on_done:
             self._anim.finished.connect(on_done)
         self._anim.start()
@@ -539,8 +558,13 @@ class SettingsPanel(QFrame):
         p = self.parentWidget()
         top = self.app._chrome_top()
         h = p.height() - top
+        w = self._lebar_panel()
+        self.setFixedWidth(w)
+        for o in (self, self.overlay):
+            if o.width() < PANEL_W_MIN and o is self:
+                pass
         self.overlay.setGeometry(0, top, p.width(), h)
-        self.setGeometry(p.width() - PANEL_W, top, PANEL_W, h)
+        self.setGeometry(p.width() - w, top, w, h)
 
     def is_open(self) -> bool:
         return self._open
