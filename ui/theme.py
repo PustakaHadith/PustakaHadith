@@ -9,6 +9,8 @@ Perubahan berbanding tema lama:
 
 from __future__ import annotations
 
+import os
+
 # ── Palet ──────────────────────────────────────────────────────────────
 # Dua set warna. `apply_theme()` menyalin set yang dipilih ke dalam
 # ruang nama SETIAP modul UI — perlu kerana `from theme import CARD_BG`
