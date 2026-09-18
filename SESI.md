@@ -822,3 +822,83 @@ Semakan curl https://pustakahadith.my (HTTP **200**) menunjukkan:
 2. **Rebuild EXE** lepas layout final OK
 3. **Uji visual** — pastikan semua baris (stepper, combo, theme buttons) align
 4. **Commit** jika pengguna minta
+
+---
+
+## Sesi 26 (18 September 2026): Panel Layout + Telegram Fix + MSIX Rebuild
+
+### Perubahan
+1. **Panel Tetapan layout** — grid layout diperbaiki:
+   - `setColumnStretch(0,1)` dibuang (label tak lagi terlalu kanan)
+   - `setColumnStretch(1,1)` ditambah (widget expand)
+   - Stepper value width 50→65px ("Sederhana" muat penuh)
+   - Theme buttons: QHBoxLayout, 3 butang sama saiz
+   - Tentang button: padding diperbaiki, tak full width
+
+2. **Telegram share 400 fix** — `pages_detail.py`:
+   - `t.me/share/url?url=&text=` → `t.me/share/url?text=` (buang `url=` kosong)
+   - Teks truncate 200 aksara untuk elak URL terlalu panjang
+
+3. **MSIX rebuild** — punca inflasi ditemui & dibaiki:
+   - **PUNCA**: `blobs/` (470MB) duplikat dalam `.cache_models` masih wujud dalam dist
+   - Blobs dibuang dari `dist/PustakaHadith/_internal/.cache_models/`
+   - MSIX: 1060MB → **781.9MB** (jimat 279MB)
+   - Lebih kecil dari v1.0.1 (814MB) walaupun ada `hadis.db` (354MB)
+
+4. **Store submission prep**:
+   - Tangkapan skrin 4 diambil (`installer/screenshots/`)
+   - Privacy policy dihost di GitHub Pages (`docs/index.md`)
+   - Store description ditulis (`installer/store_description.md`)
+   - `build_msix.ps1` dikemaskini: SDK path `D:\tools\sdkbt\bin\10.0.28000.0\x64\`, versi 1.0.2.0
+
+### Saiz MSIX — Sejarah
+| Versi | Saiz | hadis.db | blobs | Nota |
+|---|---|---|---|---|
+| v1.0.0 | 1093.7MB | ❌ | ✅ (duplikat) | Binaan awal |
+| v1.0.0-slim | 814.8MB | ❌ | ❌ (dibuang) | Fasa 3 optimum |
+| v1.0.1 | 814.7MB | ❌ | ❌ | Store release |
+| v1.0.2.0 (gagal) | 1060.8MB | ✅ | ✅ (duplikat) | Blobs tak dibuang |
+| **v1.0.2.0 (fix)** | **781.9MB** | ✅ | ❌ | **Final** |
+
+### Pengajaran Penting
+1. **MSIX mesti divalidasi SEBELUM beritahu pengguna untuk upload:**
+   - `MakeAppx pack` EXIT=0
+   - `MakeAppx unpack` 0 error (test extract)
+   - `signtool sign` EXIT=0
+   - Semak semua fail kritikal wujud
+   - Pastikan `blobs/` TIADA dalam `.cache_models`
+2. **`.cache_models` hanya perlu `snapshots/`** — `blobs/` adalah duplikat HuggingFace cache
+3. **Jangan guna `collect_all('faiss')`** — ambil banyak fail transformers models yang tak diguna
+4. **Sijil self-signed MSIX** — install lokal gagal (0x800B0109) = dijangka. Store sign semula.
+
+### Senarai Semak MSIX (PLESINGAN)
+```
+1. Pastikan dist/PustakaHadith/_internal/.cache_models/ TIADA folder blobs/
+2. Jalankan build_msix.ps1 → MAKEAPPX_EXIT=0, SIGN_EXIT=0
+3. MakeAppx unpack test → 0 error
+4. Semak fail: PustakaHadith.exe, hadis.db, hadis_faiss.index, model.safetensors, torch_cpu.dll
+5. Saiz MSIX dijangka: ~780MB (dengan hadis.db, tanpa blobs)
+6. BARU beritahu pengguna untuk upload
+```
+
+### Fail diubah
+- `ui/settings_panel.py` — grid layout, stepper width
+- `ui/pages_detail.py` — Telegram share fix
+- `installer/build_msix.ps1` — SDK path, versi 1.0.2.0
+- `installer/store_description.md` — Store listing text
+- `docs/index.md` — Privacy policy untuk GitHub Pages
+
+### Status
+- ✅ Panel layout diperbaiki
+- ✅ Telegram share 400 dibaiki
+- ✅ MSIX rebuild & verified (781.9MB)
+- ✅ Tangkapan skrin (4)
+- ✅ Privacy policy hosted
+- ✅ Store description ditulis
+- ✅ Age ratings diselesaikan pengguna
+- ⏳ **Upload ke Partner Center** — menunggu pengguna
+
+### TODO (sambung esok)
+1. **Upload MSIX** ke Partner Center → Packages
+2. **Store listings** — tambah description + 4 screenshots
+3. **Submit for certification**

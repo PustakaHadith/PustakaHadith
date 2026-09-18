@@ -4,8 +4,8 @@ $dist   = Join-Path $root "dist\PustakaHadith"
 $assets = Join-Path $root "installer\Assets"
 $stage  = Join-Path $root "installer\msix_stage"
 $out    = Join-Path $root "installer\output"
-$makeappx = "C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64\makeappx.exe"
-$signtool = "C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64\signtool.exe"
+$makeappx = "D:\tools\sdkbt\bin\10.0.28000.0\x64\makeappx.exe"
+$signtool = "D:\tools\sdkbt\bin\10.0.28000.0\x64\signtool.exe"
 $pfx    = Join-Path $root "installer\msix_temp.pfx"
 $pwtext = "PustakaMSIX2026"
 $pw     = ConvertTo-SecureString -String $pwtext -Force -AsPlainText
@@ -21,6 +21,11 @@ $name = $id["Package/Identity/Name"]; $pub = $id["Package/Identity/Publisher"]; 
 if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
 New-Item -ItemType Directory -Path $stage -Force | Out-Null
 Copy-Item (Join-Path $dist "*") $stage -Recurse -Force
+
+# Buang blobs duplikat dari .cache_models (jimat ~470MB)
+$blobsDir = Join-Path $stage "_internal\.cache_models\models--intfloat--multilingual-e5-small\blobs"
+if (Test-Path $blobsDir) { Remove-Item $blobsDir -Recurse -Force; "BLOBS: dibuang (duplikat HF cache)" }
+
 New-Item -ItemType Directory -Path (Join-Path $stage "Assets") -Force | Out-Null
 Copy-Item (Join-Path $assets "*") (Join-Path $stage "Assets") -Force
 
@@ -30,7 +35,7 @@ $manifest = @"
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
          xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
          xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities">
-  <Identity Name="$name" Publisher="$pub" Version="1.0.0.0" ProcessorArchitecture="x64" />
+  <Identity Name="$name" Publisher="$pub" Version="1.0.2.0" ProcessorArchitecture="x64" />
   <Properties>
     <DisplayName>PustakaHadith</DisplayName>
     <PublisherDisplayName>$disp</PublisherDisplayName>
@@ -64,7 +69,7 @@ Import-PfxCertificate -FilePath $pfx -Password $pw -CertStoreLocation Cert:\Curr
 
 # pack
 New-Item -ItemType Directory -Path $out -Force | Out-Null
-$msix = Join-Path $out "PustakaHadith_1.0.0.0_x64.msix"
+$msix = Join-Path $out "PustakaHadith_1.0.2.0_x64.msix"
 if (Test-Path $msix) { Remove-Item $msix -Force }
 & $makeappx pack /d "$stage" /p "$msix" /o 2>&1 | ForEach-Object { $_.ToString() }
 "MAKEAPPX_EXIT=$LASTEXITCODE"
