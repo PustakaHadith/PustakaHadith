@@ -783,3 +783,42 @@ Semakan curl https://pustakahadith.my (HTTP **200**) menunjukkan:
 ### Fail berkaitan
 - landing-page\index.html — kad dl1-p (ms:484 / en:483) + kamus i18n — sudah live.
 - SESI.md — rekod ini (Sesi 22) pada kedua-dua landasan (utama & landing-page).
+
+---
+
+## Sesi 23 (17 September): Fix Mojibake + Panel Tetapan
+
+### Perubahan
+1. **Fix mojibake `settings_panel.py`** — 229 penggantian byte-level berjaya:
+   - `âœ•` → `✕` (butang tutup)
+   - `â†'` → `↑` (butang naik) & `→` (komen)
+   - `â€"` → `─` (garis box drawing) & `—` (em dash) & `−` (tolak)
+   - `â—ˆ` → `◎` (Aqua), `ðŸŒ™` → `🌙` (Neutral), `â˜€` → `☀️` (Neutral terang)
+   - `â„¹ï¸\x8f` → `ℹ️` (info), `â€º` → `›` (panah), `âš` → `⚠` (amaran)
+   - Punca: fail disimpan semula melalui editor yang membaca UTF-8 sebagai cp1252 lalu menyimpan semula sebagai UTF-8.
+
+2. **Kecilkan lebar panel tetapan**:
+   - `PANEL_W_MIN` 380 → 340px, `PANEL_W_MAX` 760 → 520px
+   - Formula: `w * 0.36` → `w * 0.28`
+   - Combo default width 170 → 150px
+   - Padding body 18 → 14px, spacing 18 → 12px
+
+3. **Susun atur grid** — ubah dari HBoxLayout individu per baris ke **QGridLayout tunggal** untuk Paparan + Bacaan:
+   - Label kanan-align, widget kiri-align
+   - Semua label dalam satu lajur, semua widget dalam satu lajur
+   - Theme buttons guna column stretch (3 lajur sama lebar)
+
+### Status
+- ✅ Mojibake bersih — tiada lagi `0xC3 0xA2` dalam fail
+- ✅ Rebuild PyInstaller berjaya (3-4 kali)
+- ⏳ **Grid layout belum cukup kemas** — pengguna masih nampak ketidaksepadanan visual
+- ⏳ Perlu rebuild + uji visual semula
+
+### Fail diubah
+- `ui/settings_panel.py` — mojibake fix + lebar panel + grid layout
+
+### TODO (sambung esok)
+1. **Selesaikan grid layout** — pastikan label & widget benar-benar sekata
+2. **Rebuild EXE** lepas layout final OK
+3. **Uji visual** — pastikan semua baris (stepper, combo, theme buttons) align
+4. **Commit** jika pengguna minta

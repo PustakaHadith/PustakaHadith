@@ -1256,9 +1256,10 @@ class PagesDetail:
             "https://wa.me/?text=" + QUrl.toPercentEncoding(teks).data().decode())
 
     def _kongsi_telegram(self, teks: str):
-        """Kongsi via Telegram."""
+        """Kongsi via Telegram — had 200 aksara (Telegram pendek)."""
+        pendek = teks[:200].rstrip() + ("…" if len(teks) > 200 else "")
         webbrowser.open(
-            "https://t.me/share/url?url=&text=" + QUrl.toPercentEncoding(teks).data().decode())
+            "https://t.me/share/url?text=" + QUrl.toPercentEncoding(pendek).data().decode())
 
     def _kongsi_facebook(self, teks: str):
         """Kongsi via Facebook."""

@@ -1,8 +1,8 @@
-﻿"""Panel tetapan gelongsor â€” muncul dari tepi kanan.
+"""Panel tetapan gelongsor — muncul dari tepi kanan.
 
 Menggantikan halaman tetapan skrin penuh yang terlalu besar.
-Corak sama seperti apl Quran moden: ikon gear â†’ panel gelongsor masuk,
-tekan "Selesai" â†’ gelongsor keluar.
+Corak sama seperti apl Quran moden: ikon gear → panel gelongsor masuk,
+tekan "Selesai" → gelongsor keluar.
 
 Panel ini hanya membina UI. Semua logik kekal dalam PustakaApp
 (_step, _set, _set_font, _sync_settings).
@@ -29,9 +29,9 @@ from ui.theme import (
     TEXT_MUTED, TEXT_PRIMARY, TEXT_SECONDARY,
 )
 
-PANEL_W = 380
-PANEL_W_MIN = 380
-PANEL_W_MAX = 760
+PANEL_W = 340
+PANEL_W_MIN = 340
+PANEL_W_MAX = 520
 ANIM_MS = 220
 
 
@@ -43,7 +43,7 @@ class Overlay(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setAttribute(Qt.WA_StyledBackground, True)
-        # Tema terang perlu overlay lebih lembut â€” rgba(0,0,0,110) di atas
+        # Tema terang perlu overlay lebih lembut — rgba(0,0,0,110) di atas
         # latar putih kelihatan seperti kelabu kotor.
         from ui.theme import is_dark
         alpha = 110 if is_dark() else 60
@@ -60,7 +60,7 @@ class SettingsPanel(QFrame):
     """Panel gelongsor dari kanan.
 
     Isyarat:
-        closed â€” dipancar selepas animasi tutup selesai
+        closed — dipancar selepas animasi tutup selesai
     """
 
     closed = pyqtSignal()
@@ -79,7 +79,7 @@ class SettingsPanel(QFrame):
             }}
         """)
         self.setFixedWidth(PANEL_W_MIN)
-        # Cache latar glob (25 Ogos) â€” lukis semula HANYA pada resize.
+        # Cache latar glob (25 Ogos) — lukis semula HANYA pada resize.
         self._cache_latar: tuple[int, int, QPixmap] | None = None
 
         sh = QGraphicsDropShadowEffect(self)
@@ -93,13 +93,13 @@ class SettingsPanel(QFrame):
         self.hide()
 
     def paintEvent(self, e):
-        """Latar glob (25 Ogos, permintaan pengguna) â€” sama dengan
+        """Latar glob (25 Ogos, permintaan pengguna) — sama dengan
         halaman Utama/rak: glob + scrim pada tema AQUA; tema lain kekal
         permukaan HEADER_BG biasa (super() melukis QSS dahulu, imej
         dilukis ATASNYA; anak-anak panel sentiasa dilukis selepas ini).
 
         QFrame#settingsPanel QSS border-left kekal dilukis oleh super()
-        tetapi ditutup imej â€” jadi border dilukis semula di hujung kanan
+        tetapi ditutup imej — jadi border dilukis semula di hujung kanan
         di sini supaya pemisah panel/utama kekal kelihatan.
         """
         super().paintEvent(e)
@@ -109,20 +109,20 @@ class SettingsPanel(QFrame):
         w, h = max(1, self.width()), max(1, self.height())
         c = self._cache_latar
         if c is None or c[0] != w or c[1] != h:
-            # Peta dunia rangkaian â€” 26 Ogos, permintaan pengguna:
+            # Peta dunia rangkaian — 26 Ogos, permintaan pengguna:
             # imej ini untuk Tetapan (dan Makluman) SAHAJA.
             from ui.widgets import lukis_latar_dunia
             c = (w, h, lukis_latar_dunia(w, h))
             self._cache_latar = c
         p = QPainter(self)
         p.drawPixmap(0, 0, c[2])
-        # Border kiri panel â€” imej menutup QSS border, lukis semula
+        # Border kiri panel — imej menutup QSS border, lukis semula
         # garis kiri sahaja (bukan bingkai penuh).
         p.setPen(QColor(_t.BORDER))
         p.drawLine(0, 0, 0, h - 1)
         p.end()
 
-    # â”€â”€ susun atur â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    # ── susun atur ────────────────────────────────────────────────────
     def _build(self):
         root = QVBoxLayout(self)
         root.setContentsMargins(0, 0, 0, 0)
@@ -132,13 +132,13 @@ class SettingsPanel(QFrame):
         head = QWidget()
         head.setFixedHeight(52)
         hl = QHBoxLayout(head)
-        hl.setContentsMargins(20, 0, 12, 0)
+        hl.setContentsMargins(14, 0, 10, 0)
         t = QLabel("Tetapan")
         t.setStyleSheet(f"font-size: 16px; font-weight: 700; "
                         f"color: {TEXT_PRIMARY};")
         hl.addWidget(t)
         hl.addStretch()
-        x = QPushButton("âœ•")
+        x = QPushButton("✕")
         x.setFixedSize(30, 30)
         x.setCursor(Qt.PointingHandCursor)
         x.setStyleSheet(f"""
@@ -160,15 +160,15 @@ class SettingsPanel(QFrame):
         root.addWidget(sa, 1)
         self._sa = sa
 
-        # Butang terapung "â†‘ ke atas" (Sesi 34) â€” corak sama halaman
+        # Butang terapung "↑ ke atas" (Sesi 34) — corak sama halaman
         # kitab/carian: kelihatan bila kandungan panel panjang dan
         # pengguna skrol ke bawah; klik untuk kembali ke atas dengan
         # animasi lancar. Guna objectName "backTop" (QSS theme.py).
         if getattr(self, "_top_timer", None) is not None:
             self._top_timer.stop()
-        self._top_btn = QPushButton("â†‘")
+        self._top_btn = QPushButton("↑")
         self._top_btn.setObjectName("backTop")
-        self._top_btn.setToolTip("Ke atas â€” tetapan")
+        self._top_btn.setToolTip("Ke atas — tetapan")
         self._top_btn.setCursor(Qt.PointingHandCursor)
         self._top_btn.setFixedSize(44, 44)
         self._top_btn.setParent(sa)
@@ -187,12 +187,11 @@ class SettingsPanel(QFrame):
         inner.setStyleSheet("background: transparent;")
         sa.setWidget(inner)
         self.body = QVBoxLayout(inner)
-        self.body.setContentsMargins(18, 16, 18, 16)
-        self.body.setSpacing(18)
+        self.body.setContentsMargins(14, 12, 14, 12)
+        self.body.setSpacing(12)
 
         self._sec_tema()
-        self._sec_paparan()
-        self._sec_bacaan()
+        self._build_settings_grid()
         self._sec_tentang()
         self.body.addStretch(1)
 
@@ -227,7 +226,7 @@ class SettingsPanel(QFrame):
         fl.addWidget(done)
         root.addWidget(foot)
 
-    # â”€â”€ pembantu â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    # ── pembantu ──────────────────────────────────────────────────────
     def _hline(self):
         f = QFrame()
         f.setFixedHeight(1)
@@ -244,116 +243,31 @@ class SettingsPanel(QFrame):
         self.body.addLayout(wrap)
         return wrap
 
-    def _row(self, parent: QVBoxLayout, label: str) -> QHBoxLayout:
-        r = QWidget()
-        r.setStyleSheet("background: transparent;")
-        rl = QHBoxLayout(r)
-        rl.setContentsMargins(0, 0, 0, 0)
-        rl.setSpacing(8)
-        l = QLabel(label)
-        l.setStyleSheet(f"font-size: 12px; color: {TEXT_SECONDARY};")
-        rl.addWidget(l)
-        rl.addStretch()
-        parent.addWidget(r)
-        return rl
-
-    def _combo(self, parent, label, items, current=None, on_change=None,
-               width=170):
-        rl = self._row(parent, label)
-        cb = QComboBox()
-        cb.setFixedWidth(width)
-        cb.setCursor(Qt.PointingHandCursor)
-        cb.setStyleSheet(f"""
-            QComboBox {{ background-color: {CARD_BG}; color: {TEXT_PRIMARY};
-                         border: 1px solid {BORDER}; border-radius: 6px;
-                         padding: 5px 9px; font-size: 11px; }}
-            QComboBox:hover {{ border-color: {TEAL_PALE}; }}
-            QComboBox::drop-down {{ border: none; width: 18px; }}
-            QComboBox QAbstractItemView {{
-                background-color: {CARD_BG}; color: {TEXT_PRIMARY};
-                border: 1px solid {BORDER};
-                selection-background-color: {TEAL_PALE};
-                selection-color: {TEAL}; padding: 3px; }}
-        """)
-        for it in items:
-            if isinstance(it, (tuple, list)):
-                cb.addItem(it[0], it[1])
-            else:
-                cb.addItem(it)
-        if current is not None:
-            i = cb.findData(current)
-            if i < 0:
-                i = cb.findText(str(current))
-            if i >= 0:
-                cb.setCurrentIndex(i)
-        if on_change:
-            cb.currentIndexChanged.connect(lambda: on_change(cb))
-        rl.addWidget(cb)
-        return cb
-
-    def _stepper(self, parent, label, key):
-        """Baris âˆ’ nilai + (guna app._step yang sedia ada)."""
-        rl = self._row(parent, label)
-        val = QLabel("")
-        val.setFixedWidth(74)
-        val.setAlignment(Qt.AlignCenter)
-        val.setStyleSheet(f"font-size: 11px; font-weight: 700; "
-                          f"color: {TEXT_PRIMARY};")
-
-        def mk(txt, d):
-            b = QPushButton(txt)
-            b.setFixedSize(26, 26)
-            b.setCursor(Qt.PointingHandCursor)
-            b.setStyleSheet(f"""
-                QPushButton {{ background-color: {CARD_BG};
-                               border: 1px solid {BORDER};
-                               border-radius: 6px; color: {TEXT_SECONDARY};
-                               font-size: 13px; font-weight: 700; }}
-                QPushButton:hover {{ border-color: {TEAL};
-                                     color: {TEAL}; }}
-            """)
-            b.clicked.connect(lambda: (self.app._step(key, d), self.sync()))
-            return b
-
-        rl.addWidget(mk("âˆ’", -1))
-        rl.addWidget(val)
-        rl.addWidget(mk("+", 1))
-        self._stepper_labels[key] = val
-
-    # â”€â”€ bahagian â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     def _sec_tema(self):
-        """Pemilih tema â€” butang segmen, bukan dropdown.
-
-        Dua pilihan sahaja; segmen lebih pantas dan menunjukkan
-        keadaan semasa tanpa perlu dibuka.
-        """
+        """Pemilih tema — butang segmen, bukan dropdown."""
         g = self._group("Tema")
 
-        grid = QWidget()
-        grid.setStyleSheet("background: transparent;")
-        gl = QGridLayout(grid)
-        gl.setContentsMargins(0, 0, 0, 0)
-        gl.setSpacing(8)
+        row = QWidget()
+        row.setStyleSheet("background: transparent;")
+        hl = QHBoxLayout(row)
+        hl.setContentsMargins(0, 0, 0, 0)
+        hl.setSpacing(6)
 
         cur = self.app.settings.get("theme", DEFAULT_TEMA)
         self._theme_btns = {}
 
-        # 3 tema (25 Ogos): AQUA (lalai baharu) + Neutral gelap/terang.
-        # Tema dark/light (kertas hangat) kekal boleh dipilih melalui
-        # 'Ikut sistem'/fail tetapan â€” panel memaparkan yang kerap diguna.
-        for key, label, pos in (("aqua", "â—ˆ  Aqua", (0, 0)),
-                                ("neutral", "ðŸŒ™  Neutral", (0, 1)),
-                                ("lightneutral", "â˜€  Neutral terang",
-                                 (0, 2))):
+        for key, label in (("aqua", "◎ Aqua"),
+                           ("neutral", "🌙 Neutral"),
+                           ("lightneutral", "☀ Neutral terang")):
             b = QPushButton(label)
             b.setCursor(Qt.PointingHandCursor)
-            b.setFixedHeight(36)
+            b.setFixedHeight(32)
             b.clicked.connect(lambda _, k=key: self._pick_theme(k))
-            gl.addWidget(b, pos[0], pos[1], 1, 1)
+            hl.addWidget(b)
             self._theme_btns[key] = b
 
         self._paint_theme_btns(cur)
-        g.addWidget(grid)
+        g.addWidget(row)
 
     def _paint_theme_btns(self, active: str):
         for k, b in self._theme_btns.items():
@@ -365,6 +279,7 @@ class SettingsPanel(QFrame):
                     border: 1px solid {TEAL if on else BORDER};
                     border-radius: 8px; font-size: 12px;
                     font-weight: {700 if on else 600};
+                    padding: 4px 10px;
                 }}
                 QPushButton:hover {{
                     border-color: {TEAL};
@@ -376,67 +291,169 @@ class SettingsPanel(QFrame):
         if name == self.app.settings.get("theme", DEFAULT_TEMA):
             return
         self._paint_theme_btns(name)
-        # Panel dibina semula oleh set_theme; tangguh supaya klik selesai
         QTimer.singleShot(0, lambda: self.app.set_theme(name))
 
-    def _sec_paparan(self):
-        self._stepper_labels = {}
-        g = self._group("Paparan")
-        self._stepper(g, "Saiz teks Arab", "ar")
-        self._stepper(g, "Saiz terjemahan", "tr")
+    @staticmethod
+    def _combo_ss():
+        return f"""
+            QComboBox {{ background-color: {CARD_BG}; color: {TEXT_PRIMARY};
+                         border: 1px solid {BORDER}; border-radius: 6px;
+                         padding: 4px 8px; font-size: 11px; }}
+            QComboBox:hover {{ border-color: {TEAL_PALE}; }}
+            QComboBox::drop-down {{ border: none; width: 18px; }}
+            QComboBox QAbstractItemView {{
+                background-color: {CARD_BG}; color: {TEXT_PRIMARY};
+                border: 1px solid {BORDER};
+                selection-background-color: {TEAL_PALE};
+                selection-color: {TEAL}; padding: 3px; }}"""
 
-        self.cb_font = self._combo(
-            g, "Fon Arab", self.app._fonts, self.app.ar_font,
-            lambda cb: (setattr(self.app, "ar_font", cb.currentText()),
-                        self.app._set("arabic_font", cb.currentText()),
-                        self.app._refresh_current()),
-            width=190)
+    @staticmethod
+    def _stepper_btn_ss():
+        return f"""
+            QPushButton {{ background-color: {CARD_BG};
+                           border: 1px solid {BORDER};
+                           border-radius: 5px; color: {TEXT_SECONDARY};
+                           font-size: 12px; font-weight: 700; }}
+            QPushButton:hover {{ border-color: {TEAL}; color: {TEAL}; }}"""
+
+    def _build_settings_grid(self):
+        """Satu grid tunggal untuk Paparan + Bacaan."""
+        self._stepper_labels = {}
+
+        wrap = QWidget()
+        wrap.setStyleSheet("background: transparent;")
+        gl = QGridLayout(wrap)
+        gl.setContentsMargins(0, 0, 0, 0)
+        gl.setSpacing(6)
+        gl.setColumnStretch(1, 1)
+
+        r = 0
+        ss = self._combo_ss()
+
+        def _label(row, text):
+            l = QLabel(text)
+            l.setStyleSheet(f"font-size: 11px; color: {TEXT_SECONDARY};")
+            gl.addWidget(l, row, 0)
+
+        def _combo(row, items, current_data=None, on_change=None):
+            cb = QComboBox()
+            cb.setStyleSheet(ss)
+            cb.setCursor(Qt.PointingHandCursor)
+            for it in items:
+                if isinstance(it, (tuple, list)):
+                    cb.addItem(it[0], it[1])
+                else:
+                    cb.addItem(it)
+            if current_data is not None:
+                i = cb.findData(current_data)
+                if i < 0:
+                    i = cb.findText(str(current_data))
+                if i >= 0:
+                    cb.setCurrentIndex(i)
+            if on_change:
+                cb.currentIndexChanged.connect(lambda: on_change(cb))
+            gl.addWidget(cb, row, 1)
+            return cb
+
+        def _stepper(row, key):
+            w = QWidget()
+            w.setStyleSheet("background: transparent;")
+            hl = QHBoxLayout(w)
+            hl.setContentsMargins(0, 0, 0, 0)
+            hl.setSpacing(4)
+            val = QLabel("")
+            val.setFixedWidth(65)
+            val.setAlignment(Qt.AlignCenter)
+            val.setStyleSheet(f"font-size: 11px; font-weight: 700; "
+                              f"color: {TEXT_PRIMARY};")
+            for txt, d in (("−", -1), ("+", 1)):
+                b = QPushButton(txt)
+                b.setFixedSize(24, 24)
+                b.setCursor(Qt.PointingHandCursor)
+                b.setStyleSheet(self._stepper_btn_ss())
+                b.clicked.connect(lambda checked=False, dd=d:
+                                 (self.app._step(key, dd), self.sync()))
+                hl.addWidget(b)
+            hl.addWidget(val)
+            hl.addStretch()
+            gl.addWidget(w, row, 1)
+            self._stepper_labels[key] = val
+
+        # ── Paparan ──
+        sec = QLabel("PAPARAN")
+        sec.setStyleSheet(f"font-size: 10px; font-weight: 700; "
+                          f"color: {TEXT_FAINT}; letter-spacing: 0.6px;")
+        gl.addWidget(sec, r, 0, 1, 2)
+        r += 1
+
+        _label(r, "Saiz teks Arab")
+        _stepper(r, "ar")
+        r += 1
+
+        _label(r, "Saiz terjemahan")
+        _stepper(r, "tr")
+        r += 1
+
+        _label(r, "Fon Arab")
+        cb_f = _combo(r, [(f, f) for f in self.app._fonts],
+                      current_data=self.app.ar_font,
+                      on_change=lambda cb: (
+                          setattr(self.app, "ar_font", cb.currentText()),
+                          self.app._set("arabic_font", cb.currentText()),
+                          self.app._refresh_current()))
+        self.cb_font = cb_f
+        r += 1
 
         if not any(k in f for f in self.app._fonts
                    for k in ("KFGQPC", "Scheherazade", "Amiri",
                              "Naskh", "Arabic")):
-            w = QLabel("âš  Tiada fon Arab khusus dikesan. Pasang Amiri "
-                       "atau Scheherazade New untuk paparan terbaik.")
+            w = QLabel("⚠ Tiada fon Arab khusus dikesan.")
             w.setWordWrap(True)
             w.setStyleSheet(
                 f"background-color: {AMBER_BG}; color: {AMBER_TEXT};"
                 f"border: 1px solid {AMBER_BORDER}; border-radius: 6px;"
                 f"padding: 9px; font-size: 10px;")
-            g.addWidget(w)
+            gl.addWidget(w, r, 0, 1, 2)
+            r += 1
 
-    def _sec_bacaan(self):
-        g = self._group("Bacaan")
-        self._combo(
-            g, "Bahasa dimuat",
-            [("Semua bahasa", "both"),
-             ("Melayu sahaja", "bm_only"),
-             ("Indonesia sahaja", "ind_only")],
-            self.app.settings.get("language_pref", "both"),
-            lambda cb: self.app._set("language_pref", cb.currentData()))
+        # ── Bacaan ──
+        sec2 = QLabel("BACAAN")
+        sec2.setStyleSheet(f"font-size: 10px; font-weight: 700; "
+                           f"color: {TEXT_FAINT}; letter-spacing: 0.6px;")
+        gl.addWidget(sec2, r, 0, 1, 2)
+        r += 1
 
-        # Simbol selawat. Lalai SIMBOL ï·º (jika fon ada glif) -- ligatur
-        # mengandungi lafaz penuh, bukan singkatan dua huruf seperti
-        # "SAW", jadi ia tidak termasuk dalam tegahan Ibn Salah dan
-        # al-Sakhawi terhadap penyingkatan. Bentuk penuh kekal tersedia.
+        _label(r, "Bahasa dimuat")
+        _combo(r, [("Semua bahasa", "both"),
+                   ("Melayu sahaja", "bm_only"),
+                   ("Indonesia sahaja", "ind_only")],
+               current_data=self.app.settings.get("language_pref", "both"),
+               on_change=lambda cb: self.app._set(
+                   "language_pref", cb.currentData()))
+        r += 1
+
+        _label(r, "Selawat")
         _pilihan = [("Penuh (rumi)", False)]
         if getattr(self.app, "_ada_glif_selawat", False):
-            _pilihan.append(("Simbol â€” \ufdfa", True))
-        self._combo(
-            g, "Selawat",
-            [(t, v) for t, v in _pilihan],
-            bool(self.app.settings.get("simbol_selawat", True)),
-            lambda cb: self.app._set_simbol_selawat(cb.currentData()))
+            _pilihan.append(("Simbol — \ufdfa", True))
+        _combo(r, [(t, v) for t, v in _pilihan],
+               current_data=bool(self.app.settings.get(
+                   "simbol_selawat", True)),
+               on_change=lambda cb: self.app._set_simbol_selawat(
+                   cb.currentData()))
+        r += 1
 
-        self._combo(
-            g, "Hadis per halaman",
-            [(str(n), n) for n in (10, 20, 30, 50, 100)],
-            self.app.per_page(),
-            lambda cb: self.app._set("per_page", cb.currentData()),
-            width=100)
+        _label(r, "Hadis per halaman")
+        _combo(r, [(str(n), n) for n in (10, 20, 30, 50, 100)],
+               current_data=self.app.per_page(),
+               on_change=lambda cb: self.app._set(
+                   "per_page", cb.currentData()))
+        r += 1
+
+        self.body.addWidget(wrap)
 
     def _sec_tentang(self):
-        """Butang 'Tentang' -- buka deklarasi penuh (tujuan, sumber,
-        batasan, sokongan). Corak butang sama seperti Tetapan API."""
+        """Butang 'Tentang' -- buka deklarasi penuh."""
         g = self._group("Tentang")
 
         row = QWidget()
@@ -445,23 +462,24 @@ class SettingsPanel(QFrame):
         rl.setContentsMargins(0, 0, 0, 0)
         rl.setSpacing(8)
 
-        btn = QPushButton("  â„¹ï¸   Tentang PustakaHadith")
+        btn = QPushButton("ℹ Tentang PustakaHadith")
         btn.setCursor(Qt.PointingHandCursor)
-        btn.setFixedHeight(38)
+        btn.setFixedHeight(34)
         btn.setStyleSheet(f"""
             QPushButton {{ background-color: {CARD_BG}; color: {TEXT_SECONDARY};
                            border: 1px solid {BORDER}; border-radius: 8px;
                            font-size: 12px; font-weight: 600;
-                           text-align: left; padding-left: 10px; }}
+                           padding: 4px 14px; }}
             QPushButton:hover {{ background-color: {CARD_BG_HOVER};
                                  border-color: {TEAL_PALE};
                                  color: {TEXT_PRIMARY}; }}
         """)
         btn.clicked.connect(
             lambda: DeklarasiDialog(penuh=True, parent=self.app).exec_())
-        rl.addWidget(btn, 1)
+        rl.addWidget(btn)
+        rl.addStretch()
 
-        arrow = QLabel("â€º")
+        arrow = QLabel("›")
         arrow.setStyleSheet(f"color: {TEXT_FAINT}; font-size: 16px;")
         rl.addWidget(arrow)
         g.addWidget(row)
@@ -492,7 +510,7 @@ class SettingsPanel(QFrame):
             if k in self._stepper_labels:
                 self._stepper_labels[k].setText(FONT_SCALE_LABELS[idx])
 
-    # â”€â”€ animasi â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    # ── animasi ───────────────────────────────────────────────────────
     def _lebar_panel(self) -> int:
         """Lebar panel adaptif — ikut lebar tetingkap (Sesi 24, fix
         'kandungan terkeluar ke kiri' dalam fullscreen).
@@ -503,7 +521,7 @@ class SettingsPanel(QFrame):
         """
         p = self.parentWidget()
         w = p.width() if p is not None else PANEL_W_MIN
-        return max(PANEL_W_MIN, min(PANEL_W_MAX, int(w * 0.36)))
+        return max(PANEL_W_MIN, min(PANEL_W_MAX, int(w * 0.28)))
 
     # ── animasi ──────────────────────────────────────────────────
     def open_panel(self):
@@ -570,7 +588,7 @@ class SettingsPanel(QFrame):
         return self._open
 
     def _kemas_butang_atas(self):
-        """Tunjuk/sembunyi butang â†‘ mengikut kedudukan skrol (Sesi 34).
+        """Tunjuk/sembunyi butang ↑ mengikut kedudukan skrol (Sesi 34).
 
         Corak sama halaman kitab/carian: butang hanya berguna bila
         kandungan panel melebihi viewport dan pengguna sudah skrol ke
@@ -591,7 +609,7 @@ class SettingsPanel(QFrame):
         b.raise_()
 
     def _skrol_atas_lancar(self):
-        """Skrol lancar ke atas panel tetapan â€” animasi QTimer.
+        """Skrol lancar ke atas panel tetapan — animasi QTimer.
 
         Langkah mengecil (jarak dibahagi 15) supaya pergerakan kelihatan
         perlahan berhampiran sasaran. Timer disimpan pada `self` supaya
