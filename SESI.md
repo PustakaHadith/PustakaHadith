@@ -896,9 +896,124 @@ Semakan curl https://pustakahadith.my (HTTP **200**) menunjukkan:
 - ✅ Privacy policy hosted
 - ✅ Store description ditulis
 - ✅ Age ratings diselesaikan pengguna
-- ⏳ **Upload ke Partner Center** — menunggu pengguna
+- ✅ **Upload MSIX** ke Partner Center — Validated
+- ✅ **Store listings** — description + screenshots uploaded
+- ✅ **Properties** — Updated (Category, Privacy, Declarations, System req)
+- ⏳ **Submit for certification** — menunggu pengguna tekan
 
 ### TODO (sambung esok)
-1. **Upload MSIX** ke Partner Center → Packages
-2. **Store listings** — tambah description + 4 screenshots
-3. **Submit for certification**
+1. **Submit for certification** — tekan butang biru di Partner Center
+2. **Ambil screenshots apl sebenar** — screenshots lama salah (bukan apl)
+3. **Poster art & box art** — 720x1080, 1440x2160, 1080x1080, 2160x2160
+
+---
+
+## Sesi 27 (18 September 2026): MSIX Fix + Partner Center Submission
+
+### Ralat & Pembaikan MSIX
+
+1. **PublisherDisplayName mismatch** — Store reject:
+   - Ralat: `PublisherDisplayName element... doesn't match your publisher display name: PUSTAKA HADITH`
+   - PUNCA: `msix_identity.txt` ada `PustakaHadith`, Partner Center expect `PUSTAKA HADITH`
+   - FIX: Tukar `msix_identity.txt` → `PUSTAKA HADITH`
+   - **PENGAJARAN:** Baca dokumentasi SEBELUM buat perubahan. `DAFTAR_MSIX_STORE.md` sudah ada nilai betul.
+
+2. **DisplayName mismatch** — Store reject:
+   - Ralat: `Package/Properties/DisplayName uses a display name that you have not reserved: PustakaHadith`
+   - PUNCA: Manifest hardcode `PustakaHadith`, Partner Center expect `Pustaka Hadith` (ada ruang)
+   - FIX: Tambah field `Package/Properties/DisplayName=Pustaka Hadith` ke `msix_identity.txt`
+   - `build_msix.ps1` guna `$dname` dari identity file (bukan hardcode)
+
+3. **Privacy policy URL requirement** — walaupun pilih "No, my product doesn't use personal information":
+   - Ralat: `Based on the capabilities your submission declares, a privacy policy URL is required`
+   - PUNCA: `runFullTrust` capability trigger requirement wajib
+   - FIX: Tukar ke "Yes" → "Provide privacy policy URL" → `https://pustakahadith.github.io/PustakaHadith/`
+
+### Maklumat Penting Partner Center (WAJIB REFERENSI)
+
+```text
+App name reserved:          Pustaka Hadith
+Package/Identity/Name:      PustakaHadith.PustakaHadith
+Package/Identity/Publisher:  CN=1084A5A8-F66F-4B6D-A3EF-455CCC63CDD2
+PublisherDisplayName:        PUSTAKA HADITH
+DisplayName (manifest):     Pustaka Hadith
+Privacy policy URL:         https://pustakahadith.github.io/PustakaHadith/
+Category:                   Books + reference / Reference
+Generative AI:              ✅ Checked
+runFullTrust:               ✅ Required
+```
+
+### Store Listing Content (Bahasa Melayu)
+
+**Description:**
+```
+Aplikasi rujukan hadis luar talian yang lengkap.
+
+Semak, cari, dan kaji hadis daripada 9 kitab utama (Bukhari, Muslim, Abu Dawud, Tirmidhi, Ibn Majah, Ahmad, Darimi, Malik, Nasa'i) dengan teks Arab, transliterasi, dan terjemahan dalam Bahasa Melayu, Indonesia, dan Inggeris.
+
+Ciri Utama:
+- 62,169 rekod hadis merangkumi 9 kitab
+- Carian teks penuh dalam Bahasa Arab, Melayu, dan Inggeris
+- Carian makna bantu AI (berjalan 100% luar talian pada peranti anda)
+- Paparan tiga panel: Arab + Transliterasi | Melayu | Indonesia | Inggeris
+- Tema Gelap/Aqua/Neutral dengan saiz fon yang boleh laras
+- Tanda buku untuk menyimpan hadis kegemaran
+- Kongsi hadis melalui WhatsApp, Telegram, Facebook, atau Instagram
+- Teks-ke-Suara untuk membaca hadis
+- Lompat ke mana-mana hadis mengikut nombor (contoh: "Bukhari 433")
+
+100% Luar Talian — Tiada internet diperlukan selepas pelancaran pertama. Semua data kekal pada peranti anda. Tiada akaun, tiada penjejakan, tiada iklan.
+
+Privasi Diutamakan — Tiada pengumpulan data. Tanda buku dan tetapan anda tidak akan meninggalkan peranti anda.
+```
+
+**What's new:**
+```
+- Panel tetapan dipertingkatkan susun atur
+- Pembaikan perkongsian Telegram
+- Pembaikan UI dan pepijat
+```
+
+**Short description:**
+```
+Aplikasi rujukan hadis luar talian lengkap dengan 62,169 hadis daripada 9 kitab utama. Cari hadis dalam Bahasa Arab, Melayu, dan Inggeris. Sokongan carian makna AI yang berjalan 100% offline pada peranti anda. Tiada akaun diperlukan.
+```
+
+**Keywords:**
+```
+hadith offline
+sunnah reference
+bukhari muslim
+islamic studies
+arabic text
+Malay translation
+AI search offline
+```
+
+**Short title:** `Pustaka Hadith - Rujukan Luar Talian`
+
+**Copyright:** `© 2026 PustakaHadith. All rights reserved.`
+
+**Additional license terms:** `This application is provided free of charge. No warranty is expressed or implied. Use at your own risk.`
+
+**Developed by:** `PustakaHadith`
+
+### Fail diubah (Sesi 27)
+- `installer/msix_identity.txt` — tambah DisplayName field, fix PublisherDisplayName
+- `installer/build_msix.ps1` — guna `$dname` dari identity file (bukan hardcode)
+- `dokumen/rujukan/DAFTAR_MSIX_STORE.md` — kemas kini nilai sebenar Partner Center
+- `dokumen/rujukan/INSTALLER.md` — amaran PublisherDisplayName mesti sepadan tepat
+- `dokumen/penerbitan/MSIX_CAPTURE_PROSES.md` — fix Publisher CN
+
+### Status Akhir Sesi 27
+- ✅ MSIX rebuild dengan DisplayName & PublisherDisplayName betul
+- ✅ MSIX validated di Partner Center (v1.0.1 + v1.0.2.0)
+- ✅ Store listings updated (description, screenshots, keywords)
+- ✅ Properties updated (category, privacy, declarations, system req)
+- ✅ Butang "Submit for certification" sudah biru
+- ⏳ **Menunggu pengguna tekan Submit**
+
+### TODO Seterusnya
+1. **Submit for certification** — tekan butang biru
+2. **Ambil screenshots apl sebenar** — screenshots lama bukan apl
+3. **Poster art & box art** — 4 saiz untuk Store marketing
