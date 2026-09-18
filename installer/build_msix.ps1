@@ -15,7 +15,7 @@ $id = @{}
 (Get-Content (Join-Path $root "installer\msix_identity.txt")) | ForEach-Object {
     if ($_ -match "^(Package/[A-Za-z./]+)\s*=\s*(.+)$") { $id[$matches[1]] = $matches[2].Trim() }
 }
-$name = $id["Package/Identity/Name"]; $pub = $id["Package/Identity/Publisher"]; $disp = $id["Package/Properties/PublisherDisplayName"]
+$name = $id["Package/Identity/Name"]; $pub = $id["Package/Identity/Publisher"]; $disp = $id["Package/Properties/PublisherDisplayName"]; $dname = $id["Package/Properties/DisplayName"]
 
 # staging
 if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
@@ -37,7 +37,7 @@ $manifest = @"
          xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities">
   <Identity Name="$name" Publisher="$pub" Version="1.0.2.0" ProcessorArchitecture="x64" />
   <Properties>
-    <DisplayName>PustakaHadith</DisplayName>
+    <DisplayName>$dname</DisplayName>
     <PublisherDisplayName>$disp</PublisherDisplayName>
     <Description>Aplikasi rujukan hadis (PyInstaller onedir).</Description>
     <Logo>Assets\StoreLogo.png</Logo>
@@ -45,7 +45,7 @@ $manifest = @"
   <Resources><Resource Language="ms-MY" /></Resources>
   <Applications>
     <Application Id="PustakaHadith" Executable="PustakaHadith.exe" EntryPoint="Windows.FullTrustApplication">
-      <uap:VisualElements DisplayName="PustakaHadith" Description="PustakaHadith"
+      <uap:VisualElements DisplayName="$dname" Description="$dname"
         BackgroundColor="#0B2545"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">

@@ -616,14 +616,16 @@ SmartScreen/tandatangan.
 5. **Product management → Product identity** → salin TEPAT:
 
 ```text
-Package/Identity/Name              = PustakaHadith
-Package/Identity/Publisher         = CN=..., O=...   (dari Partner Center)
-Package/Properties/PublisherDisplayName = PustakaHadith
+Package/Identity/Name              = PustakaHadith.PustakaHadith
+Package/Identity/Publisher         = CN=1084A5A8-F66F-4B6D-A3EF-455CCC63CDD2
+Package/Properties/PublisherDisplayName = PUSTAKA HADITH
 ```
 
 6. Simpan ke `installer/msix_identity.txt` dan serahkan ke pembangun.
    Jangan reka sendiri `Publisher` — mesti sepadan tepat dengan Partner
    Center, jika tidak `Add-AppxPackage` gagal dan upload Store ditolak.
+   **AMARAN:** `PublisherDisplayName` mesti TEPAT termasuk huruf besar/kecil
+   dan ruang. Jika tak sepadan, Store akan reject.
 
 Versi MSIX mesti empat bahagian:
 
@@ -877,7 +879,10 @@ semua laluan.
 ### MSIX gagal upload kerana Publisher/Name
 
 Salin semula nilai tepat dari **Product identity** Partner Center. Jangan
-ubah PublisherDisplayName secara rawak.
+ubah PublisherDisplayName secara rawak. **Perhatian:** `PublisherDisplayName`
+mesti sepadan **tepat** termasuk huruf besar/kecil dan ruang — contoh
+"PUSTAKA HADITH" bukan "PustakaHadith". Rujuk `installer/msix_identity.txt`
+yang sudah disahkan.
 
 ### Pakej tempatan tidak boleh dipasang
 

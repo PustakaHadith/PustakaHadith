@@ -34,7 +34,7 @@
 - [ ] Buka MSIX Packaging Tool → **Create package** → **Manual installation**
 - [ ] **Package details**:
   - [ ] Name: `PustakaHadith`
-  - [ ] Publisher: `CN=<Publisher dari Partner Center>` (mesti sepadan!)
+   - [ ] Publisher: `CN=1084A5A8-F66F-4B6D-A3EF-455CCC63CDD2` (mesti sepadan!)
   - [ ] Version: `1.0.0.0`
   - [ ] Architecture: `x64`
 - [ ] **Installation**:

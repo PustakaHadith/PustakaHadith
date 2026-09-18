@@ -23,14 +23,16 @@ Partner Center, jika tidak:
 Nilai yang diperlukan (salin **tepat**, jangan reka sendiri):
 
 ```text
-Package/Identity/Name              = PustakaHadith
-Package/Identity/Publisher         = CN=...., O=....,  (dari Partner Center)
-Package/Properties/PublisherDisplayName = PustakaHadith
+Package/Identity/Name              = PustakaHadith.PustakaHadith
+Package/Identity/Publisher         = CN=1084A5A8-F66F-4B6D-A3EF-455CCC63CDD2
+Package/Properties/PublisherDisplayName = PUSTAKA HADITH
 ```
 
-> **Nama:** identiti pakej = `PustakaHadith` (tanpa jarak). Nama paparan
-> (Display name) boleh `PustakaHadith` (dengan jarak) — ditetapkan bila
-> isi manifest MSIX, bukan di sini.
+> **AMARAN:** `PublisherDisplayName` mesti **tepat sepadan** dengan
+> Partner Center — termasuk huruf besar/kecil dan ruang. Jika tak sepadan,
+> Store akan reject upload dengan ralat:
+> `The PublisherDisplayName element... doesn't match your publisher display name`.
+> Semak di Partner Center → Product identity sebelum setiap upload.
 
 ---
 
@@ -92,9 +94,9 @@ Salin ke `installer\msix_identity.txt` supaya mudah dipaste semasa
 capture MSIX:
 
 ```text
-Package/Identity/Name=PustakaHadith
-Package/Identity/Publisher=CN=.... (dari Partner Center - jangan ubah)
-Package/Properties/PublisherDisplayName=PustakaHadith
+Package/Identity/Name=PustakaHadith.PustakaHadith
+Package/Identity/Publisher=CN=1084A5A8-F66F-4B6D-A3EF-455CCC63CDD2
+Package/Properties/PublisherDisplayName=PUSTAKA HADITH
 ```
 
 ### 8. Serahkan nilai kepada pembangun
