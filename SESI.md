@@ -1017,3 +1017,42 @@ AI search offline
 1. **Submit for certification** — tekan butang biru
 2. **Ambil screenshots apl sebenar** — screenshots lama bukan apl
 3. **Poster art & box art** — 4 saiz untuk Store marketing
+
+---
+
+## Sesi 28 (21 September 2026): Store submission SELESAI & DITERBITKAN ✅
+
+### Pengesahan
+- Pengguna menekan **Submit for certification** di Partner Center dan pengesahan **BERJAYA** — aplikasi kini **LIVE/Published** di Microsoft Store.
+- Pautan Store: `https://apps.microsoft.com/detail/9MWLXVH2ZC7Q` (product id `9MWLXVH2ZC7Q`).
+
+### Versi
+- Submission terbaru membawa MSIX **v1.0.2.0** (781.9 MB, dengan `hadis.db` + tanpa `blobs`) — Sesi 26/27.
+- Penambahbaikan berbanding v1.0.1: panel tetapan layout dikemas, fix Telegram share (400), mojibake dibersihkan.
+
+### Status
+- ✅ Store v1.0.1 live (Sesi 20) → kini **v1.0.2.0 disahkan & live**.
+- ✅ Tiada item tertunda yang berkaitan penyiaran.
+- ⏳ Kemas kini pilihan: label landing page (kad Store mungkin masih "v1.0.1 disahkan & live") serta GitHub Release (jika mahu papar v1.0.2).
+
+### Fail berkaitan
+- Microsoft Store: `https://apps.microsoft.com/detail/9MWLXVH2ZC7Q` — v1.0.2.0 live.
+- `SESI.md` — rekod ini (Sesi 28).
+
+---
+
+## Sesi 29 (21 September 2026): Perpindahan Hosting/DNS ke Cloudflare ✅
+
+### Perubahan
+- **Landing page + DNS berpindah dari Netlify → Cloudflare** (Cloudflare **Pages** + **DNS**).
+- URL rasmi kekal **`https://pustakahadith.my`** (custom domain di Cloudflare).
+- Status Netlify terdahulu (Sesi 12–22): site `pustakahadith`, deploy manual, kadang-kala buang kredit deploy (403) & auto-deploy Git aktif semula (404) — kini diambil alih oleh Cloudflare.
+
+### Status
+- ✅ Landing page + DNS di Cloudflare — URL rasmi `https://pustakahadith.my`.
+- ⏳ Perlu pengesahan: landing page ternyata masih memaparkan kad Store "v1.0.1" — perlu kemas kini ke **v1.0.2 live** (Sesi 28) dan deploy semula di Cloudflare.
+- ⏳ Rekod `SESI.md` Sesi 28–29 belum di-commit (menunggu arahan).
+
+### Fail berkaitan
+- Landing page (sumber): `D:\Pustaka Quran Hadis\Pustaka\landing-page\index.html`
+- `SESI.md` — rekod ini (Sesi 29) (landing-page/SESI.md juga perlu dikemas jika melayani cadangan).
