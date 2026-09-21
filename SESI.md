@@ -1030,6 +1030,32 @@ AI search offline
 
 ---
 
+## Sesi 30 (21 September 2026): Fokus Promosi
+
+### Status Promosi
+- Folder `video-promo` sedia dengan pelan lengkap:
+  - STORYBOARD.md — 9 scene, 58 saat
+  - SKRIP_VOICEOVER.md — skrip penuh BM
+  - SEMAK_PRODUKSI.md — checklist 6 fasa
+  - pustakahadith-promo.srt — sari kata
+  - footage/ — folder rakaman (kosong)
+- Target platform: YouTube, TikTok, Instagram Reels, Facebook Reels, Telegram
+
+### Apa yang perlu dibuat (sambung esok)
+1. **Rakam screen recording** — 7 scene mengikut storyboard
+2. **Rakam voiceover** — guna skrip sedia ada
+3. **Edit video** — gabung screen recording + voiceover + teks overlay
+4. **Export** — MP4 1080x1920 (Shorts) atau 1920x1080 (standard)
+5. **Upload** — YouTube, TikTok, Instagram, Facebook, Telegram
+
+### Status
+- ✅ Video promo plan lengkap
+- ✅ Skrip voiceover siap
+- ✅ Storyboard siap
+- ⏳ **Rakaman belum bermula** — sambung esok
+
+---
+
 ## Sesi 28 (21 September 2026): Store submission SELESAI & DITERBITKAN ✅
 
 ### Pengesahan
