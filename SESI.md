@@ -1014,9 +1014,19 @@ AI search offline
 - ⏳ **Menunggu pengguna tekan Submit**
 
 ### TODO Seterusnya
-1. **Submit for certification** — tekan butang biru
-2. **Ambil screenshots apl sebenar** — screenshots lama bukan apl
-3. **Poster art & box art** — 4 saiz untuk Store marketing
+1. ~~Submit for certification~~ ✅
+2. ~~Ambil screenshots apl sebenar~~ ✅
+3. ~~Poster art & box art~~ ✅
+
+### Status Akhir Sesi 29
+- ✅ MSIX v1.0.2.0 published di Microsoft Store
+- ✅ Store listing (description, screenshots, keywords)
+- ✅ Properties (category, privacy, declarations, system req)
+- ✅ Landing page updated ke v1.0.2
+- ✅ DNS + hosting di Cloudflare
+- ✅ Screenshots apl sebenar
+- ✅ Poster art & box art
+- ✅ SEMUA ITEM PENDING SELESAI
 
 ---
 
