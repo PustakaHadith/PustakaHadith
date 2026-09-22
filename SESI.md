@@ -1,11 +1,27 @@
 # SESI PEMBANGUNAN — PustakaHadith
 
 ## Tarikh
-30 Ogos – 2 September 2026
+30 Ogos – 22 September 2026
 
 ## Matlamat
 Bina & edar **PustakaHadith** v1.0 (PyQt5 + SQLite/FTS5 + FAISS, Windows).
 Komunikasi dengan pengguna: **Bahasa Melayu**.
+
+---
+
+## PENTING — Folder Projek Utama
+
+Setiap aktiviti development mesti update dokumentasi di **SEMUA** folder berkaitan:
+
+| Folder | Lokasi | Tujuan |
+|---|---|---|
+| **Repo utama** | `D:\Pustaka Quran Hadis\Pustaka\PustakaHadith\` | Kod sumber, SESI.md |
+| **UI/UX** | `D:\Pustaka Quran Hadis\Pustaka\PustakaHadith_UIUX\UIUX_PustakaHadith\` | Mockup, spesifikasi visual, keputusan reka bentuk |
+| **Landing page** | `D:\Pustaka Quran Hadis\Pustaka\landing-page\` | Laman web pustakahadith.my |
+| **Cloudflare config** | `D:\Pustaka Quran Hadis\Pustaka\landing-page\cloudflare.md` | DNS, SSL, hosting details |
+| **Binaan & MSIX** | `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\` | EXE, MSIX, screenshot Store |
+
+**Peraturan:** Apabila UI berubah (layout, tema, komponen, saiz tetingkap), update juga `PustakaHadith_UIUX/` supaya mockup dan kod sentiasa sepadan.
 
 ---
 
@@ -1063,6 +1079,11 @@ AI search offline
 
 ### Pending
 - ⏳ **Saiz tetingkap** — default 1240x860, pengguna rasa kurang memanjang. Perlu naikkan height (960/1000) atau ikut resolusi skrin pengguna.
+- ⏳ **Home page kosong** — pengguna rasa bahagian bawah terlalu kosong. 3 mockup HTML disediakan di `installer\mockup_home\`:
+  - A: Statistik + Aktiviti Terkini
+  - B: Hadis Hari Ini + Cabaran + Pintasan
+  - C: 9 Kitab Grid + Carta Kemajuan
+  - Menunggu pengguna pilih sebelum implement
 
 ---
 
@@ -1102,3 +1123,69 @@ AI search offline
 ### Fail berkaitan
 - Landing page (sumber): `D:\Pustaka Quran Hadis\Pustaka\landing-page\index.html`
 - `SESI.md` — rekod ini (Sesi 29) (landing-page/SESI.md juga perlu dikemas jika melayani cadangan).
+
+---
+
+## Sesi 32 (22 September 2026): Audit UI/UX Folder & Pautan ke Development
+
+### Perubahan
+- **Audit UI/UX folder** `PustakaHadith_UIUX/UIUX_PustakaHadith/` dilakukan — perbandingan kod sebenar vs dokumentasi mockup.
+- **Penemuan:** 30 daripada 35 keputusan UI/UX telah dilaksanakan dalam kod. 5 lagi ialah "langkah seterusnya" (loading states, tema terang/gelap, responsif 900×560, spesifikasi komponen). 13 ciri kod tidak terdokumentasi dalam UI/UX folder.
+- **SESI.md dikemas kini:** blok "PENTING — Folder Projek Utama" ditambah di atas senarai sesi supaya setiap aktiviti development mesti update SEMUA folder berkaitan (termasuk UI/UX).
+- **SELECTED_UIUX.md** dikemas kini — senarai ciri yang telah dilaksanakan vs belum.
+- **INDEX_UIUX.md** dikemas kini — status terkini "apa yang telah dibina" vs "apa yang masih mockup".
+
+### Keputusan UI/UX — Status Semasa
+
+| Komponen | Status Kod |
+|---|---|
+| Split Command Center | ✅ Dilaksanakan |
+| Rak Digital Interaktif (9 kitab) | ✅ Dilaksanakan (`pages_rak.py`) |
+| Panel glass alpha 20/255, tanpa blur | ✅ Dilaksanakan (`theme.py`) |
+| Background globe/jaringan | ✅ Dilaksanakan (2 imej: timeline + dunia) |
+| Header: Pustaka bold / Hadith light | ✅ Dilaksanakan |
+| Gear icon Tetapan | ✅ Dilaksanakan |
+| Butang Cari berasingan | ✅ Dilaksanakan |
+| Bilingual carian & senarai | ✅ Dilaksanakan |
+| Loading states | ❌ Belum |
+| Tema terang/gelap dikunci | ❌ Belum |
+| Responsif 900×560 (compact mode) | ❌ Belum |
+| Spesifikasi komponen PyQt5 | ❌ Belum |
+| Pilihan Hari Ini (hadis harian) | ✅ Dilaksanakan |
+
+### Fail berkaitan
+- `D:\Pustaka Quran Hadis\Pustaka\PustakaHadith_UIUX\UIUX_PustakaHadith\SELECTED_UIUX.md`
+- `D:\Pustaka Quran Hadis\Pustaka\PustakaHadith_UIUX\UIUX_PustakaHadith\INDEX_UIUX.md`
+- `SESI.md` — rekod ini (Sesi 32)
+
+---
+
+## Sesi 33 (22 September 2026): Bina EXE + 7z v1.0.2 & Kemas Kini Pautan Landing Page
+
+### Perubahan
+- **`installer/PustakaHadith.iss`** — Source path dibetulkan ke canonical dist: `D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PustakaHadith\*` (sebelumnya menunjuk ke repo `dist\` yang tidak lengkap semasa Sesi 10; kini kedua-dua dist lengkap, tapi ikut peraturan Sesi 10).
+- **Build 7z portable v1.0.2** — `Output\PustakaHadith-portable-1.0.2-x64.7z` (802,754,038 bait / ~766 MiB). 6132 fail, 2163 MiB tidak dimampatkan. `7z a -t7z -mx=7`.
+- **Build EXE setup v1.0.2** — `Output\PustakaHadith-Setup-1.0.2-x64.exe` (820,210,212 bait). Inno Setup 6.7.3, `ISCC.exe`, compile 1437 saat (~24 minit).
+- **Nota:** Percubaan pertama kedua-dua build tamat masa (timeout 10 minit) — fail separa (7z ~241MB, EXE ~408MB) dipadam dan dibina semula dengan timeout 60 minit. Jika build besar, guna timeout ≥ 60 minit.
+- **`landing-page/index.html`** dikemas ke v1.0.2:
+  - dl2 EXE href → `.../v1.0.2/PustakaHadith-Setup-1.0.2-x64.exe`
+  - dl3 7z href → `.../v1.0.2/PustakaHadith-portable-1.0.2-x64.7z`
+  - dl-note (ms + en i18n) → "Versi 1.0.2" / "Version 1.0.2"
+  - dl1 Store kekal v1.0.2 ✅
+
+### Status
+- ✅ ISS Source path dibetulkan
+- ✅ 7z v1.0.2 dibina (802.7 MB)
+- ✅ EXE v1.0.2 dibina (820.2 MB)
+- ✅ Pautan landing page index.html → v1.0.2
+- ⏳ GitHub Release v1.0.2 — menunggu `gh auth login`
+- ⏳ Push landing page → Cloudflare auto-deploy — menunggu arahan commit
+- ⏳ Commit perubahan ini — menunggu arahan
+
+### Fail berkaitan
+- `installer/PustakaHadith.iss` — Source path fix
+- `Output/PustakaHadith-portable-1.0.2-x64.7z` — artifact 7z
+- `Output/PustakaHadith-Setup-1.0.2-x64.exe` — artifact EXE
+- `D:\Pustaka Quran Hadis\Pustaka\landing-page\index.html` — pautan muat turun
+- `D:\Pustaka Quran Hadis\Pustaka\landing-page\SESI.md` — Sesi 33 (landing)
+- `SESI.md` — rekod ini (Sesi 33)

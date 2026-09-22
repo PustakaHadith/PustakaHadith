@@ -17,7 +17,7 @@ UninstallDisplayName=PustakaHadith
 UninstallDisplayIcon={app}\PustakaHadith.exe
 
 [Files]
-Source: "D:\Pustaka Quran Hadis\Pustaka\PustakaHadith\dist\PustakaHadith\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\Pustaka Quran Hadis\Pustaka\PustakaQH_dist\PustakaHadith\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\PustakaHadith"; Filename: "{app}\PustakaHadith.exe"
