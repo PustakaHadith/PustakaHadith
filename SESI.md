@@ -1056,6 +1056,16 @@ AI search offline
 
 ---
 
+## Sesi 31 (22 September 2026): Shortcut + Saiz Tetingkap
+
+### Perubahan
+- Start Menu shortcut dikemaskini ke versi baru (`dist\PustakaHadith\`)
+
+### Pending
+- ⏳ **Saiz tetingkap** — default 1240x860, pengguna rasa kurang memanjang. Perlu naikkan height (960/1000) atau ikut resolusi skrin pengguna.
+
+---
+
 ## Sesi 28 (21 September 2026): Store submission SELESAI & DITERBITKAN ✅
 
 ### Pengesahan
