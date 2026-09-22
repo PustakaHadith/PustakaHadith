@@ -1178,9 +1178,15 @@ AI search offline
 - ✅ 7z v1.0.2 dibina (802.7 MB)
 - ✅ EXE v1.0.2 dibina (820.2 MB)
 - ✅ Pautan landing page index.html → v1.0.2
-- ⏳ GitHub Release v1.0.2 — menunggu `gh auth login`
-- ⏳ Push landing page → Cloudflare auto-deploy — menunggu arahan commit
-- ⏳ Commit perubahan ini — menunggu arahan
+- ✅ Commit + push kedua-dua repo (`ea17b0f` PustakaHadith, `3525f54` Pustaka)
+- ✅ GitHub Release `v1.0.2` — asset EXE + 7z v1.0.2 dimuat naik; 3 asset v1.0.1 tersalah letak dibuang
+- ✅ Cloudflare auto-deploy — `https://pustakahadith.my` HTTP 200, pautan v1.0.2 aktif
+- ✅ Verifikasi download: EXE 200 (820,210,212 bait), 7z 200 (802,754,038 bait)
+- ✅ GH_TOKEN revoke selepas selesai
+
+### Nota sesi
+- `gh auth login --web` interaktif gagal dalam shell (timeout sebelum token diterima) — guna **PAT + `GH_TOKEN`** untuk release automation.
+- Release `v1.0.2` sedia ada (dicipta 11 Sep) mengandungi asset v1.0.1 — asset lama dipadam, asset v1.0.2 ditambah.
 
 ### Fail berkaitan
 - `installer/PustakaHadith.iss` — Source path fix
