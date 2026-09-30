@@ -5,10 +5,12 @@ Semua I/O rangkaian berjalan dalam QThread; UI tidak pernah beku.
 
 from __future__ import annotations
 
+import ctypes
+import ctypes.wintypes
 import os
 import sys
 
-from PyQt5.QtCore import Qt, QTimer, pyqtSignal
+from PyQt5.QtCore import Qt, QEvent, QTimer, pyqtSignal
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (
     QApplication, QFrame, QHBoxLayout, QLabel, QMainWindow,
@@ -139,19 +141,83 @@ class PustakaApp(PagesKitab, PagesRak, PagesCarian, PagesDetail,
         self._fetch_collections()
 
     def _saiz_muat_skrin(self):
-        """Saiz tetingkap ikut skrin sebenar, bukan nilai tetap.
+        """Saiz lalai semasa buka — Sesi 36 (spesifikasi pengguna).
 
-        Diuji: pada 1366x768 ruang berguna hanya ~730px tinggi selepas
-        bar tugas. Tetingkap 860px menyebabkan paparan terpotong.
+        Buka: 1280x720 (~70% skrin 1080p, bentuk memanjang 16:9).
+        Maximize: 85% x 85% availableGeometry, di tengah.
+        Klik maximize SEMULA (restore-down): balik saiz buka (70%).
+        Auto-klamp kekal: min 900x560, muat pada skrin kecil.
         """
-        lebar, tinggi = 1240, 860
+        lebar, tinggi = 1280, 720
         try:
             g = QApplication.primaryScreen().availableGeometry()
             lebar = max(900, min(lebar, g.width() - 80))
             tinggi = max(560, min(tinggi, g.height() - 80))
         except Exception:
             pass
+        self._saiz_buka = (lebar, tinggi)
+        self._pada_max = False
         self.resize(lebar, tinggi)
+
+    def nativeEvent(self, eventType, message):
+        """Tangkap SC_MAXIMIZE level Windows SEBELUM Qt maximize — Sesi 36.
+
+        Butang tajuk & dwiklik tajuk hantar WM_SYSCOMMAND/SC_MAXIMIZE
+        terus ke window procedure — TIDAK melalui QWidget.setWindowState
+        (sebab itu override setWindowState terlepas dan window jadi
+        ~100% native). Telan di sini + toggle serta-merta — tiada frame
+        penuh, tiada flashing.
+        """
+        try:
+            if eventType in (b"windows_generic_MSG", "windows_generic_MSG"):
+                msg = ctypes.wintypes.MSG.from_address(int(message))
+                if msg.message == 0x0112 and (msg.wParam & 0xFFF0) == 0xF030:
+                    self._toggle_maksimum()
+                    return True, 0
+        except Exception:
+            pass
+        return super().nativeEvent(eventType, message)
+
+    def changeEvent(self, e):
+        """Fallback: Aero snap (seret ke tepi/atas) luput dari nativeEvent.
+
+        Snap tidak hantar WM_SYSCOMMAND — Qt terus maximize. Pulihkan
+        serta-merta dalam event yang sama (tanpa singleShot -> tiada
+        flash frame penuh).
+        """
+        super().changeEvent(e)
+        if (e.type() == QEvent.WindowStateChange and self.isMaximized()
+                and not getattr(self, "_dalam_toggle", False)):
+            self._toggle_maksimum()
+
+    def _toggle_maksimum(self):
+        try:
+            g = QApplication.primaryScreen().availableGeometry()
+        except Exception:
+            return
+        if getattr(self, "_pada_max", False):
+            w, h = getattr(self, "_saiz_buka", (1280, 720))
+            self._pada_max = False
+        else:
+            w = max(900, int(g.width() * 0.85))
+            h = max(560, int(g.height() * 0.85))
+            self._pada_max = True
+        self._dalam_toggle = True
+        try:
+            # Jika Aero snap dah maximize native, keluar dulu dari state
+            # maximized — jika tidak setGeometry akan di-override penuh.
+            if self.isMaximized() or self.windowState() & Qt.WindowMaximized:
+                self.setWindowState(Qt.WindowNoState)
+            self.setGeometry(g.x() + (g.width() - w) // 2,
+                             g.y() + (g.height() - h) // 2, w, h)
+        finally:
+            self._dalam_toggle = False
+        # Laras saiz kad panel kanan — HANYA mod 85% (arahan 28 Sep:
+        # masa buka kekal asal). PagesHome ialah mixin pada diri self.
+        if hasattr(self, "_saiz_kad"):
+            self._saiz_kad(self._pada_max)
+        # Toast debug saiz (Sesi 36) DIBUANG — 28 Sep: saiz telah
+        # disahkan pengguna sepanjang Sesi 36–37 (buka/max/restore).
 
     # ── infrastruktur ────────────────────────────────────────────────
     @property
@@ -539,8 +605,20 @@ class PustakaApp(PagesKitab, PagesRak, PagesCarian, PagesDetail,
                 card.set_total(n)
         total = sum(v for v in tot.values() if isinstance(v, int))
         if total and hasattr(self, "_home_count"):
-            self._home_count.setText(
-                f"{total:,} hadis daripada {len(self.collections)} kitab")
+            # Item 2 (Sesi 36) — "kiraan serata": 4 statistik ganti
+            # "Memuatkan koleksi…" (mockup: 62,169 hadis · 9 kitab ·
+            # 4 bahasa · 63,930 darjat). Bahasa = Arab, Melayu,
+            # Indonesia, Inggeris (tetap ciri data).
+            n_darjat = self._kiraan_darjat()
+            teks = (f'<b style="color:{TEAL_LIGHT}">{total:,}</b> hadis'
+                    f' · <b style="color:{TEAL_LIGHT}">'
+                    f'{len(self.collections)}</b> kitab'
+                    f' · <b style="color:{TEAL_LIGHT}">4</b> bahasa')
+            if n_darjat:
+                teks += (f' · <b style="color:{TEAL_LIGHT}">'
+                         f'{n_darjat:,}</b> darjat')
+            self._home_count.setText(teks)
+            self._home_count.setTextFormat(Qt.RichText)
         # Pilihan Hari Ini (panel kanan, 25 Ogos): perlukan jumlah hadis
         # Bukhari sebagai modul indeks harian. Dipanggil sekali selepas
         # koleksi sampai; kaedah wujud hanya pada halaman utama baharu.
@@ -549,6 +627,18 @@ class PustakaApp(PagesKitab, PagesRak, PagesCarian, PagesDetail,
         # Kiraan pada jilid Rak Digital 9 Kitab (25 Ogos).
         if hasattr(self, "_rak_update_kiraan"):
             self._rak_update_kiraan()
+
+    def _kiraan_darjat(self):
+        """Item 2 (Sesi 36) — COUNT(*) jadual darjat; 0 jika talian/
+        DB tiada (bahagian darjat disorot dari baris kiraan)."""
+        conn = getattr(self.api, "conn", None)
+        if conn is None:
+            return 0
+        try:
+            return int(conn.execute(
+                "SELECT COUNT(*) FROM darjat").fetchone()[0])
+        except Exception:
+            return 0
 
     def _total_of(self, slug):
         for c in self.collections:

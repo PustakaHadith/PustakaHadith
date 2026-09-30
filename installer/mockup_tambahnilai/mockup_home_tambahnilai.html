@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup — Page Utama Apl + Tambah Nilai</title>
+<style>
+:root{
+  --bg:#0A1520; --panel:rgba(13,42,60,0.20); --panel-b:rgba(62,201,176,0.23);
+  --card:#10222F; --card-h:#16303F; --bord:#1D3A4A;
+  --teal:#3EC9B0; --tealL:#6FDCC8; --tealP:#123A38;
+  --txt:#EAF6F6; --sec:#9FBFCB; --muted:#7FA3B0; --faint:#6E93A1;
+  --gold:#E0B35C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:url('file:///D:/Pustaka%20Quran%20Hadis/Pustaka/PustakaHadith/ui/../../../img/bg-globe.webp') center/cover;opacity:.15;z-index:-2}
+body::after{content:'';position:fixed;inset:0;background:linear-gradient(180deg,rgba(10,21,32,.9),rgba(10,21,32,.6) 40%,rgba(10,21,32,.95));z-index:-1}
+
+/* annotation badge */
+.anno{
+  display:inline-block;background:linear-gradient(135deg,#E0B35C,#E0C88A);color:#0A1520;
+  font-size:.62rem;font-weight:800;letter-spacing:1px;padding:2px 8px;border-radius:999px;
+  vertical-align:middle;margin-left:6px;text-transform:uppercase;
+}
+.anno-row{position:relative}
+.new-hl{outline:2px dashed var(--gold);outline-offset:3px;border-radius:8px;position:relative}
+.new-hl::after{
+  content:'BARU';position:absolute;top:-9px;right:-6px;
+  background:var(--gold);color:#0A1520;font-size:.55rem;font-weight:800;
+  padding:2px 7px;border-radius:999px;letter-spacing:.8px;
+}
+
+/* window chrome */
+.win{max-width:1240px;margin:24px auto;background:#0C1A26;border:1px solid var(--bord);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.win-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:#0E1E2C;border-bottom:1px solid var(--bord)}
+.win-bar i{width:11px;height:11px;border-radius:50%;display:block}
+.win-bar i:nth-child(1){background:#E08A80}.win-bar i:nth-child(2){background:#E0B35C}.win-bar i:nth-child(3){background:#5CBF85}
+.win-bar .wtitle{margin-left:12px;font-size:.78rem;color:var(--faint)}
+
+/* nav */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--bord);background:rgba(12,26,38,.9)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .logo{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--teal),#2DB89A);display:flex;align-items:center;justify-content:center;font-weight:800;color:#06251F;font-size:.85rem}
+.brand b{color:var(--teal);font-weight:800}
+.brand span{color:var(--tealL);font-weight:300}
+.nav-links{display:flex;gap:18px;align-items:center}
+.nav-links a{color:var(--muted);font-size:.82rem;font-weight:600;text-decoration:none;padding:6px 12px;border-radius:8px}
+.nav-links a.active{background:var(--tealP);color:var(--teal);border:1px solid var(--panel-b)}
+.nav-links a:hover{color:var(--txt)}
+.gear{width:34px;height:34px;border-radius:50%;border:1px solid var(--bord);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1rem;cursor:pointer}
+.ver-badge{
+  font-size:.6rem;font-weight:800;color:var(--teal);background:var(--tealP);
+  border:1px solid var(--panel-b);padding:3px 9px;border-radius:999px;letter-spacing:.5px;
+}
+
+/* content */
+.content{display:grid;grid-template-columns:62fr 38fr;gap:16px;padding:20px 24px 28px;min-height:520px}
+.panel{background:var(--panel);border:1px solid var(--panel-b);border-radius:14px;padding:24px 26px 20px;position:relative}
+
+/* left panel */
+.eyebrow{font-size:.68rem;font-weight:700;color:var(--teal);letter-spacing:2px;margin-bottom:10px}
+.h1{font-size:1.75rem;font-weight:800;line-height:1.15;margin-bottom:8px}
+.count{font-size:.8rem;color:var(--muted);margin-bottom:14px}
+.count b{color:var(--tealL);font-weight:700}
+.search-row{display:flex;gap:8px;margin-bottom:14px}
+.search-in{
+  flex:1;background:var(--card);border:1px solid var(--bord);border-radius:10px;
+  padding:11px 14px;color:var(--faint);font-size:.85rem;
+}
+.search-in::after{content:''}
+.search-btn{
+  background:linear-gradient(135deg,var(--teal),#2DB89A);color:#06251F;border:none;
+  padding:0 20px;border-radius:10px;font-weight:700;font-size:.85rem;cursor:pointer;
+}
+/* NEW: recent searches */
+.recent{display:flex;gap:8px;align-items:center;margin:-6px 0 14px;flex-wrap:wrap}
+.recent .rlabel{font-size:.65rem;color:var(--faint);font-weight:600;letter-spacing:.5px}
+.rchip{
+  font-size:.7rem;color:var(--muted);background:var(--card);border:1px solid var(--bord);
+  padding:4px 10px;border-radius:999px;cursor:pointer;transition:.2s;
+}
+.rchip:hover{border-color:var(--teal);color:var(--teal)}
+.kbd{
+  display:inline-block;font-size:.6rem;font-family:monospace;color:var(--faint);
+  background:#0A1520;border:1px solid var(--bord);border-radius:4px;padding:1px 5px;margin-left:4px;
+}
+.sec-label{font-size:.68rem;font-weight:700;color:var(--teal);letter-spacing:1px;margin-bottom:8px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{
+  font-size:.75rem;font-weight:600;color:var(--sec);background:var(--card);
+  border:1px solid var(--bord);border-radius:8px;padding:7px 16px;cursor:pointer;transition:.2s;
+}
+.chip:hover{border-color:var(--teal);color:var(--teal)}
+.quick{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.qcard{
+  background:var(--card);border:1px solid var(--bord);border-left:3px solid var(--teal);
+  border-radius:8px;padding:12px 14px;cursor:pointer;transition:.2s;
+}
+.qcard:hover{background:var(--card-h);border-color:var(--teal)}
+.qcard b{display:block;font-size:.82rem;margin-bottom:3px}
+.qcard span{font-size:.7rem;color:var(--muted)}
+/* petikan */
+.petikan{background:var(--card);border:1px solid var(--bord);border-radius:10px;padding:14px 16px;position:relative}
+.petikan .plabel{font-size:.65rem;font-weight:700;color:var(--teal);letter-spacing:1px;margin-bottom:8px}
+.petikan .ptext{font-size:.88rem;font-weight:600;line-height:1.5;margin-bottom:6px}
+.petikan .psrc{font-size:.7rem;color:var(--faint)}
+.petikan-actions{position:absolute;top:12px;right:12px;display:flex;gap:6px}
+.pbtn{
+  width:28px;height:28px;border-radius:8px;background:var(--tealP);border:1px solid var(--panel-b);
+  color:var(--teal);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.75rem;transition:.2s;
+}
+.pbtn:hover{background:var(--teal);color:#06251F}
+.kaki{font-size:.68rem;color:var(--faint);margin-top:14px}
+
+/* right panel */
+.rhead{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.rhead .rsec{font-size:.68rem;font-weight:700;color:var(--teal);letter-spacing:1px}
+.rhead .rdate{font-size:.68rem;color:var(--faint)}
+.rhead .spacer{flex:1}
+.rtitle{font-size:1.05rem;font-weight:700;margin-bottom:12px}
+.side{
+  background:var(--card);border:1px solid var(--bord);border-radius:10px;
+  padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;
+}
+.side:hover{border-color:var(--teal);background:var(--card-h)}
+.badge{
+  width:44px;height:44px;border-radius:8px;background:var(--tealP);color:var(--teal);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;flex-shrink:0;
+}
+.side-info b{display:block;font-size:.85rem;margin-bottom:2px}
+.side-info span{font-size:.72rem;color:var(--muted)}
+.side .arrow{margin-left:auto;color:var(--muted);font-size:.9rem}
+/* pilihan */
+.pilihan{background:var(--card);border:1px solid var(--bord);border-radius:10px;padding:14px 16px;margin-top:auto;position:relative}
+.pilihan .plabel{font-size:.65rem;font-weight:700;color:var(--teal);letter-spacing:1px;margin-bottom:8px}
+.pilihan b{display:block;font-size:.88rem;margin-bottom:4px}
+.pilihan p{font-size:.75rem;color:var(--muted);line-height:1.5;margin-bottom:10px}
+.p-actions{display:flex;gap:8px;justify-content:flex-end;align-items:center}
+.p-teroka{
+  background:linear-gradient(135deg,var(--teal),#2DB89A);color:#06251F;border:none;
+  padding:7px 16px;border-radius:8px;font-weight:700;font-size:.78rem;cursor:pointer;
+}
+/* NEW: thumbs on pilihan */
+.p-thumb{
+  width:28px;height:28px;border-radius:8px;background:var(--tealP);border:1px solid var(--panel-b);
+  color:var(--teal);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.75rem;
+}
+.p-thumb:hover{background:var(--teal);color:#06251F}
+
+/* legend */
+.legend{
+  max-width:1240px;margin:0 auto 30px;padding:18px 24px;
+  background:rgba(16,34,47,.7);border:1px solid var(--bord);border-radius:12px;
+}
+.legend h3{font-size:.85rem;margin-bottom:10px;color:var(--teal)}
+.legend ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px 20px}
+.legend li{font-size:.75rem;color:var(--sec);display:flex;align-items:center;gap:7px}
+.legend .dot{width:10px;height:10px;border-radius:3px;background:var(--gold);flex-shrink:0}
+.legend .keep{width:10px;height:10px;border-radius:3px;background:var(--bord);flex-shrink:0}
+.note{text-align:center;color:var(--faint);font-size:.75rem;padding:0 20px 30px;max-width:1240px;margin:0 auto}
+.note b{color:var(--muted)}
+
+@media(max-width:900px){
+  .content{grid-template-columns:1fr}
+  .quick{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div style="max-width:1240px;margin:28px auto 16px;padding:0 16px;text-align:center">
+  <div style="display:inline-block;background:linear-gradient(135deg,#E0B35C,#E0C88A);color:#0A1520;font-size:.68rem;font-weight:800;letter-spacing:1.5px;padding:5px 14px;border-radius:999px;margin-bottom:12px">MOCKUP · PAGE UTAMA APL</div>
+  <h2 style="font-size:1.35rem;font-weight:800">Split Command Center + Cadangan Tambah Nilai</h2>
+  <p style="color:var(--muted);font-size:.85rem;margin-top:6px">Susunan &amp; features asal <b style="color:var(--sec)">KEKAL 100%</b> — hanya isi dalam ruang sedia ada</p>
+</div>
+
+<!-- legend -->
+<div class="legend">
+  <h3>Penanda</h3>
+  <ul>
+    <li><span class="dot"></span> <b style="color:#E0B35C">BARU</b> — cadangan tambah nilai (outline kuning)</li>
+    <li><span class="keep"></span> Asal — features &amp; susunan sedia ada, tiada perubahan</li>
+  </ul>
+</div>
+
+<!-- APP WINDOW MOCKUP -->
+<div class="win">
+  <div class="win-bar"><i></i><i></i><i></i><span class="wtitle">PustakaHadith — Halaman Utama</span></div>
+
+  <!-- nav -->
+  <div class="nav">
+    <div class="brand"><div class="logo">PH</div><div><b>Pustaka</b><span>Hadith</span></div></div>
+    <div class="nav-links">
+      <a href="#" class="active">Utama</a>
+      <a href="#">Pencarian</a>
+      <a href="#">Rak</a>
+      <a href="#">Tersimpan</a>
+      <span class="ver-badge new-hl" title="Badge versi — cadangan baru">v1.0.2 ✓</span>
+      <div class="gear">⚙</div>
+    </div>
+  </div>
+
+  <!-- content -->
+  <div class="content">
+
+    <!-- ===== PANEL KIRI ===== -->
+    <div class="panel">
+      <div class="eyebrow">ILMU · WARISAN · JARINGAN GLOBAL</div>
+      <div class="h1">Hadis Merentas Masa,<br>Hidup Dalam Era Digital.</div>
+
+      <!-- count — UPGRADED -->
+      <div class="count new-hl">
+        <b>62,169</b> hadis · <b>9</b> kitab · <b>4</b> bahasa · <b>63,930</b> darjat
+      </div>
+
+      <!-- search -->
+      <div class="search-row">
+        <div class="search-in">Cari hadis, topik atau nombor… (cth. bukhari 433, B433) <span class="kbd">Ctrl+G</span></div>
+        <button class="search-btn">Cari</button>
+      </div>
+
+      <!-- NEW: recent searches -->
+      <div class="recent new-hl">
+        <span class="rlabel">TERAKHIR:</span>
+        <span class="rchip">niat</span>
+        <span class="rchip">bukhari 433</span>
+        <span class="rchip">akhlak</span>
+      </div>
+
+      <!-- topics (KEKAL) -->
+      <div class="sec-label">CADANGAN TOPIK</div>
+      <div class="chips">
+        <span class="chip">Niat</span><span class="chip">Solat</span><span class="chip">Puasa</span>
+        <span class="chip">Adab</span><span class="chip">Keluarga</span>
+      </div>
+
+      <!-- quick cards (KEKAL) -->
+      <div class="quick">
+        <div class="qcard"><b>Jelajah 9 Kitab</b><span>Buka rak digital</span></div>
+        <div class="qcard"><b>Carian Makna</b><span>Temui hadis berkaitan</span></div>
+        <div class="qcard"><b>Sambung</b><span>Kembali membaca</span></div>
+      </div>
+
+      <!-- petikan (KEKAL + share buttons BARU) -->
+      <div class="petikan new-hl">
+        <div class="petikan-actions">
+          <div class="pbtn" title="Salin">📋</div>
+          <div class="pbtn" title="Kongsi">📤</div>
+        </div>
+        <div class="plabel">PETIKAN HARI INI</div>
+        <div class="ptext">"Sesiapa yang menempuh jalan untuk mencari ilmu, Allah mudahkan baginya jalan menuju syurga."</div>
+        <div class="psrc">— Sahih Muslim 2699</div>
+      </div>
+
+      <div class="kaki">9 kitab utama · carian kata &amp; makna (AI) · luar talian</div>
+    </div>
+
+    <!-- ===== PANEL KANAN ===== -->
+    <div class="panel" style="display:flex;flex-direction:column">
+      <div class="rhead">
+        <span class="rsec">HARI INI</span>
+        <span class="rdate">· 22 Sep 2026</span>
+        <span class="spacer"></span>
+        <!-- NEW: reload petikan -->
+        <div class="pbtn new-hl" title="Muat semula petikan" style="position:static">🔄</div>
+      </div>
+      <div class="rtitle">Sambung perjalanan ilmu</div>
+
+      <!-- terakhir dibaca (KEKAL) -->
+      <div class="side">
+        <div class="badge">433</div>
+        <div class="side-info"><b>Terakhir dibaca</b><span>Sahih Bukhari · Al-Iman</span></div>
+        <div class="arrow">→</div>
+      </div>
+
+      <!-- tersimpan (KEKAL) -->
+      <div class="side">
+        <div class="badge">12</div>
+        <div class="side-info"><b>Tersimpan</b><span>Rujukan pilihan anda</span></div>
+        <div class="arrow">→</div>
+      </div>
+
+      <!-- rawak (KEKAL) -->
+      <div class="side">
+        <div class="badge">⚄</div>
+        <div class="side-info"><b>Rawak</b><span>Terokai hadis rawak</span></div>
+        <div class="arrow">→</div>
+      </div>
+
+      <!-- empty-state hint (BARU) -->
+      <div style="font-size:.7rem;color:var(--faint);margin:2px 0 12px;padding-left:4px" class="new-hl">
+        💡 Cuba taip: <b style="color:var(--teal)">bukhari 433</b> atau <b style="color:var(--teal)">niat</b>
+      </div>
+
+      <!-- pilihan hari ini (KEKAL + thumbs BARU) -->
+      <div class="pilihan" style="flex:1;display:flex;flex-direction:column">
+        <div class="plabel">PILIHAN HARI INI</div>
+        <b>Sahih Bukhari No. 1</b>
+        <p>"Sesungguhnya setiap amalan bergantung pada niatnya…"</p>
+        <div class="p-actions">
+          <div class="p-thumb new-hl" title="Simpan">👍</div>
+          <div class="p-thumb new-hl" title="Kongsi">📤</div>
+          <button class="p-teroka">Teroka →</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- note -->
+<div class="note">
+  <b>Susunan asal kekal:</b> Panel Kiri (eyebrow → H1 → kiraan → carian → topik → jalan pantas → petikan → kaki) · Panel Kanan (HARI INI → terakhir → tersimpan → rawak → pilihan) — <b>tiada section dipindah/dibuang</b>.<br>
+  Outline kuning = 7 titik cadangan tambah nilai dalam ruang sedia ada.
+</div>
+
+</body>
+</html>

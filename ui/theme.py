@@ -443,6 +443,13 @@ QWidget {{ color: {TEXT_PRIMARY}; font-family: "{UI_FONT}"; }}
 
 QLabel            {{ background: transparent; border: none; }}
 QLabel#h1         {{ font-size: {s(30)}; font-weight: 700; color: {TEXT_PRIMARY}; }}
+/* Tajuk hero (page carian, mockup 04) — TIDAK bold, serif elegan
+   (arahan 28 Sep: "font jgn bold / pilih font lain"). Fallback: fon
+   serif bawaan Windows. */
+QLabel#heroTajuk  {{
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: {s(30)}; font-weight: 400; color: {TEXT_PRIMARY};
+}}
 QLabel#h2         {{ font-size: {s(21)}; font-weight: 700; color: {TEXT_PRIMARY}; }}
 QLabel#h3         {{ font-size: {s(15)}; font-weight: 600; color: {TEXT_PRIMARY}; }}
 QLabel#body       {{ font-size: {s(13)}; color: {TEXT_SECONDARY}; }}
@@ -450,6 +457,8 @@ QLabel#muted      {{ font-size: {s(12)}; color: {TEXT_MUTED}; }}
 QLabel#faint      {{ font-size: {s(11)}; color: {TEXT_FAINT}; }}
 QLabel#teal       {{ font-size: {s(13)}; color: {TEAL}; font-weight: 600; }}
 QLabel#quote      {{ font-size: {s(13)}; color: {TEXT_MUTED}; font-style: italic; }}
+/* Subtitle hero (mockup 04 — bawah tajuk "Pencarian Hadis") */
+QLabel#heroSub    {{ font-size: {s(14)}; color: {TEXT_MUTED}; }}
 
 /* Label nombor hadis — "No. 1" */
 QLabel#hadisNo {{
@@ -482,6 +491,17 @@ QLineEdit {{
 }}
 QLineEdit:focus {{ border: 1px solid {BORDER_FOCUS}; background-color: {CARD_BG_HOVER}; }}
 QLineEdit::placeholder {{ color: {TEXT_FAINT}; }}
+/* Kolum carian utama (SearchBar home + carian) — latar PUTIH tetap
+   dalam tema gelap/terang (arahan 28 Sep): membezakan medan taip
+   supaya pengguna serta-merta tahu di mana hendak mencari. */
+QLineEdit#cariKolum {{
+    background-color: #FFFFFF; color: #16222C;
+    border: 1px solid #AEB9C6;
+}}
+QLineEdit#cariKolum:focus {{
+    background-color: #FFFFFF; border: 1px solid {TEAL};
+}}
+QLineEdit#cariKolum::placeholder {{ color: #8B97A6; }}
 
 QPushButton {{
     background-color: {CARD_BG}; color: {TEXT_SECONDARY};

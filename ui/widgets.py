@@ -6,8 +6,8 @@ import os
 from datetime import datetime
 
 from PyQt5.QtCore import QEvent, QObject, QSize, Qt, QTimer, pyqtSignal
-from PyQt5.QtGui import (QColor, QFont, QIcon, QLinearGradient, QPainter,
-                         QPixmap, QTextOption)
+from PyQt5.QtGui import (QBrush, QColor, QFont, QIcon, QLinearGradient,
+                         QPainter, QPen, QPixmap, QTextOption)
 from PyQt5.QtWidgets import (
     QApplication, QFrame, QHBoxLayout, QLabel, QLineEdit, QMenu,
     QPushButton, QScrollArea, QSizePolicy, QTextBrowser, QVBoxLayout,
@@ -669,6 +669,12 @@ class FilterChips(QWidget):
 class Toast(QLabel):
     """Maklum balas ringkas — 'Disalin!' dsb."""
 
+    # Frame jam berputar — SERAGAM dgn indikator carian (pages_carian
+    # `_jam`); Sesi 37: toast "Membuka hadis rawak…" guna jam ini
+    # (ganti 🎲 buah dadu, permintaan pengguna).
+    JAM = ("🕐", "🕑", "🕒", "🕓", "🕔", "🕕",
+           "🕖", "🕗", "🕘", "🕙", "🕚", "🕛")
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setAlignment(Qt.AlignCenter)
@@ -678,11 +684,18 @@ class Toast(QLabel):
             f"padding: 10px 20px; font-size: 12px; font-weight: 600;"
         )
         self._hide_timer = None
+        self._spin_timer = None
+        self._spin_i = 0
+        self._spin_teks = None
         self.hide()
 
-    def show_msg(self, text: str, ms: int = 1800):
+    def show_msg(self, text: str, ms: int = 1800, spin: bool = False):
         """Paparkan toast. `ms=0` bermakna kekal sehingga `hide()` dipanggil
         (digunakan untuk maklum balas "Membuka…" semasa muatan async).
+
+        `spin=True` — jam berputar 🕐→🕛 (120ms) di hadapan teks, sama
+        gaya indikator carian; berhenti automatik bila toast ditutup/
+        diganti mesej lain.
 
         Timer auto-hide disimpan dan DIBATALKAN apabila toast baharu
         dipaparkan — jika tidak, timer lama (cth. "Disalin!" 1800ms)
@@ -692,7 +705,18 @@ class Toast(QLabel):
         if self._hide_timer is not None:
             self._hide_timer.stop()
             self._hide_timer = None
-        self.setText(text)
+        self._henti_spin()
+        if spin:
+            self._spin_teks = text
+            self._spin_i = 0
+            self.setText(f"{self.JAM[0]}  {text}")
+            self._spin_timer = QTimer(self)
+            self._spin_timer.setInterval(120)
+            self._spin_timer.timeout.connect(self._putar_toast)
+            self._spin_timer.start()
+        else:
+            self._spin_teks = None
+            self.setText(text)
         self.adjustSize()
         if self.parent():
             p = self.parent()
@@ -705,6 +729,22 @@ class Toast(QLabel):
             t.timeout.connect(self.hide)
             t.start(ms)
             self._hide_timer = t
+
+    def _putar_toast(self):
+        self._spin_i = (self._spin_i + 1) % len(self.JAM)
+        # Lebar frame jam sama rata — setText sahaja, tanpa adjustSize
+        # (supaya posisi/tengah kekal stabil semasa berputar).
+        self.setText(f"{self.JAM[self._spin_i]}  {self._spin_teks}")
+
+    def _henti_spin(self):
+        if self._spin_timer is not None:
+            self._spin_timer.stop()
+            self._spin_timer = None
+        self._spin_teks = None
+
+    def hide(self, *a):
+        self._henti_spin()
+        super().hide(*a)
 
 # ══════════════════════════════════════════════════════════════════════
 def gear_icon(size: int = 22, color: str = None) -> QIcon:
@@ -818,6 +858,9 @@ class IconActionButton(QPushButton):
                    '<path d="M19.5 5.5a9 9 0 0 1 0 13"/>'),
         # penanda buku — simpan
         "simpan": '<path d="M6 4h12a1 1 0 0 1 1 1v15l-7-4-7 4V5a1 1 0 0 1 1-1z"/>',
+        # anak panah bulat — muat semula (Item 5, Sesi 36)
+        "muat": ('<path d="M20 12a8 8 0 1 1-2.34-5.66"/>'
+                 '<path d="M20 4v4h-4"/>'),
     }
 
     def __init__(self, kind: str, tooltip: str, parent=None, size: int = 20,
@@ -1083,3 +1126,60 @@ class Collapsible(QWidget):
         if not self._terbuka:
             self.btn.setChecked(True)
             self._toggle()
+
+
+class TeksGrad(QLabel):
+    """Label teks gradian — gaya `.grad` landing ("Sekali Tayang.").
+
+    Baris kedua tajuk hero Utama ("Hidup Dalam Era Digital.") dilukis
+    dengan gradian teal→emas sudut 100deg persis landing page
+    (`linear-gradient(100deg,#6FDCC8,#3EC9B0 40%,#E0C88A 80%,#E0B35C)`),
+    tetapi diambil daripada palet tema SEMASA (import tempatan dalam
+    paintEvent — warna segar tanpa bina semula widget). Tema AQUA
+    (lalai) = 1:1 dengan landing; tema terang guna amber lebih gelap
+    supaya kontras ≥3:1 (teks besar). paintEvent sendiri (bukan super)
+    supaya warna QSS `#homeH1` tidak menenggelamkan gradian.
+    """
+
+    def sizeHint(self):
+        # QLabel memberi sizeHint SEDIKIT lebih kecil daripada
+        # horizontalAdvance teks (≈2px) — frasa yang muat tepat-tapat
+        # akan terbalut dan potong perkataan akhir. Bubuh +4px selamat.
+        fm = self.fontMetrics()
+        return QSize(fm.horizontalAdvance(self.text()) + 4, fm.height())
+
+    def paintEvent(self, e):
+        from ui.theme import (AMBER_TEXT, PAGE_BG, TEAL, TEAL_LIGHT)
+
+        p = QPainter(self)
+        p.setRenderHint(QPainter.Antialiasing)
+        p.setFont(self.font())
+
+        r = self.contentsRect()
+        # Paksi gradian ikut lebar TEKS (bukan label — label boleh
+        # diregang lebih luas oleh layout, emas tak sempat sampai).
+        pjg = min(r.width(),
+                  p.fontMetrics().horizontalAdvance(self.text()))
+        terang = QColor(PAGE_BG).lightness() > 128
+        # Landing: tengah #E0C88A (pucat) — ok atas latar gelap sahaja.
+        tengah = "#A87B24" if terang else "#E0C88A"
+
+        # Sudut 100deg CSS ≈ mendatar + 10° ke bawah (tan10° ≈ 0.176).
+        g = QLinearGradient(0, r.top(), pjg, r.top() + pjg * 0.176)
+        g.setColorAt(0.0, QColor(TEAL_LIGHT))
+        g.setColorAt(0.4, QColor(TEAL))
+        g.setColorAt(0.8, QColor(tengah))
+        g.setColorAt(1.0, QColor(AMBER_TEXT))
+
+        pen = QPen()
+        pen.setBrush(QBrush(g))
+        p.setPen(pen)
+        flags = int(self.alignment())
+        # Balut HANYA bila teks benar-benar melebihi lebar — tanpa
+        # semak ini, frasa yang muat tepat-tapat (advance == width)
+        # boleh terbalut pada ruang dan potong perkataan akhir.
+        if (self.wordWrap()
+                and p.fontMetrics().horizontalAdvance(self.text())
+                > r.width()):
+            flags |= Qt.TextWordWrap
+        p.drawText(r, flags, self.text())

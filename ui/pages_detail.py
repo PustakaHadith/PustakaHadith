@@ -1181,26 +1181,29 @@ class PagesDetail:
         return self._teks_baca_penuh("\n\n".join(bahagian))
 
     def _teks_baca_penuh(self, teks: str) -> str:
-        """Tambah baris 'Baca penuh' sunnah.com pada teks kongsi Ringkas.
+        """Tambah baris 'Info penuh' (laman utama) pada teks kongsi Ringkas.
 
-        Pautan ditambah bila padanan wujud (lihat `sunnah_url`); tanpa
-        padanan, teks pulang tanpa perubahan supaya mesej tidak rosak.
+        Arahan 28 Sep: tukar dari `Baca penuh: {url per-hadis}` →
+        **`Info penuh: https://pustakahadith.my`** (tanpa laluan hadis).
+        Baris ditambah bila padanan sumber wujud (lihat `sunnah_url`);
+        tanpa padanan, teks pulang tanpa perubahan supaya mesej tidak
+        rosak.
         """
         h = self._detail_h or {}
         url = sunnah_url(h.get("collection", ""), h.get("id"))
         if not url:
             return teks
-        return f"{teks}\n\nBaca penuh: {url}"
+        return f"{teks}\n\nInfo penuh: https://pustakahadith.my"
 
     def _buka_wa(self, teks: str) -> None:
         """Buka wa.me dengan teks kongsi -- had keselamatan `_HAD_WA`.
 
-        Pautan "Baca penuh" (jika ada) DIKEKALKAN walaupun mesej
+        Pautan "Info penuh" (jika ada) DIKEKALKAN walaupun mesej
         dipotong -- ia yang memberi akses teks penuh kepada penerima
         (Sesi 36; pepijat dijumpai semasa demo output sebenar: pautan
         terpotong oleh had, kini dikekalkan).
         """
-        kata = "Baca penuh: "
+        kata = "Info penuh: "
         badan, sep, link = teks.rpartition(f"\n\n{kata}")
         if not sep:
             badan, link = teks, ""
@@ -1224,8 +1227,19 @@ class PagesDetail:
         self._buka_wa(self._teks_kongsi_ringkas())
 
     def _kongsi_menu(self):
-        """Tunjuk menu pilihan platform kongsi (WhatsApp/Telegram/Facebook/Instagram)."""
-        teks = self._teks_kongsi_ringkas()
+        """Tunjuk menu platform kongsi (WhatsApp/Telegram/Facebook/Instagram).
+
+        Arahan 28 Sep — pratonton FB guna laman AKAR
+        `https://pustakahadith.my` (bukan laluan per-hadis) supaya
+        selari dgn baris teks 'Info penuh'.
+        """
+        self._bina_menu_kongsi(self._teks_kongsi_ringkas(),
+                               "https://pustakahadith.my")
+
+    def _bina_menu_kongsi(self, teks: str, url: str = ""):
+        """Menu platform kongsi — dikongsi dengan kad Petikan (Item 4,
+        Sesi 36): halaman hadis hantar teks ringkas + pautan akar
+        pustakahadith.my (arahan 28 Sep); Petikan guna url sama."""
         menu = QMenu(self)
         menu.setStyleSheet("""
             QMenu {
@@ -1246,7 +1260,7 @@ class PagesDetail:
         """)
         menu.addAction("WhatsApp", lambda: self._kongsi_whatsapp(teks))
         menu.addAction("Telegram", lambda: self._kongsi_telegram(teks))
-        menu.addAction("Facebook", lambda: self._kongsi_facebook(teks))
+        menu.addAction("Facebook", lambda: self._kongsi_facebook(teks, url))
         menu.addAction("Instagram (Salin Teks)", lambda: self._kongsi_instagram(teks))
         menu.exec_(QCursor.pos())
 
@@ -1261,10 +1275,10 @@ class PagesDetail:
         webbrowser.open(
             "https://t.me/share/url?text=" + QUrl.toPercentEncoding(pendek).data().decode())
 
-    def _kongsi_facebook(self, teks: str):
-        """Kongsi via Facebook."""
-        h = self._detail_h or {}
-        url = sunnah_url(h.get("collection", ""), h.get("id"))
+    def _kongsi_facebook(self, teks: str, url: str = ""):
+        """Kongsi via Facebook. `url` (pautan hadis/petikan) — jika
+        kosong, guna pustakahadith.my (Item 4: kongsi dari halaman
+        Utama tidak boleh rujuk `_detail_h` yang mungkin basi)."""
         share_url = url if url else "https://pustakahadith.my"
         webbrowser.open(
             "https://www.facebook.com/sharer/sharer.php?u=" +
@@ -1356,7 +1370,9 @@ class PagesDetail:
 
     def _random(self):
         self._random_toast_t0 = time.monotonic()
-        self.toast.show_msg("\U0001F3B2  Membuka hadis rawak…", 0)
+        # Sesi 37 — jam berputar 🕐→🕛 (ganti 🎲 buah dadu, arahan
+        # pengguna); serupa indikator halaman carian.
+        self.toast.show_msg("Membuka hadis rawak…", 0, spin=True)
         self._run(RandomWorker(self.api), self._on_random)
 
     def _on_random(self, h):

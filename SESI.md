@@ -1195,3 +1195,479 @@ AI search offline
 - `D:\Pustaka Quran Hadis\Pustaka\landing-page\index.html` — pautan muat turun
 - `D:\Pustaka Quran Hadis\Pustaka\landing-page\SESI.md` — Sesi 33 (landing)
 - `SESI.md` — rekod ini (Sesi 33)
+
+---
+
+## Sesi 34 (24 September 2026): Page Utama Apl — Cadangan Tambah Nilai (TIDAK COMMIT)
+
+### Nota awal sesi
+- Pengesahan: Cloudflare token lama **sudah direvoke** (2 hari lepas) — gugur dari TODO.
+- Pengesahan: Windows SDK 10.0.18362 **sudah dinyahpasang** — gugur dari TODO. (10.0.19041 memang tiada terpasang; hanya rujukan `MinVersion` dalam AppxManifest — bukan keperluan SDK.)
+- Mockup landing page A/B/C (`installer/mockup_home/`) asalnya untuk **apl** — pengguna tidak suka, mahu kekal features & susunan page utama.
+- Mockup 3-section landing page (`landing-page/mockup_tambah/`) sempat dibina tetapi **bukan fokus sesi** — perbincangan beralih ke apl.
+
+### Mockup Page Utama apl — `installer/mockup_tambahnilai/mockup_home_tambahnilai.html`
+Split Command Center sedia ada (panel kiri 62% + panel kanan 38%) — **susunan & features KEKAL 100%**. 7 titik cadangan ditanda outline kuning.
+
+### Keputusan pengguna (muktamad untuk implementasi)
+
+| # | Item | Keputusan |
+|---|---|---|
+| 1 | Badge versi `v1.0.2 ✓` di nav | ✅ Setuju |
+| 2 | Kiraan serata ganti "Memuatkan koleksi…" → `62,169 hadis · 9 kitab · 4 bahasa · 63,930 darjat` | ✅ Setuju |
+| 3 | Carian terakhir — 2–3 chip bawah search bar | ✅ Setuju |
+| 4 | Kongsi/salin pada kad Petikan | ✅ Setuju — **butang sama style dgn page lain, posisi kanan bawah** (ikut pola sedia ada pages_detail) |
+| 5 | Butang muat semula petikan 🔄 (panel kanan) | ✅ Setuju — kitar manual senarai PETIKAN tanpa tunggu esok |
+| 6 | Hint carian "Cuba taip: bukhari 433" bawah Rawak | ❓ Pengguna keliru — **tunggu keputusan**: buang atau reka semula |
+| 7 | Thumbs 👍/📤 pada Pilihan Hari Ini | ❌ **TIDAK PERLU** — terlalu banyak butang |
+| 8 | Tarikh Islam (Hijri) + tarikh Melayu/Masihi | ➕ **Item baharu** — papar kedua-dua tarikh |
+
+### Nota pengguna (MESTI ikut)
+1. **Jangan ubah lokasi menu-menu di header** — kekal lokasi asal.
+2. ~~Isu **saiz page → landscape**~~ — **SEMUA SELESAI, TUTUP KES (30 Sep)**; FINAL sejak Sesi 36 (26 Sep): buka `1280×720`, max toggle 85%, pengguna sah "ok. cantik" (lihat baris 1269–1298).
+3. **JANGAN COMMIT** sehingga pengguna setuju & finalise semua item page utama.
+4. Simpan todo untuk page utama.
+
+### Pending (bukan commit)
+- [ ] Implement 6 item diluluskan + item 8 (tarikh Hijri) — **tunggu finalise & arahan commit**
+- [x] Item 6 — **FINAL (30 Sep): BUANG** — hint mockup tak pernah dibina; placeholder search bar kekal
+- [x] Isu saiz page → landscape — **SEMUA SELESAI, TUTUP KES (30 Sep)** — FINAL Sesi 36
+- [x] Saiz tetingkap `ui/app_qt.py:147` — **SEMUA SELESAI, TUTUP KES (30 Sep)** — `1240×860` → `1280×720` (Sesi 36)
+- [ ] Commit fail tertunggak (`BINA.bat`, `_rebuild.bat`, `installer/mockup_home/`, `installer/mockup_tambahnilai/`, `installer/screenshots/`, `cloudflare.md`, dll.) — tunggu arahan
+- [ ] UIUX: loading states, tema terang/gelap, responsif 900×560, spesifikasi komponen
+- [ ] Uji manual: fon bundel, teks Arab, apl tanpa panel API
+
+### Fail berkaitan
+- `installer/mockup_tambahnilai/mockup_home_tambahnilai.html` — mockup page utama + tambah nilai
+- `installer/mockup_home/` — mockup A/B/C lama (ditolak pengguna)
+- `landing-page/mockup_tambah/mockup_3section.html` — mockup landing page (3 section; bukan fokus)
+- `ui/pages_home.py` — page utama sedia ada (target implementasi)
+- `ui/app_qt.py:147` — saiz tetingkap
+- `SESI.md` — rekod ini (Sesi 34) — **TIDAK COMMIT**
+
+---
+
+## Sesi 36 (26 September 2026): Kosmetik Page Utama — Persediaan & Implementasi
+
+### Peraturan sesi (reminder pengguna — MESTI IKUT)
+1. Segala perubahan mesti **direkod** dalam SESI.md; **final mesti dicatat**.
+2. **Versi HANYA berubah bila pengguna arah secara eksplisit** (pembetulan
+   pengguna Sesi 36) — `VERSI.py` kekal `1.0.3`, jangan bump sendiri.
+3. Sebelum **major change** — **backup** fail utama/fail yang akan diubah dulu (boleh restore).
+
+### Persediaan — SELESAI
+- [x] **Backup** → `installer/backup_v1.0.3/`:
+  - `pages_home.py` (17,474 B)
+  - `app_qt.py` (26,455 B)
+- [x] **Versi dikemas** → `VERSI.py`: `1.0.2` → `1.0.3`
+- [x] Mockup rujukan dibuka: `installer/mockup_tambahnilai/mockup_home_tambahnilai.html`
+- [x] `SESI.md` — rekod ini **DIKEMASKINI penuh (FINAL)** — **TIDAK COMMIT** sehingga arahan
+
+### Implementasi — IKUT ARAHAN SATU PER SATU
+
+#### C. Isu Terbuka — SAIZ — **FINAL ✅ (26 Sep, disahkan pengguna: "ok. cantik" 85%)**
+Keputusan pengguna (FINAL, semasa sesi):
+- **Buka** → `1280×720` (~70% skrin, 16:9) — `_saiz_muat_skrin()`
+- **Maximize toggle** → **85%** skrin (bukan 90% — diturunkan semasa sesi,
+  pengguna sahkan 85% OK) ↔ balik saiz buka; **bukan fullscreen**
+- **Minimize** → OK
+- Kandungan ikut membesar/mengecil — tiada ruang kosong bawah
+- Implementasi akhir:
+  - `nativeEvent()` intercept `WM_SYSCOMMAND (0x0112)` + `SC_MAXIMIZE (0xF030)`
+    SEBELUM Qt maximize (tangkap klik dwi-tajuk/Aero snap yang lalu luar
+    `setWindowState`) → panggil `_toggle_maksimum()`
+  - `changeEvent()` fallback (Aero snap) dengan guard `_dalam_toggle`
+  - `_toggle_maksimum()`: guard `_dalam_toggle`, `setWindowState(Qt.WindowNoState)`
+    dulu (bersihkan state maximized) → `setGeometry` 85% / `_saiz_buka`
+- ⚠️ **BELUM:** toast debug `_toggle_maksimum` (app_qt.py ~baris 218) —
+  buang dalam kemas-akhir sesi; **ruang mati bila max 85%** — isu berasingan
+  (lihat senarai "Perlu difikir" di bawah)
+
+### Insiden encoding (SESI 36 — selesai)
+- Arahan PowerShell `-replace` + `Set-Content` membaca `app_qt.py` sebagai ANSI → 10 baris mojibake (`â€"`).
+- **Pemulihan:** restore dari `installer/backup_v1.0.3/app_qt.py` (backup sebelum sesi — BERFUNGSI seperti dirancang), apply semula semua edit, sahkan 0 mojibake.
+- Pengajaran: JANGAN sunting fail UTF-8 guna PowerShell string-replace — guna Edit tool sahaja.
+
+Perubahan (saiz) — semua FINAL ✅:
+- [x] `ui/app_qt.py` — import `ctypes`/`ctypes.wintypes` + `QEvent`; `_saiz_muat_skrin()`: default `1240,860` → `1280,720` + simpan `_saiz_buka` (auto-klamp kekal: min 900×560, g−80)
+- [x] `ui/app_qt.py` — `nativeEvent()` intercept `WM_SYSCOMMAND`+`SC_MAXIMIZE` → `_toggle_maksimum()` (85% ↔ saiz buka, `setWindowState(WindowNoState)` dulu → `setGeometry` — tiada flashing); guard `_dalam_toggle`
+- [x] `ui/app_qt.py` — `changeEvent()` fallback Aero snap (skip bila `_dalam_toggle`)
+- [x] `ui/pages_home.py` — `bl.addWidget(baris, 1)` ganti `addWidget + addStretch` — panel isi tinggi viewport
+- [x] `ui/pages_home.py` — `v.addStretch(1)` selepas kad Petikan (panel kiri) — kaki kekal bawah
+- [x] Pengesahan visual pengguna: **85% OK** ("ok. cantik")
+
+#### Kosmetik Page Utama — SEMUA FINAL ✅ (26 Sep 2026)
+
+- [x] **Item 1 — Badge versi: TIADA PERUBAHAN.** v{VERSI} kekal di lokasi
+  asal (header sebelah brand, app_qt.py ~baris 362). Peraturan baharu:
+  versi **kekal 1.0.3**, hanya berubah bila pengguna arah.
+- [x] **Item 2 — Kiraan serata FINAL.** `_on_collections` (app_qt.py):
+  HTML `<b style="color:TEAL_LIGHT">62,169</b> hadis · 9 kitab · 4 bahasa ·
+  63,930 darjat` (RichText); helper `_kiraan_darjat()` = `COUNT(*)` jadual
+  `darjat`, 0 jika tiada DB (segmen dijatuhkan); placeholder "Memuatkan
+  koleksi…" kekal semasa muat. Uji lulus offscreen.
+- [x] **Item 3 — Carian terakhir FINAL.** Baris `TERAKHIR:` + cip bawah
+  search bar Utama (pages_home): `_catat_carian` (kunci `carian_akhir`,
+  maks 5), `_kemas_carian_akhir`, `_laksana_carian`; dedup `_norm_carian`
+  (lowercase+buang tanda baca) + `_jarak_edit` + `_cari_sama` (norm tepat
+  ATAU jarak edit ≤1 utk len≥6 — `hijrah/`=`Hijrah?`, `hijarah` ≈
+  `hijrah`; `solat`≠`silat`). **Rekod HANYA bila berjaya** (hasil bukan
+  kosong halaman 1 / lompat lulus sahkan); digit tulen tak direkod;
+  sejarah lama pengguna dibersihkan. Uji dedup lulus.
+- [x] **Item 4 — Kongsi/salin Petikan FINAL.** Label → **"PETIKAN RINGKAS
+  HARI INI"**; butang `IconActionButton` **seragam dgn detail hadis**
+  (kongsi + salin, ikon uniform); `_salin_petikan` = `"{teks}" — {sumber}`;
+  `_kongsi_petikan` sertakan baris **`Baca penuh: https://pustakahadith.my`**
+  (keputusan B); refactor pages_detail: `_bina_menu_kongsi(teks, url)` +
+  `_kongsi_facebook(teks, url="")` fallback pustakahadith.my.
+- [x] **Item 5 — Muat semula petikan 🔄 FINAL.** Ikon `"muat"` baharu
+  (widgets ICON); butang `size=16` hujung baris HARI INI (panel kanan);
+  `_muat_semula_petikan` cycle tuple PETIKAN (7 entri unik, wrap OK);
+  `_petikan_idx` kekal ikut tema, reset ikut hari bila restart. Kitaran
+  petikan deterministik (`tm_yday % 7`).
+- [x] **Item 8 — Tarikh Hijri + Masihi FINAL.** Modul baharu
+  `utils/tarikh.py` (algoritma tabular Kuwaiti — sah: 11 Mac 2024 =
+  1 Ramadan 1445H; nota: ±1 hari dari Umm al-Qura). Kunci
+  `tarikh_paparan` + combo Tetapan → PAPARAN → **"Paparan tarikh"**:
+  Masihi `26 Sep 2026` (lalai) / Melayu `26 September 2026` / Hijri
+  `13 Rabiulakhir 1448H` / Hijri+Melayu. Label HARI INI segar
+  serta-merta (`_teks_tarikh` + `_kemas_tarikh`). Uji 4 format lulus.
+- [x] **Gradian H1 (bonus, permintaan pengguna selepas Item 8) FINAL.**
+  Gaya `.grad` landing ("Sekali Tayang."):
+  `linear-gradient(100deg,#6FDCC8,#3EC9B0 40%,#E0C88A 80%,#E0B35C)`
+  → widget baharu `TeksGrad(QLabel)` (widgets.py) lukis teks gradian
+  sendiri; baris 2 H1 **"Hidup Dalam Era Digital."** gradian, baris 1
+  kekal solid. Warna ikut palet tema semasa (AQUA = 1:1 dgn landing;
+  tema terang: teal gelap → amber #A87B24, kontras ≥3:1). PAKSI gradian
+  ikut lebar **teks** (bukan label). Dua pepijat dikesan ujian piksel &
+  dibetulkan: (a) sizeHint QLabel 2px kecil → frasa terbalut+potong
+  (fix: `sizeHint()` sendiri + guard balut ikut advance sebenar);
+  (b) label diregang 460px vs teks 373px → emas tak sampai hujung.
+  Uji piksel AQUA + light lulus (teal kiri → emas kanan).
+
+- [x] **Item 6 — FINAL (30 Sep): BUANG / ditutup** — tiada perubahan kod
+- [x] Isu landscape / saiz tetingkap — **SEMUA SELESAI, TUTUP KES (30 Sep)** — FINAL Sesi 36 (26 Sep)
+
+### Perlu difikir — SENARAI PENGUSUL (26 Sep, "kita henti di sini")
+Kemungkinan pertindihan/duplikasi & isu susulan — **belum ditentukan,
+tunggu arahan sesi akan datang:**
+1. Perkara berulang/'duplicate' — **Sambung** vs **Terakhir dibaca**
+   → ✅ **pengguna sahkan: DUPLIKASI** (perlu digabung/buang)
+2. **Jelajah kitab** vs **Jelajah 9 kitab** kad → ✅ **DUPLIKASI** (sah)
+3. **Pencarian** vs **Carian makna** kad → ✅ **DUPLIKASI** (sah)
+4. **Simpan sejarah** vs **Tersimpan** kad → ✅ **DUPLIKASI** (sah)
+5. Tambah kad di bawah kad 'Tersimpan' — **'Sejarah bacaan'**
+6. Isu kelopongan bila max 85%
+   (Nota: 1–4 disahkan duplikasi pengguna 26 Sep — keputusan SELESAI/
+   gabung/buang mana-mana **tunggu arahan**; 5–6 belum.)
+
+### TERTUNDA (bila sambung sesi)
+- Buang toast debug `_toggle_maksimum` (app_qt.py ~baris 218)
+- Kemas kini versi bina 1.0.2 → 1.0.3: `BINA.bat`,
+  `installer/PustakaHadith.iss`, `msix/AppxManifest.xml` (tunggu arahan)
+- ⚠️ NOTA: AI semantik carian 'silat' → kluster 'solat' (min_score 0.6,
+  mod `kedua`) — **BIAR DULU**, jangan ubah tanpa arahan
+- ~~Item 6~~ (FINAL 30 Sep: BUANG) + ruang mati 85% — laras kad
+  `_saiz_kad` mode 85% dah laksana (29 Sep)
+- Landing: ~~nav 3 section~~ (pengguna: selesai) · verify live ✅ automatik
+  (30 Sep) · **Biodata Penerbit — tunggu input**
+- **App TIDAK di-commit** sehingga pengguna finalise
+
+### Fail berkaitan (Sesi 36)
+- `installer/backup_v1.0.3/` — backup sebelum sunting (pages_home.py, app_qt.py)
+- `installer/mockup_tambahnilai/mockup_home_tambahnilai.html` — rujukan visual
+- `landing-page/index.html:113` — `.grad` rujukan gradian H1
+- `VERSI.py` — versi kekal 1.0.3 (JANGAN bump tanpa arahan)
+- `utils/tarikh.py` — MODUL BAHARU konversi Hijri (Item 8)
+- `ui/pages_home.py` — petikan, cip TERAKHIR, H1 gradian, tarikh
+- `ui/app_qt.py` — saiz tetingkap + kiraan serata
+- `ui/widgets.py` — `TeksGrad`, ikon `"muat"` (Item 5)
+- `ui/settings_panel.py` — combo "Paparan tarikh" (Item 8)
+- `ui/pages_carian.py` / `pages_detail.py` — rekod cip berjaya + refactor kongsi
+- `SESI.md` — rekod ini (**TIDAK COMMIT** sehingga arahan)
+
+---
+
+## Sesi 37 (28 September 2026): Kad "Sejarah bacaan" (senarai pengusul #5)
+
+Peraturan sesi Sesi 36 KEKAL (rekod FINAL setiap perubahan; versi hanya
+ubah bila diarah — `VERSI.py` kekal **1.0.3**; backup sebelum major
+change; app **TIDAK COMMIT**).
+
+### Konteks
+Dari senarai "Perlu difikir" Sesi 36: pengguna sahkan #1–4 = **duplikasi**
+(keputusan gabung/buang tunggu arahan) dan arah **implement #5 dulu**:
+kad 'Sejarah bacaan' di bawah kad 'Tersimpan'.
+
+### Implementasi — **FINAL ✅ (28 Sep 2026)**
+- [x] `ui/pages_home.py` — kad sisi baharu **"Sejarah bacaan"**
+  (`_kad_sisi`) diselit **di bawah kad Tersimpan, atas kad Rawak**:
+  badge = `len(read_history())`, sub "Semua hadis yang pernah anda baca"
+- [x] Tindakan `_buka_sejarah_bacaan()` — tetap `_saved_tab = "baca"`
+  (+ reset `_saved_filter_slug`) **SEBELUM** `go("saved")` supaya
+  `_render_saved()` bina shell dgn chip **"Telah dibaca"** aktif
+  (halaman Simpan & Sejarah → tab senarai penuh sejarah)
+- [x] `_kemas_kiraan_home()` diperluas — segarkan badge **kedua-dua**
+  kad (Tersimpan + Sejarah bacaan) setiap kali kembali ke Utama
+  (failsync baca/buang dari tempat lain)
+- [x] Dokstring KANAN (modul pages_home) dikemas: `… → Tersimpan →
+  Sejarah bacaan (Item 5) → Rawak → …`
+- [x] Uji offscreen lulus: kad wujud, badge = 15 = `read_history()`,
+  klik → halaman `saved` + `saved_tab == "baca"`, badge segar selepas
+  `_kemas_kiraan_home()`; `py_compile` lulus; app dilancarkan semula
+
+### Fail berkaitan (Sesi 37)
+- `ui/pages_home.py` — kad + `_buka_sejarah_bacaan` + badge refresh
+- `ui/pages_tersimpan.py` — rujukan mekanisme tab `_saved_tab` / `_pilih_tab_simpan`
+- `SESI.md` — rekod ini (**TIDAK COMMIT**)
+
+### Duplikasi #1–#4 — **KEPUTUSAN PENGUNGA + IMPLEMENTASI FINAL ✅ (28 Sep)**
+(Sebelum ini insiden salah faham — "cadangkan" dilaksana tanpa arahan;
+dipulihkan, kemudian pengguna buat keputusan sebenar di bawah.)
+
+- **#1 Sambung vs Terakhir dibaca → BUANG "Sambung" ✅**
+  - [x] Kad "Sambung" dibuang dari row jalan pantas (panel kiri)
+  - [x] Kaedah `_sambung_baca()` dibuang (tiada rujukan lain)
+- **#2 Jelajah Kitab (nav) vs Jelajah 9 Kitab (kad) → KEKAL dua-dua ✅**
+  - [x] Tiada perubahan (keputusan: bukan duplikasi perlu dibuang)
+- **#3 Pencarian (nav) vs Carian Makna (kad) → KEKAL dua-dua + BEZAKAN ✅**
+  - [x] `_pergi_carian()` kini panggil `_set_mod_carian("makna")` dulu —
+    kad buka carian **mod AI (makna)**; nav kekal ikut mod terakhir
+  - [x] Pepijat ditemui semasa ujian: `_kemas_mod_carian` ranap
+    `AttributeError: _mod_chips` bila panel carian belum dibina →
+    ditambah guard `getattr(self, "_mod_chips", None) or {}`
+    (pages_carian.py) — setting tetap disimpan, chips baca bila bina
+  - [x] Insiden: crash ujian tinggalkan `carian_mod=makna` dalam
+    user_settings.json → **dipulihkan ke `kata`** (nilai asal)
+- **#4 Simpan & Sejarah (nav) vs kad Tersimpan → sama dgn #1: BUANG kad ✅**
+  - [x] Kad "Tersimpan" (+ badge bookmark) dibuang dari panel kanan —
+    nav "Simpan & Sejarah" kekal; kad "Sejarah bacaan" (Item 5) kekal
+  - [x] `_kemas_kiraan_home()` kini refresh badge Sejarah bacaan sahaja
+  - Nota: kiraan bookmark tak lagi nampak di Utama (hanya dgn nav/halaman)
+- [x] Susunan panel kanan kini: Terakhir dibaca → Sejarah bacaan →
+  Rawak → (regang) → Pilihan Hari Ini
+- [x] `py_compile` lulus; uji offscreen lulus (kad tiada/mod
+  makna/badge 15); app dilancarkan semula
+- ⏳ **Row kiri kini 2 kad** (Jelajah 9 Kitab · Carian Makna) —
+  pengganti "Sambung" supaya tak nampak pelik: **cadangan menunggu**
+
+### Pengganti kad "Sambung" — **C1 "Lompat Nombor" FINAL ✅ (28 Sep)**
+Keputusan pengguna: **C1** (kad baharu, fungsi unik — bukan pindah/biar kosong).
+- [x] `ui/pages_home.py` — kad ketiga row jalan pantas:
+  **"Lompat Nombor"** / sub "Ke hadis tepat · Ctrl+G" →
+  `_focus_lompat()` (pages_kitab — buka kitab aktif jika belum, skrol +
+  fokus kotak "Lompat No. hadis", select-all). Fungsi sedia ada Ctrl+G,
+  **tiada duplikasi** (nav/panel kanan/search bar tak buat ini)
+- [x] Row kini: **Jelajah 9 Kitab · Carian Makna · Lompat Nombor** (3 kad)
+- [x] `py_compile` + uji offscreen lulus (3 judul kad wujud;
+  `_focus_lompat()` → halaman kitab + `_kitab_go_box` wujud)
+- [x] App dilancarkan semula; cadangan A/B tidak lagi diperlukan
+
+### Toast hadis rawak: 🎲 → jam berputar — **FINAL ✅ (28 Sep)**
+Arahan: pop-up "Membuka hadis rawak…" tukar buah dadu dgn jam macam
+indikator carian (Sesi 31).
+- [x] `ui/widgets.py` — `Toast` dapat mod `spin=True` dgn frame
+  `JAM = 🕐…🕛` (120ms, seragam `pages_carian._jam`); berhenti automatik
+  bila toast `hide()`/ganti mesej; `show_msg(text, ms, spin=False)`
+  — parameter baharu opsyen, semua pemanggil lama selamat
+- [x] `ui/pages_detail.py::_random` — `show_msg("Membuka hadis rawak…",
+  0, spin=True)`; 🎲 dibuang (hanya komen rujukan tinggal)
+- [x] `py_compile` + uji offscreen lulus (🕐→🕒 selepas 400ms,
+  hide berhenti, mesej biasa tanpa spin OK); app dilancarkan semula
+
+### C1 "Lompat Nombor" — keputusan: **KEKAL + toast panduan — FINAL ✅ (28 Sep)**
+Arahan: kekal kad, tambah toast panduan bila klik (cadangan diterima).
+- [x] `ui/pages_home.py` — callback kad tukar `_focus_lompat` →
+  `_lompat_nombor_pantas()`: kekal fungsi lama (buka kitab aktif +
+  fokus kotak lompat) + `toast.show_msg("Taip nombor hadis → Enter",
+  2500)`
+- [x] `py_compile` + uji offscreen lulus (page=kitab, toast tepat);
+  app dilancarkan semula; SESI.md direkod
+- Keputusan muktamad C1 — **tutup item pending ini**
+
+### Kolum carian latar PUTIH + subtitle hero carian — **FINAL ✅ (28 Sep)**
+Arahan: (1) background kolum carian → putih (membezakan medan taip);
+(2) page Pencarian Hadis — bawah tajuk, tambah tulisan mockup
+`04_search_first_minimal.png` ("Cari dengan perkataan, maksud atau
+nombor hadis.") — teks yg mendorong pengguna.
+- [x] `ui/pages.py::SearchBar` — `input.setObjectName("cariKolum")`
+  (dikongsi home + page carian)
+- [x] `ui/theme.py` — QSS `QLineEdit#cariKolum` (putih #FFFFFF, teks
+  gelap #16222C, border #AEB9C6, focus border TEAL, placeholder
+  #8B97A6) + `QLabel#heroSub` (14px TEXT_MUTED)
+- [x] `ui/pages.py::Hero` — susunan ubah: subtitle (heroSub) kini
+  TERUS bawah tajuk (dulu jatuh bawah bar carian) — Hero hanya dipanggil
+  page carian, selamat
+- [x] `ui/pages_carian.py` — `Hero(..., subtitle="Cari dengan
+  perkataan, maksud atau nombor hadis.")`
+- [x] SUSULAN 1 — tajuk hero carian tukar ikut arahan: **"Apa yang anda
+  ingin cari hari ini?"** (dari "Pencarian Hadis"); `ui/pages.py::Hero`
+  tajuk diberi `setWordWrap(True)` (tajuk panjang tak terpotong dgn
+  kunci tinggi Hero); susunan disahkan: tajuk → subtitle → input
+- [x] SUSULAN 2 — fon tajuk hero: "font jgn bold / pilih font lain" →
+  `ui/pages.py::Hero` tajuk tukar objectName `h1` → **`heroTajuk`**;
+  `ui/theme.py` QSS `#heroTajuk` = **Georgia serif, font-weight 400**
+  (30px, fallback Times New Roman) — gaya mockup 04; `#h1` global
+  (tajuk Tetapan) kekal bold, tiada rujukan program pada "h1" dlm Hero
+- [x] Uji offscreen lulus: input home+carian `cariKolum`; subtitle atas
+  input (y 98 < 131); render pixel input = RGB(255,255,255) putih
+- [x] `py_compile` semua; app dilancarkan semula; SESI.md direkod
+- NOTA: QLineEdit lain (kitab `_kitab_carian`, rak, go-box) TIDAK
+  diubah — belum ada arahan
+
+### Laras saiz kad panel kanan — kurangkan lopong max 85% — **FINAL ✅ (28 Sep)**
+Arahan: "laras sedikit saiz kad supaya dapat kurangkan sikit lopong"
+(isu pengusul #6 — void antara kad "Rawak" & "PILIHAN HARI INI" yg
+meregang bila maximize 85%).
+- [x] `ui/pages_home.py::_kad_sisi` — padding (14,12,14,12)→(16,16,16,16),
+  badge 46→**52px**, kol spacing 2→4 (kad 76→**86px**)
+- [x] `ui/pages_home.py::_panel_kanan` — spacing 10→**14**, margins
+  (24,24,24,20)→(24,26,24,24); kad Pilihan margins→(16,16,16,16),
+  spacing 4→6
+- [x] Ukur (script sementara, dipadam): lopong
+  - buka 1280×720: **113→47px** ✓ hampir tertutup
+  - max85% 1632×918: **265→199px** (-66px)
+- Screenshot 1632×918 disemak — kad lebih tinggi, void berkurang
+- **PENGESAHAN + PELARASAN pengguna**: masa buka semua saiz **KEKAL
+  ASAL (jgn ubah)** — larasan kad HANYA pada mode maximize 85%. Kod
+  dijadikan KONDISIONAL:
+  - `ui/pages_home.py::_saiz_kad(besar)` — tukar padding/badge/spacing
+    panel kanan (asal: kad 76px, spacing10 → besar: kad 86px, spacing14)
+  - `ui/app_qt.py::_toggle_maksimum` panggil `self._saiz_kad(self._pada_max)`
+    (PagesHome = mixin pada self); `_panel_kanan` (rebuild tema) +
+    `_render_sejarah` (kad Terakhir baharu) terap semula ikut flag
+    `_kad_besar`; rujukan disimpan `_kanan_lo`, `_kad_rawak`
+  - Uji lulus (script dipadam): buka = **76px/113px (asal tepat)**;
+    85% = 86px/**199px**; render_sejarah kekal besar; balik buka =
+    76px/113px; wiring `_toggle_maksimum` disahkan
+- isu #6 ditutup dgn larasan kondisional ini
+- `py_compile` ✓; app dilancarkan semula; SESI.md direkod
+
+### Baris pautan kongsi: 'Baca penuh' → **'Info penuh'** — **FINAL ✅ (28 Sep)**
+Arahan: output kongsi (cth. Bukhari 555) `Baca penuh:
+https://pustakahadith.my/bukhari/555` → tukar `Info penuh:
+https://pustakahadith.my` (akar sahaja, tanpa laluan hadis).
+- [x] `ui/pages_detail.py::_teks_baca_penuh` — teks baris →
+  `Info penuh: https://pustakahadith.my` (syarat sumber/kitab kekal:
+  ahmad & darimi tetap tanpa baris)
+- [x] `ui/pages_detail.py::_buka_wa` — `kata` potong WA tukar →
+  `"Info penuh: "` (pautan tetap dikekalkan bila mesej dipotong)
+- [x] `ui/pages_home.py::_kongsi_petikan` — baris → `Info penuh:
+  https://pustakahadith.my`
+- [x] Uji offscreen lulus: teks ringkas tamat dgn baris baru, tiada
+  `/bukhari/555`; rpartition WA OK; petikan OK; ahmad tanpa baris
+- [x] Ujian dikemas: `semak.py` (check "Info penuh:"), `tests/
+  uji_bandingan.py` (expect `Info penuh: https://pustakahadith.my`)
+- [x] `py_compile` semua; app dilancarkan semula; SESI.md direkod
+- SUSULAN (pengesahan "ya") — pratonton FB ikut sekali:
+  `ui/pages_detail.py::_kongsi_menu` kini hantar
+  `"https://pustakahadith.my"` (akar) kepada `_bina_menu_kongsi`
+  (dulu `sunnah_url` per-hadis); uji offscreen: FB url = akar ✓,
+  teks tamat 'Info penuh: https://pustakahadith.my' ✓. `sunnah_url()`
+  (laluan per-hadis) kekal dlm `_teks_baca_penuh` sbg syarat
+  "kitab ada sumber sahaja" — tiada lagi pemanggil URL laluan.
+
+### Toast debug `_toggle_maksimum` DIBUANG — **FINAL ✅ (28 Sep)**
+- [x] `ui/app_qt.py::_toggle_maksimum` — blok `toast.show_msg(label…)`
+  + pemboleh ubah `label`/`pct` dibuang (nota lama: "buang selepas
+  pengesahan pengguna" — saiz disahkan sepanjang Sesi 36–37)
+- [x] Uji offscreen: toggle bolak-balik `_pada_max` OK, TIADA toast
+  selepas toggle, `label` hilang dlm src; `py_compile` ✓; app dilancarkan
+  semula
+
+### Popup "Makluman" — buang skroll + setting ON/OFF — **FINAL ✅ (28 Sep)**
+Arahan: (1) popup permulaan 'Makluman' — buang arrow skroll, saiz
+ruangan cukup sehingga ayat habis; (2) tambah setting ON/OFF popup.
+- [x] `ui/disclaimer.py::DisclaimerDialog` — **PENYELARASAN susulan:
+  jangan lebarkan → LEBAR KEKAL ASAL 540; tinggi asal 600 +
+  2%~5% (dikunci `max(620, min(630, kandungan))` → 620, +3%)**;
+  `QTextEdit` dipaku lebar dlm layout + `ScrollBarAlwaysOff` (V+H);
+  teks muat penuh dlm viewport (doc+pad 463 ≤ 464, baki OK) — ayat
+  habis tanpa skroll; fallback: jika teks melebihi ruang, skroll Hidup
+  semula (langkah selamat supaya teks tetap terbaca)
+- [x] `ui/disclaimer.py::_boleh_papar()` — baca kunci
+  **`makluman_papar`** (lalai True) drp user_settings.json;
+  `papar_disclaimer()` pulang False jika OFF (main.py tiada ubahan)
+- [x] `ui/settings_panel.py` — **BUTANG ON/OFF** (pill checkable
+  64×26, teks ON/OFF, teal bila ON) untuk **"Makluman permulaan"**
+  dlm seksyen PAPARAN (bwh "Paparan tarikh"); klik → `app._set(
+  "makluman_papar", ...)`; (susulan arahan: tukar drp combo → butang)
+- [x] Uji offscreen: 1 butang ON/OFF; klik ON→OFF (setting False) →
+  ON semula (True); label wujud; `py_compile` ✓; app dilancarkan semula
+- Uji awal gate `_boleh_papar`: off→False / on→True / kosong→True ✓;
+  dialog 540×612 saat itu — diselaraskan kpd 620 dlm entri atas
+
+### Masih tertunggu (utk esok — 30 Sep)
+- ~~C1~~ · ~~kelopongan 85%~~ · ~~toast debug~~ · ~~kolum putih~~ ·
+  ~~hero carian~~ · ~~Info penuh~~ · ~~Makluman ON/OFF~~ — SEMUA SELESAI
+- **Versi bina 1.0.2→1.0.3** (BINA.bat, installer .iss, msix) — PERLU
+  ARAHAN eksplisit pengguna (peraturan versi)
+- ~~**Item 6 hint carian**~~ — **FINAL 30 Sep: BUANG** (lihat entri
+  Sesi 38)
+- **Landing**: ~~nav~~ (selesai) · ~~verify live~~ ✅ automatik (30 Sep,
+  entri Sesi 36 landing SESI.md) · **Biodata — tunggu input**
+- NOTA AI 'silat'→kluster 'solat' — **BIAR DULU**
+- **App TIDAK di-commit** sehingga pengguna finalise
+
+### Status akhir sesi (29 Sep — pengguna rehat; sambung esok)
+Sesi 37b (28–29 Sep) — SEMUA FINAL, entri di atas:
+- Toast rawak 🎲→jam berputar · C1 kekal + toast panduan · kolum carian
+  putih · hero carian (tajuk serif "Apa yang anda ingin cari hari ini?"
+  + subtitle mockup 04) · laras kad KONDISIONAL mode 85% (buka kekal
+  asal) · baris kongsi **"Info penuh: https://pustakahadith.my"** (WA/
+  FB/petikan) · toast debug `_toggle_maksimum` dibuang · popup Makluman
+  (lebar asal 540, tinggi +3%=620, tanpa skroll) + setting **butang
+  ON/OFF** "Makluman permulaan"
+- Semua fail DISIMPAN; source app OK (`main.py`); tiada debug script
+  tertinggal; settings uji dipulihkan
+- **Rebuild `dist\PustakaHadith` (PyInstaller) SIAP** atas arahan
+  "update apl untuk saya uji": `EXIT=0`, exe 29 Sep 2026 20:59
+  (77.9 MB), COLLECT selesai — semua perubahan Sesi 37b dalam exe
+- Esok: versi bina (perlu arahan), hint carian, landing, `silat` BIAR
+  DULU, app TIDAK di-commit
+
+---
+
+## Sesi 38 — 30 Sep 2026
+
+### Item 6 hint carian — FINAL (keputusan pengguna)
+- **Keputusan: BUANG / tutup item** — pengguna pilih cadangan saya
+  (30 Sep), tiada perubahan kod.
+- Fakta semakan: hint "Cuba taip: bukhari 433" **hanya wujud dalam
+  mockup** (`installer/mockup_tambahnilai/mockup_home_tambahnilai.html:293`,
+  kelas `new-hl`) — **tidak pernah dibina dalam apl**. Search bar
+  home/carian sudah ada placeholder setara: *"Cari hadis, topik atau
+  nombor. (cth. bukhari 433, B433)"* (`pages_home.py:193`,
+  `pages_carian.py:103`).
+- Senarai pending di atas ditanda selesai (4 lokasi).
+
+### Versi bina 1.0.2 → 1.0.3 — FINAL ✅ (30 Sep, arahan eksplisit pengguna)
+Backup dulu: `installer/backup_v1.0.3_build_30sep/` (5 fail).
+
+| Fail | Perubahan |
+|---|---|
+| `BINA.bat:4,7` | title/echo `v1.0.2` → `v1.0.3` |
+| `installer/PustakaHadith.iss:4,9` | `AppVersion=1.0.3`; `OutputBaseFilename=PustakaHadith-Setup-1.0.3-x64` |
+| `msix/AppxManifest.xml:12` | `Version="1.0.3.0"` |
+| `installer/build_msix.ps1:38,72` | Identity `Version="1.0.3.0"`; nama fail `PustakaHadith_1.0.3.0_x64.msix` |
+| `VERSI.py` | sudah `1.0.3` — TIADA perubahan |
+
+- Semakan: `1.0.2` tinggal hanya dalam backup + docstring contoh
+  `core/update_checker.py:20` (bukan versi sebenar)
+- Belum dibina: Setup Inno (`Output/PustakaHadith-Setup-1.0.3-x64.exe`)
+  & MSIX 1.0.3.0 — tunggu arahan sama ada nak compile sekarang
+- Landing changelog masih "v1.0.2" — kemas kini bila release 1.0.3 (arahan)
+
+### Setup Inno 1.0.3 — SIAP ✅ (30 Sep, arahan "1")
+- **PENTING — punca sync:** `.iss` ambil fail dari
+  `PustakaQH_dist/PustakaHadith` yang masih **build lama 12 Sep**;
+  build baru (29 Sep, Sesi 37b) hanya dalam `dist/`.
+- `PustakaQH_dist/PustakaHadith` → rename jadi
+  **`PustakaHadith_lama_1.0.2`** (backup) → robocopy `dist/` masuk
+  (6,133 fail, 2.1 GB, exit 1 = OK, exe 29 Sep 20:59 disahkan)
+- Compile: `D:\tools\InnoSetup\ISCC.exe installer\PustakaHadith.iss`
+  → **`EXIT=0`**, 1,120.6 saat
+- Hasil: **`Output/PustakaHadith-Setup-1.0.3-x64.exe`** —
+  820,547,022 B (~820.5 MB), 30 Sep 2026 10:57
+- Belum: MSIX 1.0.3.0, portable 7z 1.0.3, GitHub Release, landing
+  changelog — tunggu arahan

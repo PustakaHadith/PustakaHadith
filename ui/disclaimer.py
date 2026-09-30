@@ -78,8 +78,11 @@ class DisclaimerDialog(QDialog):
     def __init__(self):
         super().__init__(None)
         self.setWindowTitle("PustakaHadith — Makluman")
-        self.setMinimumSize(520, 580)
-        self.resize(540, 600)
+        # Saiz: LEBAR KEKAL ASAL 540 (arahan 28 Sep: jangan lebarkan);
+        # tinggi dikunci dlm julat 2%~5% drp asal 600 → 612..630.
+        self._lebar = 540
+        self.setMinimumSize(self._lebar, 320)
+        self.resize(self._lebar, 600)
         self.setWindowFlags(
             Qt.Dialog | Qt.WindowStaysOnTopHint
         )
@@ -130,6 +133,12 @@ class DisclaimerDialog(QDialog):
             f"font-size: 13px; line-height: 1.5; padding: 8px; color: {FG};"
             f"background: transparent; border: none;"
         )
+        # Buang arrow skroll (arahan 28 Sep) — lebar dipaku dulu supaya
+        # pengiraan tinggi document dlm `_bina` ikut bungkusan sebenar.
+        teks.setFixedWidth(self._lebar - lo.contentsMargins().left()
+                           - lo.contentsMargins().right())
+        teks.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        teks.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         lo.addWidget(teks, 1)
 
         btn = QPushButton("Faham")
@@ -144,17 +153,47 @@ class DisclaimerDialog(QDialog):
         btn.clicked.connect(self._terima)
         lo.addWidget(btn)
 
+        # Tinggi dialog: kekal asal 600 + 2%~5% (612..630 — arahan
+        # 28 Sep: "panjangkan sedikit") supaya ayat habis tanpa skroll.
+        # Ruang selamat: jika teks melebihi ruang (skrin kecil), skroll
+        # Hidup semula supaya teks tetap terbaca sampai habis.
+        teks.document().adjustSize()
+        doc_h = int(teks.document().size().height()) + 20  # padding 8*2
+        tetap = (tajuk.sizeHint().height() + lo.spacing() * 2
+                 + btn.sizeHint().height()
+                 + lo.contentsMargins().top()
+                 + lo.contentsMargins().bottom())
+        tinggi = max(620, min(630, tetap + doc_h))
+        h_teks = tinggi - tetap
+        if doc_h > h_teks:
+            teks.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        teks.setFixedHeight(h_teks)
+        self.setFixedSize(self._lebar, tinggi)
+
     def _terima(self):
         _simpan_dibaca()
         self.accept()
 
 
-def papar_disclaimer(parent=None) -> bool:
-    """Papar dialog setiap kali larian. True jika dialog dipapar.
+def _boleh_papar() -> bool:
+    """True jika tetapan 'makluman_papar' benarkan popup (lalai True)."""
+    try:
+        with open(_SETTINGS, encoding="utf-8") as f:
+            return bool((json.load(f) or {}).get("makluman_papar", True))
+    except Exception:
+        return True
 
+
+def papar_disclaimer(parent=None) -> bool:
+    """Papar dialog setiap kali larian (ikut tetapan). True jika dipapar.
+
+    Arahan 28 Sep — user boleh ON/OFF popup "Makluman" drp Tetapan
+    (settings_panel, kunci `makluman_papar`; lalai True = papar).
     parent=None supaya dialog berdiri sendiri di tengah skrin.
     exec_() blok sehingga pengguna klik 'Faham'.
     """
+    if not _boleh_papar():
+        return False
     dlg = DisclaimerDialog()
     dlg.exec_()
     return True

@@ -1,0 +1,45 @@
+JUSTIFICATION FOR runFullTrust RESTRICTED CAPABILITY
+=====================================================
+App Name: Pustaka Hadith
+Package Name: PUSTAKAHADITH.PustakaHadith
+Capability: runFullTrust
+
+Why do you need the runFullTrust capability, and how will it be used in your product?
+-------------------------------------------------------------------------------------
+
+Pustaka Hadith is a desktop Quranic reference application built with Python (PyQt5) and packaged as MSIX via Desktop Bridge. It requires runFullTrust for the following critical reasons:
+
+
+1. NATIVE PYTHON RUNTIME EXECUTION
+-----------------------------------
+The app bundles a complete Python 3.14 runtime with PyInstaller. Python's native interpreter and DLLs require full trust permissions to execute. Without runFullTrust, the packaged executable cannot start at all.
+
+
+2. SQLITE DATABASE WITH FTS5 ENGINE
+------------------------------------
+The app stores 62,169 hadith records in a local SQLite database with FTS5 (Full-Text Search) extension for fast keyword queries. SQLite's C library requires direct file system access to read/write the database at %LOCALAPPDATA%\PustakaHadith\hadis.db.
+
+
+3. FAISS NATIVE C++ LIBRARIES FOR AI SEARCH
+---------------------------------------------
+The app uses Facebook's FAISS (compiled with C++/BLAS) for vector-based semantic search. This requires loading native .pyd/.dll files that call Windows system APIs directly for memory management and CPU optimization.
+
+
+4. ML MODEL INFERENCE (sentence-transformers)
+----------------------------------------------
+The app loads a 460MB multilingual AI model (intfloat/multilingual-e5-small) for semantic search. PyTorch and sentence-transformers require direct access to system memory and CPU instructions (AVX2/SSE) that are restricted in sandboxed environments.
+
+
+5. WHY UWP/SANDBOXED ALTERNATIVES ARE NOT VIABLE
+--------------------------------------------------
+- UWP sandbox cannot load native Python runtime or C++ extensions (FAISS, PyTorch)
+- Rewriting as native C#/UWP would require 6+ months of development and lose compatibility with existing Python ecosystem
+- Web-based solution would eliminate the app's core value proposition: full offline access without internet dependency
+
+
+6. SECURITY ASSURANCE
+----------------------
+- App only accesses its own data folder (%LOCALAPPDATA%\PustakaHadith)
+- No access to user documents, camera, microphone, or personal files
+- No background services or startup persistence
+- No other restricted capabilities requested

@@ -56,8 +56,15 @@ class Hero(QFrame):
         # Side widget (cth. ilustrasi buku) di sebelah kiri tajuk dalam
         # banner. Tanpa `side`, tingkah laku lama (berpusat) kekal.
         t = QLabel(title)
-        t.setObjectName("h1")
+        # heroTajuk (bukan h1) — arahan: tajuk hero JANGAN bold, tukar
+        # fon lain (serif gaya mockup 04). QSS #h1 kekal utk lokasi lain
+        # (cth. tajuk Tetapan). `#heroTajuk` dlm theme.py.
+        t.setObjectName("heroTajuk")
         t.setAlignment(Qt.AlignCenter)
+        # Wrap — tajuk panjang (mockup 04: "Apa yang anda ingin cari
+        # hari ini?") mesti membungkus, bukan terpotong pada tetingkap
+        # sempit.
+        t.setWordWrap(True)
 
         if side is not None:
             baris = QWidget()
@@ -79,13 +86,21 @@ class Hero(QFrame):
                 teks.addWidget(q)
             if subtitle:
                 s = QLabel(subtitle)
-                s.setObjectName("faint")
+                s.setObjectName("heroSub")
                 s.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
                 teks.addWidget(s)
             rl.addLayout(teks)
             lo.addWidget(baris)
         else:
             lo.addWidget(t)
+            # Subtitle (mockup 04) TERUS bawah tajuk — bukan bawah bar
+            # carian; mendorong pengguna taip perkataan/maksud/nombor.
+            if subtitle:
+                s = QLabel(subtitle)
+                s.setObjectName("heroSub")
+                s.setAlignment(Qt.AlignCenter)
+                s.setWordWrap(True)
+                lo.addWidget(s)
             if quote:
                 q = QLabel(quote)
                 q.setObjectName("quote")
@@ -96,12 +111,6 @@ class Hero(QFrame):
         self.body = QVBoxLayout()
         self.body.setSpacing(12)
         lo.addLayout(self.body)
-
-        if side is None and subtitle:
-            s = QLabel(subtitle)
-            s.setObjectName("faint")
-            s.setAlignment(Qt.AlignCenter)
-            lo.addWidget(s)
 
     def resizeEvent(self, e):
         """Kunci tinggi mengikut LEBAR semasa, setiap kali ia berubah.
@@ -147,6 +156,10 @@ class SearchBar(QWidget):
         rl.setSpacing(8)
 
         self.input = QLineEdit()
+        # Kolum carian berlatar PUTIH (arahan 28 Sep) — medan taip serta-
+        # merta menonjol dgn latar halaman gelap/terang, pengguna tahu
+        # di mana nak menaip. QSS `QLineEdit#cariKolum` dlm theme.py.
+        self.input.setObjectName("cariKolum")
         self.input.setPlaceholderText(placeholder)
         self.input.setMinimumHeight(40)
         self.input.setClearButtonEnabled(True)

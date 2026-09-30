@@ -90,7 +90,12 @@ class PagesCarian:
         bl.setContentsMargins(0, 0, 0, 16)
         bl.setSpacing(0)
 
-        hero = Hero("Pencarian Hadis", compact=True)
+        # Tajuk + subtitle mockup 04_search_first_minimal (arahan 28 Sep):
+        # "Apa yang anda ingin cari hari ini?" + terus bawah tajuk,
+        # mendorong pengguna menaip perkataan/maksud/nombor.
+        hero = Hero("Apa yang anda ingin cari hari ini?", compact=True,
+                    subtitle="Cari dengan perkataan, maksud atau "
+                             "nombor hadis.")
         # Aqua Glass: hero telus supaya glob tembus (hanya teks atas glob).
         if ada_latar_imej():
             hero.setStyleSheet(
@@ -201,9 +206,14 @@ class PagesCarian:
         return row
 
     def _kemas_mod_carian(self):
-        """Tanda butang aktif ikut `carian_mod` (unpolish/polish = segar)."""
+        """Tanda butang aktif ikut `carian_mod` (unpolish/polish = segar).
+
+        Guard `getattr`: kad "Carian Makna" (Utama, Sesi 37) boleh tukar
+        mod SEBELUM panel carian dibina — `_mod_chips` belum wujud lagi;
+        setting tetap disimpan dan chips dibina baca nilai kemudian.
+        """
         aktif = self.settings.get("carian_mod", "kedua")
-        for v, b in self._mod_chips.items():
+        for v, b in (getattr(self, "_mod_chips", None) or {}).items():
             b.setObjectName("filterChip_active" if v == aktif else "filterChip")
             b.style().unpolish(b)
             b.style().polish(b)
@@ -654,6 +664,9 @@ class PagesCarian:
         r = self._sahkan_lompat(slug, n, nama)
         if r is None:
             return
+        # Item 3 (Sesi 36) — lompat lulus sahkan = berjaya -> rekod cip
+        # "TERAKHIR" dengan konteks kitab eksplisit ('bukhari 433').
+        self._catat_carian(f"{slug} {n}")
         self._detail_from = dari
         # Toast "Membuka…" kekal sehingga butiran dibuka (open_by_ref
         # menyembunyikannya) — muatan hadis asynchronous, jadi tempoh
@@ -896,4 +909,10 @@ class PagesCarian:
         self._carian_bina_bab_rows()
         self._carian_kemas_info(self._search_q, len(self._carian_hasil))
         self._carian_render_panel(self._kw_meta, self._sem_res, self._kw_res)
+
+        # Item 3 (Sesi 36) — cip "TERAKHIR": rekod HANYA carian
+        # BERJAYA (ada hasil) pada halaman 1. Carian salah/ kosong
+        # (cth. 'hhijrah') tidak direkod.
+        if self._carian_hasil and self._search_page == 1:
+            self._catat_carian(self._search_q)
         self._laras_tinggi(self._search_sa)

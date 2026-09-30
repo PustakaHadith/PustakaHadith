@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<title>Pilihan C — Kitab + Carta</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',sans-serif; background:#0B2545; color:#fff; padding:20px; }
+.container { max-width:1200px; margin:0 auto; }
+.section-title { font-size:11px; letter-spacing:2px; color:#3EC9B0; margin-bottom:12px; text-transform:uppercase; }
+.kitab-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:24px; }
+.kitab-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px; cursor:pointer; transition:all 0.2s; position:relative; overflow:hidden; }
+.kitab-card:hover { border-color:#3EC9B0; transform:translateY(-2px); }
+.kitab-card .name { font-size:15px; font-weight:600; margin-bottom:4px; }
+.kitab-card .count { font-size:12px; color:#3EC9B0; }
+.kitab-card .bar { position:absolute; bottom:0; left:0; height:3px; background:#3EC9B0; border-radius:0 0 12px 12px; }
+.chart-section { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+.chart-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:20px; }
+.chart-card h4 { font-size:14px; color:#3EC9B0; margin-bottom:16px; }
+.bar-chart { display:flex; align-items:flex-end; gap:8px; height:100px; }
+.bar-item { flex:1; display:flex; flex-direction:column; align-items:center; }
+.bar-item .bar { width:100%; background:rgba(62,201,176,0.3); border-radius:4px 4px 0 0; }
+.bar-item .bar.active { background:#3EC9B0; }
+.bar-item .label { font-size:10px; color:#8ba4b8; margin-top:6px; text-align:center; }
+.pie-chart { width:100px; height:100px; border-radius:50%; background:conic-gradient(#3EC9B0 0% 35%, #2a9d8f 35% 55%, #1a7a6a 55% 75%, #0d4a40 75% 100%); margin:0 auto 12px; position:relative; }
+.pie-chart::after { content:''; position:absolute; top:25px; left:25px; width:50px; height:50px; background:#0B2545; border-radius:50%; }
+.pie-legend { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+.pie-legend span { font-size:11px; color:#8ba4b8; display:flex; align-items:center; gap:4px; }
+.pie-legend span::before { content:''; width:8px; height:8px; border-radius:2px; }
+.pie-legend .l1::before { background:#3EC9B0; }
+.pie-legend .l2::before { background:#2a9d8f; }
+.pie-legend .l3::before { background:#1a7a6a; }
+.pie-legend .l4::before { background:#0d4a40; }
+.tips-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.tip-box { background:rgba(62,201,176,0.06); border-radius:12px; padding:14px; text-align:center; }
+.tip-box .icon { font-size:20px; margin-bottom:6px; }
+.tip-box .text { font-size:12px; color:#c0d0e0; }
+</style>
+</head>
+<body>
+<div class="container">
+<h2 style="margin-bottom:20px; font-size:22px;">Pilihan C — Kitab + Carta Kemajuan</h2>
+
+<div class="section-title">9 Kitab Utama</div>
+<div class="kitab-grid">
+  <div class="kitab-card">
+    <div class="name">Sahih al-Bukhari</div>
+    <div class="count">7,563 hadis</div>
+    <div class="bar" style="width:100%"></div>
+  </div>
+  <div class="kitab-card">
+    <div class="name">Sahih Muslim</div>
+    <div class="count">7,500 hadis</div>
+    <div class="bar" style="width:99%"></div>
+  </div>
+  <div class="kitab-card">
+    <div class="name">Sunan Abu Daud</div>
+    <div class="count">5,274 hadis</div>
+    <div class="bar" style="width:70%"></div>
+  </div>
+  <div class="kitab-card">
+    <div class="name">Sunan al-Tirmizi</div>
+    <div class="count">3,956 hadis</div>
+    <div class="bar" style="width:52%"></div>
+  </div>
+  <div class="kitab-card">
+    <div class="name">Sunan Ibn Majah</div>
+    <div class="count">4,341 hadis</div>
+    <div class="bar" style="width:57%"></div>
+  </div>
+  <div class="kitab-card">
+    <div class="name">Musnad Ahmad</div>
+    <div class="count">16,656 hadis</div>
+    <div class="bar" style="width:100%"></div>
+  </div>
+  <div class="kitab-card">
+    <div class="name">Sunan al-Darimi</div>
+    <div class="count">3,561 hadis</div>
+    <div class="bar" style="width:47%"></div>
+  </div>
+  <div class="kitab-card">
+    <div class="name">Muwatta Malik</div>
+    <div class="count">1,832 hadis</div>
+    <div class="bar" style="width:24%"></div>
+  </div>
+  <div class="kitab-card">
+    <div class="name">Sunan al-Nasa'i</div>
+    <div class="count">5,761 hadis</div>
+    <div class="bar" style="width:76%"></div>
+  </div>
+</div>
+
+<div class="section-title">Kemajuan Anda</div>
+<div class="chart-section">
+  <div class="chart-card">
+    <h4> Hadis Dibaca Mengikut Kitab</h4>
+    <div class="bar-chart">
+      <div class="bar-item"><div class="bar active" style="height:80%"></div><div class="label">Bukhari</div></div>
+      <div class="bar-item"><div class="bar active" style="height:45%"></div><div class="label">Muslim</div></div>
+      <div class="bar-item"><div class="bar active" style="height:30%"></div><div class="label">Abu Daud</div></div>
+      <div class="bar-item"><div class="bar" style="height:15%"></div><div class="label">Tirmizi</div></div>
+      <div class="bar-item"><div class="bar" style="height:10%"></div><div class="label">Ibn Majah</div></div>
+      <div class="bar-item"><div class="bar" style="height:5%"></div><div class="label">Ahmad</div></div>
+      <div class="bar-item"><div class="bar" style="height:0%"></div><div class="label">Darimi</div></div>
+      <div class="bar-item"><div class="bar" style="height:0%"></div><div class="label">Malik</div></div>
+      <div class="bar-item"><div class="bar" style="height:0%"></div><div class="label">Nasa'i</div></div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <h4> Tabiat Membaca</h4>
+    <div class="pie-chart"></div>
+    <div class="pie-legend">
+      <span class="l1">Pagi (35%)</span>
+      <span class="l2">Tengah hari (20%)</span>
+      <span class="l3">Petang (20%)</span>
+      <span class="l4">Malam (25%)</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-title">Tips Harian</div>
+<div class="tips-row">
+  <div class="tip-box"><div class="icon"> </div><div class="text">Baca sekurang-kurangnya 1 hadis setiap hari</div></div>
+  <div class="tip-box"><div class="icon"> </div><div class="text">Gunakan carian makna AI untuk memahami konteks</div></div>
+  <div class="tip-box"><div class="icon"> </div><div class="text">Simpan hadis penting untuk rujukan masa hadapan</div></div>
+</div>
+
+</div>
+</body>
+</html>

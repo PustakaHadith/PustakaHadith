@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<title>Pilihan A — Statistik + Aktiviti</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',sans-serif; background:#0B2545; color:#fff; padding:20px; }
+.container { max-width:1200px; margin:0 auto; }
+.section-title { font-size:11px; letter-spacing:2px; color:#3EC9B0; margin-bottom:12px; text-transform:uppercase; }
+.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px; }
+.stat-card { background:rgba(62,201,176,0.08); border:1px solid rgba(62,201,176,0.2); border-radius:12px; padding:20px; text-align:center; }
+.stat-card .number { font-size:32px; font-weight:700; color:#3EC9B0; }
+.stat-card .label { font-size:13px; color:#8ba4b8; margin-top:4px; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+.info-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px; }
+.info-card h4 { font-size:14px; color:#3EC9B0; margin-bottom:8px; }
+.info-card p { font-size:13px; color:#8ba4b8; line-height:1.5; }
+.recent-list { list-style:none; }
+.recent-list li { padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:13px; color:#c0d0e0; display:flex; justify-content:space-between; }
+.recent-list li span { color:#3EC9B0; font-size:12px; }
+.badge { display:inline-block; background:#3EC9B0; color:#0B2545; font-size:10px; font-weight:600; padding:2px 8px; border-radius:10px; margin-left:8px; }
+</style>
+</head>
+<body>
+<div class="container">
+<h2 style="margin-bottom:20px; font-size:22px;">Pilihan A — Statistik + Aktiviti Terkini</h2>
+
+<div class="section-title">Statistik Anda</div>
+<div class="grid-3">
+  <div class="stat-card">
+    <div class="number">127</div>
+    <div class="label">Hadis Dibaca</div>
+  </div>
+  <div class="stat-card">
+    <div class="number">23</div>
+    <div class="label">Disimpan</div>
+  </div>
+  <div class="stat-card">
+    <div class="number">8</div>
+    <div class="label">Kitab Dilawati</div>
+  </div>
+</div>
+
+<div class="section-title">Aktiviti Terkini</div>
+<div class="grid-2">
+  <div class="info-card">
+    <h4> Teruskan Membaca</h4>
+    <ul class="recent-list">
+      <li>Sahih al-Bukhari — Bab الصلاة <span>5 min lalu</span></li>
+      <li>Sahih Muslim — Bab الزكاة <span>2 jam lalu</span></li>
+      <li>Sunan al-Tirmizi — Bab الصيام <span>Kemarin</span></li>
+    </ul>
+  </div>
+  <div class="info-card">
+    <h4> Topik Popular</h4>
+    <div style="display:flex; flex-wrap:wrap; gap:8px;">
+      <span style="background:rgba(62,201,176,0.15); padding:6px 14px; border-radius:20px; font-size:13px;">Solat</span>
+      <span style="background:rgba(62,201,176,0.15); padding:6px 14px; border-radius:20px; font-size:13px;">Puasa</span>
+      <span style="background:rgba(62,201,176,0.15); padding:6px 14px; border-radius:20px; font-size:13px;">Zakat</span>
+      <span style="background:rgba(62,201,176,0.15); padding:6px 14px; border-radius:20px; font-size:13px;">Haji</span>
+      <span style="background:rgba(62,201,176,0.15); padding:6px 14px; border-radius:20px; font-size:13px;">Nikah</span>
+      <span style="background:rgba(62,201,176,0.15); padding:6px 14px; border-radius:20px; font-size:13px;">Muamalat</span>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

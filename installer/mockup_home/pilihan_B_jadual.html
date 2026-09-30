@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<title>Pilihan B — Jadual Harian + Motivasi</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',sans-serif; background:#0B2545; color:#fff; padding:20px; }
+.container { max-width:1200px; margin:0 auto; }
+.section-title { font-size:11px; letter-spacing:2px; color:#3EC9B0; margin-bottom:12px; text-transform:uppercase; }
+.daily-card { background:linear-gradient(135deg, rgba(62,201,176,0.12), rgba(62,201,176,0.03)); border:1px solid rgba(62,201,176,0.25); border-radius:16px; padding:24px; margin-bottom:24px; position:relative; overflow:hidden; }
+.daily-card::before { content:''; position:absolute; top:-30px; right:-30px; width:120px; height:120px; background:rgba(62,201,176,0.08); border-radius:50%; }
+.daily-card .label { font-size:11px; color:#3EC9B0; letter-spacing:1px; margin-bottom:8px; }
+.daily-card .quote { font-size:18px; font-weight:600; line-height:1.6; margin-bottom:8px; }
+.daily-card .source { font-size:13px; color:#8ba4b8; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+.challenge-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:20px; }
+.challenge-card h4 { font-size:14px; color:#3EC9B0; margin-bottom:12px; }
+.progress-bar { height:8px; background:rgba(255,255,255,0.1); border-radius:4px; margin-bottom:8px; }
+.progress-fill { height:100%; background:#3EC9B0; border-radius:4px; }
+.progress-text { font-size:12px; color:#8ba4b8; }
+.tip-card { background:rgba(62,201,176,0.06); border-left:3px solid #3EC9B0; border-radius:0 12px 12px 0; padding:16px; margin-bottom:24px; }
+.tip-card .icon { font-size:20px; margin-bottom:8px; }
+.tip-card p { font-size:14px; color:#c0d0e0; line-height:1.6; }
+.quick-links { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.quick-link { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px; text-align:center; cursor:pointer; transition:all 0.2s; }
+.quick-link:hover { border-color:#3EC9B0; background:rgba(62,201,176,0.08); }
+.quick-link .icon { font-size:24px; margin-bottom:8px; }
+.quick-link .text { font-size:13px; color:#c0d0e0; }
+</style>
+</head>
+<body>
+<div class="container">
+<h2 style="margin-bottom:20px; font-size:22px;">Pilihan B — Hadis Hari Ini + Cabaran</h2>
+
+<div class="section-title">Hadis Hari Ini</div>
+<div class="daily-card">
+  <div class="label">PETIKAN HARI INI</div>
+  <div class="quote">"Sesungguhnya setiap amalan bergantung pada niat, dan sesungguhnya setiap orang akan mendapat apa yang dia niatkan."</div>
+  <div class="source">— Sahih al-Bukhari, Hadis No. 1</div>
+</div>
+
+<div class="section-title">Cabaran Mingguan</div>
+<div class="grid-2">
+  <div class="challenge-card">
+    <h4> Baca 5 Hadis Sehari</h4>
+    <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+    <div class="progress-text">3/5 hadis hari ini</div>
+  </div>
+  <div class="challenge-card">
+    <h4> Simpan 10 Hadis Bulan Ini</h4>
+    <div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
+    <div class="progress-text">7/10 hadis</div>
+  </div>
+</div>
+
+<div class="section-title">Pintasan Pantas</div>
+<div class="quick-links">
+  <div class="quick-link"><div class="icon"> </div><div class="text">Rawak</div></div>
+  <div class="quick-link"><div class="icon"> </div><div class="text">Bookmark</div></div>
+  <div class="quick-link"><div class="icon"> </div><div class="text">Sejarah</div></div>
+  <div class="quick-link"><div class="icon">⚙️</div><div class="text">Tetapan</div></div>
+</div>
+
+<div class="tip-card" style="margin-top:24px;">
+  <div class="icon"> </div>
+  <p><strong>Petua:</strong> Taip "Bukhari 433" terus dalam bar carian untuk lompat terus ke hadis tersebut.</p>
+</div>
+
+</div>
+</body>
+</html>

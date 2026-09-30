@@ -381,8 +381,8 @@ teks_ringkas = w._teks_kongsi_ringkas()
 semak("kongsi Ringkas: petikan Arab + [TERJEMAHAN], tiada 'Read more' literal",
       "[TERJEMAHAN]" in teks_ringkas and r["arab"][:20] in teks_ringkas
       and "Read more" not in teks_ringkas, teks_ringkas[:40])
-semak("kongsi Ringkas ada pautan 'Baca penuh' pustakahadith.my",
-      "Baca penuh: https://pustakahadith.my/" in teks_ringkas, teks_ringkas[-90:])
+semak("kongsi Ringkas ada pautan 'Info penuh' pustakahadith.my",
+      "Info penuh: https://pustakahadith.my" in teks_ringkas, teks_ringkas[-90:])
 
 # 8. Carian KHUSUS (kitab + nombor) -> TERUS ke butiran, bukan senarai
 #    (Sesi 38). "bukhari 500" bukan carian umum -- pengguna mahukan

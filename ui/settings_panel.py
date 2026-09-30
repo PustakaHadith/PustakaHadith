@@ -404,6 +404,55 @@ class SettingsPanel(QFrame):
         self.cb_font = cb_f
         r += 1
 
+        # Item 8 (Sesi 36) — paparan tarikh baris HARI INI (Utama).
+        _label(r, "Paparan tarikh")
+        _combo(r, [("Masihi (26 Sep 2026)", "masihi"),
+                   ("Melayu (26 September 2026)", "melayu"),
+                   ("Hijri (13 Rabiulakhir 1448H)", "hijri"),
+                   ("Hijri + Melayu", "hijri_melayu")],
+               current_data=self.app.settings.get(
+                   "tarikh_paparan", "masihi"),
+               on_change=lambda cb: (
+                   self.app._set("tarikh_paparan", cb.currentData()),
+                   self.app._kemas_tarikh()))
+        r += 1
+
+        # Arahan 28 Sep — BUTANG ON/OFF popup "Makluman" (disclaimer)
+        # pada permulaan. Kunci `makluman_papar` (lalai True); dibaca
+        # oleh ui/disclaimer.papar_disclaimer().
+        _label(r, "Makluman permulaan")
+        b_mak = QPushButton()
+        b_mak.setCheckable(True)
+        b_mak.setChecked(bool(self.app.settings.get(
+            "makluman_papar", True)))
+        b_mak.setCursor(Qt.PointingHandCursor)
+        b_mak.setFixedSize(64, 26)
+
+        def _gayak_makluman():
+            on = b_mak.isChecked()
+            b_mak.setText("ON" if on else "OFF")
+            if on:
+                b_mak.setStyleSheet(
+                    f"QPushButton {{ background-color: {TEAL};"
+                    f" color: #0B1A17; border: 1px solid {TEAL};"
+                    f" border-radius: 13px; font-size: 11px;"
+                    f" font-weight: 700; }}"
+                    f"QPushButton:hover {{ background-color: {TEAL_LIGHT}; }}")
+            else:
+                b_mak.setStyleSheet(
+                    f"QPushButton {{ background-color: {CARD_BG};"
+                    f" color: {TEXT_FAINT}; border: 1px solid {BORDER};"
+                    f" border-radius: 13px; font-size: 11px;"
+                    f" font-weight: 700; }}"
+                    f"QPushButton:hover {{ background-color: {CARD_BG_HOVER}; }}")
+
+        b_mak.clicked.connect(lambda: (
+            self.app._set("makluman_papar", b_mak.isChecked()),
+            _gayak_makluman()))
+        _gayak_makluman()
+        gl.addWidget(b_mak, r, 1)
+        r += 1
+
         if not any(k in f for f in self.app._fonts
                    for k in ("KFGQPC", "Scheherazade", "Amiri",
                              "Naskh", "Arabic")):
