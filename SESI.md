@@ -1724,3 +1724,15 @@ Biodata Penerbit (tunggu input pengguna)
   (msix baharu datang automatik); sintaks diperiksa, 0 ralat
 - Nota: `PANDUAN_KEMAS_KINI_STORE_v1.0.1.md` masih rujuk laluan lama
   root (dokumen sejarah v1.0.1 — dibiarkan)
+
+### WAJIB: PustakaQH_dist = pusat file distribution Microsoft Store (30 Sep)
+- Arahan: "pastikan folder ini diguna utk pembikinan file distribution
+  m.store. **wajib**. simpan dlm nota"
+- Nota baharu: **`PustakaQH_dist\NOTA.md`** — hukum wajib + jadual
+  susunan (msix/, msix_staging/, build tree, aset Store) + arahan
+  "jangan ubah laluan tanpa arahan"; `msix\NOTA.md` ditambah pautan
+  ke nota induk
+- `build_msix.ps1` **`$stage` → `PustakaQH_dist\msix_staging`**
+  (dulu `installer\msix_stage`) supaya staging ikut folder wajib;
+  `$out` sudah `PustakaQH_dist\msix`; sintaks 0 ralat
+- Belum diuji hias build penuh dgn laluan baharu (build seterusnya)
