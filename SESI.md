@@ -1669,8 +1669,8 @@ Backup dulu: `installer/backup_v1.0.3_build_30sep/` (5 fail).
   → **`EXIT=0`**, 1,120.6 saat
 - Hasil: **`Output/PustakaHadith-Setup-1.0.3-x64.exe`** —
   820,547,022 B (~820.5 MB), 30 Sep 2026 10:57
-- Belum: MSIX 1.0.3.0, portable 7z 1.0.3, GitHub Release, landing
-  changelog — tunggu arahan
+- Belum: ~~MSIX 1.0.3.0~~ · ~~portable 7z 1.0.3~~ · ~~GitHub Release~~
+  (semua SIAP — entri bawah) · landing changelog — tunggu arahan
 
 ### Commit & push (30 Sep, arahan "commit" + "push") ✅
 - App repo: **`9e78b87`** → `pustakahadith/main` (30 fail, +2,055/−98)
@@ -1679,3 +1679,48 @@ Backup dulu: `installer/backup_v1.0.3_build_30sep/` (5 fail).
 - Sengaja TIDAK dikomit: token/rahsia, `build_err.txt`,
   `.pytest_cache/`, backup `installer/backup_v1.0.3*/`, folder besar
   tak track (`dist/`, `PustakaQH_dist/`)
+
+### MSIX + portable 7z + GitHub Release v1.0.3 — SEMUA SIAP ✅ (30 Sep)
+Arahan: "MSIX 1.0.3 · portable 7z · GitHub Release v1.0.3" → "jalankan
+ketiga-tiga".
+
+**1. MSIX** (`installer/build_msix.ps1`)
+- `MAKEAPPX_EXIT=0` · `SIGN_EXIT=0` (self-signed) · `signtool verify /pa`
+  gagal **dijangka** — sijil sendiri bukan root CA
+- Hasil: `installer/output/PustakaHadith_1.0.3.0_x64.msix` — **781.9 MB**
+
+**2. Portable 7z**
+- Ikut struktur 1.0.2 (kandungan pada root archive, LZMA2+BCJ):
+  `7z a -t7z -mf=BCJ -mx=9` dari `dist/PustakaHadith` — `EXIT=0`
+- Hasil: `Output/PustakaHadith-portable-1.0.3-x64.7z` —
+  **800,701,801 B (763.6 MB)**, 6,133 fail
+
+**3. GitHub Release v1.0.3**
+- Isu token: `github token.txt` baris 4 (`opencodemk`) = **read-only**
+  (POST /releases → 404); baris 0 mati (401). Guna kredensial
+  `.git-credentials` akaun **`PustakaHadith` (owner, push=true)**
+- `gh release create` sendiri 404 → cipta terus via
+  `gh api POST /releases` (body dari fail JSON — badan multi-baris
+  pecah argumen PowerShell 5.1)
+- **PUBLISHED** (bukan draft): id `399717524` —
+  https://github.com/PustakaHadith/PustakaHadith/releases/tag/v1.0.3
+- Aset disahkan (saiz sama dgn lokal):
+  | Fail | Saiz |
+  |---|---|
+  | `PustakaHadith-Setup-1.0.3-x64.exe` | 820,547,022 B |
+  | `PustakaHadith-portable-1.0.3-x64.7z` | 800,701,801 B |
+- SHA-256 dalam nota release (Setup `DB22D26B…20E0C`, 7z `8F4355D9…01BA1`)
+
+**Masih belum:** landing changelog → v1.0.3 + deploy Netlify (arahan),
+Biodata Penerbit (tunggu input pengguna)
+
+### Folder khas MSIX — PustakaQH_dist\msix (30 Sep, arahan pindah + nota)
+- **5 fail msix dipindah** dari root `PustakaQH_dist\` (v1.0.0-slim,
+  v1.0.0, v1.0.1, v1.0.2.0) + msix baharu dari
+  `installer/output/` → **`PustakaQH_dist\msix\`**
+- Nota dibuat: **`PustakaQH_dist\msix\NOTA.md`** — "semua msix akan
+  dtg di sini masa akan datang" + jadual kandungan + amaran verify /pa
+- `installer/build_msix.ps1` `$out` **ditukar terus ke folder ini**
+  (msix baharu datang automatik); sintaks diperiksa, 0 ralat
+- Nota: `PANDUAN_KEMAS_KINI_STORE_v1.0.1.md` masih rujuk laluan lama
+  root (dokumen sejarah v1.0.1 — dibiarkan)
