@@ -1736,12 +1736,36 @@ Biodata Penerbit (tunggu input pengguna)
   (dulu `installer\msix_stage`) supaya staging ikut folder wajib;
   `$out` sudah `PustakaQH_dist\msix`; sintaks 0 ralat
 - Belum diuji hias build penuh dgn laluan baharu (build seterusnya)
+
 ### Pembersihan PustakaQH_dist (30 Sep, arahan "buang yg tak berkenaan")
-- **Dibuang (�6.0 GB)**: `PustakaHadith_lama_1.0.2\` (2.16 GB) � `PustakaHadith_sep2026\`
-  (2.23 GB, staging era v1.0.0) � `msix_v101_staging\` (1.76 GB) � semua lapuk,
+- **Dibuang (≈6.0 GB)**: `PustakaHadith_lama_1.0.2\` (2.16 GB) · `PustakaHadith_sep2026\`
+  (2.23 GB, staging era v1.0.0) · `msix_v101_staging\` (1.76 GB) — semua lapuk,
   boleh dibina semula
-- **Dikekalkan**: `msix\` (5 versi) � `msix_staging\` � `PustakaHadith\` (build 29 Sep)
-  � sijil pfx � aset Store � **`PustakaHadith-v1.0.0.zip` (satu-satunya salinan �
+- **Dikekalkan**: `msix\` (5 versi) · `msix_staging\` · `PustakaHadith\` (build 29 Sep)
+  · sijil pfx · aset Store · **`PustakaHadith-v1.0.0.zip` (satu-satunya salinan —
   Release GitHub v1.0.0 tiada aset, jadi tak dibuang)**
 - `PustakaQH_dist\NOTA.md` dikemas kini (senarai pembersihan); folder ~8.9 GB
 - `PANDUAN_KEMAS_KINI_STORE_v1.0.1.md` **dibuang** (arahan: tak perlu memandangkan v1.0.3 terbit); dipulihkan dari git `d10bc51` jika perlu; rujukan dalam NOTA.md dibersihkan
+
+### RINGKASAN & TUTUP SESI 38 (30 Sep 2026) — SIAP ✅
+
+| # | Kerja | Status |
+|---|---|---|
+| 1 | Hint carian "bukhari 433" — tutup (mockup sahaja) | ✅ FINAL |
+| 2 | Pending saiz tetingkap/landscape (4 penanda) — tutup kes | ✅ FINAL |
+| 3 | Semakan landing automatik — LULUS (173 i18n, 0 hilang) | ✅ |
+| 4 | Versi 1.0.2 → 1.0.3 (BINA.bat/.iss/AppxManifest/build_msix) + backup | ✅ |
+| 5 | Setup Inno 1.0.3 (782.5 MB) · MSIX 1.0.3.0 (781.9 MB) · 7z (763.6 MB) | ✅ |
+| 6 | GitHub Release **v1.0.3** — Setup + 7z, SHA-256 direkod | ✅ LIVE |
+| 7 | Folder khas MSIX `PustakaQH_dist\msix\` + **WAJIB nota pusat Store** (`$stage`/`$out`) | ✅ |
+| 8 | Pembersihan `PustakaQH_dist` — buang 3 pokok lapuk ≈6.0 GB | ✅ |
+| 9 | Buang `PANDUAN_KEMAS_KINI_STORE_v1.0.1.md` + bersih rujukan NOTA | ✅ |
+| 10 | Landing changelog → v1.0.3 (i18n ms+en, butang → release) + semak live 10/10 | ✅ LIVE |
+| 11 | Landing SESI Sesi 36 (semakan) + Sesi 37 (changelog) direkod | ✅ |
+| 12 | Git: app `bcef099` · luar `ce4f551` — semua push, 0 ahead | ✅ |
+
+**Tertunda (bukan kerja hari ini):** upload MSIX 1.0.3.0 ke Partner Center
+(selepas itu kad Store landing → v1.0.3) · cadangan link nav `#mula`/`#soalan` ·
+biodata penerbit.
+
+**SESI 38 TUTUP — 30 September 2026, kerja selesai.**
