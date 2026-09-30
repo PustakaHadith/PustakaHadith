@@ -1736,3 +1736,11 @@ Biodata Penerbit (tunggu input pengguna)
   (dulu `installer\msix_stage`) supaya staging ikut folder wajib;
   `$out` sudah `PustakaQH_dist\msix`; sintaks 0 ralat
 - Belum diuji hias build penuh dgn laluan baharu (build seterusnya)
+### Pembersihan PustakaQH_dist (30 Sep, arahan "buang yg tak berkenaan")
+- **Dibuang (˜6.0 GB)**: `PustakaHadith_lama_1.0.2\` (2.16 GB) · `PustakaHadith_sep2026\`
+  (2.23 GB, staging era v1.0.0) · `msix_v101_staging\` (1.76 GB) — semua lapuk,
+  boleh dibina semula
+- **Dikekalkan**: `msix\` (5 versi) · `msix_staging\` · `PustakaHadith\` (build 29 Sep)
+  · sijil pfx · aset Store · **`PustakaHadith-v1.0.0.zip` (satu-satunya salinan —
+  Release GitHub v1.0.0 tiada aset, jadi tak dibuang)**
+- `PustakaQH_dist\NOTA.md` dikemas kini (senarai pembersihan); folder ~8.9 GB
