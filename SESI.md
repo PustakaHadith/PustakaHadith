@@ -1671,3 +1671,11 @@ Backup dulu: `installer/backup_v1.0.3_build_30sep/` (5 fail).
   820,547,022 B (~820.5 MB), 30 Sep 2026 10:57
 - Belum: MSIX 1.0.3.0, portable 7z 1.0.3, GitHub Release, landing
   changelog — tunggu arahan
+
+### Commit & push (30 Sep, arahan "commit" + "push") ✅
+- App repo: **`9e78b87`** → `pustakahadith/main` (30 fail, +2,055/−98)
+  — Sesi 36–38 + versi 1.0.3 + Setup; push EXIT=0
+- Repo utama: **`aaf61de`** → `origin/main` (landing-page/SESI.md) — push EXIT=0
+- Sengaja TIDAK dikomit: token/rahsia, `build_err.txt`,
+  `.pytest_cache/`, backup `installer/backup_v1.0.3*/`, folder besar
+  tak track (`dist/`, `PustakaQH_dist/`)
