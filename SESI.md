@@ -1744,3 +1744,4 @@ Biodata Penerbit (tunggu input pengguna)
   · sijil pfx · aset Store · **`PustakaHadith-v1.0.0.zip` (satu-satunya salinan —
   Release GitHub v1.0.0 tiada aset, jadi tak dibuang)**
 - `PustakaQH_dist\NOTA.md` dikemas kini (senarai pembersihan); folder ~8.9 GB
+- `PANDUAN_KEMAS_KINI_STORE_v1.0.1.md` **dibuang** (arahan: tak perlu memandangkan v1.0.3 terbit); dipulihkan dari git `d10bc51` jika perlu; rujukan dalam NOTA.md dibersihkan
