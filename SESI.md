@@ -1776,3 +1776,9 @@ biodata penerbit.
 - Lancar: PID berjalan, window "PustakaHadith", responsif, 116MB; exe SHA256 identik dgn build 29 Sep
 - Pembersihan: Remove-AppxPackage OK, sijil akar Root dibuang (UAC), fail sementara dibuang
 - KESIMPULAN: MSIX 1.0.3 SELAMAT untuk dinaikkan ke Microsoft Store
+
+### Microsoft Store: v1.0.3.0 PUBLISH (30 Sep) + kad Store landing v1.0.3
+- Pengesahan pengguna: update dah publish di m.store
+- Landing kad Store dl1-p -> "v1.0.3 disahkan & live" (ms+en), commit 23b65b1, live disemak OK
+- Sisa v1.0.2 dlm landing = baris "Keluaran lepas" sahaja (dikehendaki)
+- SELESAI: kitaran v1.0.3 penuh (bina -> ujian -> release -> Store -> landing)
