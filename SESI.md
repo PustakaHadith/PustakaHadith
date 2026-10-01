@@ -1769,3 +1769,10 @@ Biodata Penerbit (tunggu input pengguna)
 biodata penerbit.
 
 **SESI 38 TUTUP — 30 September 2026, kerja selesai.**
+
+### Ujian MSIX v1.0.3.0 sebelum publish ke Store (30 Sep) - LULUS
+- 0x800B0109 (akar tak dipercayai) -> export .cer + import admin ke LocalMachine\Root (UAC)
+- Add-AppxPackage OK: versi 1.0.3.0, status Ok, PFN PustakaHadith.PustakaHadith_a8vs82dc5casm
+- Lancar: PID berjalan, window "PustakaHadith", responsif, 116MB; exe SHA256 identik dgn build 29 Sep
+- Pembersihan: Remove-AppxPackage OK, sijil akar Root dibuang (UAC), fail sementara dibuang
+- KESIMPULAN: MSIX 1.0.3 SELAMAT untuk dinaikkan ke Microsoft Store
