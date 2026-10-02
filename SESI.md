@@ -1815,3 +1815,13 @@ biodata penerbit.
 - Tooling: PowerShell System.Drawing (resize/ICO), ffmpeg (webp) - tiada Pillow
 - NOTA: landing belum live (perlukan commit+push -> Cloudflare auto-deploy);
   exe/MSIX belum ada icon baharu sehingga rebuild seterusnya
+
+### ZIP portable v1.0.3 + semakan pulihan (2 Okt)
+- Cipta output\PustakaHadith-portable-1.0.3-x64.zip (993.5 MB) dari dist\PustakaHadith
+  via 7z a -tzip -mx=5 (6133 fail, 1255 folder)
+- SHA-256: 4AD4B2D221DB209FBAE155E16979798955C05B81F3D42C42F433B65DD641D9CB
+- Upload GitHub Release v1.0.3 (gh release upload, exit=0); release body ditambah
+  baris ZIP + baris SHA-256 (gh release edit, exit=0)
+- Semakan halaman download landing: EXE + portable sudah v1.0.3 sebelum ini;
+  landing tiada pautan zip lama (semak sejarah git) - kad 7z ditukar ke ZIP
+- Semak pulihan dokumen/imej: 19 fail kembali, baki D: 0 (dipulihkan pengguna)
