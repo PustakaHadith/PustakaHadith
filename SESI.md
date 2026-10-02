@@ -1793,3 +1793,25 @@ biodata penerbit.
 - Baik pulih: semak.py:3252 ralat NameError 'badan' (pra-ada) -> guna 'cari'
 - Ujian: py_compile OK; semak.py - semua semakan kongsi/lulus OK
 - Belum commit (tunggu arahan)
+
+### Ujian FB dari source (tanpa rebuild) - 2 Okt, menunggu pengesahan visual
+- Keputusan: app boleh jalan terus dari source (entry main.py + hadis.db dlm repo)
+  - TAK perlu rebuild utk uji fix FB; BINA.bat (10-15 min) hanya utk edaran/Store
+- App dilancarkan: .venv-build\Scripts\python.exe main.py, PID 12976, responsif
+- Aliran ujian: Kongsi -> Facebook -> jangka: teks disalin + FB buka + toast
+  "Teks disalin! Tampal (Ctrl+V) di Facebook."
+- Status: MENUNGGU pengesahan visual pengguna; fix FB sudah dikomit (bed07cf)
+
+### Tukar icon brand -> video-promo/thumbnail/icon.png (2 Okt)
+- Sumber baharu: video-promo\thumbnail\icon.png (1123x1135, 249 KB)
+- 25 fail ditukar (semua disemak: dimensi/SHA-256/ICO entry/webp ffprobe = LULUS):
+  - Outer repo (10): img\logo.png (+.jpg/.webp/logo1.png), landing-page\img\logo.png,
+    landing-page\logo.jpg, favicon.ico (3 saiz 16/32/48), apple-touch-icon.png (180x180),
+    video-promo\composition*\assets\brand\logo.png (13 salinan, SHA-256 = sumber)
+  - App repo (4): app.ico (7 saiz 16..256), installer\Assets StoreLogo 50,
+    Square44, Square150, Wide310x150 (icon center-fit, bg lutsinar)
+- JPG = icon atas latar putih 880x717; logo1 = fit atas kanvas 900x512
+- Backup: D:\Pustaka Quran Hadis\Pustaka\backup_logo_2Okt\ (25 fail, ikut laluan asal)
+- Tooling: PowerShell System.Drawing (resize/ICO), ffmpeg (webp) - tiada Pillow
+- NOTA: landing belum live (perlukan commit+push -> Cloudflare auto-deploy);
+  exe/MSIX belum ada icon baharu sehingga rebuild seterusnya
