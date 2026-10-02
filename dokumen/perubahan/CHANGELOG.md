@@ -8,6 +8,30 @@
 > pembetulan draf jawapan AI). Perbandingan paparan hadis lama →
 > baharu (Sesi 55, dengan tangkap layar): `dokumen/manual/TRANSFORMASI_DETAIL.md`.
 
+## 1.0.3 — 30 September 2026
+
+Edaran rasmi selepas v1.0.2: **Setup Inno 782.5 MB** · **portable 7z
+763.6 MB** · **MSIX 781.9 MB** — semua diterbitkan dalam GitHub Release
+`v1.0.3`; MSIX dinaikkan ke **Microsoft Store** (30 Sep 2026, lulus ujian
+pasang `Add-AppxPackage` 1.0.3.0 + lancar sebelum naik).
+
+Perubahan pengguna (Sesi 36–38):
+
+- **Saiz tetingkap dijaga** — app buka pada **1280×720**, maximize = **85%
+  skrin** (bukan skrin penuh), kandungan ikut muat (`_saiz_muat_skrin`).
+- **Halaman utama lebih kemas** — kolum carian putih + hero baharu
+  "Apa yang anda ingin cari hari ini?".
+- **Kongsi "Info penuh"** — teks kongsi Ringkas (WhatsApp/Telegram/
+  Facebook) sertai baris `Info penuh: https://pustakahadith.my`; kongsi
+  Facebook kini corak **salin + tampal** (Facebook takbenarkan auto-prefill
+  teks post sejak 2017 — parameter `quote=` sharer.php diabaikan).
+- **Makluman permulaan boleh dimatikan (ON/OFF)** dalam Tetapan + **tarikh
+  Hijri** dipaparkan pada baris tarikh.
+- Landing page dikemas kini: changelog v1.0.3, butang muat turun → Release
+  v1.0.3, kad Store → "v1.0.3 disahkan & live".
+
+Ujian: semak.py (semakan kongsi LULUS) · MSIX 1.0.3.0 lulus pasang+lancar.
+
 ## 1.0 (ditetapkan semula) — 11 Ogos 2026
 
 Versi aplikasi **ditetapkan semula ke 1.0** (dahulu 1.3) kerana edaran

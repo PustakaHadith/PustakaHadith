@@ -1229,17 +1229,15 @@ class PagesDetail:
     def _kongsi_menu(self):
         """Tunjuk menu platform kongsi (WhatsApp/Telegram/Facebook/Instagram).
 
-        Arahan 28 Sep — pratonton FB guna laman AKAR
-        `https://pustakahadith.my` (bukan laluan per-hadis) supaya
-        selari dgn baris teks 'Info penuh'.
+        FB tak boleh auto-prefill teks (arahan 30 Sep) — teks disalin +
+        FB dibuka, pengguna tampal; tiada lagi url pratonton sharer.
         """
-        self._bina_menu_kongsi(self._teks_kongsi_ringkas(),
-                               "https://pustakahadith.my")
+        self._bina_menu_kongsi(self._teks_kongsi_ringkas())
 
-    def _bina_menu_kongsi(self, teks: str, url: str = ""):
-        """Menu platform kongsi — dikongsi dengan kad Petikan (Item 4,
-        Sesi 36): halaman hadis hantar teks ringkas + pautan akar
-        pustakahadith.my (arahan 28 Sep); Petikan guna url sama."""
+    def _bina_menu_kongsi(self, teks: str):
+        """Menu platform kongsi — WhatsApp/Telegram guna teks Ringkas
+        (petikan + pautan 'Info penuh'); Facebook salin+tampal (pilihan 1,
+        arahan 30 Sep); Instagram salin teks."""
         menu = QMenu(self)
         menu.setStyleSheet("""
             QMenu {
@@ -1260,7 +1258,7 @@ class PagesDetail:
         """)
         menu.addAction("WhatsApp", lambda: self._kongsi_whatsapp(teks))
         menu.addAction("Telegram", lambda: self._kongsi_telegram(teks))
-        menu.addAction("Facebook", lambda: self._kongsi_facebook(teks, url))
+        menu.addAction("Facebook", lambda: self._kongsi_facebook(teks))
         menu.addAction("Instagram (Salin Teks)", lambda: self._kongsi_instagram(teks))
         menu.exec_(QCursor.pos())
 
@@ -1275,15 +1273,20 @@ class PagesDetail:
         webbrowser.open(
             "https://t.me/share/url?text=" + QUrl.toPercentEncoding(pendek).data().decode())
 
-    def _kongsi_facebook(self, teks: str, url: str = ""):
-        """Kongsi via Facebook. `url` (pautan hadis/petikan) — jika
-        kosong, guna pustakahadith.my (Item 4: kongsi dari halaman
-        Utama tidak boleh rujuk `_detail_h` yang mungkin basi)."""
-        share_url = url if url else "https://pustakahadith.my"
-        webbrowser.open(
-            "https://www.facebook.com/sharer/sharer.php?u=" +
-            QUrl.toPercentEncoding(share_url).data().decode() +
-            "&quote=" + QUrl.toPercentEncoding(teks).data().decode())
+    def _kongsi_facebook(self, teks: str):
+        """Kongsi via Facebook — salin teks ke papan klip + buka FB,
+        pengguna tampal sendiri (Ctrl+V).
+
+        Sebab (arahan 30 Sep — pilihan 1): Facebook TIDAK benarkan
+        auto-prefill teks post (ditutup sejak 2017); parameter `quote=`
+        pada sharer.php kini diabaikan, jadi kad FB tetap hanya
+        screenshot laman + pautan sahaja. Corak sama pilihan Instagram:
+        teks Ringkas (petikan + pautan 'Info penuh') disalin, FB dibuka,
+        pengguna tampal — teks hadis DIJAMIN muncul.
+        """
+        QApplication.clipboard().setText(teks)
+        webbrowser.open("https://www.facebook.com/")
+        self.toast.show_msg("Teks disalin! Tampal (Ctrl+V) di Facebook.")
 
     def _kongsi_instagram(self, teks: str):
         """Salin teks untuk Instagram (salin ke papan klip)."""

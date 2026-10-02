@@ -3249,7 +3249,7 @@ def semak_kitab_shell() -> None:
     # Literal format total HANYA diharamkan dalam badan _render_kitab_shell
     # (banner meta dahulu). Footer "Menunjukkan X–Y daripada Z hadis" di
     # luar metod itu adalah teks sah. Carian skop ke `badan`, bukan src_k.
-    if 'f"{total:,} hadis"' not in badan and 'f"0–{total}"' not in badan:
+    if 'f"{total:,} hadis"' not in cari and 'f"0–{total}"' not in cari:
         lulus("tiada literal format total dibenamkan dalam render")
     else:
         salah("literal format total masih dibenamkan dalam render")
@@ -3462,10 +3462,10 @@ def semak_versi_changelog() -> None:
         return
     lulus(f"VERSI.py dibaca (v{VERSI})")
 
-    if VERSI != "1.0":
-        salah(f"VERSI dikunci 1.0 (edaran rasmi), sebenar {VERSI!r}")
+    if VERSI != "1.0.3":
+        salah(f"VERSI dikunci 1.0.3 (edaran rasmi), sebenar {VERSI!r}")
     else:
-        lulus("VERSI == '1.0' (edaran rasmi dikunci)")
+        lulus("VERSI == '1.0.3' (edaran rasmi dikunci)")
 
     if not os.path.exists("dokumen/perubahan/CHANGELOG.md"):
         salah("dokumen/perubahan/CHANGELOG.md TIADA -- "
@@ -3474,7 +3474,8 @@ def semak_versi_changelog() -> None:
     changelog = open("dokumen/perubahan/CHANGELOG.md",
                      encoding="utf-8").read()
 
-    seksyen = set(re.findall(r"^## (\d+\.\d+)(?:\s|$)", changelog, re.M))
+    seksyen = set(re.findall(r"^## (\d+\.\d+(?:\.\d+)?)(?:\s|$)",
+                             changelog, re.M))
     sejarah = ("1.0", "1.1", "1.2", "1.3")
     tiada = [v for v in sejarah if v not in seksyen]
     if tiada:

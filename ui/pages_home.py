@@ -354,13 +354,12 @@ class PagesHome:
 
     def _kongsi_petikan(self):
         """Item 4 + keputusan B (Sesi 36) — kongsi RINGKAS + baris
-        'Info penuh' ke pustakahadith.my (arahan 28 Sep: label +
-        pautan akar sahaja, format sama halaman hadis); Facebook guna
-        pautan sama (bukan pautan hadis basi)."""
+        'Info penuh' ke pustakahadith.my; Facebook = salin + tampal
+        (arahan 30 Sep, pilihan 1 — FB takbenar auto-prefill teks)."""
         teks = (f'"{self._petikan_teks}"\n'
                 f'— {self._petikan_sumber}\n\n'
                 f'Info penuh: https://pustakahadith.my')
-        self._bina_menu_kongsi(teks, "https://pustakahadith.my")
+        self._bina_menu_kongsi(teks)
 
     # ── panel kanan ──────────────────────────────────────────────────
     def _teks_tarikh(self) -> str:

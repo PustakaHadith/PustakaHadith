@@ -1782,3 +1782,14 @@ biodata penerbit.
 - Landing kad Store dl1-p -> "v1.0.3 disahkan & live" (ms+en), commit 23b65b1, live disemak OK
 - Sisa v1.0.2 dlm landing = baris "Keluaran lepas" sahaja (dikehendaki)
 - SELESAI: kitaran v1.0.3 penuh (bina -> ujian -> release -> Store -> landing)
+
+### Fix kongsi Facebook (30 Sep, arahan "1" - pilihan salin+tampal)
+- Masalah: kongsi FB bagi screenshot page utama + link sahaja, tiada petikan hadis
+- Punca: sharer.php hanya u= laman akar; param quote= kini diabaikan FB (auto-prefill
+  teks ditutup FB sejak 2017) - tiada cara mana-mana app paksa teks masuk FB
+- Fix (corak sama Instagram): _kongsi_facebook salin teks Ringkas ke papan klip +
+  buka facebook.com + toast "Tampal (Ctrl+V)"; lambda menu + param url dibuang
+  (_bina_menu_kongsi kini teks sahaja; panggilan pages_home ikut diselaraskan)
+- Baik pulih: semak.py:3252 ralat NameError 'badan' (pra-ada) -> guna 'cari'
+- Ujian: py_compile OK; semak.py - semua semakan kongsi/lulus OK
+- Belum commit (tunggu arahan)
