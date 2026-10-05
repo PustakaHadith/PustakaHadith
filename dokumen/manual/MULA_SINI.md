@@ -16,7 +16,7 @@
 
 ---
 
-## Keadaan projek — ringkasan satu muka (akhir 26 Ogos 2026)
+## Keadaan projek — ringkasan satu muka (akhir 5 Oktober 2026)
 
 **Apa ini:** Aplikasi desktop **PustakaHadith v1.0** — PyQt5, berjalan
 sepenuhnya di luar talian selepas sync: **62,169 hadis** (9 kitab
@@ -24,17 +24,13 @@ hadis.my), carian kata kunci FTS5 + carian makna AI, 3 tab bahasa,
 5 tema (Aqua lalai + Neutral gelap/terang + Kertas gelap/terang),
 susun atur RTL.
 
-**Status: SIAP & DISAHKAN** — suite rasmi **14/14 SEMUA LULUS**
-· `semak.py` SEMUA LULUS (**395 semakan**) ·
-`uji_negatif_8z` 55/0 · `semak_dokumen_ui` 109/0 · pokok kerja bersih ·
-**21 commit** pada 26 Ogos (glassy scrim + latar dunia Makluman/Tetapan +
-spec Senarai Hadis + Senarai Hadis dwibahasa + Pencarian Aqua Glass +
-fiks dedupe carian + fiks klik kad + latar glob seragam API/Tentang/Detail
-+ halaman Tersimpan diubah suai + fiks kelipan Senarai Hadis + tab Simpan
-& Sejarah + tarikh simpan & navigasi Kembali + isi semula tarikh lama +
-kotak semak buang pukal sejarah + kilat chip aktif + tarikh dibaca sejarah
-+ fiks kembali dari Utama + kiraan Tersimpan Utama selari + maklum balas
-Rawak + nombor carian kitab buka terus).
+**Status: v1.0.3 LIVE** — GitHub Release v1.0.3 (Setup EXE + portable
+ZIP 993.5 MB/7z) · Microsoft Store v1.0.3.0 disahkan · landing
+pustakahadith.my current (icon brand baharu + versi pada kad download)
+· `semak.py` tinggal GAGAL prahedi sahaja (307 → baki sepanjang sesi
+38) · pokok kerja bersih ·
+**13 commit** (Sesi 38: siar penuh v1.0.3 pada 30 September – 2
+Oktober + pentadbiran dokumen 5 Oktober — MULA_SINI + README).
 
 **Kerja 26 Ogos (21 commit):** glassy scrim glob (`bb5a912`); latar peta
 dunia Makluman + Tetapan sahaja (`eaf6f07`); spesifikasi Senarai Hadis
@@ -181,242 +177,49 @@ audit — `dokumen/audit/AUDIT_SEMAKHADIS.md` ·
 
 ---
 
-## Sesi Terakhir — 26 Ogos 2026 (49 commit)
+## Sesi Terakhir — 5 Oktober 2026 (13 commit)
 
-Versi semasa: **v1.0**. Kerja 26 Ogos — **47 commit** (glassy scrim +
-latar dunia Makluman/Tetapan + spesifikasi + redesign halaman Senarai
-Hadis):
+Versi semasa: **v1.0.3**. Kerja 5 Oktober — **13 commit** (Sesi 38 —
+kerja sebenar 30 September – 2 Oktober: siar penuh v1.0.3; pentadbiran
+5 Oktober: MULA_SINI + README):
 
-1. **Scrim latar dikurangkan (glassy)** (`bb5a912`) — alpha glob 150→85,
-   gradient 200→120; glob lebih jelas menembusi panel kaca pada Utama/
-   rak/Makluman/Tetapan. Teks kekal terbaca (imej asas navy gelap).
+1. **Build + Release v1.0.3** (`2d3cff2`, `30c171c`) — Setup EXE
+   782.5 MB, MSIX 781.9 MB, portable 7z 763.6 MB; output/staging MSIX
+   wajib ke `PustakaQH_dist\` (NOTA.md).
 
-2. **Latar peta dunia: Makluman + Tetapan SAHAJA** (`eaf6f07`) — imej
-   `latar_globe_dunia.png` (bg_03 daripada pengguna) dipakai pada
-   dialog Makluman (`BackgroundCanvas(dunia=)`) dan panel Tetapan sahaja;
-   Utama/rak kekal `latar_globe_timeline.png` (bg_04). `_GLOB_CACHE`
-   ikut laluan imej; `lukis_latar_dunia()` baharu.
+2. **Pembersihan PustakaQH_dist** (`20cee5a`, `bcef099`) — buang salinan
+   lama (~6 GB); PANDUAN Store v1.0.1 dibuang (arkib git).
 
-3. **Spesifikasi Senarai Hadis** (`629ac49`) —
-   `docs/superpowers/specs/2026-08-26-halaman-senarai-hadis-design.md`.
+3. **SESI 38 ditutup + fiks encoding U+FFFD** (`69f0bd9`) — suntingan
+   teks UTF-8 wajib guna alat Write/Edit atau Node; PS string haram.
 
-4. **Halaman Senarai Hadis diubah suai** (`[hadapan ini]`) — susun atur
-   Split Command Center: banner kaca + sidebar KITAB SEMASA/PILIH BAB
-   (senarai buku + kiraan dari `get_bab_list`) + panel senarai dwibahasa
-   (terjemahan kiri | Arab kanan, `hadith_card_dwibahasa`), di atas
-   `BackgroundCanvas` glob AQUA. Chips berfungsi: Semua / Tersimpan
-   (tanda buku) / Belum dibaca (sejarah) + togol Nombor ↓/↑. Carian
-   banner buka Pencarian tertapis kitab; Lompat No. dipindah ke sidebar
-   (Ctrl+G kekal). API: `get_bab_list` + `get_hadis_list(book/order/
-    ids/exclude_ids)` + `ListWorker` sokong param.
+4. **Ujian pasang MSIX v1.0.3 LULUS** (`8445145`) — pasang, lancar,
+   responsif; sijil Root tempahan dibuang selepas ujian.
 
-5. **Halaman Pencarian diubah suai** (`4f1de4d`) — gaya Aqua Glass: akar
-   `BackgroundCanvas` glob AQUA (hero telus) + kad hasil dwibahasa
-   (`hadith_card_dwibahasa`, terjemahan kiri | Arab kanan, butang 🔖
-   simpan) di atas `BackgroundCanvas`. Togol kaedah carian 3-mod **Kata
-   kunci / Makna / Kedua-dua** (lalai, disimpan `carian_mod` ke
-   `user_settings.json`); mod `kata` melangkau semantik, `makna`
-   melangkau keyword. Draf jawapan AI kekal sebelum hasil (mod Makna/
-   Kedua-dua). Spesifikasi:
-   `docs/superpowers/specs/2026-08-26-halaman-pencarian-design.md`.
+5. **Microsoft Store v1.0.3.0 publish** (`4a8a5a8`) — identity Store
+   disahkan; landing kad Store → "v1.0.3 disahkan & live".
 
-6. **Fiks dedupe carian keyword** (`319787f`) — `search_hadis` pulang `id`
-   (bukan `hadis_id`), maka kunci dedupe `(collection, hadis_id)` sentiasa
-   `None` → hanya 1 kad setiap koleksi dipapar (cth. "riba" 20 hasil jadi
-   7). Guna `hadis_id or id` supaya SEMUA 20 hasil setiap halaman dipapar.
-   Bug ini juga menjejaskan kad lama (hadith_card) sebelum ubah suai.
+6. **Kongsi Facebook: corak salin+tampal** (`bed07cf`) — FB sekat
+   auto-prefill sejak 2017; `_kongsi_facebook` salin teks + buka FB +
+   toast; CHANGELOG 1.0.3; semak.py baiki (badan→cari + check 10b).
 
-7. **Fiks klik kad** (`d157235`) — `ClickCard.clicked` ialah `pyqtSignal()`
-   (0 arg), tetapi lambda sambungan guna param wajib `lambda _, hh=h:`
-   (carian) dan `lambda _, bk=book:` (senarai kitab). Klik mana-mana kad
-   → `TypeError: missing 1 required positional argument: '_'` → apl
-   terus keluar. Betulkan ke `lambda hh=h:` / `lambda bk=book:` (param
-   ada nilai lalai). Disahkan: klik kad carian & baris kitab tiada lagi
-   pecah (CRASH LIST: NONE, `_detail_from='search'`). Senarai Hadis
-   (`lambda hh=h:`, baris 516) sudah betul sejak mula.
+7. **Icon brand → `video-promo/thumbnail/icon.png`** (`178b0ca`) —
+   app.ico (7 saiz 16..256) + 4 aset MSIX; 25 fail outer-repo (img
+   root, landing logo/favicon/apple-touch, 13 brand video) commit
+   berasingan.
 
-8. **Latar glob seragam** (`360c74b`) — dialog **Tetapan API**
-   (`ApiDialog`), dialog **Tentang** (`DeklarasiDialog`), dan **halaman
-   Detail** (`PagesDetail._page_detail`) dibalut `BackgroundCanvas(
-   dunia=True)` supaya latar sama dengan panel Tetapan (peta dunia AQUA;
-   pepejal pada tema lain). Sebelum ini ketiga-tiganya guna latar
-   pepejal (`HEADER_BG`/`PAGE_BG`). Scroll & body detail dibuat telus
-   (`detailScroll`/`detailBody`) supaya glob kelihatan. Disahkan offscreen:
-    ketiga-tiga mengandungi `BackgroundCanvas`, detail render dengan data
-    sebenar tanpa ralat.
+8. **ZIP portable v1.0.3 + landing live** (`542d15d`) — ZIP 993.5 MB
+   diupload ke Release + SHA-256 dalam release body; landing: kad
+   7z→ZIP, versi v1.0.3 pada kad EXE/ZIP, ikon brand 38→46px.
 
-9. **Halaman Tersimpan (bookmark)** (`6ab1f5a`) — dibalut `BackgroundCanvas()`
-   (glob **garisan masa**, sama Carian/Senarai — bukan glob dunia seperti
-   Tetapan) supaya seragam dengan halaman kandungan lain. Hero dibuat telus
-   (`QFrame#hero { background: transparent }` bila `ada_latar_imej()`), kad
-   lama `hadith_card` diganti `hadith_card_dwibahasa` (Arab+Melayu), dan
-   togol 🔖 kini membuang/masuk semula tanda buku terus dari halaman
-   (`_bookmark_toggle` → `_toggle_save` → `_render_saved`). Fix susulan:
-   lambda `simpan_clicked` guna param pendahulu `_` supaya arg bool butang
-   tidak menulis ganti `slug` (bug senyap — togol tambah dan bukannya buang).
-   `_toggle_save` dijamin dengan `getattr(self, "_save_btn", None)` supaya
-   selamat dipanggil dari halaman lain (tiada butang detail). Disahkan
-   offscreen: 3 tanda buku → 3 kad dwibahasa; togol 🔖 → 2 kad + 2 bookmark.
+9. **Ujian FB dari source** — app dilancarkan terus dari `main.py`
+   (tanpa rebuild); pengesahan visual menunggu pengguna.
 
-10. **Fiks kelipan Senarai Hadis** (`52e83b2`) — butang 🔖 pada kad
-   (`_kitab_toggle_simpan`) asal memanggil `_load_kitab_page` yang
-   mengosongkan senarai lalu memutar `ListWorker` semula (~1 saat kelipan
-   glob). Diganti: kemas SATU kad di tempatnya (tukar `objectName`
-   `simpanChip`↔`simpanChip_aktif` + `unpolish/polish`); bila penapis
-   "tersimpan", buang kad itu dari senarai. `_load_kitab_page` langsung
-   TIDAK dipanggil. Disahkan offscreen: 2 kad kekal 2, butang flip, 0
-    muat semula; penapis tersimpan: 2→1 kad, 0 muat semula.
+10. **semak.py** — GAGAL ditekan dari 307 (awal sesi) ke baki
+    prahedi; senarai cadangan membersih menunggu arahan.
 
-11. **Tab Simpan & Sejarah** (`4546090`) — halaman Tersimpan diberi togol
-    dua tab: **Tersimpan** (penanda buku, `_render_bookmarks_simpan`) dan
-    **Telah dibaca** (`_render_sejarah_simpan`). Bahagian sejarah ambil
-    `read_history()` lalu `api.get_hadis_by_id(slug, n)` untuk setiap
-    entri, dipapar sebagai kad dwibahasa sama; klik 🔖 simpan/masuk
-    terus, klik kad `open_by_ref` buka detail. Label tab & sub-tajuk
-    dikemas dengan kiraan (`_kemas_tab_simpan`). Nav "Tersimpan"
-    ditukar "Simpan & Sejarah". Disahkan offscreen: tab Simpan 3 kad,
-    tab Baca 10 kad (sejarah sebenar), tukar tab + klik/kunci 🔖 tiada
-    ralat.
-
-12. **Tarikh simpan + navigasi Kembali** (`03674bc`) — bahagian **Tersimpan**
-    papar **tarikh disimpan** di sebelah nama + nombor hadis: `_toggle_save`
-    simpan `saved_at` (ISO) bila simpan; `hadith_card_dwibahasa` terima
-    `tarikh_simpan` dan tambah `· disimpan <DD Bulan YYYY>` (helper
-    `_fmt_tarikh_simpan`); kad disusun mengikut `saved_at` terkini dulu.
-    Butang **Kembali** pada halaman detail pulang ke halaman asal: `open_by_ref`
-    terima `from_page` (pemanggil Tersimpan hantar `"saved"`, Carian
-    `"search"`), lalu `BACK_PETA["saved"]` → `go("saved")`. Bonus: buang/
-    simpan dari tab **Telah dibaca** kini bawa data hadis penuh supaya kad
-    tersimpan ada teks. Disahkan offscreen: meta kad = "Sunan Abu Daud 2906
-    · … · disimpan 26 Ogos 2026"; `_detail_from` = "saved" (Kembali →
-     halaman simpan), kekal bila buka hadis seterusnya.
-
-13. **Isi semula tarikh simpan lama** (`234b2ef`) — penanda buku disimpan
-     SEBELUM ciri `saved_at` wujud tiada rujukan masa. `backfill_saved_at`
-     (helpers.py) dijalankan sekali pada permulaan (`app_qt.py`): isi
-     `saved_at` yang hilang dengan *mtime* fail `bookmarks.json` sebagai
-     anggaran; tulis semula bila berubah. Hadis simpan BAHARU kekal guna
-     `datetime.now()`. Idempoten. Disahkan: lama dapat mtime, baru kekal,
-     backfill kedua tiada ubah; boot app semua penanda ada `saved_at`.
-
-14. **Kotak semak buang pukal (Telah dibaca)** (`42ef681`) — bahagian
-     **Telah dibaca** (`_render_sejarah_simpan`) dapat bar kawalan:
-     `☐ Pilih semua` + butang `🗑 Buang dipilih (N)` (lumpuh bila N=0).
-     Setiap kad dibalut baris `[☐][kad]`; tanda semak dikira ke N dan
-     `Pilih semua` segerak. `helpers.remove_reading(slug, n)` buang
-     ikut `(slug, n)`; `_sejarah_buang_pilih` panggil untuk setiap
-     pilihan lalu `_render_saved` semula. Klik kad masih buka detail
-     (☐ berasingan). Disahkan offscreen: 14 entri→14 ☐, tick 2→butang
-     "(2)" aktif, Pilih Semua→"(11)", buang panggil `remove_reading` 11×.
-
-15. **Kilat chip aktif (bukan teks hitam)** (`f77506e`) — `filterChip_active`
-     (theme.py) tukar `color: PAGE_BG` (hitam, mengelirukan) kepada
-     `#ffffff` + sempadan `TEAL_GLOW`. Chip aktif kini teal penuh + teks
-     putih jelas. Objek nama ini dikongsi tab Tersimpan/Telah dibaca DAN
-     togol Arab/Transliterasi + mod Pencarian di **halaman detail**, jadi
-     satu pembetulan QSS membaiki kedua-dua tempat (permintaan "buat juga
-     pada detail page").
-
-16. **Tarikh dibaca + buang butang Simpan (sejarah)** (`67e9271`) — pada
-     bahagian **Telah dibaca**: (a) `record_reading` kini simpan `read_at`
-     (ISO); `backfill_reading_at` (helpers.py, sama corak `backfill_saved_at`)
-     isi `read_at` lama dengan mtime fail pada permulaan (`app_qt.py`); kad
-     papar `· dibaca <DD Bulan YYYY>` guna `tarikh_label="dibaca"` pada
-     `hadith_card_dwibahasa`; (b) butang 🔖 **disembunyikan** (`c.simpan_btn
-     .hide()`) kerana buang pukal kini guna kotak semak — klik kad masih
-     buka detail. Tab **Tersimpan** tidak berubah (🔖 + "disimpan" kekal).
-     Disahkan offscreen: 13 kad sejarah, semua `simpan_btn` tersembunyi,
-     meta "Sahih al-Bukhari 1 · … · dibaca 26 Ogos 2026".
-
-17. **Fiks kembali dari Utama** (`e19f216`) — klik "Terakhir dibaca" (atau
-     pintasan nombor) di halaman Utama buka detail tetapi butang Kembali
-     menuju Carian, bukan Utama. Punca: `_buka_hadis_terus` (`pages_carian
-     .py`) tetapkan `self._detail_from = dari` BETUL, namun talian
-     berikutnya memanggil `open_by_ref(slug, n, "search")` (keras) yang
-     menulis semula `_detail_from="search"`. Diubah kepada `open_by_ref
-     (slug, n, dari)` supaya sumber sebenar (home/carian) dihormati.
-     Disahkan offscreen: `dari="home"` → `_detail_from="home"` →
-     `BACK_PETA["home"]`=("Utama","home"); lalai carian kekal "search".
-
-18. **Kiraan Tersimpan Utama selari** (`d247b98`) — badge "Tersimpan" di
-     halaman Utama dikira SEKALI pada binaan (`n_simpan = len(self
-     .bookmarks)`) dan tidak disegar; bila simpan/buang dari halaman lain,
-     kiraan tidak padan dengan tab Tersimpan. Simpan rujukan badge
-     (`_kad_tersimpan_badge`) dan segarkan melalui `_kemas_kiraan_home`
-     yang dipanggil setiap `_render_sejarah` (go("home")). Disahkan
-     offscreen: 3→4→2 sepadan `len(self.bookmarks)`.
-
-19. **Maklum balas Rawak** (`4cdf6c4`) — butang **Rawak** (kad sisi Utama)
-     berfungsi tetapi tiada maklum balas semasa `RandomWorker` memuat,
-     jadi nampak "tak fungsi". `_random` kini papar toast "🎲 Membuka hadis
-     rawak…" (kekal) lalu `RandomWorker`→`_on_random`: buka detail (`from
-     ="home"`, jadi Kembali → Utama) dan sembunyi toast selepas jaminan
-     paparan minimum 1200ms; kegagalan papar "Tiada hadis rawak dijumpai".
-     `import time` ditambah di peringkat modul (sebelum ini hanya import
-     setempat dalam `open_by_ref`). Disahkan offscreen: toast kelihatan →
-     detail (indeks 2) → toast disembunyi; tiada hadis → toast ralat.
-
-20. **Nombor carian kitab buka terus** (`28f40d6`) — kotak carian
-     halaman **Senarai Hadis** (`_kitab_hantar_carian`) dahulu SELALU ke
-     halaman Pencarian walaupun input nombor. Kini: input nombor sahaja
-     (`q.replace(" ","").isdigit()`) → `_buka_hadis_terus(self._kitab_slug,
-     n, dari="kitab")` (buka butiran terus, Kembali → Senarai Hadis);
-     teks lain → ke Pencarian seperti sedia ada. Sama corak kotak "Pergi ke
-     No." sidebar. Disahkan offscreen: "433"→indeks kekal kitab (bukan
-     search 3); "riba"→Pencarian (3).
-
-21. **Dialog 'Lapor Ralat'** (`80537f3`, dipindah `f31ead1`) — pautan
-     teks **"Lapor ralat"** pada bar tindakan bawah terjemahan di
-     **halaman butiran hadis** (sebaris **"Kongsi | Salin"**) membuka
-     `LaporRalatDialog` (QDialog, tajuk "Lapor Ralat"). Kandungan: nota
-     "Laporkan ralat anda di sini." (juga placeholder kotak mesej), medan
-     "Daripada (e-mel)" (USER EMAIL), medan "Tajuk" terisi "LAPOR RALAT",
-     dan kotak mesej berlatar putih + teks hitam. "Hantar" **membuka Gmail
-     compose dalam browser yang pra-isi** (`https://mail.google.com/mail/
-     ?view=cm&to=PustakaHadith@gmail.com&su=LAPOR%20RALAT&body=…`) — tiada
-     klien e-mel / kredential diperlukan; pengguna klik Hantar sekali dalam
-     browser. E-mel pelapor disertakan dalam badan ("Daripada: <email>").
-     "Batal" tutup dialog. (Asalnya dicadang di Tetapan, dipindah ke butiran
-     hadis; ciri SMTP terus dibuang kerana susah difail — kekal Gmail
-     compose.) Tetapan "Pelayan E-mel" di buang. Disahkan offscreen: tanpa
-     SMTP → buka URL Gmail compose ke PustakaHadith@gmail.com, subjek
-     "LAPOR RALAT", badan ada "Daripada".
-
-22. **Binaan installer (onedir) + selenggara git** (`564c92d`) —
-    tambah `Output/`, `Screenshot/`, `mockup/selected_*` ke `.gitignore`
-    (menyelesaikan kegagalan berdiri semak.py #9 untracked). Binaan
-    PyInstaller **onedir BERJAYA** (`pyinstaller PustakaHadith.spec`):
-    `dist/PustakaHadith/` ~1.8 GB, 7036 fail, `PustakaHadith.exe` ada
-    (teras Fasa 3 selesai; Fasa 0–2 sudah lulus 20 Ogos). **EXE Setup
-    Inno Setup BERJAYA** (`iscc installer/PustakaHadith.iss`):
-    `Output/PustakaHadith-Setup-1.0.0-x64.exe` ~722 MB (BELUM
-    ditandatangani — SmartScreen mungkin beri amaran). **Baki
-    installer:** sijil penandatanganan kod + MSIX/Store (akaun Partner
-    Center). `uji_visual_kiraan.py` kekal langkah manual (perlu skrin
-    fizikal + DB penuh). **Ujian pasang (sandbox):** pasang senyap ke
-    folder sementara + lancar (`PustakaHadith - Makluman`, CPU aktif)
-    berjaya; uninstall bersih. **Bangun semula (dist dikemas 26/8, SAH
-    + AQUA):** binaan onedir awal (15:31) RUPANYA LAPUK — tiada kod/tema
-    AQUA (cache `build/` lama + aset glob `latar_globe_*.png` TIDAK
-    dibundel → `BackgroundCanvas` guna fallback warna pepejal).
-    **Pembetulan:** tambah `latar_globe_dunia.png` +
-    `latar_globe_timeline.png` ke `datas` spec; padam `build/` +
-    `dist/PustakaHadith`; binaan PyInstaller **BERJAYA (EXIT=0,
-    21:09)**; ISCC **BERJAYA (EXIT=0, 1955s)** →
-    `Output/PustakaHadith-Setup-1.0.0-x64.exe` **725.8 MB (21:43)**
-    (saiz naik kerana aset AQUA disertakan). Apl dibuka dari
-    `dist/.../PustakaHadith.exe` (PID 6852) — tema AQUA kelihatan.
-
-**Kiraan telus:** 26 Ogos = **53 commit**.
-
-**Gate:** semak.py SEMUA semakan kod LULUS (termasuk semakan baharu
-halaman Pencarian: BackgroundCanvas + kad dwibahasa + togol `carian_mod`)
-· API senarai 12/12 · ujian fungsional `uji_api_senarai.py` (DB memori) ·
-ujian mod carian kata/makna (offscreen, routing enjin sah) · ujian berdata
-(uji_tukar_tema/uji_pra_hantar) menunggu hadis.db penuh di
-persekitaran ini. `uji_visual_kiraan.py` dijangka perlu dikemas
-(banner baharu) — jalankan manual selepas sync DB.
-
+**Sebelum ini (arkib):** blok Sesi 26 Ogos (49 commit) kekal dalam
+sejarah git MULA_SINI.md dan `dokumen/sesi/sesi_index.md`.
 ---
 
 1. **Buka rekod hari (komit 1, 18 Ogos)** — finalkan baris komit 10

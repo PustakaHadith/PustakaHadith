@@ -228,7 +228,7 @@ python sync.py
 ## Verification
 
 ```bash
-python semak.py && python semak_versi.py      # 399 semakan (15 bahagian) + version
+python semak.py && python semak_versi.py      # 393 semakan (15 bahagian) + version
                                  # (build folder not git + no user cache:
                                  #  semak #12 git comparison & part #9 skipped)
 ```

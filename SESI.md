@@ -1825,3 +1825,32 @@ biodata penerbit.
 - Semakan halaman download landing: EXE + portable sudah v1.0.3 sebelum ini;
   landing tiada pautan zip lama (semak sejarah git) - kad 7z ditukar ke ZIP
 - Semak pulihan dokumen/imej: 19 fail kembali, baki D: 0 (dipulihkan pengguna)
+
+### Sambung esok (ditutup 2 Okt, 23:xx) - senarai baki
+1. MULA_SINI.md: "Sesi Terakhir" + ringkasan -> 2 Okt (arahan "ya" belum dibuat);
+   lepas tu kemas kini kiraan semakan dlm README (check terakhir semak.py)
+2. Ujian visual FB (salin+tampal) - app dah dilancarkan dari source, pengesahan
+   pengguna belum disahkan
+3. Semak.py: ~29 GAGAL prahedi (line ending .bat, implementasi docs, uji_visual,
+   addStretch, 7px, _label_simpan) - cadangan sahaja, tunggu arahan
+4. Landing: pautan nav #mula/#soalan (pengguna kata sudah, jumpa tiada link)
+5. Biodata Penerbit - tunggu teks pengguna
+6. Icon baru (thumbnail/icon.png) masuk exe/MSIX hanya lepas rebuild seterusnya
+- Status git: 2 repo bersih & terdorong (app 542d15d, outer b5e230a)
+
+### Sambungan 5 Okt - MULA_SINI + README kiraan (arahan lama "ya")
+- MULA_SINI.md: blok 'Sesi Terakhir' (baris 184-419, 236 baris lama
+  Sesi 26 Ogos) -> seksyen baharu Sesi 38 (10 item, hash git sahaja
+  app-repo; blok lama kekal dlm git history). Tajuk: 5 Oktober 2026
+  (julat sah: git 2 Okt <= tajuk <= hari ini 5 Okt; teks ringkasan
+  sebut "2 Oktober" + "5 Oktober" supaya lulus pra/pasca commit)
+- Ringkasan atas: tajuk -> akhir 5 Oktober 2026; status -> v1.0.3 LIVE;
+  kiraan -> **13 commit** == intro Sesi Terakhir (check 15)
+- semak.py: _pulihkan_settings retry 5x0.3s -> 40x0.5s (kunci AV/??????
+  hari ini konsisten kenakan PermissionError pada user_settings.json)
+- README: 399 -> 393 semakan (15 bahagian) == LULUS_CNT semak.py
+- Keputusan semak.py AKHIR: GAGAL 25 -> 24 (check 12 + 15 + README LULUS)
+- Baki 24 GAGAL = prahedi menunggu arahan: 5 line-ending .bat/.ps1,
+  7 fail backup_v1.0.3 'masih ada', 2 uji_visual hilang + 2 sisa,
+  2 implementasi docs, 2 addStretch, 1 7px, 1 _label_simpan x2, 1 set_total,
+  1 mesej bantuan kosong

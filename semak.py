@@ -52,7 +52,7 @@ def _pulihkan_settings():
     subproses app selesai; tanpa cuba semula, larian semak gagal palsu.
     """
     import time as _time
-    for _cuba in range(5):
+    for _cuba in range(40):
         try:
             if _ASAL_SETTINGS is not None:
                 with open("user_settings.json", "w", encoding="utf-8") as _fh:
@@ -61,9 +61,9 @@ def _pulihkan_settings():
                 os.remove("user_settings.json")
             return
         except PermissionError:
-            if _cuba == 4:
+            if _cuba == 39:
                 raise
-            _time.sleep(0.3)
+            _time.sleep(0.5)
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE)
