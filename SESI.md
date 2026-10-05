@@ -1898,8 +1898,14 @@ pembikinan dipindah ke repo arkib tanpa kehilangan versi/backup.
    PADANAN_ARKIB.md (kini dlm arkib - dasar: arkib = sejarah beku,
    tak disemak bahasa); 8r + SESI.md Indonesia = kalah berterusan
    (pre-fail sedia ada). Senarai belakang menunggu arahan.
+8. **Line-ending .bat/.ps1 dibetulkan** (4 fail: `BINA.bat`,
+   `BUAT_PINTASAN.bat`, `PINDAH_DATA.ps1`, `_rebuild.bat`) - LF -> CRLF,
+   ASCII tulen kekal (0 byte >127). Kesan: check 1 semua lulus + check 10
+   PINDAH_DATA lulus -> **GAGAL 19 -> 15**; LULUS 360 -> **365** (README
+   dikemas kini). Nota: index git tak berubah (`core.autocrlf=true`
+   normalkan CRLF -> LF; filtered hash == index hash) - fix ni state
+   worktree sahaja, checkout Windows dgn autocrlf=true kekal CRLF.
 
-Baki **19 GAGAL** = prahedi menunggu arahan: 5 line-ending .bat/.ps1
-(incl PINDAH_DATA versi), 7 fail backup_v1.0.3 'masih ada',
-2 _label_simpan, 2 addStretch, 1 7px, 1 mesej bantuan kosong,
-1 SESI.md kata Indonesia.
+Baki **14 GAGAL** = prahedi menunggu arahan: 7 fail backup_v1.0.3
+'masih ada', 2 _label_simpan, 2 addStretch, 1 7px, 1 mesej bantuan
+kosong, 1 SESI.md kata Indonesia.
