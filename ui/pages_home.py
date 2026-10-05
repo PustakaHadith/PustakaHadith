@@ -133,7 +133,10 @@ class PagesHome:
         body.setObjectName("homeBody")
         sa.setWidget(body)
         bl = QVBoxLayout(body)
-        bl.setContentsMargins(24, 20, 24, 20)
+        # Padding atas/bawah 24 -> 16 (seragam halaman carian): kandungan
+        # halaman utama melampaui viewport sebanyak 7px pada 1240x730 dan
+        # memaksa skrol yang tidak perlu (semak 8d).
+        bl.setContentsMargins(24, 16, 24, 16)
         bl.setSpacing(0)
 
         baris = QWidget()
@@ -145,6 +148,10 @@ class PagesHome:
         # stretch=1: baris panel MENGISI tinggi viewport bila tetingkap
         # membesar (buang ruang kosong bawah — Sesi 36). Bila kandungan
         # lebih tinggi dari viewport, QScrollArea ambil alih seperti biasa.
+        # TIADA addStretch pada layout akar (bl): `baris` adalah anak
+        # tunggal dan sudah membawa stretch=1 -- menambah addStretch(1)
+        # di hujung akan membahagi ruang lebihan 50/50 dan menghidupkan
+        # semula ruang kosong bawah panel yang dibuang pada Sesi 36.
         bl.addWidget(baris, 1)
 
         # Kanvas perlu tahu saiz viewport — QScrollArea mengisi kanvas;

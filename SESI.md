@@ -1209,7 +1209,7 @@ AI search offline
 ### Mockup Page Utama apl — `installer/mockup_tambahnilai/mockup_home_tambahnilai.html`
 Split Command Center sedia ada (panel kiri 62% + panel kanan 38%) — **susunan & features KEKAL 100%**. 7 titik cadangan ditanda outline kuning.
 
-### Keputusan pengguna (muktamad untuk implementasi)
+### Keputusan pengguna (muktamad untuk pelaksanaan)
 
 | # | Item | Keputusan |
 |---|---|---|
@@ -1241,13 +1241,13 @@ Split Command Center sedia ada (panel kiri 62% + panel kanan 38%) — **susunan 
 - `installer/mockup_tambahnilai/mockup_home_tambahnilai.html` — mockup page utama + tambah nilai
 - `installer/mockup_home/` — mockup A/B/C lama (ditolak pengguna)
 - `landing-page/mockup_tambah/mockup_3section.html` — mockup landing page (3 section; bukan fokus)
-- `ui/pages_home.py` — page utama sedia ada (target implementasi)
+- `ui/pages_home.py` — page utama sedia ada (target pelaksanaan)
 - `ui/app_qt.py:147` — saiz tetingkap
 - `SESI.md` — rekod ini (Sesi 34) — **TIDAK COMMIT**
 
 ---
 
-## Sesi 36 (26 September 2026): Kosmetik Page Utama — Persediaan & Implementasi
+## Sesi 36 (26 September 2026): Kosmetik Page Utama — Persediaan & Pelaksanaan
 
 ### Peraturan sesi (reminder pengguna — MESTI IKUT)
 1. Segala perubahan mesti **direkod** dalam SESI.md; **final mesti dicatat**.
@@ -1263,7 +1263,7 @@ Split Command Center sedia ada (panel kiri 62% + panel kanan 38%) — **susunan 
 - [x] Mockup rujukan dibuka: `installer/mockup_tambahnilai/mockup_home_tambahnilai.html`
 - [x] `SESI.md` — rekod ini **DIKEMASKINI penuh (FINAL)** — **TIDAK COMMIT** sehingga arahan
 
-### Implementasi — IKUT ARAHAN SATU PER SATU
+### Pelaksanaan — IKUT ARAHAN SATU PER SATU
 
 #### C. Isu Terbuka — SAIZ — **FINAL ✅ (26 Sep, disahkan pengguna: "ok. cantik" 85%)**
 Keputusan pengguna (FINAL, semasa sesi):
@@ -1272,7 +1272,7 @@ Keputusan pengguna (FINAL, semasa sesi):
   pengguna sahkan 85% OK) ↔ balik saiz buka; **bukan fullscreen**
 - **Minimize** → OK
 - Kandungan ikut membesar/mengecil — tiada ruang kosong bawah
-- Implementasi akhir:
+- Pelaksanaan akhir:
   - `nativeEvent()` intercept `WM_SYSCOMMAND (0x0112)` + `SC_MAXIMIZE (0xF030)`
     SEBELUM Qt maximize (tangkap klik dwi-tajuk/Aero snap yang lalu luar
     `setWindowState`) → panggil `_toggle_maksimum()`
@@ -1399,7 +1399,7 @@ Dari senarai "Perlu difikir" Sesi 36: pengguna sahkan #1–4 = **duplikasi**
 (keputusan gabung/buang tunggu arahan) dan arah **implement #5 dulu**:
 kad 'Sejarah bacaan' di bawah kad 'Tersimpan'.
 
-### Implementasi — **FINAL ✅ (28 Sep 2026)**
+### Pelaksanaan — **FINAL ✅ (28 Sep 2026)**
 - [x] `ui/pages_home.py` — kad sisi baharu **"Sejarah bacaan"**
   (`_kad_sisi`) diselit **di bawah kad Tersimpan, atas kad Rawak**:
   badge = `len(read_history())`, sub "Semua hadis yang pernah anda baca"
@@ -1421,7 +1421,7 @@ kad 'Sejarah bacaan' di bawah kad 'Tersimpan'.
 - `ui/pages_tersimpan.py` — rujukan mekanisme tab `_saved_tab` / `_pilih_tab_simpan`
 - `SESI.md` — rekod ini (**TIDAK COMMIT**)
 
-### Duplikasi #1–#4 — **KEPUTUSAN PENGUNGA + IMPLEMENTASI FINAL ✅ (28 Sep)**
+### Duplikasi #1–#4 — **KEPUTUSAN PENGUNGA + PELAKSANAAN FINAL ✅ (28 Sep)**
 (Sebelum ini insiden salah faham — "cadangkan" dilaksana tanpa arahan;
 dipulihkan, kemudian pengguna buat keputusan sebenar di bawah.)
 
@@ -1831,7 +1831,7 @@ biodata penerbit.
    lepas tu kemas kini kiraan semakan dlm README (check terakhir semak.py)
 2. Ujian visual FB (salin+tampal) - app dah dilancarkan dari source, pengesahan
    pengguna belum disahkan
-3. Semak.py: ~29 GAGAL prahedi (line ending .bat, implementasi docs, uji_visual,
+3. Semak.py: ~29 GAGAL prahedi (line ending .bat, pelaksanaan docs, uji_visual,
    addStretch, 7px, _label_simpan) - cadangan sahaja, tunggu arahan
 4. Landing: pautan nav #mula/#soalan (pengguna kata sudah, jumpa tiada link)
 5. Biodata Penerbit - tunggu teks pengguna
@@ -1852,7 +1852,7 @@ biodata penerbit.
 - Keputusan semak.py AKHIR: GAGAL 25 -> 24 (check 12 + 15 + README LULUS)
 - Baki 24 GAGAL = prahedi menunggu arahan: 5 line-ending .bat/.ps1,
   7 fail backup_v1.0.3 'masih ada', 2 uji_visual hilang + 2 sisa,
-  2 implementasi docs, 2 addStretch, 1 7px, 1 _label_simpan x2, 1 set_total,
+  2 pelaksanaan docs, 2 addStretch, 1 7px, 1 _label_simpan x2, 1 set_total,
   1 mesej bantuan kosong
 
 ## Sesi 39 - 5 Okt 2026
@@ -1909,3 +1909,65 @@ pembikinan dipindah ke repo arkib tanpa kehilangan versi/backup.
 Baki **14 GAGAL** = prahedi menunggu arahan: 7 fail backup_v1.0.3
 'masih ada', 2 _label_simpan, 2 addStretch, 1 7px, 1 mesej bantuan
 kosong, 1 SESI.md kata Indonesia.
+
+## Sesi 40 - 5 Okt 2026
+
+Objektif: arahan pengguna **"semua"** - selesaikan SEMUA baki GAGAL
+semak.py + item tertunggak (nav landing, rebuild icon). Sambungan
+Sesi 39 (pindahan sejarah sudah siap & di-push).
+
+1. **backup_v1.0.3 dipindah ke luar repo** - 7 GAGAL hilang:
+   `installer/backup_v1.0.3/` + `installer/backup_v1.0.3_build_30sep/`
+   -> `D:\Pustaka Quran Hadis\Pustaka\backup\`. `git status` app bersih.
+2. **_label_simpan x2 (8r) dibetulkan** - `ui/pages_detail.py`:
+   - `_render_detail`: butang simpan guna
+     `IconActionButton("simpan", _label_simpan(saved), ...)` +
+     `b_simpan.set_active(saved)`; literal ternary
+     `"⭐ Tersimpan" if saved else "☆ Simpan"` dibuang.
+   - `_toggle_save`: dead code `_save_btn` (butang teks) dibuang ->
+     `icon.set_active(saved)` +
+     `icon.setToolTip(_label_simpan(True) if saved else _label_simpan(False))`.
+   Kesan: uji_negatif test 8r (suntik literal ke `_render_detail`)
+   kini berfungsi sebagaimana dimaksudkan.
+3. **addStretch(1) x2 (8d) dibetulkan**:
+   - `ui/pages_carian.py` `_page_search`: `bl.addStretch(1)` di hujung
+     (punca dinyatakan dalam docstring semak: hero meregang dan hasil
+     carian tertolak ke bawah).
+   - `ui/pages_home.py` `_page_home`: komen `TIADA addStretch` - anak
+     tunggal `baris` sudah stretch=1; addStretch(1) akan bahagi ruang
+     50/50 dan menghidupkan semula ruang kosong bawah (keputusan
+     Sesi 36). Guna pengecualian semak.
+4. **Lebihan 7px halaman utama (8d runtime) dibetulkan**:
+   `bl.setContentsMargins(24, 20, 24, 20)` -> `(24, 16, 24, 16)`
+   (padanan halaman carian). Diukur 1240x730: LEBIHAN 7px -> **0px**.
+5. **Mesej bantuan + nota carian longgar (8g) dipulihkan** -
+   `ui/pages_carian.py` `_tampal_gabungan` (asalnya dibuang dalam
+   commit `8677924` Sesi 31 Ogos bersama draf AI). Dua nota AMBER
+   dipapar selepas `_carian_render_panel`:
+   (a) "Tiada padanan kata kunci yang mengandungi SEMUA perkataan..."
+       bila `if sem:` + `not kw and not meta.get("total")`;
+   (b) "Carian kata kunci longgar..." bila `meta.get("fallback")`.
+6. **SESI.md kata Indonesia (8m)**: 9 perkataan Indonesia dalam SESI.md
+   (semua varian huruf besar/kecil, baris 1215-1858) ditukar kepada
+   padanan Melayu `pelaksanaan` / `Pelaksanaan` / `PELAKSANAAN`.
+7. **README**: `365 semakan (15 bahagian)` ->
+   **`381 semakan (15 bahagian)`** (== LULUS_CNT semak.py; check 16 LULUS).
+8. **Landing nav `#mula` / `#soalan`** (`landing-page/index.html`):
+   siasat - kedua-dua `<section>` wujud tetapi TIADA satu pun
+   `href="#..."` merujuknya (imbasan href vs id: 0 href mati). Tambah
+   2 pautan nav + kunci i18n `nav-start` (Mula Pantas / Quick Start)
+   dan `nav-faq` (Soalan Lazim / FAQ). Kerana nav penuh kini 7 pautan
+   + CTA + ikon tidak muat di bawah ~1160px, media query baharu
+   `@media(max-width:1180px)` menutup `.nav-links` kepada burger -
+   BEZA daripada blok 980px supaya susun atur grid tidak ikut berubah.
+   Commit landing `b2704ab` (push: auto-deploy Cloudflare).
+9. **Rebuild `BINA.bat`** (PyInstaller `PustakaHadith.spec --clean`):
+   icon baru `app.ico` (2 Okt, selepas binaan 29 Sep) kini disemat ke
+   exe. Berjaya - `dist\PustakaHadith\PustakaHadith.exe`
+   77,909,178 bytes (5 Okt 13:34), log "Copying icon to EXE".
+
+**Keputusan semak.py AKHIR: GAGAL 14 -> 0; LULUS 365 -> 381 (15 bahagian).**
+Bunyi akhir: `SEMUA LULUS - 381 semakan (15 bahagian), selamat dihantar`.
+
+**Masih menunggu pengguna:** biodata Penerbit (teks dari pengguna),
+pengesahan visual butang Kongsi FB (salin + tampal).

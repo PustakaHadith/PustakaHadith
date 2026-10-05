@@ -562,13 +562,16 @@ class PagesDetail:
         b_salin.clicked.connect(self._menu_salin)
         b_dengar = IconActionButton("dengar", "Dengar (TTS)")
         b_dengar.clicked.connect(lambda: self._tts(self._detail_h))
+        # Tooltip (bukan teks) datang dari PEMALAR _label_simpan --
+        # elak ternary label dibenamkan semula dalam _render_detail.
+        saved = self._is_saved(h.get("collection"), h.get("id"))
         b_simpan = IconActionButton(
-            "simpan", "Simpan",
+            "simpan", _label_simpan(saved),
             active_inner=('<path d="M6 4h12a1 1 0 0 1 1 1v15l-7-4-7 4V5a1 1 '
                           '0 0 1 1-1z"/>'))
         b_simpan.clicked.connect(lambda: self._toggle_save(self._detail_h))
         self._save_btn_icon = b_simpan
-        b_simpan.set_active(self._is_saved(h.get("collection"), h.get("id")))
+        b_simpan.set_active(saved)
         bar_lo.addWidget(b_kongsi)
         bar_lo.addWidget(b_salin)
         bar_lo.addWidget(b_dengar)
@@ -1412,14 +1415,16 @@ class PagesDetail:
                 "saved_at": datetime.now().isoformat(timespec="seconds")})
             self.toast.show_msg("Disimpan")
         _write_json(BOOKMARKS, self.bookmarks)
-        # _save_btn hanya wujud di halaman detail; abaikan di halaman
-        # lain (cth. Tersimpan) yang memanggil _toggle_save.
-        btn = getattr(self, "_save_btn", None)
-        if btn is not None:
-            btn.setText(_label_simpan(self._is_saved(slug, hid)))
+        # Kemas ikon + tooltip melalui PEMALAR _label_simpan (bukan
+        # ternary benam). `_save_btn` (teks) tidak wujud lagi -- bar
+        # tindakan guna ikon monokrom (IconActionButton) sejak 4 butang
+        # ikon; tooltip je yang berubah mengikut keadaan simpan.
+        saved = self._is_saved(slug, hid)
         icon = getattr(self, "_save_btn_icon", None)
         if icon is not None:
-            icon.set_active(self._is_saved(slug, hid))
+            icon.set_active(saved)
+            icon.setToolTip(_label_simpan(True) if saved
+                            else _label_simpan(False))
 
     def _kemas_butang_atas_detail(self):
         """Tunjuk/sembunyi butang ↑ mengikut kedudukan skrol (Sesi 34).

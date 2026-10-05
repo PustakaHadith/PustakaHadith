@@ -168,6 +168,12 @@ class PagesCarian:
         hl.addWidget(self._bina_carian_panel(), 1)
         hl.setAlignment(Qt.AlignTop)
         bl.addWidget(baris)
+        # Stretch pada layout akar (semak 8d): tanpanya ruang lebihan
+        # dibahagi kepada SETIAP anak -- hero meregang dan hasil carian
+        # tertolak ke bawah. Di hujung ia menyerap semua ruang lebihan
+        # supaya hero/toolbar kekal tinggi asalnya; `baris` sudah
+        # AlignTop jadi kandungan kekal rata atas.
+        bl.addStretch(1)
 
         # Kanvas perlu mengisi ruang: letakkan scroll-area telus di dalamnya.
         vl = QVBoxLayout(kanvas)
@@ -909,6 +915,52 @@ class PagesCarian:
         self._carian_bina_bab_rows()
         self._carian_kemas_info(self._search_q, len(self._carian_hasil))
         self._carian_render_panel(self._kw_meta, self._sem_res, self._kw_res)
+
+        # Kes "hukum riba": FTS5 AND mahu SEMUA perkataan hadir, jadi
+        # carian yang setiap perkataannya wujud berasingan pulang 0
+        # hasil keyword walaupun hadis berkaitan ada. Beritahu pengguna
+        # mengapa kad kata kunci kosong dan bawa perhatian ke padanan
+        # makna di bawah. Hanya relevan bila enjin kata kunci turut
+        # dijalankan (mod kata/kedua) dan enjin makna ada hasil.
+        sem = self._sem_res or []
+        kw = self._kw_res or []
+        meta = self._kw_meta or {}
+        mod = self.settings.get("carian_mod", "kedua")
+        if sem:
+            if mod in ("kata", "kedua") and not kw and not meta.get("total"):
+                nota = QLabel(
+                    "ℹ️ Tiada padanan kata kunci yang mengandungi SEMUA "
+                    f"perkataan '{self._search_q}'. Padanan makna (AI) di "
+                    "bawah dicari ikut maksud — perkataan hadis boleh "
+                    "berbeza daripada soalan anda.")
+                nota.setWordWrap(True)
+                # Lencana AMBER (latar gelap + teks amber) — kontras baik
+                # dalam KEDUA-DUA tema; teks amber sahaja pudar pada
+                # tema terang.
+                nota.setStyleSheet(
+                    f"background-color: {AMBER_BG}; color: {AMBER_TEXT};"
+                    f"border: 1px solid {AMBER_BORDER}; border-radius: 8px;"
+                    "padding: 10px; font-size: 12px;")
+                self._carian_list.insertWidget(0, nota)
+                self._search_sa.verticalScrollBar().setValue(0)
+
+        # Fallback OR (v1.2): FTS5 AND pulang 0 hasil jadi enjin cuba OR
+        # (kes "hukum riba"). Kad kata kunci di bawah mungkin mengandungi
+        # mana-mana satu perkataan sahaja — beritahu pengguna supaya
+        # tidak menafsirkannya sebagai padanan penuh.
+        if meta.get("fallback"):
+            nota = QLabel(
+                "ℹ️ Carian kata kunci longgar: tiada hadis mengandungi "
+                f"SEMUA perkataan '{self._search_q}'. Hasil kata kunci di "
+                "bawah mengandungi mana-mana satu perkataan — padanan "
+                "makna (AI) mungkin lebih tepat.")
+            nota.setWordWrap(True)
+            nota.setStyleSheet(
+                f"background-color: {AMBER_BG}; color: {AMBER_TEXT};"
+                f"border: 1px solid {AMBER_BORDER}; border-radius: 8px;"
+                "padding: 10px; font-size: 12px;")
+            self._carian_list.insertWidget(0, nota)
+            self._search_sa.verticalScrollBar().setValue(0)
 
         # Item 3 (Sesi 36) — cip "TERAKHIR": rekod HANYA carian
         # BERJAYA (ada hasil) pada halaman 1. Carian salah/ kosong
