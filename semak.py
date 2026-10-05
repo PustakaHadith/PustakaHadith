@@ -68,6 +68,32 @@ def _pulihkan_settings():
 BASE = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE)
 
+# Dokumen sejarah (MULA_SINI, sesi, audit, ...) dipindah ke repo arkib
+# adik-beradik (5 Okt 2026) supaya repo utama GitHub bersih. Baca dua
+# laluan: repo utama dahulu (pengedaran ZIP lama), kemudian repo arkib.
+_ARKIB = os.path.join(os.path.dirname(BASE), "PustakaHadith_arsip")
+
+
+def _laluan_dok(rel: str):
+    p = os.path.join(BASE, rel)
+    if os.path.exists(p):
+        return p
+    p2 = os.path.join(_ARKIB, rel)
+    if os.path.exists(p2):
+        return p2
+    return None
+
+
+def _laluan_uji(rel: str):
+    """Ujian visual: root dahulu, kemudian tests/ (Fasa 1, 29 Ogos)."""
+    p = os.path.join(BASE, rel)
+    if os.path.exists(p):
+        return p
+    p2 = os.path.join(BASE, "tests", rel)
+    if os.path.exists(p2):
+        return p2
+    return None
+
 # Cache baca fail berasaskan (mtime, saiz) supaya fail yang sama tidak
 # dibaca berulang kali oleh semakan berbeza (sintaks, bahasa dokumen,
 # bahasa UI, susun atur). SELAMAT untuk ujian mutasi (uji_negatif_8z):
@@ -763,7 +789,7 @@ _BUKAN_KOMUNIKASI = (
 # Folder yang bukan kod komunikasi pengguna (skrip arkib/sandaran).
 _SKIP_FOLDER = ("__pycache__", "_arkib", "sandaran_", "tampalan_preload",
                 ".git", ".cache", "_opencode", "Pustaka_Hadis_Pembetulan_Lengkap",
-                ".venv", "build", "dist")
+                ".venv", "build", "dist", "backup_v1")
 
 
 def _senarai_py_projek() -> list:
@@ -1758,8 +1784,8 @@ def semak_carian_sibuk() -> None:
         salah("_on_search_failed/_kw_res=[] TIADA")
 
     # 6) Ujian visual kekal wujud (uji_visual_carian.py)
-    p_uji = os.path.join(BASE, "uji_visual_carian.py")
-    if not os.path.exists(p_uji):
+    p_uji = _laluan_uji("uji_visual_carian.py")
+    if p_uji is None:
         salah("uji_visual_carian.py TIADA — jam berputar tanpa ujian visual kekal")
         return
     lulus("uji_visual_carian.py wujud")
@@ -2127,8 +2153,8 @@ def semak_dokumen() -> None:
         ("Disahkan 5/5", "penomboran Fath al-Bari sejajar"),
     ]
     for f in dok:
-        p = os.path.join(BASE, f)
-        if not os.path.exists(p):
+        p = _laluan_dok(f)
+        if p is None:
             continue
         with open(p, encoding="utf-8") as fh:
             isi = fh.read()
@@ -2140,8 +2166,8 @@ def semak_dokumen() -> None:
             lulus(f"{f} tiada dakwaan terbatal")
 
     # Fasa 4B: status mesti SATU sahaja merentas semua dokumen.
-    p = os.path.join(BASE, "dokumen/manual/MULA_SINI.md")
-    if os.path.exists(p):
+    p = _laluan_dok("dokumen/manual/MULA_SINI.md")
+    if p is not None:
         with open(p, encoding="utf-8") as fh:
             isi = fh.read()
         if "Fasa 4B SIAP" in isi and "Fasa 4B) — TERSEKAT" in isi:
@@ -2207,8 +2233,8 @@ def semak_sesi_terakhir() -> None:
     """
     tajuk("12. MULA_SINI 'Sesi Terakhir' seiring git log")
 
-    p = os.path.join(BASE, "dokumen/manual/MULA_SINI.md")
-    if not os.path.exists(p):
+    p = _laluan_dok("dokumen/manual/MULA_SINI.md")
+    if p is None:
         salah("dokumen/manual/MULA_SINI.md TIADA — bahagian 'Sesi "
               "Terakhir' hilang")
         return
@@ -2410,8 +2436,8 @@ def semak_rtl_dokumen() -> None:
                  "dokumen/manual/MANUAL_PENGGUNAAN.md",
                  "README.md",
                  "dokumen/sesi/sesi_index.md"):
-        p = os.path.join(BASE, fail)
-        if not os.path.exists(p):
+        p = _laluan_dok(fail)
+        if p is None:
             masalah.append(f"{fail}: TIADA")
             continue
         isi = open(p, encoding="utf-8").read()
@@ -2448,8 +2474,8 @@ def semak_ringkasan_keadaan() -> None:
     """
     tajuk("15. MULA_SINI ringkasan satu muka seiring 'Sesi Terakhir'")
 
-    p = os.path.join(BASE, "dokumen/manual/MULA_SINI.md")
-    if not os.path.exists(p):
+    p = _laluan_dok("dokumen/manual/MULA_SINI.md")
+    if p is None:
         salah("dokumen/manual/MULA_SINI.md TIADA — ringkasan hilang")
         return
     isi = open(p, encoding="utf-8").read()
@@ -3344,7 +3370,8 @@ def semak_kad_koleksi() -> None:
             if _p != "ui/pages.py":
                 luar_cnt.append(f"{_p}:{_s.count(chr(10), 0, _m.start()) + 1}")
         for _m in re.finditer(r"\.set_total\(", _s):
-            if _p not in ("ui/app_qt.py", "uji_visual_kiraan.py"):
+            if _p not in ("ui/app_qt.py", "uji_visual_kiraan.py",
+                          "tests/uji_visual_kiraan.py"):
                 luar_set.append(f"{_p}:{_s.count(chr(10), 0, _m.start()) + 1}")
     if luar_cnt:
         salah(f"penulis _cnt di luar pages.py: {luar_cnt}")
@@ -3370,8 +3397,8 @@ def semak_visual_kiraan() -> None:
     ujian tidak diikuti, penanda ini hilang -- suite utama menandakan.
     """
     tajuk("8y. Ujian visual _label_kiraan (banner + kad)")
-    p_uji = os.path.join(BASE, "uji_visual_kiraan.py")
-    if not os.path.exists(p_uji):
+    p_uji = _laluan_uji("uji_visual_kiraan.py")
+    if p_uji is None:
         salah("uji_visual_kiraan.py TIADA — banner/kad tanpa ujian visual")
         return
     lulus("uji_visual_kiraan.py wujud")
@@ -3406,15 +3433,22 @@ def semak_visual_rujukan() -> None:
                   "uji_visual_mockup.py", "uji_visual_piksel.py",
                   "uji_visual_ralat.py", "uji_visual_sebenar.py")
 
-    hilang = [f for f in UJI_VISUAL if not os.path.exists(f)]
+    # Fasa 1 (29 Ogos): uji_visual_*.py berpindah ke tests/.
+    def _ada_uji(f: str) -> bool:
+        return (os.path.exists(f)
+                or os.path.exists(os.path.join("tests", f)))
+
+    hilang = [f for f in UJI_VISUAL if not _ada_uji(f)]
     if hilang:
         salah(f"uji_visual_* dibuang: {hilang}")
     else:
         lulus(f"kesemua {len(UJI_VISUAL)} ujian visual kekal wujud")
 
     import glob as _glob
-    wujud = sorted(os.path.basename(p)
-                   for p in _glob.glob("uji_visual_*.py"))
+    wujud = sorted({os.path.basename(p)
+                    for p in list(_glob.glob("uji_visual_*.py"))
+                    + list(_glob.glob(os.path.join("tests",
+                                                    "uji_visual_*.py")))})
     baharu = [f for f in wujud if f not in UJI_VISUAL]
     if baharu:
         salah(f"uji_visual_* baharu belum dalam senarai semak: {baharu}")

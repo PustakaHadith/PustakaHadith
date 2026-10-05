@@ -1,6 +1,9 @@
 # Changelog — PustakaHadith
 
 > Log perubahan versi aplikasi. Cap versi tunggal: `VERSI.py`.
+> **Nota (5 Okt 2026):** `sesi_index.md` dan semua `PERUBAHAN_*.md` kini
+> berada di repo arkib adik-beradik `PustakaHadith/arsip` (laluan relatif
+> kekal sama, dari root repo arkib).
 > Butiran penuh setiap sesi: `dokumen/sesi/sesi_index.md`. Rujukan ringkas sesi
 > 11 Ogos 2026: `dokumen/perubahan/PERUBAHAN_11OGOS.md`; sesi 12 Ogos 2026:
 > `dokumen/perubahan/PERUBAHAN_12OGOS.md`; sesi 13 Ogos 2026:

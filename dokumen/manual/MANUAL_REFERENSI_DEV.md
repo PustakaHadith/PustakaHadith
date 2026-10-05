@@ -4,6 +4,8 @@
 > modul, senarai semak, dan status. Guna dokumen ini sebagai titik mula
 > untuk sebarang sesi pembangunan; baca `dokumen/manual/MULA_SINI.md` untuk peraturan
 > keras dan `dokumen/sesi/sesi_index.md` untuk arkib penuh.
+> **Nota (5 Okt 2026):** kedua-dua fail itu kini di repo arkib adik-beradik
+> `PustakaHadith/arsip` (laluan relatif kekal sama).
 >
 > Versi: **v1.0** (11 Ogos 2026)
 

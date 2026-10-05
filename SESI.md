@@ -1846,11 +1846,60 @@ biodata penerbit.
   sebut "2 Oktober" + "5 Oktober" supaya lulus pra/pasca commit)
 - Ringkasan atas: tajuk -> akhir 5 Oktober 2026; status -> v1.0.3 LIVE;
   kiraan -> **13 commit** == intro Sesi Terakhir (check 15)
-- semak.py: _pulihkan_settings retry 5x0.3s -> 40x0.5s (kunci AV/??????
-  hari ini konsisten kenakan PermissionError pada user_settings.json)
+- semak.py: _pulihkan_settings retry 5x0.3s -> 40x0.5s (kunci AV/proses
+  Windows hari ini konsisten kenakan PermissionError pada user_settings.json)
 - README: 399 -> 393 semakan (15 bahagian) == LULUS_CNT semak.py
 - Keputusan semak.py AKHIR: GAGAL 25 -> 24 (check 12 + 15 + README LULUS)
 - Baki 24 GAGAL = prahedi menunggu arahan: 5 line-ending .bat/.ps1,
   7 fail backup_v1.0.3 'masih ada', 2 uji_visual hilang + 2 sisa,
   2 implementasi docs, 2 addStretch, 1 7px, 1 _label_simpan x2, 1 set_total,
   1 mesej bantuan kosong
+
+## Sesi 39 - 5 Okt 2026
+
+Objektif: **Pilihan A** - senarai repo GitHub utama bersih, sejarah
+pembikinan dipindah ke repo arkib tanpa kehilangan versi/backup.
+
+1. **Repo arkib dicipta** `github.com/PustakaHadith/arsip` (private).
+   48 fail disalin + commit `988ef3b` + push: `dokumen/manual/MULA_SINI.md`,
+   `sesi/` (1), `perubahan/` 15 PERUBAHAN_*.md, `audit/` 12,
+   `surat/` 13, `perbincangan/` 4, `sejarah_pembangunan/` 1, `README.md`.
+   Struktur relatif dikekalkan supaya rujukan silang dalam fail arkib
+   kekal sah.
+2. **git rm 48 fail dipindah** dari repo app; `dokumen/perubahan/CHANGELOG.md`
+   KEKAL di app. Semua salinan disahkan wujud di arkib adik-beradik
+   `../PustakaHadith_arsip/` sebelum dibuang (tiada data hilang).
+3. **semak.py**: fungsi baharu `_laluan_dok` (root -> arkib adik-beradik)
+   + `_laluan_uji` (root -> tests/); check 11 (dokumen konsisten),
+   12 (Sesi Terakhir), 14 (RTL), 15 (ringkasan) + blok Fasa 4B kini
+   baca laluan arkib. `_SKIP_FOLDER` tambah "backup_v1" (folder sandaran
+   tak diskan semasa imbasan .py).
+4. **Sisa Fasa 1 (29 Ogos) dibetulkan**: uji_visual_*.py sudah berpindah
+   ke `tests/` tapi rujukan semak/uji_negatif masih root - semak 8l/8y/8z
+   kini cari tests/; pengecualian set_total sertakan
+   `tests/uji_visual_kiraan.py`; `tests/uji_negatif_8z.py` UJI +
+   UJI_CARIAN guna resolver root -> tests. Kesan: **4 GAGAL hilang**
+   (uji_visual_carian TIADA, uji_visual_kiraan TIADA, uji_visual_*
+   dibuang, set_total). Sebelum ini uji_negatif crash terus
+   (FileNotFoundError uji_visual_ralat.py) sejak 29 Ogos.
+5. **Nota arkib ditambah** pada rujukan dokumen app: README (baris
+   struktur), CHANGELOG header, STRUKTUR_DOSUMENTASI,
+   MANUAL_REFERENSI_DEV header, CHECKLIST_PEMANTAUAN. Skrip dilaras:
+   `buka_hari.py` (SESI_INDEX/PER18/PER19/MULA) + `buat_pdf.py` /
+   `buat_pdf2.py` (BASE surat hadis.my -> arkib fallback).
+6. **semak.py AKHIR**: GAGAL 24 -> **19**, LULUS **360** (15 bahagian);
+   README dikemas kini `360 semakan (15 bahagian)` == LULUS_CNT
+   (check 16 LULUS).
+7. **uji_negatif_8z.py dijalankan semula penuh** (pertama kali sejak
+   Fasa 1): keputusan 41 lulus, 14 gagal. 14 = lapuk/bukan regresi
+   pindahan: hash `1b1390c` + kiraan "35 commit" tak wujud lagi selepas
+   blok Sesi 38 ditulis semula; jangkaan 8k terbalik selepas Lazy Load
+   (kod kini menuntut _mula_pramuat TIADA); 8m tak lagi kesan
+   PADANAN_ARKIB.md (kini dlm arkib - dasar: arkib = sejarah beku,
+   tak disemak bahasa); 8r + SESI.md Indonesia = kalah berterusan
+   (pre-fail sedia ada). Senarai belakang menunggu arahan.
+
+Baki **19 GAGAL** = prahedi menunggu arahan: 5 line-ending .bat/.ps1
+(incl PINDAH_DATA versi), 7 fail backup_v1.0.3 'masih ada',
+2 _label_simpan, 2 addStretch, 1 7px, 1 mesej bantuan kosong,
+1 SESI.md kata Indonesia.

@@ -4,6 +4,13 @@ Susunan fail dokumen ikut kategori. Semua perbincangan & perubahan projek
 direkodkan untuk **sejarah pembuatan projek** (lihat
 `sejarah_pembangunan/LOG_PEMBANGUNAN.md`).
 
+> **Nota (5 Oktober 2026):** folder `sejarah_pembangunan/`, `sesi/`,
+> `audit/`, `surat/`, `perbincangan/`, fail `manual/MULA_SINI.md` dan
+> `perubahan/PERUBAHAN_*.md` **dipindahkan ke repo arkib adik-beradik
+> [`PustakaHadith/arsip`](https://github.com/PustakaHadith/arsip)**
+> (laluan relatif sama). Kekal di repo ini: `CHANGELOG.md`,
+> `penerbitan/`, `rujukan/`, `manual/` (selain MULA_SINI), fail akar.
+
 ## Kategori
 
 | Folder | Isi |

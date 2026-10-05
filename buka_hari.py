@@ -33,10 +33,17 @@ import sys
 BASE = os.path.dirname(os.path.abspath(__file__))
 os.environ["PYTHONIOENCODING"] = "utf-8"
 
-SESI_INDEX = os.path.join(BASE, "dokumen/sesi/sesi_index.md")
-PER18 = os.path.join(BASE, "dokumen/perubahan/PERUBAHAN_18OGOS.md")
-PER19 = os.path.join(BASE, "dokumen/perubahan/PERUBAHAN_19OGOS.md")
-MULA = os.path.join(BASE, "dokumen/manual/MULA_SINI.md")
+def _dokumen(rel):
+    p = os.path.join(BASE, rel)
+    if os.path.exists(p):
+        return p
+    return os.path.join(os.path.dirname(BASE), "PustakaHadith_arsip", rel)
+
+
+SESI_INDEX = _dokumen("dokumen/sesi/sesi_index.md")
+PER18 = _dokumen("dokumen/perubahan/PERUBAHAN_18OGOS.md")
+PER19 = _dokumen("dokumen/perubahan/PERUBAHAN_19OGOS.md")
+MULA = _dokumen("dokumen/manual/MULA_SINI.md")
 UJI = os.path.join(BASE, "uji_negatif_8z.py")
 
 HARI, BULAN, TAHUN = 19, "Ogos", 2026

@@ -124,21 +124,36 @@ sys.path.insert(0, BASE)
 
 import semak
 
-UJI = "uji_visual_ralat.py"
+
+def _uji(rel):
+    p = os.path.join(BASE, rel)
+    if os.path.exists(p):
+        return p
+    return os.path.join(BASE, "tests", rel)
+
+
+UJI = _uji("uji_visual_ralat.py")
 MAN = "dokumen/manual/MANUAL_REFERENSI_DEV.md"
 DUMMY = "uji_visual_cuba.py"
 KITAB = "ui/pages_kitab.py"
 PAGES = "ui/pages.py"
-UJI_CARIAN = "uji_visual_carian.py"
+UJI_CARIAN = _uji("uji_visual_carian.py")
 DETAIL = "ui/pages_detail.py"
 TRANS = "dokumen/manual/TRANSFORMASI_DETAIL.md"
 README_MD = "README.md"
 CLOG = "dokumen/perubahan/CHANGELOG.md"
-PADANAN = "dokumen/audit/PADANAN_ARKIB.md"
+def _dokumen(rel):
+    p = os.path.join(BASE, rel)
+    if os.path.exists(p):
+        return p
+    return os.path.join(os.path.dirname(BASE), "PustakaHadith_arsip", rel)
+
+
+PADANAN = _dokumen("dokumen/audit/PADANAN_ARKIB.md")
 PROBE_PY = "_neg_8m_probe.py"
 APP_QT = "ui/app_qt.py"
 LOGO = "scripts/bina_logo.py"
-MULA = "dokumen/manual/MULA_SINI.md"
+MULA = _dokumen("dokumen/manual/MULA_SINI.md")
 THEME = "ui/theme.py"
 
 PASS = 0

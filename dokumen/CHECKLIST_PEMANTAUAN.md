@@ -10,6 +10,8 @@
 > `dokumen/rujukan/PLAN_BINA_EDARAN.md` (kawalan fasa/gate),
 > `dokumen/surat/kebenaran/PERMOHONAN_LESEN_AHMAD.md` (lesen Inggeris).
 > **Log harian:** `dokumen/perubahan/PERUBAHAN_20OGOS.md`.
+> **Nota (5 Okt 2026):** rujukan `dokumen/surat/*` dan `PERUBAHAN_*.md`
+> kini berada di repo arkib adik-beradik `PustakaHadith/arsip`.
 
 ---
 

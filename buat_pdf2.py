@@ -10,8 +10,17 @@ from reportlab.lib.utils import ImageReader
 
 TMP = r"C:\ph_aset"
 os.makedirs(TMP, exist_ok=True)
-BASE = os.path.abspath("dokumen/surat/hadis.my")
-LOGO = os.path.abspath("dokumen/surat/hadis.my/logo_PustakaHadith.png")
+
+
+def _dokumen(rel):
+    p = os.path.abspath(rel)
+    if os.path.exists(p):
+        return p
+    return os.path.abspath(os.path.join("..", "PustakaHadith_arsip", rel))
+
+
+BASE = _dokumen("dokumen/surat/hadis.my")
+LOGO = os.path.join(BASE, "logo_pustakahadith.png")
 
 TEAL = colors.HexColor("#1A6B3C")
 GREY = colors.HexColor("#555555")

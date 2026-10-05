@@ -228,7 +228,7 @@ python sync.py
 ## Verification
 
 ```bash
-python semak.py && python semak_versi.py      # 393 semakan (15 bahagian) + version
+python semak.py && python semak_versi.py      # 360 semakan (15 bahagian) + version
                                  # (build folder not git + no user cache:
                                  #  semak #12 git comparison & part #9 skipped)
 ```
@@ -239,4 +239,4 @@ python semak.py && python semak_versi.py      # 393 semakan (15 bahagian) + vers
 
 Hadith data sourced from `service.hadis.my`. Commentary from **SemakHadis.com** — used with attribution in app. Before commercial distribution, obtain written permission from SemakHadis.com.
 
-Part of this project structure summarizes the development journey; full records (design rationale, audits, sessions) in `dokumen/sesi/sesi_index.md`. Detailed before/after UI comparison (two-column layout, warm paper palette, color chips) with screenshots in `dokumen/manual/TRANSFORMASI_DETAIL.md`. Latest daily changelog (13 Aug — removed Sebelah tab, aligned text, default Arabic Small, AI draft fix): `dokumen/perubahan/PERUBAHAN_13OGOS.md`.
+Part of this project structure summarizes the development journey; full records (design rationale, audits, sessions) in the sibling archive repo [`PustakaHadith/arsip`](https://github.com/PustakaHadith/arsip) (`dokumen/sesi/sesi_index.md`). Detailed before/after UI comparison (two-column layout, warm paper palette, color chips) with screenshots in `dokumen/manual/TRANSFORMASI_DETAIL.md`. Latest daily changelog: `dokumen/perubahan/CHANGELOG.md` (per-session `PERUBAHAN_*.md` files live in the archive repo).

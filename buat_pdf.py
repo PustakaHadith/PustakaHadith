@@ -4,8 +4,16 @@ from xhtml2pdf import pisa
 TMP = r"C:\ph_aset"
 os.makedirs(TMP, exist_ok=True)
 
-BASE = os.path.abspath("dokumen/surat/hadis.my")
-LOGO = os.path.abspath("dokumen/surat/hadis.my/logo_PustakaHadith.png")
+
+def _dokumen(rel):
+    p = os.path.abspath(rel)
+    if os.path.exists(p):
+        return p
+    return os.path.abspath(os.path.join("..", "PustakaHadith_arsip", rel))
+
+
+BASE = _dokumen("dokumen/surat/hadis.my")
+LOGO = os.path.join(BASE, "logo_pustakahadith.png")
 SRC = [
     ("SURAT_HADISMY.md", "SURAT_HADISMY.pdf", True),
     ("EMEL_HADISMY.md", "EMEL_HADISMY.pdf", True),
