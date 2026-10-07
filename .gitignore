@@ -74,3 +74,13 @@ mockup/selected_*
 
 # Fail data pengguna (PII) - jangan commit
 bf9c0680-b5ff-4d53-8fb8-376e148cbdee.json
+
+# Rujukan/tangkapan/artefak - kekal LOKAL, jangan push (5 Okt 2026)
+# (semak.py tetap lulus kerana fail kekal di disk; CI hanya compileall .py)
+/dokumen/
+/screenshots/
+/docs/
+/msix/
+/mockup/
+/amiri-sample.html
+/hadyahadis-mockup.html
