@@ -79,7 +79,6 @@ bf9c0680-b5ff-4d53-8fb8-376e148cbdee.json
 # (semak.py tetap lulus kerana fail kekal di disk; CI hanya compileall .py)
 /dokumen/
 /screenshots/
-/docs/
 /msix/
 /mockup/
 /amiri-sample.html
