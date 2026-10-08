@@ -42,7 +42,7 @@ A desktop Windows application containing **62,169 hadiths** from 9 major books (
 | **Dual-Column Language Tabs** | Detail view: right column **ARAB \| TRANSLITERATION** (2 romanization styles), left column **Malay \| Indonesian \| English** — RTL layout (Arabic right, translations left, 14 Aug) · translation text always aligned with Arabic |
 | **Action Bar `Report \| Share \| Copy`** | Below translation (like sunnah.com): Report → sunnah.com; Share → WhatsApp per current language; Copy → 3 options (Arabic only / current translation / Arabic + current translation). 💬 WhatsApp also in title bar |
 | **Splash Screen** | Semantic model loading phase shown with progress bar — user knows app isn't frozen; skippable by click (v1.3) |
-| **Jump Direct to Hadith** | Type `bukhari 433`, `B433`, `b:433` in search to open book at hadith number, or `433` alone to open detail directly; "Jump to Hadith #" box above list + `Ctrl+G` shortcut on book page (v1.3) |
+| **Jump Direct to Hadith** | Type `bukhari 433`, `B433`, `b:433` in search to open book at hadith number, or `433` alone to open detail directly; kitab shortcut prefixes `b mu ad ti an im mw ah da` (case-insensitive, e.g. `mu4665`, `AD4400`); "Jump to Hadith #" box above list + `Ctrl+G` shortcut on book page (v1.3) |
 | **Errors Translated to Malay** | 23 runtime error patterns (sqlite3/requests/OSError/faiss/HTTP/JSON) mapped to user-friendly messages before display |
 | **Syarah & Transliteration** | Arabic transliteration and additional syarah |
 | **4 Languages** | Arabic, Malay, Indonesian, English |

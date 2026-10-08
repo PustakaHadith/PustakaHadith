@@ -268,7 +268,14 @@ class PustakaApp(PagesKitab, PagesRak, PagesCarian, PagesDetail,
         # tetingkap utama TIDAK auto-henti app.exec_(). Tanpa ini proses
         # kekal berjalan di latar selepas window ditutup. Keluar secara
         # eksplisit di sini supaya aplikasi berakhir bersih.
-        QApplication.quit()
+        # UJIAN: `PustakaApp.ujian_mode = True` — QApplication.quit()
+        # dipanggil LUAR exec_ meracuni QEventLoop seterusnya (semua
+        # tunggu/QEventLoop.exec seterusnya kembali serta-merta; timer +
+        # isyarat worker berantai tak pernah sampai). Ujian restart
+        # (uji_tersimpan_sebenar) membina instance kedua dalam proses
+        # sama → matikan quit di sini. Apl sebenar: kekal seperti asal.
+        if not getattr(PustakaApp, "ujian_mode", False):
+            QApplication.quit()
 
     def resizeEvent(self, e):
         super().resizeEvent(e)

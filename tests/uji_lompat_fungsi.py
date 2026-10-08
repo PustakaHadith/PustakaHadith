@@ -100,6 +100,12 @@ def jalankan():
     semak("433 default muslim", _parse_lompat("433", "muslim") == ("muslim", 433))
     semak("hukum riba bukan lompat", _parse_lompat("hukum riba") is None)
     semak("m 5 ambigu bukan lompat", _parse_lompat("m 5") is None)
+    # singkatan rasmi 9 kitab (padan tepat _SINGKATAN_LOMPAT)
+    semak("mu4665 -> muslim", _parse_lompat("mu4665") == ("muslim", 4665))
+    semak("AD4400 -> abu-daud", _parse_lompat("AD4400") == ("abu-daud", 4400))
+    semak("im500 -> ibnu-majah", _parse_lompat("im500") == ("ibnu-majah", 500))
+    semak("mw100 -> malik", _parse_lompat("mw100") == ("malik", 100))
+    semak("AN5000 -> nasai", _parse_lompat("AN5000") == ("nasai", 5000))
 
     print("=== _kira_halaman_lompat (offline) ===")
     page, total = w._kira_halaman_lompat("bukhari", 433)
@@ -290,8 +296,11 @@ def periksa_kitab():
 
     print("=== Butang Simpan/Tersimpan (togol penanda buku) ===")
     # Logik label diuji unit (semak.py 8r); di sini tingkah laku SEBENAR:
-    # klik Simpan menukar label kepada '⭐ Tersimpan' DAN menambah ke
-    # penanda buku; klik kedua mengembalikan label + membuangnya.
+    # klik ikon Simpan menukar tooltip kepada '⭐ Tersimpan' DAN menambah
+    # ke penanda buku; klik kedua mengembalikan tooltip + membuangnya.
+    # NOTA: bar tindakan guna ikon (IconActionButton) sejak 4 butang ikon
+    # -- `_save_btn` (teks) tidak wujud lagi; keadaan dibaca melalui
+    # `_active` + tooltip (_label_simpan).
     # Keadaan awal dipaksa bersih (bukhari#2 dibuang dahulu) supaya
     # deterministik; penanda buku asal dipulihkan selepas ujian.
     asal_bm = list(w.bookmarks)
@@ -302,18 +311,22 @@ def periksa_kitab():
                          and (w._detail_h or {}).get("id") == 2)
     semak("butiran No. 2 dibuka (ujian Simpan)", sedia,
           f"index={w.stack.currentIndex()}, hid={(w._detail_h or {}).get('id')}")
+    simpan = w._save_btn_icon
     semak("butang Simpan mula '☆ Simpan' (belum disimpan)",
-          w._save_btn.text() == "☆ Simpan", f"teks={w._save_btn.text()!r}")
-    w._save_btn.click()
-    semak("klik Simpan -> label '⭐ Tersimpan'",
-          w._save_btn.text() == "⭐ Tersimpan", f"teks={w._save_btn.text()!r}")
+          not simpan._active and simpan.toolTip() == "☆ Simpan",
+          f"aktif={simpan._active}, tooltip={simpan.toolTip()!r}")
+    simpan.click()
+    semak("klik Simpan -> ikon aktif + tooltip '⭐ Tersimpan'",
+          simpan._active and simpan.toolTip() == "⭐ Tersimpan",
+          f"aktif={simpan._active}, tooltip={simpan.toolTip()!r}")
     bm_ada = any(b.get("slug") == "bukhari" and b.get("id") == 2
                  for b in w.bookmarks)
     semak("penanda buku ditambah (bukhari#2)", bm_ada,
           f"bookmarks={[(b.get('slug'), b.get('id')) for b in w.bookmarks]}")
-    w._save_btn.click()
-    semak("klik kedua -> label '☆ Simpan' semula",
-          w._save_btn.text() == "☆ Simpan", f"teks={w._save_btn.text()!r}")
+    simpan.click()
+    semak("klik kedua -> tooltip '☆ Simpan' semula",
+          not simpan._active and simpan.toolTip() == "☆ Simpan",
+          f"aktif={simpan._active}, tooltip={simpan.toolTip()!r}")
     bm_tiada = not any(b.get("slug") == "bukhari" and b.get("id") == 2
                        for b in w.bookmarks)
     semak("penanda buku dibuang (kembali asal)", bm_tiada)

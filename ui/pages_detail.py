@@ -403,9 +403,10 @@ class PagesDetail:
 
         tl.addLayout(self._tajuk_r1)
         # Label jelas (pilihan B, 27 Ogos): nombor hadis ikut edisi
-        # terjemahan sumber, bukan penomoran sunnah.com / hadith.my.
+        # terjemahan sumber, bukan susunan nombor sunnah.com / hadis.my.
         cap = QLabel("No. rujukan PustakaHadith · mengikut edisi terjemahan "
-                     "sumber (mungkin berbeza dari penomoran sunnah.com / hadith.my)")
+                     "sumber (mungkin berbeza daripada susunan nombor di "
+                     "sunnah.com / hadis.my)")
         cap.setObjectName("muted")
         cap.setWordWrap(True)
         tl.addWidget(cap)

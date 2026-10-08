@@ -2,7 +2,8 @@
 """Ujian parser 'lompat ke hadis' — _parse_lompat / _slug_dari_awalan.
 
 Melindungi regresi ejaan kitab & format lompat pada bar carian:
-  'bukhari 433', 'bukhari:433', 'B433', 'bukhari433', 'b 433', '433'.
+  'bukhari 433', 'bukhari:433', 'B433', 'bukhari433', 'b 433', '433',
+  dan singkatan rasmi 9 kitab ('mu4665', 'AD4400', 'mw100', dsb.).
 Tiada GUI diperlukan (offscreen). Jalankan:
     python uji_lompat.py
 Keluar 0 jika semua lulus, 1 jika ada kegagalan.
@@ -73,6 +74,19 @@ LULUS = [
     ("muw 5", None, ("malik", 5)),
     ("ah 5", None, ("ahmad", 5)),
     ("dar 7", None, ("darimi", 7)),
+    # singkatan RASMI 9 kitab (padan tepat, besar/kecil bebas)
+    ("mu 5", None, ("muslim", 5)),
+    ("ad 10", None, ("abu-daud", 10)),
+    ("ti 2", None, ("tirmidzi", 2)),
+    ("an 10", None, ("nasai", 10)),
+    ("im 3", None, ("ibnu-majah", 3)),
+    ("mw 12", None, ("malik", 12)),
+    ("da 7", None, ("darimi", 7)),
+    ("MU4665", None, ("muslim", 4665)),
+    ("Ad4400", None, ("abu-daud", 4400)),
+    ("IM500", None, ("ibnu-majah", 500)),
+    ("Mw100", None, ("malik", 100)),
+    ("AN5000", None, ("nasai", 5000)),
     # nombor sahaja — kitab lalai daripada pemanggil
     ("433", "muslim", ("muslim", 433)),
 ]
@@ -92,21 +106,28 @@ BUKAN_LULUS = [
     ("hukum riba", None),
     ("hukum: riba", None),
     ("hadis 10", None),
-    # awalan AMBIGU — elak tekaan silap
+    # awalan AMBIGU — elak tekaan silap ('mu' kini singkatan rasmi
+    # muslim, jadi tiada lagi dalam senarai ini)
     ("m 5", None),                  # muslim / malik
     ("a 5", None),                  # ahmad / abu-daud
-    ("mu 5", None),                 # muslim / malik / musnad-*
     ("mus 5", None),                # muslim + musnad ahmad/darimi
     ("s 5", None),                  # sahih-* / sunan-* / shahih-*
 ]
 
-# ── Awalan ringkas (_slug_dari_awalan): unik -> slug, ambigu -> None ─
+# ── Awalan ringkas (_slug_dari_awalan): singkatan rasmi (tepat),
+#   awalan kabur unik -> slug; ambigu -> None ──────────────────────
 AWALAN = {
-    "b": "bukhari", "t": "tirmidzi", "n": "nasai",
+    # singkatan RASMI 9 kitab (padan tepat _SINGKATAN_LOMPAT)
+    "b": "bukhari", "mu": "muslim", "ad": "abu-daud",
+    "ti": "tirmidzi", "an": "nasai", "im": "ibnu-majah",
+    "mw": "malik", "ah": "ahmad", "da": "darimi",
+    # awalan kabur unik (kekal berfungsi)
+    "t": "tirmidzi", "n": "nasai",
     "i": "ibnu-majah", "d": "darimi",
     "ab": "abu-daud", "musl": "muslim", "ma": "malik",
-    "muw": "malik", "ah": "ahmad", "dar": "darimi",
-    "m": None, "a": None, "mu": None, "mus": None, "s": None,
+    "muw": "malik", "dar": "darimi",
+    # ambigu -> kekal None (jatuh ke carian biasa)
+    "m": None, "a": None, "mus": None, "s": None,
 }
 
 print("=" * 62)

@@ -100,7 +100,7 @@ class PagesCarian:
         if ada_latar_imej():
             hero.setStyleSheet(
                 "QFrame#hero { background: transparent; border: none; }")
-        self.search_bar = SearchBar("Cari hadis… (cth. bukhari 433, B433)")
+        self.search_bar = SearchBar("Cari hadis… (cth. bukhari 433, B433, mu4665)")
         self.search_bar.setMaximumWidth(900)
         w = QWidget()
         wl = QHBoxLayout(w)

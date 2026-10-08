@@ -62,9 +62,25 @@ def tunggu(ms: int):
 
 
 BM = os.path.join(BASE, "bookmarks.json")
-BM_SANDARAN = os.path.join(BASE, "bookmarks.json.sandaran_uji")
+# Nama sandaran UNIK (lihat nota uji_end_to_end) — JANGAN kongsi dengan
+# ujian lain: sandaran berebut pernah memadam data pengguna (7 Okt 2026).
+BM_SANDARAN = os.path.join(BASE, "bookmarks.json.sandaran_pip")
+if os.path.exists(BM_SANDARAN):
+    # Sisa larian terdahulu yang gagal pulih — sandaran = salinan
+    # terakhir diketahui baik; pulihkan SEBELUM menulis apa-apa
+    # (jangan ditimbus dgn salinan baru).
+    try:
+        if os.path.exists(BM):
+            os.remove(BM)
+        shutil.move(BM_SANDARAN, BM)
+    except OSError:
+        pass
 if os.path.exists(BM):
     shutil.copy2(BM, BM_SANDARAN)
+# Asingkan: mula dgn bookmarks kosong — D2 menyemak meta tepat
+# "1 tersimpan"; data pengguna dipulihkan dalam finally.
+with open(BM, "w", encoding="utf-8") as f:
+    json.dump([], f, ensure_ascii=False, indent=2)
 
 print("=" * 62)
 print("  PIPELINE END-TO-END — install → API → baca → tersimpan")
@@ -185,11 +201,14 @@ try:
     w._toggle_save(h)
     tunggu(300)
     semak("D1. Hadis disimpan (bookmarks + butang)",
-          w._is_saved("bukhari", 1) and "Tersimpan" in w._save_btn.text())
+          w._is_saved("bukhari", 1)
+          and "Tersimpan" in w._save_btn_icon.toolTip())
     w.go("saved")
     tunggu(700)
     semak("D2. Tersimpan memaparkan hadis",
-          "1 hadis disimpan" in
+          # Meta banner kini "{n} tersimpan · {n} dibaca" (halaman
+          # "Simpan & Sejarah" — teks lama "1 hadis disimpan" basi).
+          "1 tersimpan" in
           " ".join(t for obj in w.findChildren(object)
                    if hasattr(obj, "text") and obj.isVisible()
                    for t in [obj.text()] if t))
@@ -207,19 +226,33 @@ finally:
     except Exception:
         pass
     tunggu(800)
-    if os.path.exists(BM_SANDARAN):
-        shutil.move(BM_SANDARAN, BM)
-    else:
+    # Pulih dgn cubaan berulang: fail yang baru ditulis selalu dipegang
+    # sebentar oleh imbasan AV/index Windows (WinError 32). JANGAN buang
+    # sandaran bila pemulihan gagal — sandaran = satu-satunya salinan
+    # (pembersihan buta pernah memadam data pengguna, 7 Okt 2026).
+    pulih = False
+    for _cuba in range(40):
         try:
-            os.remove(BM)
+            if os.path.exists(BM_SANDARAN):
+                if os.path.exists(BM):
+                    os.remove(BM)
+                shutil.move(BM_SANDARAN, BM)
+            else:
+                try:
+                    os.remove(BM)
+                except OSError:
+                    pass
+            pulih = True
+            break
+        except OSError:
+            tunggu(500)
+    if pulih:
+        try:
+            if os.path.exists(BM_SANDARAN):
+                os.remove(BM_SANDARAN)
         except OSError:
             pass
-    try:
-        if os.path.exists(BM_SANDARAN):
-            os.remove(BM_SANDARAN)
-    except OSError:
-        pass
-    semak("E1. bookmarks.json dipulihkan (data pengguna selamat)", True)
+    semak("E1. bookmarks.json dipulihkan (data pengguna selamat)", pulih)
 
 print("\n" + "=" * 62)
 print(f"  KEPUTUSAN: {PASS} lulus, {FAIL} gagal")

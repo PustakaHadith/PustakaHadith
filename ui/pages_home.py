@@ -197,7 +197,7 @@ class PagesHome:
         v.addSpacing(6)
 
         self.home_search = SearchBar(
-            "Cari hadis, topik atau nombor… (cth. bukhari 433, B433)",
+            "Cari hadis, topik atau nombor… (cth. bukhari 433, B433, mu4665)",
             with_chips=False)
         self.home_search.setMaximumWidth(760)
         attach_copy_menu(self.home_search.input)

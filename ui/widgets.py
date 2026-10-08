@@ -429,7 +429,8 @@ def hadith_card(hadis: dict, kitab_name: str = "", scale: float = 1.0,
     no = QLabel(f"No. {hadis.get('id', '')}")
     no.setObjectName("hadisNo")
     no.setToolTip("No. rujukan PustakaHadith — mengikut edisi terjemahan "
-                  "sumber; mungkin berbeza dari penomoran sunnah.com / hadith.my")
+                  "sumber; mungkin berbeza daripada susunan nombor di "
+                  "sunnah.com / hadis.my")
     tl.addWidget(no)
 
     # Nama bab -- terjemahan BM (Kaedah B) dengan fallback EN dari CDN.

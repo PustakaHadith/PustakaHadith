@@ -45,7 +45,20 @@ def tunggu(ms: int):
 
 # ── Sandaran bookmarks.json ─────────────────────────────────────────
 BM = os.path.join(BASE, "bookmarks.json")
-BM_SANDARAN = os.path.join(BASE, "bookmarks.json.sandaran_uji")
+# NOTA: nama sandaran mesti UNIK antara ujian — uji_tersimpan_sebenar
+# pernah kongsi nama ini dan bila dua ujian berjalan serentak, sandaran
+# berebut -> fail pengguna terakhir dipadam (kehilangan data 7 Okt 2026).
+BM_SANDARAN = os.path.join(BASE, "bookmarks.json.sandaran_e2e")
+if os.path.exists(BM_SANDARAN):
+    # Sisa larian terdahulu yang gagal pulih — sandaran = salinan
+    # terakhir diketahui baik; pulihkan SEBELUM menulis apa-apa
+    # (jangan ditimbus dgn salinan baru).
+    try:
+        if os.path.exists(BM):
+            os.remove(BM)
+        shutil.move(BM_SANDARAN, BM)
+    except OSError:
+        pass
 if os.path.exists(BM):
     shutil.copy2(BM, BM_SANDARAN)
 
@@ -110,8 +123,9 @@ try:
     semak("7. Disimpan ke penanda buku",
           w._is_saved("bukhari", hadis_tersimpan["id"]))
     semak("8. Butang bertukar ke Tersimpan",
-          w._save_btn.text() == "⭐ Tersimpan",
-          f"teks={w._save_btn.text()}")
+          w._save_btn_icon.toolTip() == "⭐ Tersimpan"
+          and w._save_btn_icon._active,
+          f"tooltip={w._save_btn_icon.toolTip()!r}")
 
     # ── Halaman Tersimpan ───────────────────────────────────────────
     w.go("saved")
@@ -155,22 +169,34 @@ finally:
     tunggu(300)
     w.close()
     tunggu(2000)
-    if os.path.exists(BM_SANDARAN):
-        shutil.move(BM_SANDARAN, BM)
-    else:
+    # Pulih dgn cubaan berulang: fail yang baru ditulis selalu dipegang
+    # sebentar oleh imbasan AV/index Windows (WinError 32). JANGAN buang
+    # sandaran bila pemulihan gagal — sandaran = satu-satunya salinan
+    # (pembersihan buta pernah memadam data pengguna, 7 Okt 2026).
+    pulih = False
+    for _cuba in range(40):
         try:
-            os.remove(BM)
+            if os.path.exists(BM_SANDARAN):
+                if os.path.exists(BM):
+                    os.remove(BM)
+                shutil.move(BM_SANDARAN, BM)
+            else:
+                try:
+                    os.remove(BM)
+                except OSError:
+                    pass
+            pulih = True
+            break
+        except OSError:
+            tunggu(500)
+    if pulih:
+        try:
+            if os.path.exists(BM_SANDARAN):
+                os.remove(BM_SANDARAN)
         except OSError:
             pass
-    # Pembersihan eksplisit: jangan tinggalkan sisa sandaran walaupun
-    # move terganggu (cth. semak.py berjalan selari).
-    try:
-        if os.path.exists(BM_SANDARAN):
-            os.remove(BM_SANDARAN)
-    except OSError:
-        pass
     semak("15. Aplikasi ditutup tanpa crash", True)
-    semak("16. bookmarks.json dipulihkan", True)
+    semak("16. bookmarks.json dipulihkan", pulih)
 
 print("\n" + "=" * 62)
 print(f"  KEPUTUSAN: {PASS} lulus, {FAIL} gagal")

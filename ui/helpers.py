@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import time
 from datetime import datetime
 
 from config import (                                       # noqa: E402
@@ -169,12 +170,32 @@ def _normalis_kitab(nama: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", nama.lower()).strip("-")
 
 
+# Singkatan RASMI lompat pantas (huruf kecil — input sudah dinormalkan
+# oleh _parse_lompat, jadi kes besar/kecil tidak mempengaruhi). Padan
+# TEPAT diambil dahulu sebelum cubaan awalan kabur supaya keputusan
+# deterministik walaupun nama kitab lain turut bermula dgn huruf sama:
+#   'mu' -> muslim (BUKAN keliru dgn "Muwatta' Malik")
+#   'im' -> ibnu-majah (BUKAN "Imam Ahmad"/"Imam Malik")
+#   'mw'/'ad' tiada padanan kabur langsung -> kini tetap lompat
+_SINGKATAN_LOMPAT = {
+    "b": "bukhari", "mu": "muslim", "ad": "abu-daud",
+    "ti": "tirmidzi", "an": "nasai", "im": "ibnu-majah",
+    "mw": "malik", "ah": "ahmad", "da": "darimi",
+}
+
+
 def _slug_dari_awalan(awalan: str):
     """Pulangkan slug jika awalan padan SATU kitab sahaja, else None.
 
-    'b' -> bukhari, 't' -> tirmidzi, 'ab' -> abu-daud. 'm'/'a' ambigu
-    (muslim/malik, ahmad/abu-daud) -> None supaya jatuh ke carian biasa.
+    Singkatan RASMI (padan tepat, lihat _SINGKATAN_LOMPAT): 'b' bukhari,
+    'mu' muslim, 'ad' abu-daud, 'ti' tirmidzi, 'an' nasai, 'im'
+    ibnu-majah, 'mw' malik, 'ah' ahmad, 'da' darimi. Selepas itu cubaan
+    awalan KABUR yang unik ('t' -> tirmidzi, 'ab' -> abu-daud, 'musl'
+    -> muslim). 'm'/'a' ambigu (muslim/malik, ahmad/abu-daud) -> None
+    supaya jatuh ke carian biasa.
     """
+    if awalan in _SINGKATAN_LOMPAT:
+        return _SINGKATAN_LOMPAT[awalan]
     padan = set()
     for slug, meta in COLLECTION_META.items():
         for nama in (slug, meta.get("short", ""), meta.get("name", "")):
@@ -191,10 +212,12 @@ def _parse_lompat(q, default_slug=None):
       'bukhari:433' / 'b:433'               pemisah titik bertindih
       'B433' / 'bukhari433'                 awalan/huruf + nombor
       '433'                                 nombor sahaja
-    Nama kitab boleh ringkas ('b', 'mu', 'ab') selagi padan UNIK;
-    `default_slug` dipakai bila tiada nama ('433' sahaja -- chip kitab
-    terpilih atau kitab terakhir dibuka). Pulangkan (slug, nombor) atau
-    None untuk carian biasa.
+    Nama kitab boleh ringkas: singkatan rasmi 'b'/'mu'/'ad'/'ti'/'an'/
+    'im'/'mw'/'ah'/'da' (padan tepat, lihat _SINGKATAN_LOMPAT) atau
+    awalan kabur selagi UNIK ('musl', 'ab'). `default_slug` dipakai
+    bila tiada nama ('433' sahaja -- chip kitab terpilih atau kitab
+    terakhir dibuka). Pulangkan (slug, nombor) atau None untuk carian
+    biasa.
     """
     # ':' dijadikan ruang supaya 'bukhari:433' mengalir melalui laluan
     # token yang sama dengan 'bukhari 433' (titik bertindih tidak pernah
@@ -236,11 +259,23 @@ def _read_json(path, default):
 
 
 def _write_json(path, data):
+    """Tulis atomik (tmp -> os.replace) dgn cubaan berulang.
+
+    os.replace boleh gagal SEMENTARA (WinError 32) bila fail sasaran
+    baru ditulis sedang dipegang imbasan AV Windows. Dahulu kegagalan
+    ini SENYAP — tulisan pengguna (bookmark dsb.) hilang dan tmp
+    tertinggal (dedah 7 Okt 2026: tulisan selepas-simpan tak masuk).
+    """
     try:
         tmp = path + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
-        os.replace(tmp, path)
+        for _ in range(10):
+            try:
+                os.replace(tmp, path)
+                return
+            except OSError:
+                time.sleep(0.3)
     except Exception:
         pass
 

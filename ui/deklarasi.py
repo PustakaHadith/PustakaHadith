@@ -1,7 +1,7 @@
 """Deklarasi PustakaHadith — skrin permulaan (sekali) + halaman Tentang.
 
 Teks diambil daripada `DEKLARASI.md` (8 Ogos 2026): apa aplikasi ini
-dan apa ia BUKAN, batasan, sumber & atribusi, dan sokongan. Bahagian
+dan apa ia BUKAN, batasan, sumber & kredit, dan sokongan. Bahagian
 "Kedudukan berbanding platform lain" dalam DEKLARASI.md ialah rujukan
 dalaman sahaja -- TIDAK dipapar dalam aplikasi.
 
@@ -25,6 +25,7 @@ from ui.theme import (
     TEXT_FAINT, TEXT_MUTED, TEXT_PRIMARY,
 )
 from ui.widgets import BackgroundCanvas
+from VERSI import VERSI
 
 DEKLARASI_FLAG = "deklarasi_dibaca"
 SEMAKHADIS_URL = "https://semakhadis.com"
@@ -176,7 +177,7 @@ class DeklarasiDialog(QDialog):
     def _bina_penuh(self, v: QVBoxLayout):
         v.addWidget(_lbl("Tentang PustakaHadith", saiz=22, warna=TEAL,
                          tebal=True))
-        v.addWidget(_lbl("Versi 1.0 — aplikasi desktop percuma, berjalan "
+        v.addWidget(_lbl(f"Versi {VERSI} — aplikasi desktop percuma, berjalan "
                          "sepenuhnya luar talian.", saiz=13,
                          warna=TEXT_MUTED, bawah=6))
 
@@ -226,22 +227,22 @@ class DeklarasiDialog(QDialog):
         tbl.setMinimumHeight(len(data) * 34 + 4)
         v.addWidget(tbl)
 
-        _kepala(v, "Penomoran Hadis")
+        _kepala(v, "Nombor Hadis")
         _perenggan(v, "Nombor pada setiap hadis mengikuti edisi terjemahan "
-                       "sumber (Kutub al-Tis'ah) dan mungkin berbeza dari "
-                       "penomoran sunnah.com / hadith.my. Ia dipaparkan sebagai "
-                       "\"No. rujukan PustakaHadith\" pada butiran hadis. "
+                       "sumber (Kutub al-Tis'ah) dan mungkin berbeza daripada "
+                       "susunan nombor di sunnah.com / hadis.my. Ia dipaparkan "
+                       "sebagai \"No. rujukan PustakaHadith\" pada butiran hadis. "
                        "Kandungan hadis kekal sahih — hanya nombor rujukan "
                        "yang berbeza edisi.", warna=TEXT_MUTED)
 
-        _kepala(v, "Sumber dan atribusi")
+        _kepala(v, "Sumber dan kredit")
         sumber = [
             ("Teks hadis, terjemahan\nMelayu & Indonesia",
              f"<a href=\"{HADISMY_URL}\" style='color:{TEAL_LIGHT}'>" f"hadis.my</a> — API Hadis Malaysia"),
             ("Terjemahan Inggeris\n& darjat ulama",
              f"<a href=\"{FAWAZ_URL}\" style='color:{TEAL_LIGHT}'>" f"fawazahmed0/hadith-api</a> (domain awam)"),
             ("Huraian ringkas",
-             f"<a href=\"{SEMAKHADIS_URL}\" style='color:{TEAL_LIGHT}'>" f"SemakHadis.com</a> — atribusi pada setiap huraian"),
+             f"<a href=\"{SEMAKHADIS_URL}\" style='color:{TEAL_LIGHT}'>" f"SemakHadis.com</a> — kredit pada setiap huraian"),
         ]
         stbl = QTableWidget(len(sumber), 2)
         stbl.setEditTriggers(QTableWidget.NoEditTriggers)

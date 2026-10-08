@@ -1812,6 +1812,8 @@ biodata penerbit.
     Square44, Square150, Wide310x150 (icon center-fit, bg lutsinar)
 - JPG = icon atas latar putih 880x717; logo1 = fit atas kanvas 900x512
 - Backup: D:\Pustaka Quran Hadis\Pustaka\backup_logo_2Okt\ (25 fail, ikut laluan asal)
+  — **DILUPUSKAN 5 Okt**: tak perlu lagi; versi lama masih dalam sejarah git
+  (outer `ab8eeb1^`, app `178b0ca^`)
 - Tooling: PowerShell System.Drawing (resize/ICO), ffmpeg (webp) - tiada Pillow
 - NOTA: landing belum live (perlukan commit+push -> Cloudflare auto-deploy);
   exe/MSIX belum ada icon baharu sehingga rebuild seterusnya
@@ -1971,3 +1973,32 @@ Bunyi akhir: `SEMUA LULUS - 381 semakan (15 bahagian), selamat dihantar`.
 
 **Masih menunggu pengguna:** biodata Penerbit (teks dari pengguna),
 pengesahan visual butang Kongsi FB (salin + tampal).
+
+## Sesi 41 - 5 Okt 2026 (kebersihan repo + pengesahan akhir)
+
+1. **Untrack rujukan/artefak — kekal lokal, tak di-push** (commit `e1166e1`):
+   `dokumen/` (52 fail), `screenshots/` (6), `docs/` (5), `msix/` (10),
+   `mockup/` (4) + `amiri-sample.html` + `hadyahadis-mockup.html`
+   -> **217 -> 138 fail track**. Semua fail KELAL di disk + masuk `.gitignore`.
+   - `semak.py` tetap lulus (baca fail dari disk); CI hanya `compileall .py`
+     (tak baca `dokumen/`) -> tak terjejas.
+   - Kekal: kod (main/db/ui/core/api/utils/scripts), tests/, installer/,
+     fonts/ + `latar_globe_*.png` (UI wajib guna), semak*.py, sync*.py,
+     README/SESI/LICENSE, requirements/pyproject.
+2. **Pengesahan pengguna TUTUP** (ikut `landing-page/SESI.md` Sesi 39d):
+   Kongsi FB visual ✅, kad Store → v1.0.3 ✅, pop-up biodata di HP sebenar ✅
+   — Sesi 40 "Masih menunggu pengguna" kini ditutup.
+3. **Nota:** repo luar `Pustaka` juga dibersihkan 67 → 40 fail (commits
+   `aa341b1` + `71887d9`) + analisa Android sebagai rujukan lokal
+   (`D:\Pustaka Quran Hadis\Pustaka\analisa-android\ANALISA_ANDROID.md`).
+4. **Insiden: GitHub Pages gagal pada `e1166e1`** (emel alert) — punca:
+   Pages repo ini guna folder `/docs` sebagai host **Privacy Policy URL
+   Microsoft Store** (`https://pustakahadith.github.io/PustakaHadith/`,
+   rujuk Sesi 33 baris ~946) dan `docs/` baru dilepas dari track ->
+   build tak jumpa index. Betulan: `/docs/` ditarik keluar `.gitignore` +
+   5 fail `docs/` di-track semula -> commit **`4dc4d99`**, Pages build
+   **success**, URL hidup (HTTP 200, 9,115 bait). CI tetap lulus.
+   - Kesan: app track 138 -> **143 fail**; `dokumen/ screenshots/ msix/
+     mockup/` kekal lokal (tiada kaitan dengan Pages).
+   - Pengajaran: sebelum untrack direktori, semak dulu Pages settings
+     (`/docs`), kebergantungan CI, dan pautan luar (Store).

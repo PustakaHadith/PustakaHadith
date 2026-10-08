@@ -91,7 +91,8 @@ class PagesTersimpan:
     def _render_saved(self):
         _clear(self._saved_root)
         self._sejarah_checks = []
-        self._saved_root.addWidget(self._saved_banner())
+        banner = self._saved_banner()
+        self._saved_root.addWidget(banner)
         baris = QWidget()
         hl = QHBoxLayout(baris)
         hl.setContentsMargins(0, 0, 0, 0)
@@ -101,6 +102,14 @@ class PagesTersimpan:
         # TIADA addStretch pada _saved_root — senarai melebihi viewport;
         # stretch menuntut ruang tetap dan menjadikan kawasan bawah kosong.
         self._saved_root.addWidget(baris)
+        # show() EKSPLISIT: widget yang ditambah layout ke parent YANG
+        # SEDANG TERPAKAR direpent dan ditandakan tersembunyi oleh Qt;
+        # tanpa show() banner + baris kekal isHidden (instance kedua app
+        # dalam proses sama tak pernah dipaparkan — kad2=0 dalam ujian
+        # restart). Selamat dipanggil masa init (parent tersembunyi →
+        # kesan papar tertangguh sehingga parent dipapar).
+        banner.show()
+        baris.show()
         # ISI senarai — _render_saved hanya bina shell (banner + sidebar +
         # panel). Tanpa panggilan ini senarai kekal KOSONG sehingga pengguna
         # klik sidebar ("Semua kitab") melalui _saved_pilih_kitab. Ini punca
@@ -271,6 +280,15 @@ class PagesTersimpan:
             self._isi_sejarah()
         else:
             self._isi_bookmarks()
+        # show() EKSPLISIT setiap item: widget yang ditambah layout ke
+        # kontena YANG SEDANG TERPAKAR direpent Qt dan ditandakan
+        # tersembunyi → kekal ghaib (punca kad2=0 pada instance kedua;
+        # _toggle_simpan_kad semasa halaman terbuka berisiko sama).
+        # Selamat bila parent tersembunyi — kesan papar tertangguh.
+        for i in range(self._saved_list.count()):
+            wd = self._saved_list.itemAt(i).widget()
+            if wd is not None:
+                wd.show()
         self._laras_tinggi(self._tersimpan_sa)
 
     def _isi_bookmarks(self):

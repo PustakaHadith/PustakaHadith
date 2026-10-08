@@ -104,7 +104,7 @@ semak("A6. English 7 kitab utama (Ahmad/Darimi tiada)",
 semak("A7. Berjalan pada Python 3.14 (MULA_CEPAT §1)",
       sys.version_info[:2] >= (3, 14), sys.version.split()[0])
 import re as _re                                                   # noqa: E402
-_pra = sumber("uji_pra_hantar.py")
+_pra = sumber("tests/uji_pra_hantar.py")
 _n_ujian = len(_re.findall(r"\(\"\d+\.", _pra))
 semak("A8. Suite pra-hantar 14 ujian (MULA_CEPAT §1)",
       _n_ujian == 14 and "uji_tersimpan_sebenar.py" in _pra

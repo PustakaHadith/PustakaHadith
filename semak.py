@@ -3636,7 +3636,7 @@ def semak_deklarasi() -> None:
          "sunnah.com"),
         ("Huraian ringkas", "SemakHadis.com",
          "Huraian ringkas: SemakHadis.com — dipaparkan tanpa sebarang "
-         "pengubahsuaian, dengan atribusi pada setiap huraian"),
+         "pengubahsuaian, dengan kredit pada setiap huraian"),
     )
     rosak = []
     for label, sumber, ayat in atribusi:
