@@ -2052,3 +2052,37 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    semak_dokumen_ui 83/26.
 
 **Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
+
+## Sesi 44 - 9 Okt 2026 (RELEASE v1.1.0)
+
+1. **Naik cap versi ke 1.1.0** (commit `8394a98`) — `VERSI.py`
+   (`VERSI = "1.1.0"`), `BINA.bat`, `installer/PustakaHadith.iss`
+   (AppVersion + OutputBaseFilename), `installer/build_msix.ps1`
+   (Identity + nama fail), `msix/AppxManifest.xml` (1.1.0.0, folder
+   gitignored), lock `semak.py` 10b + docstring → 1.1.0,
+   `dokumen/perubahan/CHANGELOG.md` seksyen `## 1.1.0 — 9 Oktober 2026`
+   (setempat).
+2. **Binaan edaran (semua exit 0)** — exe PyInstaller (`--clean`,
+   74.3 MB); salin dist → `PustakaQH_dist\PustakaHadith\` (pusat
+   rasmi); Setup Inno ISCC **782.7 MB** (1,095 saat); ZIP portable
+   `7z a -tzip -mx=5` **993.5 MB** (6,133 fail; struktur
+   `PustakaHadith\` sama persis v1.0.3); MSIX `build_msix.ps1`
+   (makeappx + signtool OK) **782 MB** → `PustakaQH_dist\msix\`
+   (`signtool verify /pa` gagal = sijil sendiri, dijangka).
+3. **GitHub Release v1.1.0** — nota guna `--notes-file`; insiden:
+   ciptaan pertama terkena repo `Pustaka` (gh baca remote ikut cwd
+   parent) → padam release + tag, cipta semula dengan
+   `-R PustakaHadith/PustakaHadith`; upload 3 aset (2.55 GB, exit 0);
+   SHA-256 penuh dalam nota release; URL
+   `github.com/PustakaHadith/PustakaHadith/releases/tag/v1.1.0`.
+4. **Landing page v1.1.0** (repo parent) — kad changelog → v1.1.0
+   (4 item: carian singkatan kitab, cip 'Semua' + nombor, Reset ke
+   Asal, Lompat Nombor/dialog) + `cl-date` 9 Oktober 2026 + `cl-more`
+   sertai v1.0.3; butang dl2/dl3 + URL → v1.1.0; `dl-note` → Versi
+   1.1.0; blok TRANS ms+en selaras; kad Store `dl1-p` KEKAL v1.0.3
+   (MSIX 1.1.0.0 belum naik Partner Center).
+5. **Dokumen** — entri SESI 44 (commit ini); MULA_SINI (arsip):
+   'Sesi Terakhir' + ringkasan → 9 Okt (6 commit) + Status v1.1.0
+   LIVE; semak.py 381/381.
+
+**Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
