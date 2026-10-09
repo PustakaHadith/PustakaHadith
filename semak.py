@@ -3486,7 +3486,7 @@ def semak_versi_changelog() -> None:
 
     `VERSI.py` ialah satu-satunya sumber cap versi (semakan 10
     mengesahkan CIRI). Semakan ini menambah: (1) VERSI dikunci pada
-    "1.0" -- edaran rasmi semasa; naikkan di sini SENGAJA apabila
+    "1.1.0" -- edaran rasmi semasa; naikkan di sini SENGAJA apabila
     versi baharu dilancarkan, (2) CHANGELOG.md kekal wujud, dan (3)
     setiap versi sejarah 1.0-1.3 + versi semasa ada seksyen `## x.y`
     dalam CHANGELOG.md -- menukar cap di VERSI.py tanpa menyusuli
@@ -3502,10 +3502,10 @@ def semak_versi_changelog() -> None:
         return
     lulus(f"VERSI.py dibaca (v{VERSI})")
 
-    if VERSI != "1.0.3":
-        salah(f"VERSI dikunci 1.0.3 (edaran rasmi), sebenar {VERSI!r}")
+    if VERSI != "1.1.0":
+        salah(f"VERSI dikunci 1.1.0 (edaran rasmi), sebenar {VERSI!r}")
     else:
-        lulus("VERSI == '1.0.3' (edaran rasmi dikunci)")
+        lulus("VERSI == '1.1.0' (edaran rasmi dikunci)")
 
     if not os.path.exists("dokumen/perubahan/CHANGELOG.md"):
         salah("dokumen/perubahan/CHANGELOG.md TIADA -- "

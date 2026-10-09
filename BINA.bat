@@ -1,10 +1,10 @@
 @echo off
 chcp 65001 >nul
 cd /d "D:\Pustaka Quran Hadis\Pustaka\PustakaHadith"
-title Bina PustakaHadith v1.0.3 (adaptif) - jangan tutup tetingkap ini
+title Bina PustakaHadith v1.1.0 (adaptif) - jangan tutup tetingkap ini
 echo.
 echo  ============================================================
-echo   BINA PUSTAKAHADITH v1.0.3 (PyInstaller)
+echo   BINA PUSTAKAHADITH v1.1.0 (PyInstaller)
 echo   Ambil masa 10-15 minit. JANGAN tutup tetingkap ini.
 echo  ============================================================
 echo.

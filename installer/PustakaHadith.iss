@@ -1,12 +1,12 @@
 [Setup]
 AppId={{7DF2553E-9E62-4ED4-929A-61C71AD1047F}
 AppName=PustakaHadith
-AppVersion=1.0.3
+AppVersion=1.1.0
 AppPublisher=opencodemk
 DefaultDirName={localappdata}\PustakaHadith
 DefaultGroupName=PustakaHadith
 OutputDir=..\Output
-OutputBaseFilename=PustakaHadith-Setup-1.0.3-x64
+OutputBaseFilename=PustakaHadith-Setup-1.1.0-x64
 SetupIconFile=..\app.ico
 Compression=lzma2
 SolidCompression=yes
