@@ -81,10 +81,12 @@ class PustakaApp(PagesKitab, PagesRak, PagesCarian, PagesDetail,
             _write_json(READING_HISTORY, _hist)
 
         self.ui_idx = int(self.settings.get("font_scale_idx", 1))
-        # Keputusan Sesi 55 lanjutan: lalai saiz teks Arab = KECIL (0.85)
-        # supaya teks terjemahan di lajur kanan sama paras (top-aligned)
-        # dengan teks Arab -- mockup bukharin1/nasai2117/abudaud4177.
-        self.ar_idx = int(self.settings.get("arabic_font_idx", 0))
+        # Keputusan pengguna 9 Okt 2026: lalai saiz teks Arab =
+        # SEDERHANA (1.0×) — menggantikan KECIL (0.85, Sesi 55) yang
+        # terlalu kecil; Besar dicuba sebentar lalu dibatalkan pengguna.
+        # Susun atur dua lajur/sama paras kekal (kemas mula baris, bukan
+        # saiz fon) — pengguna boleh laras stepper Tetapan.
+        self.ar_idx = int(self.settings.get("arabic_font_idx", 1))
         self.tr_idx = int(self.settings.get("translation_font_idx", 1))
         self._fonts = available_arabic_fonts()
         saved_font = self.settings.get("arabic_font", "")

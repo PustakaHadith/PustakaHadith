@@ -16,7 +16,7 @@ from PyQt5.QtCore import (
 from PyQt5.QtGui import QColor, QPainter, QPixmap
 from PyQt5.QtWidgets import (
     QComboBox, QFrame, QGraphicsDropShadowEffect, QGridLayout,
-    QHBoxLayout, QLabel, QPushButton, QScrollArea,
+    QHBoxLayout, QLabel, QMessageBox, QPushButton, QScrollArea,
     QSizePolicy, QVBoxLayout, QWidget,
 )
 
@@ -202,7 +202,7 @@ class SettingsPanel(QFrame):
         fl = QHBoxLayout(foot)
         fl.setContentsMargins(18, 0, 18, 0)
 
-        rst = QPushButton("Set Semula")
+        rst = QPushButton("Reset ke Asal")
         rst.setCursor(Qt.PointingHandCursor)
         rst.setStyleSheet(f"""
             QPushButton {{ background: transparent; border: none;
@@ -406,15 +406,16 @@ class SettingsPanel(QFrame):
 
         # Item 8 (Sesi 36) — paparan tarikh baris HARI INI (Utama).
         _label(r, "Paparan tarikh")
-        _combo(r, [("Masihi (26 Sep 2026)", "masihi"),
-                   ("Melayu (26 September 2026)", "melayu"),
-                   ("Hijri (13 Rabiulakhir 1448H)", "hijri"),
-                   ("Hijri + Melayu", "hijri_melayu")],
-               current_data=self.app.settings.get(
-                   "tarikh_paparan", "masihi"),
-               on_change=lambda cb: (
-                   self.app._set("tarikh_paparan", cb.currentData()),
-                   self.app._kemas_tarikh()))
+        self.cb_tarikh = _combo(
+            r, [("Masihi (26 Sep 2026)", "masihi"),
+                ("Melayu (26 September 2026)", "melayu"),
+                ("Hijri (13 Rabiulakhir 1448H)", "hijri"),
+                ("Hijri + Melayu", "hijri_melayu")],
+            current_data=self.app.settings.get(
+                "tarikh_paparan", "hijri"),
+            on_change=lambda cb: (
+                self.app._set("tarikh_paparan", cb.currentData()),
+                self.app._kemas_tarikh()))
         r += 1
 
         # Arahan 28 Sep — BUTANG ON/OFF popup "Makluman" (disclaimer)
@@ -473,12 +474,13 @@ class SettingsPanel(QFrame):
         r += 1
 
         _label(r, "Bahasa dimuat")
-        _combo(r, [("Semua bahasa", "both"),
-                   ("Melayu sahaja", "bm_only"),
-                   ("Indonesia sahaja", "ind_only")],
-               current_data=self.app.settings.get("language_pref", "both"),
-               on_change=lambda cb: self.app._set(
-                   "language_pref", cb.currentData()))
+        self.cb_lang = _combo(
+            r, [("Semua bahasa", "both"),
+                ("Melayu sahaja", "bm_only"),
+                ("Indonesia sahaja", "ind_only")],
+            current_data=self.app.settings.get("language_pref", "both"),
+            on_change=lambda cb: self.app._set(
+                "language_pref", cb.currentData()))
         r += 1
 
         _label(r, "Selawat")
@@ -493,10 +495,11 @@ class SettingsPanel(QFrame):
         r += 1
 
         _label(r, "Hadis per halaman")
-        _combo(r, [(str(n), n) for n in (10, 20, 30, 50, 100)],
-               current_data=self.app.per_page(),
-               on_change=lambda cb: self.app._set(
-                   "per_page", cb.currentData()))
+        self.cb_pp = _combo(
+            r, [(str(n), n) for n in (10, 20, 30, 50, 100)],
+            current_data=self.app.per_page(),
+            on_change=lambda cb: self.app._set(
+                "per_page", cb.currentData()))
         r += 1
 
         self.body.addWidget(wrap)
@@ -538,26 +541,44 @@ class SettingsPanel(QFrame):
 
 
     def _reset(self):
-        a = self.app
-        # Keputusan Sesi 55 lanjutan: lalai teks Arab = Kecil (0).
-        a.ui_idx, a.ar_idx, a.tr_idx = 1, 0, 1
-        a.settings.update({"font_scale_idx": 1, "arabic_font_idx": 0,
-                           "translation_font_idx": 1,
-                           "language_pref": "both", "per_page": 20})
-        from ui.app_qt import _write_json, SETTINGS
-        _write_json(SETTINGS, a.settings)
-        from ui.theme import build_qss, FONT_SCALES
-        a.setStyleSheet(build_qss(FONT_SCALES[a.ui_idx]))
-        a._refresh_current()
+        """Reset ke Asal (Sesi 43) — dialog pengesahan DAHULU kerana
+        tindakan memadam kekal (Tersimpan + sejarah bacaan), kemudian
+        `_reset_ke_asal` (pages_tetapan) laksanakan penuh + toast."""
+        jawab = QMessageBox.question(
+            self, "Reset ke Asal",
+            "Kembalikan apl ke kedudukan asal pemasangan?\n\n"
+            "• Hadis Tersimpan — dipadam\n"
+            "• Sejarah bacaan — dipadam\n"
+            "• Cip 'Terakhir' & hasil carian — dikosongkan\n"
+            "• Saiz teks & terjemahan — Sederhana\n"
+            "• Paparan tarikh — Hijri\n\n"
+            "Tindakan ini tidak boleh dibatalkan.",
+            QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if jawab != QMessageBox.Yes:
+            return
+        self.app._reset_ke_asal()
         self.sync()
-        a.toast.show_msg("Tetapan diset semula")
 
     def sync(self):
-        """Segarkan nilai yang dipapar."""
+        """Segarkan nilai yang dipapar (stepper + combo ikut settings)."""
         for k, idx in (("ui", self.app.ui_idx), ("ar", self.app.ar_idx),
                        ("tr", self.app.tr_idx)):
             if k in self._stepper_labels:
                 self._stepper_labels[k].setText(FONT_SCALE_LABELS[idx])
+        a = self.app
+        for cb, data in (
+                (getattr(self, "cb_tarikh", None),
+                 a.settings.get("tarikh_paparan", "hijri")),
+                (getattr(self, "cb_lang", None),
+                 a.settings.get("language_pref", "both")),
+                (getattr(self, "cb_pp", None), a.per_page())):
+            if cb is None:
+                continue
+            i = cb.findData(data)
+            if i >= 0 and i != cb.currentIndex():
+                cb.blockSignals(True)
+                cb.setCurrentIndex(i)
+                cb.blockSignals(False)
 
     # ── animasi ───────────────────────────────────────────────────────
     def _lebar_panel(self) -> int:

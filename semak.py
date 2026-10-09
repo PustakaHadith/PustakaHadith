@@ -26,6 +26,15 @@ import subprocess
 import sys
 import tokenize
 
+# os.chdir(BASE) WAJIB dijalankan SEBELUM snapshot fail di bawah —
+# jika tidak, snapshot dibuat dari cwd luar repo (contoh:
+# `python D:\...\PustakaHadith\semak.py` dari folder lain) →
+# _ASAL_SETTINGS = None → _pulihkan_settings() MEMBUANG
+# user_settings.json pengguna pada akhir larian (kerosakan data;
+# kejadian 9 Okt 2026 — dialog deklarasi muncul semula).
+BASE = os.path.dirname(os.path.abspath(__file__))
+os.chdir(BASE)
+
 # Semakan yang melancarkan PustakaApp menulis user_settings.json minima
 # (tanpa bendera deklarasi) dan MEMADAMKAN fail asal pengguna selepas
 # ujian. Jika fail asal (dengan `deklarasi_dibaca: true`) tidak
@@ -64,9 +73,6 @@ def _pulihkan_settings():
             if _cuba == 39:
                 raise
             _time.sleep(0.5)
-
-BASE = os.path.dirname(os.path.abspath(__file__))
-os.chdir(BASE)
 
 # Dokumen sejarah (MULA_SINI, sesi, audit, ...) dipindah ke repo arkib
 # adik-beradik (5 Okt 2026) supaya repo utama GitHub bersih. Baca dua

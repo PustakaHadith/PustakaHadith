@@ -1988,9 +1988,9 @@ pengesahan visual butang Kongsi FB (salin + tampal).
 2. **Pengesahan pengguna TUTUP** (ikut `landing-page/SESI.md` Sesi 39d):
    Kongsi FB visual ✅, kad Store → v1.0.3 ✅, pop-up biodata di HP sebenar ✅
    — Sesi 40 "Masih menunggu pengguna" kini ditutup.
-3. **Nota:** repo luar `Pustaka` juga dibersihkan 67 → 40 fail (commits
-   `aa341b1` + `71887d9`) + analisa Android sebagai rujukan lokal
-   (`D:\Pustaka Quran Hadis\Pustaka\analisa-android\ANALISA_ANDROID.md`).
+ 3. **Nota:** repo luar `Pustaka` juga dibersihkan 67 → 40 fail (commits
+    `aa341b1` + `71887d9`) + analisis Android sebagai rujukan setempat
+    (fail `ANALISA_ANDROID.md` dalam folder projek `Pustaka`).
 4. **Insiden: GitHub Pages gagal pada `e1166e1`** (emel alert) — punca:
    Pages repo ini guna folder `/docs` sebagai host **Privacy Policy URL
    Microsoft Store** (`https://pustakahadith.github.io/PustakaHadith/`,
@@ -2002,3 +2002,41 @@ pengesahan visual butang Kongsi FB (salin + tampal).
      mockup/` kekal lokal (tiada kaitan dengan Pages).
    - Pengajaran: sebelum untrack direktori, semak dulu Pages settings
      (`/docs`), kebergantungan CI, dan pautan luar (Store).
+
+## Sesi 43 - 8-9 Okt 2026 (fix paparan nombor + Reset ke Asal + lalai baharu)
+
+1. **Ciri carian singkatan kitab** (8 Okt, commit `05068f2`): awalan
+   kitab + nombor dalam petak carian terus lompat ke butiran (`b433`
+   → Bukhari 433); senarai singkatan `b`/`mu`/`ad`/`ti`/`an`/`im`/
+   `mw`/`ah`/`da` padan tepat; baiki paparan Tersimpan instance kedua
+   (`show()` eksplisit + guard `closeEvent` `ujian_mode`); ujian
+   uji_lompat 84/84 + uji_lompat_fungsi 53/53 + uji_tersimpan 20/20.
+2. **Rak Digital: carian nombor ikut jilid dipilih** —
+   `_rak_hantar_carian` guna `_rak_slug` (dulu jatuh ke `_kitab_slug`
+   basi 'bukhari'): Muslim + `422` → Muslim 422 (dulu Bukhari 422);
+   probe 5/5 LULUS.
+3. **Pencarian: cip 'Semua' + nombor → semua kitab** — kaedah baharu
+   `_papar_nombor_semua_kitab`: 'Semua' + `205` papar hadis No. 205
+   dari 9 kitab (dulu lompat kitab terakhir); cip kitab kekal lompat
+   terus; probe 7/7 LULUS.
+4. **Butang "Reset ke Asal"** (panel Tetapan + dialog pengesahan) —
+   padam buku sematan + sejarah bacaan, cip 'TERAKHIR' & halaman
+   Pencarian kosong, saiz fon Sederhana (1, 1, 1), bahasa semua,
+   20 hadis/halaman, paparan tarikh Hijri; kaedah `_reset_ke_asal`
+   (pages_tetapan) + `_kosongkan_carian` (pages_carian); ujian 9/9
+   (data pengguna disimpan & dipulih dalam ujian).
+5. **Lalai pemasangan baharu** (9 Okt): tarikh **Hijri** — 3 fallback
+   `tarikh_paparan` masihi→hijri (pages_home, settings_panel ×2);
+   saiz teks Arab **Sederhana** — `arabic_font_idx` 0→1 (keputusan
+   pengguna; menolak keputusan Sesi 55 Kecil); Reset ikut lalai
+   baharu; ujian uji_visual_sebenar diselaraskan.
+6. **Fix semak.py: membuang user_settings.json** — snapshot dibuat
+   sebelum `os.chdir(BASE)`; dari cwd luar repo `_ASAL_SETTINGS=None`
+   → `_pulihkan_settings()` buang fail pengguna pada akhir larian
+   (insiden 9 Okt: settings hilang → popup Makluman muncul semula).
+   Kini chdir dahulu; terbukti fail kekal selepas larian penuh.
+7. **Dokumen selaras** — SESI: "analisa/lokal" → BM; MULA_SINI (arsip):
+   'Sesi Terakhir' + ringkasan satu muka → 9 Okt 2026 (2 commit);
+   README 381 semakan; semak_dokumen_ui 83/26.
+
+**Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**

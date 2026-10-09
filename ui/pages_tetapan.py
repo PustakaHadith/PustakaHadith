@@ -26,7 +26,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout, QWidget,
 )
 
-from ui.helpers import SETTINGS, _write_json
+from ui.helpers import BOOKMARKS, READING_HISTORY, SETTINGS, _write_json
 from ui.theme import (
     AMBER_BG, AMBER_BORDER, AMBER_TEXT, FONT_SCALES, FONT_SCALE_LABELS,
     TEXT_MUTED, build_qss,
@@ -210,3 +210,53 @@ class PagesTetapan:
         self.ar_font = name
         self._set("arabic_font", name)
         self._refresh_current()
+
+    def _reset_ke_asal(self):
+        """Kembalikan apl ke kedudukan asal pemasangan (Sesi 43).
+
+        Dipanggil dari `SettingsPanel._reset` SELEPAS pengesahan dialog.
+        Kedudukan asal (permintaan pengguna 8 Okt 2026):
+
+        * Tanda buku (tab Tersimpan) & sejarah bacaan (tab Telah
+          dibaca, kad 'Terakhir dibaca', badge 'Sejarah bacaan')
+          dipadam — kosong.
+        * Cip 'TERAKHIR' (catatan carian halaman Utama) dikosongkan —
+          "tiada catatan".
+        * Halaman Pencarian dikosongkan — tiada sisa hasil carian
+          selepas tab ditutup/dibuka semula.
+        * Saiz teks (UI/Arab) & terjemahan = Sederhana (lalai
+          pemasangan baharu 9 Okt 2026); bahasa = semua;
+          20 hadis per halaman (lalai pemasangan).
+        * Paparan tarikh = Hijri (lalai pemasangan — keputusan pengguna
+          9 Okt 2026; dahulu Masihi, Sesi 36).
+        """
+        from ui.theme import FONT_SCALES, build_qss
+
+        # 1. Data pengguna — padam
+        self.bookmarks = []
+        _write_json(BOOKMARKS, [])
+        _write_json(READING_HISTORY, [])
+        self.settings["carian_akhir"] = []
+
+        # 2. Tetapan asal pemasangan
+        self.ui_idx, self.ar_idx, self.tr_idx = 1, 1, 1
+        self.settings.update({
+            "font_scale_idx": 1, "arabic_font_idx": 1,
+            "translation_font_idx": 1,
+            "language_pref": "both", "per_page": 20,
+            "tarikh_paparan": "hijri",
+        })
+        _write_json(SETTINGS, self.settings)
+
+        # 3. Terap semula QSS + kosongkan paparan semasa
+        self.setStyleSheet(build_qss(FONT_SCALES[self.ui_idx]))
+        if hasattr(self, "_kosongkan_carian"):
+            self._kosongkan_carian()
+        if hasattr(self, "_kemas_carian_akhir"):
+            self._kemas_carian_akhir()
+        if hasattr(self, "_render_sejarah"):
+            self._render_sejarah()
+        if hasattr(self, "_kemas_tarikh"):
+            self._kemas_tarikh()
+        self._refresh_current()
+        self.toast.show_msg("Apl dikembalikan ke asal")

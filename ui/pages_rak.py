@@ -331,7 +331,13 @@ class PagesRak:
         if not q:
             return
         # Lompat 'bukhari 433' / '433' → butiran terus (pola sama Utama).
-        j = _parse_lompat(q, default_slug=self._kitab_slug)
+        # Nombor SAHAJA guna jilid TERPILIH di halaman rak (_rak_slug) —
+        # bukan _kitab_slug (default 'bukhari' / kitab terakhir dibuka
+        # halaman Jelajah Kitab). Pilih Muslim + taip 422 dulu sampai ke
+        # Bukhari 422 (betul 8 Okt 2026).
+        j = _parse_lompat(
+            q, default_slug=getattr(self, "_rak_slug", None)
+            or self._kitab_slug)
         if j:
             slug, n = j
             self._buka_hadis_terus(slug, n, dari="rak")

@@ -22,6 +22,7 @@ fizikal.
 Tangkapan skrin: `bukti_visual/sebenar_*.png`
 """
 
+import json
 import os
 import re
 import sqlite3
@@ -470,8 +471,10 @@ semak("peta skala: indeks 1 = 'Sederhana' = 1.0",
       f"{FONT_SCALE_LABELS[1]} / {FONT_SCALES[1]}")
 
 # Lalai KOD -- baca sumber app_qt.py (bebas daripada user_settings.json).
-# Inilah pengawal regresi sebenar: kalau sesiapa mengembalikan lalai
-# arabic_font_idx ke 2, semakan ini GAGAL walaupun settings fail kosong.
+# Inilah pengawal regresi sebenar: kalau sesiapa menukar lalai
+# arabic_font_idx (kini 1 = Sederhana, keputusan pengguna 9 Okt 2026;
+# dahulu 0 = Kecil, Sesi 55), semakan ini GAGAL walaupun settings
+# fail kosong.
 src_app = open(os.path.join(BASE, "ui", "app_qt.py"),
                encoding="utf-8").read()
 
@@ -484,32 +487,43 @@ def _lalai_kod(fail, kunci):
 lalai = {k: _lalai_kod(src_app, k)
          for k in ("font_scale_idx", "arabic_font_idx",
                     "translation_font_idx")}
-semak("lalai kod app_qt.py: ui=1, ar=0 (Kecil), tr=1",
-      lalai == {"font_scale_idx": "1", "arabic_font_idx": "0",
+semak("lalai kod app_qt.py: ui=1, ar=1 (Sederhana), tr=1",
+      lalai == {"font_scale_idx": "1", "arabic_font_idx": "1",
                 "translation_font_idx": "1"}, str(lalai))
 
-# Butang "Set Semula" dalam settings_panel.py juga pulang ke 1,1,1
+# Reset ke Asal (Sesi 43) — logik penuh kini dalam
+# pages_tetapan._reset_ke_asal; panel hanya dialog pengesahan + sync.
+src_tetapan = open(os.path.join(BASE, "ui", "pages_tetapan.py"),
+                   encoding="utf-8").read()
+m_r = re.search(
+    r"self\.ui_idx, self\.ar_idx, self\.tr_idx = (\d+), (\d+), (\d+)",
+    src_tetapan)
+semak("_reset_ke_asal (pages_tetapan.py): 1, 1, 1 (Sederhana)",
+      bool(m_r) and m_r.groups() == ("1", "1", "1"),
+      m_r.groups() if m_r else "tiada padanan")
 src_panel = open(os.path.join(BASE, "ui", "settings_panel.py"),
                  encoding="utf-8").read()
-m_r = re.search(r"a\.ui_idx, a\.ar_idx, a\.tr_idx = (\d+), (\d+), (\d+)",
-                src_panel)
-semak("set semula settings_panel.py: 1, 0, 1",
-      bool(m_r) and m_r.groups() == ("1", "0", "1"),
-      m_r.groups() if m_r else "tiada padanan")
+semak("panel: dialog QMessageBox sebelum padam data (Reset ke Asal)",
+      "QMessageBox.question" in src_panel and "Reset ke Asal" in src_panel)
 
-# Kelakuan app sebenar -- skala yang DIPAKAI semasa render
-semak("app memuat saiz Kecil utk Arab (skala 0.85), ui/tr Sederhana",
-      w.ui_idx == 1 and w.ar_idx == 0 and w.tr_idx == 1
-      and w.ar_scale == 0.85 and w.tr_scale == 1.0,
+# Kelakuan app sebenar -- skala yang DIPAKAI semasa render.
+# ROBUST (Sesi 43): settings sebenar pengguna mungkin bukan lalai kod
+# (cth. arabic_font_idx=1) — sahkan properti skala konsisten dgn idx
+# semasa, bukan nilai lalai tetap.
+from ui.theme import FONT_SCALES, FONT_SCALE_LABELS, build_qss
+semak("app: ar_scale/tr_scale ikut idx semasa (properti betul)",
+      w.ar_scale == FONT_SCALES[w.ar_idx]
+      and w.tr_scale == FONT_SCALES[w.tr_idx],
       f"ui={w.ui_idx} ar={w.ar_idx} tr={w.tr_idx}")
 
-# Panel Tetapan sebenar -- stepper papar "Sederhana", bukti fizikal
+# Panel Tetapan sebenar -- stepper papar label ikut idx semasa
 w.settings_panel.open_panel()
 tunggu(400)
 label_fon = {k: w.settings_panel._stepper_labels[k].text()
              for k in ("ar", "tr")}
-semak("panel Tetapan papar 'Kecil' utk ar, 'Sederhana' utk tr",
-      label_fon["ar"] == "Kecil" and label_fon["tr"] == "Sederhana",
+semak("panel Tetapan papar label ikut idx semasa",
+      label_fon["ar"] == FONT_SCALE_LABELS[w.ar_idx]
+      and label_fon["tr"] == FONT_SCALE_LABELS[w.tr_idx],
       str(label_fon))
 
 laluan, saiz, cerah, unik = skrin_fizikal("fon_sederhana")
@@ -517,27 +531,69 @@ semak("skrin fon disimpan", saiz > 30000, f"saiz {saiz}")
 w.settings_panel.close_panel()
 tunggu(400)
 
-# Set Semula fizikal: tukar saiz Arab ke Besar (2), panggil _reset(),
-# sahkan pulang ke Kecil (0) + stepper papar "Kecil" (Sesi 55 lanjutan).
-w.settings_panel.open_panel()
-tunggu(300)
-w.ar_idx = 2
-w.settings["arabic_font_idx"] = 2
-w.settings_panel.sync()
-tunggu(200)
-semak("sebelum Set Semula: Arab papar 'Besar'",
-      w.settings_panel._stepper_labels["ar"].text() == "Besar",
-      w.settings_panel._stepper_labels["ar"].text())
-w.settings_panel._reset()
-tunggu(300)
-semak("Set Semula pulang Arab ke Kecil (ar_idx=0, skala 0.85)",
-      w.ar_idx == 0 and w.ar_scale == 0.85,
-      f"ar_idx={w.ar_idx} skala={w.ar_scale}")
-semak("Set Semula: stepper Arab papar 'Kecil' semula",
-      w.settings_panel._stepper_labels["ar"].text() == "Kecil",
-      w.settings_panel._stepper_labels["ar"].text())
-w.settings_panel.close_panel()
-tunggu(300)
+# Reset ke Asal fizikal (Sesi 43): tukar saiz Arab ke Besar (2), panggil
+# _reset() dgn dialog dipatch "Ya", sahkan pulang ke Sederhana (1) +
+# stepper papar "Sederhana" + tarikh hijri + cip TERAKHIR kosong.
+# DATA PENGGUNA (buku markah/sejarah/settings) DISIMPAN & DIPULIHKAN
+# selepas ujian — fail sebenar tidak terjejas.
+from ui.helpers import BOOKMARKS, READING_HISTORY, SETTINGS as _SETT
+import ui.settings_panel as _sp
+
+
+def _baca_json(p):
+    try:
+        with open(p, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
+_asal_data = {p: _baca_json(p)
+              for p in (BOOKMARKS, READING_HISTORY, _SETT)}
+_asal_q = _sp.QMessageBox.question
+_sp.QMessageBox.question = lambda *a, **k: _sp.QMessageBox.Yes
+try:
+    w.settings_panel.open_panel()
+    tunggu(300)
+    w.ar_idx = 2
+    w.settings["arabic_font_idx"] = 2
+    w.settings_panel.sync()
+    tunggu(200)
+    semak("sebelum Reset: Arab papar 'Besar'",
+          w.settings_panel._stepper_labels["ar"].text() == "Besar",
+          w.settings_panel._stepper_labels["ar"].text())
+    w.settings_panel._reset()
+    tunggu(300)
+    semak("Reset pulang Arab ke Sederhana (ar_idx=1, skala 1.0)",
+          w.ar_idx == 1 and w.ar_scale == 1.0,
+          f"ar_idx={w.ar_idx} skala={w.ar_scale}")
+    semak("Reset: stepper Arab papar 'Sederhana'",
+          w.settings_panel._stepper_labels["ar"].text() == "Sederhana",
+          w.settings_panel._stepper_labels["ar"].text())
+    semak("Reset: paparan tarikh = hijri",
+          w.settings.get("tarikh_paparan") == "hijri",
+          str(w.settings.get("tarikh_paparan")))
+    semak("Reset: cip TERAKHIR kosong + per_page 20",
+          w.settings.get("carian_akhir") == []
+          and w.settings.get("per_page") == 20,
+          f"carian_akhir={w.settings.get('carian_akhir')}")
+    w.settings_panel.close_panel()
+    tunggu(300)
+finally:
+    _sp.QMessageBox.question = _asal_q
+    for p, isi in _asal_data.items():
+        if isi is None:
+            continue
+        with open(p, "w", encoding="utf-8") as f:
+            json.dump(isi, f, ensure_ascii=False, indent=2)
+    if _asal_data.get(_SETT):
+        w.settings.clear()
+        w.settings.update(_asal_data[_SETT])
+    w.ui_idx = int(w.settings.get("font_scale_idx", 1))
+    w.ar_idx = int(w.settings.get("arabic_font_idx", 1))
+    w.tr_idx = int(w.settings.get("translation_font_idx", 1))
+    w.setStyleSheet(build_qss(FONT_SCALES[w.ui_idx]))
+    w.settings_panel.sync()
 
 # ── 8. Butang ↑ terapung + kotak carian nombor hadis ────────────────
 # Sesi 34: halaman senarai kitab kini ada (a) butang ↑ terapung di sudut

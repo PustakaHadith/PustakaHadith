@@ -642,21 +642,107 @@ class PagesCarian:
         """Hantar carian dari bar carian (butang/Enter).
 
         Sebelum carian biasa, cuba tafsir sebagai lompat terus: 'bukhari
-        433' atau '433' (chip kitab terpilih, atau kitab terakhir dibuka).
-        Carian KHUSUS seperti ini membuka butiran hadis TERUS (Sesi 38)
-        — pengguna mahukan hadis itu, bukan senarai. Carian umum (cth.
-        'hukum riba') kekal memaparkan senarai hasil carian.
+        433' atau '433' (chip kitab terpilih). Carian KHUSUS seperti ini
+        membuka butiran hadis TERUS (Sesi 38) — pengguna mahukan hadis
+        itu, bukan senarai. Carian umum (cth. 'hukum riba') kekal
+        memaparkan senarai hasil carian.
+
+        Cip 'Semua' + nombor sahaja (205) → senarai hadis No. 205
+        dalam SETIAP kitab (Sesi 43) — bukan lompat ke kitab basi
+        `_kitab_slug` seperti sebelumnya.
         """
         q = self.search_bar.text()
         if not q:
             return
-        j = _parse_lompat(q, default_slug=self.search_bar.slug()
-                          or self._kitab_slug)
+        chip = self.search_bar.slug()
+        if chip is None and q.isdigit():
+            self._papar_nombor_semua_kitab(int(q))
+            return
+        j = _parse_lompat(q, default_slug=chip or self._kitab_slug)
         if j:
             slug, n = j
             self._buka_hadis_terus(slug, n)
             return
         self._do_search(1)
+
+    def _papar_nombor_semua_kitab(self, n: int):
+        """Cip 'Semua' + nombor sahaja → hadis No. n dalam SETIAP kitab.
+
+        Permintaan pengguna (8 Okt 2026): carian 'Semua' + '205' mesti
+        memaparkan hadis No. 205 dari semua 9 kitab — sebelum ini ia
+        melompat ke kitab terakhir dibuka (cth. darimi 205 kerana
+        darimi dipilih dahulu). Keputusan disusun terus dari DB
+        tempatan (segera, tiada worker) dan dirender melalui pipeline
+        carian biasa — sidebar bab, penapis, susunan, paginasi dan
+        butang Simpan semuanya kekal berfungsi.
+        """
+        self._search_q = str(n)
+        self._search_slug = None
+        self._search_page = 1
+        self._tok += 1                      # batal worker carian lama
+        self._carian_bab = None
+        self._carian_page = 1
+        self._carian_sibuk.hide()
+        self._carian_timer.stop()
+        self._clear_carian_list()
+        self._carian_reset_sidebar()
+
+        hasil = []
+        for slug in COLLECTION_META:
+            h = self.api.get_hadis_by_id(slug, n)
+            if h:
+                hasil.append({
+                    "h": h, "collection": slug, "hid": n,
+                    "book": h.get("book"), "nama_bab": h.get("nama_bab"),
+                })
+        self._carian_hasil = hasil
+        self._kw_res = []
+        self._kw_meta = {}
+        self._sem_res = []
+        self._sem_gagal = None
+
+        self._carian_bina_bab_rows()
+        self._carian_kemas_info(self._search_q, len(hasil))
+        self._carian_render_panel({"total": len(hasil)}, [], [])
+
+        if hasil and self._search_page == 1:
+            self._catat_carian(self._search_q)
+        self._laras_tinggi(self._search_sa)
+
+    def _kosongkan_carian(self):
+        """Kosongkan halaman Pencarian — pulih ke keadaan mula (Sesi 43).
+
+        Dipanggil oleh `_reset_ke_asal` (butang Reset ke Asal dalam
+        Tetapan): buang teks bar carian, chip, senarai hasil, sidebar
+        bab dan label — halaman Pencarian tidak meninggalkan apa-apa
+        hasil carian selepas tab ditutup/dibuka semula. `self._tok`
+        dinaikkan supaya worker carian yang masih berjalan terbatal.
+        """
+        self._search_q = ""
+        self._search_slug = None
+        self._search_page = 1
+        self._tok += 1
+        self._kw_res = []
+        self._kw_meta = {}
+        self._sem_res = []
+        self._sem_gagal = None
+        self._carian_bab = None
+        self._carian_page = 1
+        self._carian_hasil = []
+        self._carian_sibuk.hide()
+        self._carian_timer.stop()
+        self._clear_carian_list()
+        self._carian_reset_sidebar()
+        self.search_bar.input.clear()
+        if self.search_bar.chips:
+            self.search_bar.chips.set_active(None, emit=False)
+        self._carian_q_lbl.setText("—")
+        self._carian_scope_lbl.setText("Semua kitab")
+        self._carian_total_lbl.setText("Cari untuk melihat bab")
+        self.search_info.setText("")
+        self._carian_kaki.setText("")
+        self._carian_halaman.setText("")
+        self._carian_pager.hide()
 
     def _buka_hadis_terus(self, slug: str, n: int, dari: str = "search"):
         """Buka butiran hadis No. n dalam slug TERUS, tanpa senarai.

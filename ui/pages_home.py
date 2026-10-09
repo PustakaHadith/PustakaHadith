@@ -371,10 +371,10 @@ class PagesHome:
     # ── panel kanan ──────────────────────────────────────────────────
     def _teks_tarikh(self) -> str:
         """Item 8 (Sesi 36) — tarikh baris HARI INI ikut Tetapan
-        (`tarikh_paparan`): masihi (lalai) · melayu · hijri ·
+        (`tarikh_paparan`): hijri (lalai pemasangan) · melayu · masihi ·
         hijri_melayu."""
         hari = datetime.date.today()
-        jenis = self.settings.get("tarikh_paparan", "masihi")
+        jenis = self.settings.get("tarikh_paparan", "hijri")
         if jenis == "hijri":
             return teks_hijri(hari)
         if jenis == "melayu":
