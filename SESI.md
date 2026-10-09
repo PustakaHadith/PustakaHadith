@@ -2082,7 +2082,7 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    1.1.0; blok TRANS ms+en selaras; kad Store `dl1-p` KEKAL v1.0.3
    (MSIX 1.1.0 belum naik Partner Center).
 5. **Dokumen** — entri SESI 44 (commit ini); MULA_SINI (arsip):
-   'Sesi Terakhir' + ringkasan → 9 Okt (8 commit) + Status v1.1.0
+   'Sesi Terakhir' + ringkasan → 9 Okt (9 commit) + Status v1.1.0
    LIVE; semak.py 381/381.
 6. **Pembetulan nama fail MSIX** (`61c922b`) — `build_msix.ps1` →
    `PustakaHadith_1.1.0_x64.msix` (Identity kekal `1.1.0.0` — format
@@ -2099,5 +2099,19 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    semula → `PustakaQH_dist\...\PustakaHadith.exe` (dulu dist repo
    lama, desc v1.0.1); MSIX 1.1.0 dihantar ke Partner Center (dalam
    semakan); landing kad Store `dl1-p` → v1.1.0 (ms+en).
+9. **Penutup sesi** — CHANGELOG baris Store (MSIX 1.1.0 dihantar
+   9 Okt); MULA_SINI → **9 commit** (`1ba8b6c`); landing kad Store
+   v1.1.0 disahkan live (HTTP 200, v1.1.0 ×18, tiada 'MSIX v1.0.3');
+   push 3 repo — utama `7fc5069`, arkib `1ba8b6c`, Pustaka
+   `226f916`; semak.py 381/381.
+10. **Imej README dipulihkan** — punca: `e1166e1` buang
+   `screenshots/` dari track (dasar 5 Okt) + gate semak.py larang
+   folder itu wujud, sedangkan README masih rujuk 6 PNG → imej
+   hilang di GitHub; penyelesaian: 6 fail (≈4.9 MB) **pindah** ke
+   `readme_screenshots/` (bukan ignore, ikut track) + README
+   retarget; `screenshots/` kekal dibersih (dasar 5 Okt utuh),
+   kiraan tetap 381.
 
 **Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
+
+**SESI 44 TUTUP — 9 Oktober 2026, kerja selesai.**
