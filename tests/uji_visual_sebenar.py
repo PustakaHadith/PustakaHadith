@@ -503,8 +503,14 @@ semak("_reset_ke_asal (pages_tetapan.py): 1, 1, 1 (Sederhana)",
       m_r.groups() if m_r else "tiada padanan")
 src_panel = open(os.path.join(BASE, "ui", "settings_panel.py"),
                  encoding="utf-8").read()
+# 9 Okt 2026: dialog bertukar instance (QMessageBox(self) + exec_) kerana
+# static question tak boleh diberi gaya — teks jadi "kosong" (putih atas
+# putih) akibat QSS global QWidget { color: TEXT_PRIMARY }.
 semak("panel: dialog QMessageBox sebelum padam data (Reset ke Asal)",
-      "QMessageBox.question" in src_panel and "Reset ke Asal" in src_panel)
+      (("QMessageBox.question" in src_panel)
+       or ("QMessageBox(self)" in src_panel
+           and "box.exec_()" in src_panel))
+      and "Reset ke Asal" in src_panel)
 
 # Kelakuan app sebenar -- skala yang DIPAKAI semasa render.
 # ROBUST (Sesi 43): settings sebenar pengguna mungkin bukan lalai kod
@@ -550,8 +556,8 @@ def _baca_json(p):
 
 _asal_data = {p: _baca_json(p)
               for p in (BOOKMARKS, READING_HISTORY, _SETT)}
-_asal_q = _sp.QMessageBox.question
-_sp.QMessageBox.question = lambda *a, **k: _sp.QMessageBox.Yes
+_asal_exec = _sp.QMessageBox.exec_
+_sp.QMessageBox.exec_ = lambda self, *a, **k: _sp.QMessageBox.Yes
 try:
     w.settings_panel.open_panel()
     tunggu(300)
@@ -580,7 +586,7 @@ try:
     w.settings_panel.close_panel()
     tunggu(300)
 finally:
-    _sp.QMessageBox.question = _asal_q
+    _sp.QMessageBox.exec_ = _asal_exec
     for p, isi in _asal_data.items():
         if isi is None:
             continue

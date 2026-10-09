@@ -229,11 +229,15 @@ class PagesKitab:
         ek_lompat = QLabel("LOMPAT NO. HADIS")
         ek_lompat.setObjectName("panelSection")
         kanan_l.addWidget(ek_lompat, 0, Qt.AlignRight)
-        # Go box tersembunyi — kekal untuk Ctrl+G shortcut
+        # Go box tersembunyi pada mula — diserlah oleh Ctrl+G / kad
+        # "Lompat Nombor" (_fokus_go_box). WAJIB dalam layout: dulu ia
+        # yatim (tiada addWidget) + hide() -> show()+setFocus tak pernah
+        # berkesan, pengguna tersangkut di senarai (insiden 9 Okt 2026).
         self._kitab_go_box = QLineEdit()
         self._kitab_go_box.setPlaceholderText(_julat_lompat(total))
         self._kitab_go_box.setValidator(QIntValidator(1, 999999, self))
         self._kitab_go_box.returnPressed.connect(self._hantar_go_box)
+        kanan_l.addWidget(self._kitab_go_box)
         self._kitab_go_box.hide()
 
         h.addWidget(kanan)
@@ -775,6 +779,7 @@ class PagesKitab:
         # lama sudah mati -- jangan sentuh objek SIP tertunda padam.
         if kotak is not getattr(self, "_kitab_go_box", None):
             return
+        kotak.show()    # lalai tersembunyi — serlah sebelum skrol & fokus
         sa = getattr(self, "_kitab_sa", None)
         if sa is not None:
             sa.ensureWidgetVisible(kotak, 0, 60)

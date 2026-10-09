@@ -543,17 +543,39 @@ class SettingsPanel(QFrame):
     def _reset(self):
         """Reset ke Asal (Sesi 43) — dialog pengesahan DAHULU kerana
         tindakan memadam kekal (Tersimpan + sejarah bacaan), kemudian
-        `_reset_ke_asal` (pages_tetapan) laksanakan penuh + toast."""
-        jawab = QMessageBox.question(
-            self, "Reset ke Asal",
+        `_reset_ke_asal` (pages_tetapan) laksanakan penuh + toast.
+
+        Nota 9 Okt 2026 — gaya EKSPLISIT (instance, bukan static
+        question): QSS global `QWidget { color: TEXT_PRIMARY }` mewarnai
+        teks cerah sedangkan latar QMessageBox ikut sistem (putih) ->
+        mesej bertukar "kosong" (teks putih atas putih). Latar CARD_BG
+        + butang bergaya menjamin teks penerangan terlihat dalam tema
+        gelap mahupun terang.
+        """
+        box = QMessageBox(self)
+        box.setIcon(QMessageBox.Question)
+        box.setWindowTitle("Reset ke Asal")
+        box.setText(
             "Kembalikan apl ke kedudukan asal pemasangan?\n\n"
             "• Hadis Tersimpan — dipadam\n"
             "• Sejarah bacaan — dipadam\n"
             "• Cip 'Terakhir' & hasil carian — dikosongkan\n"
             "• Saiz teks & terjemahan — Sederhana\n"
             "• Paparan tarikh — Hijri\n\n"
-            "Tindakan ini tidak boleh dibatalkan.",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            "Tindakan ini tidak boleh dibatalkan.")
+        box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        box.setDefaultButton(QMessageBox.No)
+        box.setStyleSheet(f"""
+            QMessageBox {{ background-color: {CARD_BG}; }}
+            QMessageBox QLabel {{ color: {TEXT_PRIMARY};
+                                  background: transparent; font-size: 13px; }}
+            QPushButton {{ background-color: {CARD_BG}; color: {TEXT_PRIMARY};
+                           border: 1px solid {BORDER}; border-radius: 8px;
+                           padding: 6px 18px; font-size: 13px; }}
+            QPushButton:hover {{ background-color: {CARD_BG_HOVER};
+                                 color: {TEXT_PRIMARY}; }}
+        """)
+        jawab = box.exec_()
         if jawab != QMessageBox.Yes:
             return
         self.app._reset_ke_asal()

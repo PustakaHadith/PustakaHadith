@@ -16,8 +16,8 @@ from __future__ import annotations
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (
-    QDialog, QFrame, QHBoxLayout, QLabel, QPushButton, QScrollArea,
-    QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget,
+    QDialog, QFrame, QHBoxLayout, QHeaderView, QLabel, QPushButton,
+    QScrollArea, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget,
 )
 
 from ui.theme import (
@@ -221,10 +221,20 @@ class DeklarasiDialog(QDialog):
             kn.setFlags(Qt.ItemIsEnabled)
             tbl.setItem(i, 0, ki)
             tbl.setItem(i, 1, kn)
-            row_h = tbl.rowHeight(i)
-            if row_h < 34:
-                tbl.setRowHeight(i, 34)
-        tbl.setMinimumHeight(len(data) * 34 + 4)
+            tbl.setRowHeight(i, 34)
+        # Tiada ruang lebihan (9 Okt 2026): (a) tinggi TEPAT ikut jumlah
+        # sebenar baris — setMinimumHeight + saiz Expanding dulu
+        # meninggalkan petak kosong di bawah baris terakhir (rounding
+        # Qt boleh jadi 35px, jadi jumlahkan rowHeight sebenar);
+        # (b) kolum 1 MODE Stretch regang mengisi tepat —
+        # stretchLastSection hanya membesar, tidak mengecil, jadi
+        # jalur kosong kekal bila dialog sempit.
+        tbl.setFixedHeight(sum(tbl.rowHeight(i)
+                               for i in range(len(data))) + 4)
+        tbl.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        tbl.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        tbl.horizontalHeader().setSectionResizeMode(
+            1, QHeaderView.Stretch)
         v.addWidget(tbl)
 
         _kepala(v, "Nombor Hadis")
@@ -277,7 +287,14 @@ class DeklarasiDialog(QDialog):
             stbl.setItem(i, 0, ki)
             stbl.setCellWidget(i, 1, lbl)
             stbl.setRowHeight(i, 40)
-        stbl.setMinimumHeight(len(sumber) * 40 + 4)
+        # Tinggi tepat (jumlah rowHeight sebenar) + kolum 1 MODE
+        # Stretch — corak sama jadual Kandungan di atas, 9 Okt 2026.
+        stbl.setFixedHeight(sum(stbl.rowHeight(i)
+                                for i in range(len(sumber))) + 4)
+        stbl.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        stbl.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        stbl.horizontalHeader().setSectionResizeMode(
+            1, QHeaderView.Stretch)
         v.addWidget(stbl)
         _perenggan(v, "Ucapan terima kasih kepada semua pihak di atas. "
                       "Tanpa kerja mereka, aplikasi ini tidak wujud.",

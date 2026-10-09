@@ -2035,9 +2035,20 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    → `_pulihkan_settings()` buang fail pengguna pada akhir larian
    (insiden 9 Okt: settings hilang → popup Makluman muncul semula).
    Kini chdir dahulu; terbukti fail kekal selepas larian penuh.
-7. **Dokumen selaras** — SESI: kata asing pada nota Sesi 41 ditulis
-   semula dalam BM; MULA_SINI (arsip):
-   'Sesi Terakhir' + ringkasan satu muka → 9 Okt 2026 (2 commit);
-   README 381 semakan; semak_dokumen_ui 83/26.
+7. **Pembetulan UI susulan (9 Okt)** —
+   (a) kotak "LOMPAT NO. HADIS" tak pernah dimasukkan ke layout
+   (widget yatim) + `hide()` — kad "Lompat Nombor"/Ctrl+G hanya buka
+   senarai tanpa kotak taip; kini `kanan_l.addWidget` +
+   `_fokus_go_box` `show()` (probe skenario pengguna 10/10);
+   (b) pop-up Reset ke Asal: penerangan wujud tapi putih atas putih
+   (QSS global warna teks vs latar sistem) — bertukar dialog instance
+   bergaya tema eksplisit (probe 15/15);
+   (c) jadual Tentang: tinggi tepat ikut jumlah baris + kolum 1 mode
+   `QHeaderView.Stretch` (`stretchLastSection` hanya membesar, tak
+   mengecil) — tiada ruang lebihan di bawah/kanan jadual.
+8. **Dokumen selaras** — SESI: kata asing pada nota Sesi 41 ditulis
+   semula dalam BM; MULA_SINI (arsip): 'Sesi Terakhir' + ringkasan
+   satu muka → 9 Okt 2026 (4 commit); README 381 semakan;
+   semak_dokumen_ui 83/26.
 
 **Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
