@@ -2035,7 +2035,8 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    → `_pulihkan_settings()` buang fail pengguna pada akhir larian
    (insiden 9 Okt: settings hilang → popup Makluman muncul semula).
    Kini chdir dahulu; terbukti fail kekal selepas larian penuh.
-7. **Dokumen selaras** — SESI: "analisa/lokal" → BM; MULA_SINI (arsip):
+7. **Dokumen selaras** — SESI: kata asing pada nota Sesi 41 ditulis
+   semula dalam BM; MULA_SINI (arsip):
    'Sesi Terakhir' + ringkasan satu muka → 9 Okt 2026 (2 commit);
    README 381 semakan; semak_dokumen_ui 83/26.
 
