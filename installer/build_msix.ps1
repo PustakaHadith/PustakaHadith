@@ -69,7 +69,7 @@ Import-PfxCertificate -FilePath $pfx -Password $pw -CertStoreLocation Cert:\Curr
 
 # pack
 New-Item -ItemType Directory -Path $out -Force | Out-Null
-$msix = Join-Path $out "PustakaHadith_1.1.0.0_x64.msix"
+$msix = Join-Path $out "PustakaHadith_1.1.0_x64.msix"
 if (Test-Path $msix) { Remove-Item $msix -Force }
 & $makeappx pack /d "$stage" /p "$msix" /o 2>&1 | ForEach-Object { $_.ToString() }
 "MAKEAPPX_EXIT=$LASTEXITCODE"

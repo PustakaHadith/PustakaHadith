@@ -2080,7 +2080,7 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    Asal, Lompat Nombor/dialog) + `cl-date` 9 Oktober 2026 + `cl-more`
    sertai v1.0.3; butang dl2/dl3 + URL → v1.1.0; `dl-note` → Versi
    1.1.0; blok TRANS ms+en selaras; kad Store `dl1-p` KEKAL v1.0.3
-   (MSIX 1.1.0.0 belum naik Partner Center).
+   (MSIX 1.1.0 belum naik Partner Center).
 5. **Dokumen** — entri SESI 44 (commit ini); MULA_SINI (arsip):
    'Sesi Terakhir' + ringkasan → 9 Okt (6 commit) + Status v1.1.0
    LIVE; semak.py 381/381.
