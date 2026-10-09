@@ -2082,7 +2082,22 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    1.1.0; blok TRANS ms+en selaras; kad Store `dl1-p` KEKAL v1.0.3
    (MSIX 1.1.0 belum naik Partner Center).
 5. **Dokumen** — entri SESI 44 (commit ini); MULA_SINI (arsip):
-   'Sesi Terakhir' + ringkasan → 9 Okt (6 commit) + Status v1.1.0
+   'Sesi Terakhir' + ringkasan → 9 Okt (8 commit) + Status v1.1.0
    LIVE; semak.py 381/381.
+6. **Pembetulan nama fail MSIX** (`61c922b`) — `build_msix.ps1` →
+   `PustakaHadith_1.1.0_x64.msix` (Identity kekal `1.1.0.0` — format
+   4 bahagian wajib); aset release ditukar (upload nama baharu, padam
+   nama lama `..._1.1.0.0_...`); CHANGELOG + MULA_SINI + nota release
+   selaras.
+7. **Ujian MSIX sebelum upload — LULUS** — punca `0x800B0109` (sijil
+   self-signed tak dipercayai): sijil `FE6E2292` diimport ke
+   CurrentUser\Root + **LocalMachine\Root** (kuasa tinggi) + Developer
+   Mode (`AllowDevelopmentWithoutDevLicense` + `AllowAllTrustedApps`
+   = 1); `Add-AppxPackage` OK (v1.1.0.0, Status Ok), lancar OK
+   (PID 3152, tetingkap Makluman), `Remove-AppxPackage` bersih.
+8. **Start Menu shortcut + Store** — `Pustaka Hadith.lnk` dibina
+   semula → `PustakaQH_dist\...\PustakaHadith.exe` (dulu dist repo
+   lama, desc v1.0.1); MSIX 1.1.0 dihantar ke Partner Center (dalam
+   semakan); landing kad Store `dl1-p` → v1.1.0 (ms+en).
 
 **Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
