@@ -2137,7 +2137,14 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    auto-pulih di awal semakan jika fail hilang/tinggal nilai probe
    (uji: dummy+BOM, fail dipadam, sihat — semua lulus); flag
    `--pulih-settings` untuk pulih manual. Insiden 10 Okt (probe
-   manual tanpa restore) tidak akan berulang. Commit penutup
-   (3 commit hari ini).
+   manual tanpa restore) tidak akan berulang.
+6. **Buang fail sementara release** - `backup/sebelum_release_v1.1.0`
+   (10 fail) dibuang dari disk parent (tidak di-track git);
+   `sign_1100.cer` + `msix_fix_elevated.ps1` sudah tiada (dibuang
+   lebih awal); 6 folder backup lain dikekalkan.
+7. **Penutup sesi** - Store LIVE, backup disk settings, workspace
+   bersih; tertunggak: rotasi token Cloudflare oleh pengguna +
+   semak pilihan Tetapan app (nilai mungkin kembali lalai). Commit
+   penutup (4 commit hari ini).
 
 **Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
