@@ -2129,5 +2129,9 @@ pengesahan visual butang Kongsi FB (salin + tampal).
 3. **Buka hari 10 Okt** — MULA_SINI 'Sesi Terakhir' + ringkasan →
    10 Oktober (1 commit); `buka_hari.py` TIDAK diguna (hardcoded
    19 Ogos, akan rosakkan MULA); semak.py 381/381.
+4. **Store Certified & Published** — pengesahan Microsoft untuk
+   MSIX 1.1.0 (10 Okt) → status teks 'dalam semakan' → LIVE dalam
+   MULA_SINI + CHANGELOG; landing tiada perubahan (sudah v1.1.0);
+   commit penutup (2 commit hari ini).
 
 **Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
