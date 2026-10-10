@@ -2131,7 +2131,13 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    19 Ogos, akan rosakkan MULA); semak.py 381/381.
 4. **Store Certified & Published** — pengesahan Microsoft untuk
    MSIX 1.1.0 (10 Okt) → status teks 'dalam semakan' → LIVE dalam
-   MULA_SINI + CHANGELOG; landing tiada perubahan (sudah v1.1.0);
-   commit penutup (2 commit hari ini).
+   MULA_SINI + CHANGELOG; landing tiada perubahan (sudah v1.1.0).
+5. **Backup disk user_settings.json** (semak.py) — simpanan asal kini
+   tulis salinan fizikal `user_settings.json.asal` setiap larian +
+   auto-pulih di awal semakan jika fail hilang/tinggal nilai probe
+   (uji: dummy+BOM, fail dipadam, sihat — semua lulus); flag
+   `--pulih-settings` untuk pulih manual. Insiden 10 Okt (probe
+   manual tanpa restore) tidak akan berulang. Commit penutup
+   (3 commit hari ini).
 
 **Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**

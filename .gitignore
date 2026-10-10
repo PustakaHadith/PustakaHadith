@@ -1,5 +1,6 @@
 # ---------- Kunci & tetapan pengguna (SENSITIF — jangan commit) ----------
 user_settings.json
+user_settings.json.asal
 bookmarks.json
 profil_model.json
 .env

@@ -36,19 +36,69 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE)
 
 # Semakan yang melancarkan PustakaApp menulis user_settings.json minima
-# (tanpa bendera deklarasi) dan MEMADAMKAN fail asal pengguna selepas
-# ujian. Jika fail asal (dengan `deklarasi_dibaca: true`) tidak
-# dipulihkan, larian app berikutnya memaparkan dialog deklarasi modal
-# yang menyekat ujian offscreen (tiada pengguna untuk klik "Faham") —
-# gejala: ujian "tersangkut". Simpan kandungan asal supaya boleh
-# dipulihkan di akhir setiap semakan yang menyentuhnya.
+# (tanpa bendera deklarasi) dan memulihkan fail asal pengguna selepas
+# ujian. Ingatan semata-mata tidak cukup: larian probe di luar semak.py
+# pernah meninggalkan nilai dummy sehingga kandungan pengguna hilang
+# (insiden 10 Okt). Kini tiga lapis: (1) simpan salinan fizikal
+# user_settings.json.asal pada setiap larian semak, (2) auto-pulih di
+# awal semakan jika fail hilang atau tinggal nilai probe, (3) flag
+# `--pulih-settings` untuk pulihkan status tanpa larian penuh.
+_ASAL_BK = "user_settings.json.asal"
+_PROBE_DUMMY = {"theme": "dark", "api_key": "", "api_url": "x"}
 _ASAL_SETTINGS = None
-if os.path.exists("user_settings.json"):
+_HEAL_DIBUAT = False
+
+
+def _baca_settings_kini():
     try:
-        with open("user_settings.json", encoding="utf-8") as _fh:
-            _ASAL_SETTINGS = _fh.read()
+        # utf-8-sig: tolak BOM yang kadang ditulis alat pihak ketiga.
+        with open("user_settings.json", encoding="utf-8-sig") as _fh:
+            return _fh.read()
     except OSError:
-        _ASAL_SETTINGS = None
+        return None
+
+
+def _adakah_probe(teks):
+    if teks is None:
+        return False
+    try:
+        return json.loads(teks) == _PROBE_DUMMY
+    except ValueError:
+        return False
+
+
+def _simpan_salinan_asal(teks):
+    try:
+        with open(_ASAL_BK, "w", encoding="utf-8") as _fh:
+            _fh.write(teks)
+    except OSError:
+        pass
+
+
+_kini = _baca_settings_kini()
+if _adakah_probe(_kini):
+    _kini = None  # sisa nilai probe — bukan kandungan pengguna
+
+if _kini is None:
+    # Fail hilang / sisa probe: pulihkan dari salinan fizikal jika ada.
+    try:
+        with open(_ASAL_BK, encoding="utf-8-sig") as _fh:
+            _kini = _fh.read()
+    except OSError:
+        _kini = None
+    if _adakah_probe(_kini):
+        _kini = None  # salinan sendiri pernah tercemar nilai probe
+    if _kini is not None:
+        try:
+            with open("user_settings.json", "w", encoding="utf-8") as _fh:
+                _fh.write(_kini)
+            _HEAL_DIBUAT = True
+        except OSError:
+            pass
+
+_ASAL_SETTINGS = _kini
+if _kini is not None and not _adakah_probe(_kini):
+    _simpan_salinan_asal(_kini)
 
 
 def _pulihkan_settings():
@@ -3861,6 +3911,16 @@ def semak_kiraan_readme() -> None:
 
 def main() -> int:
     global LULUS_CNT, TAJUK_NAMA
+    if any(a == "--pulih-settings" for a in sys.argv):
+        if _HEAL_DIBUAT:
+            print("pulih: user_settings.json dipulihkan dari salinan "
+                  "user_settings.json.asal")
+        elif _ASAL_SETTINGS is not None:
+            print("pulih: user_settings.json sihat — tiada tindakan")
+        else:
+            print("pulih: tiada salinan asal — biarkan app cipta "
+                  "tetapan lalai pada lancaran")
+        return 0
     LULUS_CNT, TAJUK_NAMA = 0, []
     print("\n" + "=" * 60)
     print("  SEMAKAN PRA-HANTAR — PustakaHadith")
