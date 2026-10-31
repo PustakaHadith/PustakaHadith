@@ -2148,3 +2148,139 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    penutup (4 commit hari ini).
 
 **Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
+
+---
+
+## Sesi 46 - 21 Okt 2026 (pembersihan folder projek)
+
+1. **Arahan & kaedah** - pengguna: "bersihkan folder projek", kemudian
+   "semak lebih dalam sebelum hapus". Semakan mendalam dibuat **dahulu**:
+   setiap fail dibandingkan dengan aset GitHub Release melalui SHA-256
+   (bukan andaian), dan setiap skrip projek diperiksa sama ada merujuk
+   fail yang akan dibuang. Skop dipilih pengguna: **A + MSIX lama**.
+
+2. **Disahkan sama tepat dengan GitHub** (digest dibaca dari
+   GitHub API `assets[].digest`):
+   - v1.1.0 - Setup `e2b66e1a...976f79`, ZIP `2637cfad...c937a51`,
+     MSIX `3eb3b5e4...bc2ab8a`
+   - v1.0.3 - Setup `db22d26b...7820e0c`, 7z `8f4355d9...ca01ba1`,
+     ZIP `4ad4b2d2...641d9cb`
+   - v1.0.2 - Setup `5e40ce78...9f03472`, 7z `62ffeec0...31ce697`
+
+3. **Dibuang - 17 item, 14,928.1 MB (~14.6 GB)**:
+
+   | Kategori | Item | Saiz |
+   |---|---|---|
+   | Artefak GitHub (hash sepadan) | `Output\` Setup/7z/zip v1.0.2, v1.0.3, v1.1.0 | 5,863.6 MB |
+   | Fail rosak | `Output\PustakaHadith-portable-1.0.0-x64.zip` | 201.5 MB |
+   | Sampah binaan | `dist\PustakaHadith` (6,133 fail) | 2,163.3 MB |
+   | Staging MSIX | `PustakaQH_dist\msix_staging` (6,128 fail) | 1,692.9 MB |
+   | Cache AI berulang | `.cache_models\...\blobs` | 470.4 MB |
+   | Temp PyInstaller | `build\PustakaHadith` | 249.4 MB |
+   | MSIX lama (5 versi) | v1.0.0, v1.0.0-slim, v1.0.1, v1.0.2.0, v1.0.3.0 | 4,287.0 MB |
+
+   - ZIP v1.0.0 disahkan **rosak**: 7z melaporkan `Errors: 1`, hanya
+     46 fail (sepatutnya 6,133) - baki muat turun separa 22 Ogos.
+   - `dist\PustakaHadith` **6,133 fail, set fail sama penuh** dengan
+     `PustakaQH_dist\PustakaHadith`; SHA-256 exe kedua-duanya
+     `E0D77736...C621354` (sama).
+
+4. **Bukti MSIX lama selamat dibuang**:
+   - `build_msix.ps1` sentiasa membina semula dari
+     `PustakaQH_dist\PustakaHadith` ke `msix_staging` (baris 21 padam &
+     cipta semula) dan menulis `$out` baharu - **tidak pernah membaca**
+     pakej MSIX lama.
+   - `semak.py` **tiada langsung** semakan fail MSIX (0 padanan).
+   - Rujukan nama fail lama hanya dalam `SESI.md` (rekod sejarah) dan
+     `msix\NOTA.md` (jadual) - kedua-duanya dikemas kini.
+   - `.iss` (Inno) dan BINA.bat masing-masing baca/tulis
+     `PustakaQH_dist\PustakaHadith` dan `dist\` - tidak terjejas;
+     `dist` juga dalam senarai SKIP `semak.py` (baris 848).
+
+5. **Pengesahan selepas hapus**:
+   - `semak.py` - **381/381, EXIT=0** (15 bahagian).
+   - Model AI dimuat **tanpa** `blobs` (ujian sebenar, offline):
+     384 dim, nilai contoh `0.0147` - sama seperti asal.
+   - `PustakaQH_dist\PustakaHadith` (2,163.3 MB) utuh.
+
+6. **Dikekalkan (sengaja)**:
+   - `msix\PustakaHadith_1.1.0_x64.msix` (782 MB) - **versi semasa**;
+     disimpan untuk kemudahan penghantaran semula ke Store (ada juga di
+     GitHub dengan hash sama).
+   - `Output\` v1.0.0 Setup + 7z (1,608.7 MB) dan v1.0.1 Setup + 7z
+     (1,559.6 MB) - **salinan tunggal**; Release v1.0.0 tiada aset,
+     Release v1.0.1 sudah tiada (404).
+   - `PustakaQH_dist\PustakaHadith-v1.0.0.zip` (683.5 MB) - disimpan
+     sengaja sejak Sesi 38.
+   - `Output\skrin_*.png` (8 fail, ~4.4 MB) - bukti dokumentasi.
+   - `.venv-build`, `.cache_models\snapshots`, `backup\`,
+     `PustakaHadith_arsip\`, `UIUX_PustakaHadith\`, `video-promo\`.
+
+7. **Kesan ruang**:
+   - Folder `PustakaHadith`: 14,950.3 -> **6,001.3 MB** (-8,949.0 MB)
+   - Folder `PustakaQH_dist`: 9,614.0 -> **3,634.1 MB** (-5,979.9 MB)
+   - Cakera `D:` bebas: 152.0 -> **166.6 GB** (+14.6 GB)
+
+8. **Dokumentasi dikemas kini**:
+   - `PustakaQH_dist\msix\NOTA.md` - jadual 5 pakej lama diganti 1 pakej
+     semasa + nota pembersihan (sebab + bukti selamat).
+   - `PustakaQH_dist\NOTA.md` - seksyen "Pembersihan 21 Okt 2026",
+     kandungan folder ~8.9 GB -> **~3.63 GB**.
+
+9. **Nota** - tiada kod aplikasi disentuh; versi kekal **1.1.0**.
+   Rekod ini ditulis 21 Okt dan di-commit **31 Okt (buka hari)**
+   bersama Sesi 47.
+
+**Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
+
+---
+
+## Sesi 47 - 24 Okt 2026 (perpindahan program ke D: + pemulihan git PATH)
+
+1. **Arahan** - pengguna memindahkan program (Node.js, Java) ke `D:` dan
+   minta semakan sama ada perpindahan itu mengganggu projek. Semua alat
+   binaan diperiksa satu per satu, kemudian diuji dengan larian sebenar.
+
+2. **Tidak terjejas (disahkan dengan ujian)**:
+   - `.venv-build` - Python **3.14.6** (`D:\Python314`); PyInstaller
+     6.22.2, PyQt5, sentence_transformers, faiss **semua import OK**.
+   - `BINA.bat` - guna laluan relatif `.venv-build\Scripts\python.exe`.
+   - `build_msix.ps1` - laluan mutlak
+     `D:\tools\sdkbt\bin\10.0.28000.0\x64\` (`makeappx.exe`,
+     `signtool.exe`) **ADA**.
+   - Inno Setup `D:\tools\InnoSetup\ISCC.exe` **ADA**; 7-Zip **ADA**.
+   - opencode **v2.1.2** - CLI terbundel (bukan Node).
+   - `hadis.db`, FAISS, `.cache_models\snapshots` - tidak disentuh.
+
+3. **Masalah ditemui: `git` hilang dari PATH kekal** - `git.exe` masih
+   ada (`D:\tools\mingit\cmd\git.exe`) tetapi entri itu **tiada dalam
+   registry** `HKCU\Environment\Path`. Sesi sedia ada masih lulus kerana
+   PATH lama diwarisi; terminal baharu tidak. Kesan diukur pada terminal
+   baharu: `semak.py` **2 KEGAGALAN, EXIT=1** (9b fail sisa untracked
+   tidak dikesan; 16 README 381 lawan 375). Semakan 12 pula dilangkau
+   senyap ("tiada git"), dan commit/buka hari akan gagal.
+
+4. **Pembetulan** - `D:\tools\mingit\cmd` ditambah ke PATH pengguna.
+   Jenis nilai `String` dikekalkan (tiada `%VAR%` yang boleh rosak).
+   Sandaran nilai asal:
+   `C:\Users\MKAW\AppData\Local\Temp\opencode\path_user_20261024.asal.txt`.
+   Selepas: `git version 2.55.0.windows.5`; terminal baharu
+   **381/381, EXIT=0**; `git status` kembali normal.
+
+5. **Sisa netlify dibuang** - landing page sudah berpindah ke
+   **Cloudflare Pages** (`pustakahadith.my`) pada Sesi 29; tiada
+   `netlify.toml`, tiada folder `.netlify`, tiada rujukan dalam kod,
+   skrip, html atau json. `D:\npm-global\node_modules\netlify-cli`
+   (50.7 MB, 8,542 fail) dibuang. Shim memang sudah tiada lebih awal -
+   bukan kerosakan akibat perpindahan.
+
+6. **Belum dibuat (pilihan pengguna)**:
+   - Node bertindih - `C:\Program Files\nodejs` (PATH Machine) menang
+     atas `D:\tools\nodejs`, jadi niat pindah ke `D:` belum berkesan;
+     prefix npm bercanggah (`%APPDATA%\npm` lawan `D:\tools\nodejs`).
+   - Entri PATH ffmpeg (`...Gyan.FFmpeg...`) sudah `[TIADA]`.
+
+7. **Nota** - tiada kod aplikasi disentuh; versi kekal **1.1.0**;
+   direkod 24 Okt, di-commit **31 Okt (buka hari)** bersama Sesi 46.
+
+**Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
