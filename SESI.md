@@ -2284,3 +2284,74 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    direkod 24 Okt, di-commit **31 Okt (buka hari)** bersama Sesi 46.
 
 **Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
+
+---
+
+## Sesi 48 - 1 Nov 2026 (semakan semula tertunggak 3, 5, 6)
+
+1. **Arahan** - pengguna maklumkan bahawa item 3, 5 dan 6 dalam senarai
+   tertunggak sebenarnya **telah selesai lebih awal** dan kemungkinan
+   tidak direkod. Semakan bukti dibuat merentas fail, commit dan ujian,
+   kemudian rekod ditambah di sini.
+
+2. **Item 5 - Biodata Penerbit: SIAP (5-6 Okt; direkod di tempat lain)**
+   - `landing-page\BIODATA_PENERBIT.md` (54 baris, 6 Okt) + modal dalam
+     `index.html` (footer `bioLink`, seksyen modal) - teks Melayu +
+     Inggeris.
+   - Commit parent `577334e` (6 Okt): "betulkan fakta tarikh bermula
+     dalam biodata penerbit".
+   - **Sudah direkod** dalam `landing-page\SESI.md` Sesi 39 (5 Okt);
+   - punca kelihatan belum siap: `SESI.md` ini terakhir menyebut
+     "tunggu input" pada Sesi 36 dan Sesi 38 (26-30 Sep).
+
+3. **Item 6 - Rotasi token Cloudflare: SIAP (sekitar 22-24 Sep)**
+   - Sesi 34 (24 Sep): "Cloudflare token lama sudah direvoke (2 hari
+     lepas) - gugur dari TODO"; fail token dipindah ke Desktop 22 Sep
+     (direkod semula dalam Sesi 45).
+   - `landing-page\cloudflare.md` (7 Okt) menyimpan token kini
+     `cfut_sJUym...` di bawah kaedah deploy Direct API.
+   - Petunjuk lapuk: penanda tertunggak Sesi 45 (10 Okt) masih menyebut
+     rotasi token - ia sudah lapuk dan gugur senyap-senyap.
+
+4. **Item 3 - UIUX (loading states, tema terang/gelap, responsif
+   900x560): SIAP dalam kod + ujian**
+   - Responsif: `ui/app_qt.py:70` `setMinimumSize(900, 560)` (masuk
+     22 Ogos, commit `5fa22dc`) + auto-klamp (baris 151-157) + panel
+     melimpah `ui/pages_detail.py:353` + `tests/uji_responsif_viewport.py`
+     (6 halaman x 4 saiz tetingkap, DPI 150%).
+   - Loading states: petunjuk jam berputar (12 muka + QTimer) + laluan
+     gagal carian melengkapkan paparan - dikunci gate 8l.
+   - Tema: 5 tema AQUA/NEUTRAL/DARK/LIGHT_NEUTRAL/LIGHT - dikunci
+     gate 13 kontras WCAG AA.
+   - Petunjuk lapuk **dibiarkan sebagai rekod sejarah** (tidak
+     disunting): jadual audit Sesi 32 dan TODO Sesi 34 dalam fail ini
+     masih bertulis "Belum" kerana ia kenyataan pada tarikh kerja
+     tersebut, bukan keadaan sekarang. Status kini ada di sini dan
+     dalam `UIUX_PustakaHadith\INDEX_UIUX.md`.
+
+5. **Dokumentasi dikemas kini**
+   - `UIUX_PustakaHadith\INDEX_UIUX.md` - tarikh status -> 1 Nov 2026
+     (Sesi 48); 3 baris dipindahkan dari "Ciri yang belum dibina" ke
+     "Ciri yang telah dibina" beserta bukti fail/uji/gate.
+
+6. **Item 1 - Node/npm: SIAP** (diselesaikan sesi ini)
+   - Tanpa admin: `C:\Program Files\nodejs\` dibuang dari PATH
+     pengguna; `%USERPROFILE%\.npmrc` dicipta dengan
+     `prefix=D:\npm-global` (sandaran PATH pengguna:
+     `path_user_20261101.asal.txt`).
+   - Dengan satu pengesahan UAC: entri `C:\Program Files\nodejs\`
+     dibuang dari PATH sistem (HKLM; jenis nilai asal dikekalkan;
+     sandaran `path_machine_20261101.asal.txt`), dan folder
+     `C:\Program Files\nodejs` (112.4 MB, 1,936 fail) dipadam.
+     node.exe kedua-dua salinan didahului sama SHA-256 - tiada
+     kehilangan versi.
+   - Verifikasi terminal baharu: node v26.12.1 dari
+     `D:\tools\nodejs\node.exe`, `npm prefix -g` = `D:\npm-global`,
+     `rea` 6.7.0 + `codex` 0.156.1 + `zcode` berfungsi, `git` kekal
+     mingit 2.55.0 (D:). C: bebas +112.4 MB (397.3 GB).
+
+7. **Nota** - tiada kod aplikasi disentuh; versi kekal **1.1.0**.
+   Tertunggak selepas ini: item 2 (semak nilai Tetapan app), item 4
+   (Fasa 0 macOS/Android), item 7 (keputusan `opencode.json`).
+
+**Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
