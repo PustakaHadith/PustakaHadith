@@ -2355,3 +2355,69 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    (Fasa 0 macOS/Android), item 7 (keputusan `opencode.json`).
 
 **Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
+
+---
+
+## Sesi 49 - 3 Nov 2026 (housekeeping: tutup item 7 + rekod parent)
+
+1. **Keputusan `opencode.json` - KEKAL tidak di-commit** (tutup item 7
+   tertunggak): fail itu konfigurasi mesin peribadi (permission deny
+   tulis fail + papan MCP `filesystem`/`sqlite` guna `npx`), bukan kod
+   projek; `semak.py` tiada rujukan padanya. Repo utama kekal hanya
+   `M opencode.json` selepas ini - sengaja dikekalkan.
+
+2. **Repo parent `Pustaka` - commit `55bae0c`** (3 fail, +364/-8):
+   - `PustakaQH_dist\NOTA.md` + `PustakaQH_dist\msix\NOTA.md` -
+     catatan pembersihan 21 Okt dimasukkan (-4,287.0 MB; MSIX tinggal
+     1 versi 1.1.0; `msix_staging` dipadam & dibina semula automatik
+     oleh `build_msix.ps1`).
+   - `UIUX_PustakaHadith\INDEX_UIUX.md` (324 baris) - **di-track buat
+     pertama kali**; fail besar UIUX lain (73.9 MB mockup PNG) kekal
+     tidak di-track, ikut corak `video-promo/` & `img/`.
+
+3. **Nota** - tiada kod aplikasi disentuh; versi kekal **1.1.0**.
+   Tertunggak tinggal: item 2 (semak nilai Tetapan app), item 4
+   (Fasa 0 macOS/Android).
+
+**Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
+
+---
+
+## Sesi 50 - 12 Nov 2026 (pemulihan selepas pemasangan semula Windows)
+
+1. **Pemeriksaan pasca Windows Update + pembersihan C:** -
+   `semak.py` 381/381 EXIT=0; 3 repo git intak; alat di D: (mingit
+   2.55.0, node v26.12.1, venv `.venv-build`) selamat; C: 402.3 GB
+   bebas. Shortcut Start Menu dibina semula dan diuji lancar (dist
+   exe berjalan, ditutup semula selepas ujian).
+
+2. **Kesihatan alat npm** - `codex` rosak (package.json dan shim
+   menjadi ruang kosong selepas pembersihan C:) lalu dipasang semula
+   ke `D:\npm-global` (codex-cli 0.167.1 berfungsi); `zcode` dan
+   `9router` kekal rosak di folder npm lama C: - bukan program
+   projek, langsung tidak diperlukan (hanya rujukan sejarah SESI.md).
+
+3. **Sandaran mesin sebelum reset** -
+   `D:\sandaran_mesin_20261112\` (52.5 MB, 3,680 fail):
+   `sandaran_PATH_HKCU.reg` (eksport HKCU PATH), `opencode_config\`,
+   `opencode_auth.json`, `npmrc.txt`.
+
+4. **Pemasangan semula Windows (12 Nov) + pemulihan penuh** -
+   - PATH pengguna dipulih dengan `reg import` (7 entri D: balik);
+   - `.npmrc` disalin semula (`prefix=D:\npm-global`);
+   - `git config --global --add safe.directory` x3 - SID pengguna
+     Windows baharu menyebabkan ralat "dubious ownership" pada
+     ketiga-tiga repo;
+   - **VC++ Redistributable dipasang** (msvcp140.dll,
+     vcruntime140.dll, vcruntime140_1.dll semuanya hilang -> PyQt5
+     `ImportError: DLL load failed` -> `semak.py` terhenti) - winget
+     + 1 UAC;
+   - shortcut Start Menu dibina semula (C: dibersihkan semula);
+   - `semak.py` **381/381 EXIT=0** pulih sepenuhnya.
+
+5. **Nota** - tiada kod aplikasi disentuh; versi kekal **1.1.0**.
+   Tertunggak: item 2 (semak nilai Tetapan app), item 4 (Fasa 0
+   macOS/Android), pilihan varian mockup petikan hero (V1/V2),
+   pintasan Desktop `Hadis.lnk`.
+
+**Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
