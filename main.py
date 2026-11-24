@@ -140,6 +140,12 @@ def main():
     w = PustakaApp()
     if os.path.exists(ico):
         w.setWindowIcon(QIcon(ico))
+    # Buka terus MOD MAX (85% availableGeometry) — arahan 24 Nov 2026:
+    # "bila buka apl, ia launch minimal; buat buka max". Dipanggil
+    # SEBELUM show() supaya tetingkap muncul terus pada saiz max
+    # (tiada flash 1280x720). Klik maximize sekali lagi (restore-down)
+    # balik ke saiz buka 1280x720 — logik toggle Sesi 36 kekal utuh.
+    w._toggle_maksimum()
     w.show()
 
     return app.exec_()

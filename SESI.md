@@ -2421,3 +2421,123 @@ pengesahan visual butang Kongsi FB (salin + tampal).
    pintasan Desktop `Hadis.lnk`.
 
 **Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
+
+---
+
+## Sesi 51 - 15 Nov 2026 (semakan status + shortcut Start Menu + buka semula mockup)
+
+1. **Semakan status** - `semak.py` 381/381 EXIT=0; 3 repo intak
+   (`01cdbcc` / `a32319f` / `55bae0c`); alat (git 2.55.0, node
+   v26.12.1, npm 11.20.0, rea 6.7.0, Python 3.14.6, opencode v2.2.7)
+   berfungsi; C: 415.7 GB bebas, D: 162.7 GB bebas.
+
+2. **Skill `pustaka-hadith` disahkan terpasang** dalam senarai skill
+   opencode (Python/SQLite/FAISS - pembangunan, pangkalan data,
+   carian semantik, binaan/pakej, penyelesaian masalah).
+
+3. **Shortcut Start Menu dibina semula + diuji** - lama dibuang,
+   `Pustaka Hadith.lnk` dicipta semula (sasaran dist exe v1.1.0 +
+   ikon exe); uji klik shortcut -> apl berjalan (PID 5660), ditutup
+   semula selepas ujian.
+
+4. **Mockup petikan hero dibuka semula** (`UIUX_PustakaHadith\
+   CADANGAN_PETIKAN_HERO.html`) - tiga bahagian: SEMASA, banding
+   panel kanan (PILIHAN HARI INI naik ke atas), dan varian panel
+   kiri V1 (kad ~241px) / V2 (kad ~177px). **Keputusan V1/V2 masih
+   menunggu** - sesi seterusnya bermula **16 November 2026**.
+
+5. **Nota** - tiada kod aplikasi disentuh; versi kekal **1.1.0**;
+   `opencode.json` kekal tak di-commit (keputusan Sesi 49); belum
+   push (belum diarah). Tertunggak: pilihan V1/V2 mockup (mula esok),
+   item 2 (semak nilai Tetapan app), item 4 (Fasa 0 macOS/Android),
+   pintasan Desktop `Hadis.lnk` (pilihan).
+
+**Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**
+
+---
+
+## Sesi 52 - 24 Nov 2026 (buka apl terus mod max)
+
+1. **Arahan pengguna** - "bila buka apl, ia launch minimal; buat
+   buka max". Sebelum ini `main.py` buka tetingkap pada 1280x720
+   (`_saiz_muat_skrin`, Sesi 36); mod max (85%) hanya selepas klik
+   butang maximize.
+
+2. **Perubahan `main.py`** - `w._toggle_maksimum()` dipanggil SEBELUM
+   `w.show()` supaya tetingkap muncul terus pada mod max (85%
+   `availableGeometry`) tanpa flash 1280x720. Restore-down (klik
+   maximize sekali lagi) tetap balik ke saiz buka 1280x720 - logik
+   toggle/nativeEvent/changeEvent Sesi 36 TIDAK disentuh. Entry dist
+   = `main.py` (`PustakaHadith.spec` baris 22) - perubahan sampai ke
+   exe selepas bina semula.
+
+3. **Uji automatik** - skrip `uji_buka_max.py` (tiru urutan main.py):
+   bina 1280x720 -> toggle -> **1632x884** (85% skrin 1080p, tepat),
+   `_pada_max=True`, `_kad_besar=True` (kad panel kanan terap saiz
+   besar) -> restore-down balik 1280x720. **LULUS (EXIT=0)**.
+
+4. **`UIUX_PustakaHadith\INDEX_UIUX.md`** - baris "Buka mod max
+   (85%)" ditambah ke senarai ciri dibina (repo parent).
+
+5. **Nota** - versi kekal **1.1.0**; mockup petikan hero **kekal
+   on hold** (V1/V2 belum dipilih); `opencode.json` kekal tak
+   di-commit; belum push.
+
+6. **Rebuild dist (arah pengguna "b")** - PyInstaller penuh ke
+   `PustakaQH_dist\PustakaHadith_v2` (~9 minit, EXIT=0; spec entry
+   `main.py`), sahkan `hadis.db` 371 MB + `hadis_faiss.index` 95 MB,
+   lalu TUKAR dengan folder rasmi (sandaran
+   `PustakaHadith_lama_20261124` dikekalkan, boleh buang selepas
+   pengguna sahkan apl baharu). Exe baharu **24 Nov 2026 14:53**
+   (77.9 MB) di laluan shortcut Start Menu yang sama - uji lancar
+   OK (PID 3504, tajuk PustakaHadith). Setup EXE (Inno) + MSIX
+   TIDAK dibina semula - artifak release kekal.
+
+7. **Uji sebenar LULUS (pengguna sahkan "ok")** - exe rasmi dilancar
+   pada skrin 1920x1080: `GetClientRect` = **1632 x 884** (tepat 85%
+   availableGeometry, jangkaan mod max), window rect 1648 x 923 @
+   (136,47), tajuk PustakaHadith; tangkap layar disemak (buka terus
+   MAX, tiada flash 1280x720). Pengguna cuba toggle maximize /
+   restore-down sendiri dan sahkan OK.
+
+8. **Susunan menu nav ditukar (arahan: "pindah menu jelajah kitab
+   jadi no 2 sebelah utama")** - `ui/app_qt.py` `_header()`: senarai
+   nav kini **Utama, Jelajah Kitab, Pencarian, Simpan & Sejarah**
+   (Jelajah Kitab naik dari no. 3). Tiada gate/ujian kunci susunan
+   nav (disemak). Uji: log python cetak `NAV: home=Utama |
+   rak=Jelajah Kitab | search=Pencarian | saved=Simpan & Sejarah`
+   + tetingkap 1632x884 visible; tangkap layar header mengesahkan
+   paparan visual. Nota: dist exe (binaan 14:53 tadi) BELUM mengandungi
+   perubahan nav ini - perlu rebuild untuk shortcut.
+
+9. **Nota disclaimer dev** - `makluman_papar` lalai True (tiada kunci
+   dalam `user_settings.json` repo) -> popup Makluman papar setiap
+   larian `main.py` dev; ciri sedia ada 28 Sep, bukan regresi. Probe
+   mengesahkan aliran penuh main.py: disclaimer -> PustakaApp ->
+   `_toggle_maksimum()` -> 1632x884.
+
+10. **Rebuild dist KEDUA (arah "ya")** - PyInstaller ke `v2`
+    (~6 minit, EXIT=0), sahkan hadis.db + FAISS, tukar dengan rasmi;
+    sandaran `PustakaHadith_lama2_20261124` (binaan 14:53) dikekalkan
+    berserta sandaran asal `PustakaHadith_lama_20261124`. Exe baharu
+    **24 Nov 2026 15:32** (77.9 MB) mengandungi DUA perubahan sesi
+    ini: buka max 85% + nav Jelajah Kitab no. 2; uji lancar OK
+    (PID 5476); shortcut Start Menu sah.
+
+11. **ROLLBACK dist (arah pengguna "a")** - pengguna laporkan apl
+    minta API key ("API Key diperlukan. sertakan dalam header
+    X-API-Key" - mesej server service.hadis.my) semasa buka kitab
+    Muslim/Bukhari + Bukhari lambat; arahan "jangan ubah lain selain
+    diarah - awak merosakkan apl stabil". Tindakan: folder rasmi
+    ditukar balik ke **binaan stabil 9 Okt 18:38**
+    (`PustakaHadith_lama_20261124` -> `PustakaHadith`); binaan 24 Nov
+    15:32 disimpan sebagai `PustakaHadith_24nov_navmax` (bukan
+    dipadam). Uji lancar OK (PID 11140); shortcut sah. Kod sumber
+    (`main.py` buka max + `ui/app_qt.py` nav no. 2) KEKAL dalam repo
+    tetapi TIDAK aktif dalam exe rasmi (exe = binaan 9 Okt). Nota:
+    `user_settings.json` di LOCALAPPDATA hanya 60 bait (flag
+    disclaimer) - kunci API lama Windows mungkin hilang; jika mesej
+    API masih keluar selepas rollback, sebabnya kunci belum dimuat
+    semula dalam Tetapan, bukan binaan.
+
+**Keputusan semak.py: 0 GAGAL - 381 semakan (15 bahagian).**

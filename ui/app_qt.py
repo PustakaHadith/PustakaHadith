@@ -377,8 +377,10 @@ class PustakaApp(PagesKitab, PagesRak, PagesCarian, PagesDetail,
         # Nav baharu (25 Ogos, mockup Split Command Center): "Jelajah
         # Kitab" → halaman RAK DIGITAL (bukan senarai terus); "Rawak"
         # dipindah ke panel kanan halaman utama.
-        for label, key in [("Utama", "home"), ("Pencarian", "search"),
-                            ("Jelajah Kitab", "rak"),
+        # Susunan (arah 24 Nov 2026): Jelajah Kitab naik ke no. 2,
+        # sebelah Utama — Pencarian ke no. 3.
+        for label, key in [("Utama", "home"), ("Jelajah Kitab", "rak"),
+                            ("Pencarian", "search"),
                             ("Simpan & Sejarah", "saved")]:
             b = QPushButton(label)
             b.setObjectName("nav")
