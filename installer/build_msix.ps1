@@ -1,3 +1,19 @@
+# ============================================================================
+# BUILD MSIX - PustakaHadith
+# ============================================================================
+# Versi semasa: 1.2.0 (25 November 2026)
+# Dokumentasi lengkap: lihat BUILD_MSIX.md dalam folder ini
+# 
+# SEBELUM BUILD:
+#   1. Update VERSI.py → VERSI = "1.2.0"
+#   2. Update semak.py → versi dikunci 1.2.0
+#   3. Update CHANGELOG.md → tambah entry 1.2.0
+#   4. Update fail ini → Version="1.2.0.0" dan filename
+#
+# OUTPUT:
+#   D:\PustakaQH_dist\msix\PustakaHadith_1.2.0_x64.msix (783 MB)
+# ============================================================================
+
 $ErrorActionPreference = "Stop"
 $root   = "D:\Pustaka Quran Hadis\Pustaka\PustakaHadith"
 $dist   = Join-Path $root "dist\PustakaHadith"
@@ -35,7 +51,7 @@ $manifest = @"
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
          xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
          xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities">
-  <Identity Name="$name" Publisher="$pub" Version="1.1.0.0" ProcessorArchitecture="x64" />
+  <Identity Name="$name" Publisher="$pub" Version="1.2.0.0" ProcessorArchitecture="x64" />
   <Properties>
     <DisplayName>$dname</DisplayName>
     <PublisherDisplayName>$disp</PublisherDisplayName>
@@ -69,7 +85,7 @@ Import-PfxCertificate -FilePath $pfx -Password $pw -CertStoreLocation Cert:\Curr
 
 # pack
 New-Item -ItemType Directory -Path $out -Force | Out-Null
-$msix = Join-Path $out "PustakaHadith_1.1.0_x64.msix"
+$msix = Join-Path $out "PustakaHadith_1.2.0_x64.msix"
 if (Test-Path $msix) { Remove-Item $msix -Force }
 & $makeappx pack /d "$stage" /p "$msix" /o 2>&1 | ForEach-Object { $_.ToString() }
 "MAKEAPPX_EXIT=$LASTEXITCODE"

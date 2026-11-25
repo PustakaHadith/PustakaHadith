@@ -3552,10 +3552,10 @@ def semak_versi_changelog() -> None:
         return
     lulus(f"VERSI.py dibaca (v{VERSI})")
 
-    if VERSI != "1.1.0":
-        salah(f"VERSI dikunci 1.1.0 (edaran rasmi), sebenar {VERSI!r}")
+    if VERSI != "1.2.0":
+        salah(f"VERSI dikunci 1.2.0 (edaran rasmi), sebenar {VERSI!r}")
     else:
-        lulus("VERSI == '1.1.0' (edaran rasmi dikunci)")
+        lulus("VERSI == '1.2.0' (edaran rasmi dikunci)")
 
     if not os.path.exists("dokumen/perubahan/CHANGELOG.md"):
         salah("dokumen/perubahan/CHANGELOG.md TIADA -- "
